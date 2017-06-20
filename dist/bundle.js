@@ -65,6 +65,27 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Log; });
+/**
+ * Created by David Maser on 19/06/2017.
+ */
+const Global = {
+  node:'ft',
+  experiment:'ftx',
+  ignore:'ignore',
+  ajax:{
+    root:'data/'
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = Global;
+
+let Log = [];
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10324,24 +10345,6 @@ return jQuery;
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Log; });
-/**
- * Created by David Maser on 19/06/2017.
- */
-const Global = {
-  node:'ft',
-  experiment:'ftx',
-  ignore:'ignore'
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = Global;
-
-let Log = [];
-
-/***/ }),
 /* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -10351,7 +10354,7 @@ let Log = [];
  * Created by David Maser on 19/06/2017.
  */
 
-class Errors{
+class Woops{
   constructor(args){
     this.args = args;
     this.build();
@@ -10366,7 +10369,7 @@ class Errors{
   }
 
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Errors;
+/* harmony export (immutable) */ __webpack_exports__["a"] = Woops;
 
 
 /***/ }),
@@ -10376,17 +10379,20 @@ class Errors{
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_classes_Sniffer__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_classes_GetAjax__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_css_scss_Fast_scss__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_css_scss_Fast_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__src_css_scss_Fast_scss__);
 /**
  * Created by David Maser on 19/06/2017.
  */
 
 
+
 $(function(){
-  new __WEBPACK_IMPORTED_MODULE_0__src_classes_Sniffer__["a" /* default */]().then();
+  new __WEBPACK_IMPORTED_MODULE_0__src_classes_Sniffer__["a" /* default */]();
+  new __WEBPACK_IMPORTED_MODULE_1__src_classes_GetAjax__["a" /* default */]('demo.json');
 });
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
 /* 4 */
@@ -10394,8 +10400,8 @@ $(function(){
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Faster__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_Errors__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Woops__ = __webpack_require__(2);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -10426,7 +10432,7 @@ class Sniffer{
         if(a.indexOf('template:') > -1 ){
           nodeString = __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.template(a);
         }else{
-          new __WEBPACK_IMPORTED_MODULE_2__classes_Errors__["a" /* default */]({
+          new __WEBPACK_IMPORTED_MODULE_2__Woops__["a" /* default */]({
             origin:'Sniffer.cycle',
             type:'Missing attribute',
             message:'Unable to process this object. It has no assigned type or template',
@@ -10442,7 +10448,7 @@ class Sniffer{
         __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].remove.emptyTags();
       }).then(()=>{
         __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].remove.ignoredTags();
-      }).done(()=>{
+      }).then(()=>{
         __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].render();
       })
     })
@@ -10450,16 +10456,16 @@ class Sniffer{
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Sniffer;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
 /* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Errors__ = __webpack_require__(2);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_Templates__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(0);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -10481,7 +10487,7 @@ const Faster = {
             return __this !== undefined ? __this: null;
           }
         }catch(e){
-          new __WEBPACK_IMPORTED_MODULE_0__classes_Errors__["a" /* default */]({
+          new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
             origin:'',
             type:'',
             message:'',
@@ -10524,7 +10530,7 @@ const Faster = {
           }
         }
       }catch(e){
-        new __WEBPACK_IMPORTED_MODULE_0__classes_Errors__["a" /* default */]({
+        new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
           origin:'',
           type:'',
           message:'',
@@ -10544,7 +10550,7 @@ const Faster = {
           }
         }
       }catch(e){
-        new __WEBPACK_IMPORTED_MODULE_0__classes_Errors__["a" /* default */]({
+        new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
           origin:'',
           type:'',
           message:'',
@@ -10563,7 +10569,7 @@ const Faster = {
           }
         }
       }catch(e){
-        new __WEBPACK_IMPORTED_MODULE_0__classes_Errors__["a" /* default */]({
+        new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
           origin:'',
           type:'',
           message:'',
@@ -10597,7 +10603,7 @@ const Faster = {
       try{
         return obj.replace(/(\r\n|\n|\r)/gm,'');
       }catch(e){
-        new __WEBPACK_IMPORTED_MODULE_0__classes_Errors__["a" /* default */]({
+        new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
           origin:'Faster.parse.noLineBreaks',
           type:'Parse Error',
           message:'Unable to parse the string. An undefined error occurred',
@@ -10609,7 +10615,7 @@ const Faster = {
       try{
         return JSON.parse(obj);
       }catch(e){
-        new __WEBPACK_IMPORTED_MODULE_0__classes_Errors__["a" /* default */]({
+        new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
           origin:'Faster.parse.asJSON',
           type:'JSON Error',
           message:'Can not parse JSON as object. JSON string is probably malformed',
@@ -10636,14 +10642,14 @@ const Architect = {
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Architect;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
 /* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -10684,12 +10690,69 @@ function Extract(){
 
 /***/ }),
 /* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Woops__ = __webpack_require__(2);
+/**
+ * Created by David Maser on 20/06/2017.
+ */
+
+
+class GetAjax{
+  constructor(url){
+    this.url = url;
+    this.ajaxUrl = `../${__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.root}${this.url}`;
+    this.execute();
+  }
+
+  execute(){
+    return new Promise((resolve, reject)=>{
+      let req = new XMLHttpRequest();
+      req.open("GET", this.ajaxUrl);
+      req.onload = () => {
+        if (req.status === 200) {
+          console.log(req.response);
+          resolve(req.response);
+        } else {
+          reject(
+            new __WEBPACK_IMPORTED_MODULE_1__Woops__["a" /* default */]({
+              origin:'GetAjax.execute',
+              type:'AJAX Error',
+              message:req.statusText,
+              log:false
+            })
+          )
+        }
+      };
+
+      req.onerror = () => {
+        reject(
+          new __WEBPACK_IMPORTED_MODULE_1__Woops__["a" /* default */]({
+            origin:'GetAjax.execute',
+            type:'AJAX Error',
+            message:'Unable to process the ajax request. Check the path to your json file',
+            log:false
+          })
+        );
+      };
+
+      req.send();
+    });
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = GetAjax;
+
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(9);
+var content = __webpack_require__(10);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -10697,7 +10760,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(11)(content, options);
+var update = __webpack_require__(12)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -10714,10 +10777,10 @@ if(false) {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)(undefined);
+exports = module.exports = __webpack_require__(11)(undefined);
 // imports
 
 
@@ -10728,7 +10791,7 @@ exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"render
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 /*
@@ -10810,7 +10873,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -10856,7 +10919,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(12);
+var	fixUrls = __webpack_require__(13);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -11169,7 +11232,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 

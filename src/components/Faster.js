@@ -1,7 +1,7 @@
 /**
  * Created by David Maser on 19/06/2017.
  */
-import Errors from '../classes/Errors';
+import Woops from '../classes/Woops';
 import {Templates} from '../templates/Templates';
 import {Global} from '../config/Global';
 export const Faster = {
@@ -19,7 +19,7 @@ export const Faster = {
             return __this !== undefined ? __this: null;
           }
         }catch(e){
-          new Errors({
+          new Woops({
             origin:'',
             type:'',
             message:'',
@@ -62,7 +62,7 @@ export const Faster = {
           }
         }
       }catch(e){
-        new Errors({
+        new Woops({
           origin:'',
           type:'',
           message:'',
@@ -82,7 +82,7 @@ export const Faster = {
           }
         }
       }catch(e){
-        new Errors({
+        new Woops({
           origin:'',
           type:'',
           message:'',
@@ -101,7 +101,7 @@ export const Faster = {
           }
         }
       }catch(e){
-        new Errors({
+        new Woops({
           origin:'',
           type:'',
           message:'',
@@ -135,7 +135,7 @@ export const Faster = {
       try{
         return obj.replace(/(\r\n|\n|\r)/gm,'');
       }catch(e){
-        new Errors({
+        new Woops({
           origin:'Faster.parse.noLineBreaks',
           type:'Parse Error',
           message:'Unable to parse the string. An undefined error occurred',
@@ -147,7 +147,7 @@ export const Faster = {
       try{
         return JSON.parse(obj);
       }catch(e){
-        new Errors({
+        new Woops({
           origin:'Faster.parse.asJSON',
           type:'JSON Error',
           message:'Can not parse JSON as object. JSON string is probably malformed',

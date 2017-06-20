@@ -3,7 +3,7 @@
  */
 import {Faster,Architect} from '../components/Faster';
 import {Global} from '../config/Global';
-import Errors from '../classes/Errors';
+import Woops from './Woops';
 
 export default class Sniffer{
   constructor(args){
@@ -28,7 +28,7 @@ export default class Sniffer{
         if(a.indexOf('template:') > -1 ){
           nodeString = Faster.extract.template(a);
         }else{
-          new Errors({
+          new Woops({
             origin:'Sniffer.cycle',
             type:'Missing attribute',
             message:'Unable to process this object. It has no assigned type or template',
@@ -44,7 +44,7 @@ export default class Sniffer{
         Faster.remove.emptyTags();
       }).then(()=>{
         Faster.remove.ignoredTags();
-      }).done(()=>{
+      }).then(()=>{
         Architect.render();
       })
     })

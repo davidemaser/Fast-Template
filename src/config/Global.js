@@ -4,6 +4,9 @@
 export const Global = {
   node:'ft',
   experiment:'ftx',
-  ignore:'ignore'
+  ignore:'ignore',
+  ajax:{
+    root:'data/'
+  }
 };
 export let Log = [];
