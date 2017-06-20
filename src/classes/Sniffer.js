@@ -41,11 +41,7 @@ export default class Sniffer{
       let nodeElement = $('body').find(`[fst-id="${b}"]`);
       console.log(nodeType,Faster.extract.class(a),Faster.extract.content(a),Faster.extract.json(a,null,true));
       $.when(Architect.build.element(nodeElement,nodeString,Faster.extract.content(a))).then(()=>{
-        Faster.remove.emptyTags();
-      }).then(()=>{
-        Faster.remove.ignoredTags();
-      }).then(()=>{
-        Architect.render();
+        Faster.exec();
       })
     })
   }

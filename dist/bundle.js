@@ -78,6 +78,9 @@ const Global = {
   ignore:'ignore',
   ajax:{
     root:'data/'
+  },
+  init:{
+    all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Global;
@@ -10445,11 +10448,7 @@ class Sniffer{
       let nodeElement = $('body').find(`[fst-id="${b}"]`);
       console.log(nodeType,__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.class(a),__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.content(a),__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.json(a,null,true));
       $.when(__WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.element(nodeElement,nodeString,__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.content(a))).then(()=>{
-        __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].remove.emptyTags();
-      }).then(()=>{
-        __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].remove.ignoredTags();
-      }).then(()=>{
-        __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].render();
+        __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].exec();
       })
     })
   }
@@ -10473,10 +10472,12 @@ class Sniffer{
 
 
 const Faster = {
+  exec(){
+    this.remove.emptyTags();
+    this.remove.ignoredTags();
+    Architect.render()
+  },
   extract: {
-    all(){
-
-    },
     node: {
       type(obj, callback){
         try {

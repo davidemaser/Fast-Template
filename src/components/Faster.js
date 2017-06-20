@@ -5,10 +5,12 @@ import Woops from '../classes/Woops';
 import {Templates} from '../templates/Templates';
 import {Global} from '../config/Global';
 export const Faster = {
+  exec(){
+    this.remove.emptyTags();
+    this.remove.ignoredTags();
+    Architect.render()
+  },
   extract: {
-    all(){
-
-    },
     node: {
       type(obj, callback){
         try {

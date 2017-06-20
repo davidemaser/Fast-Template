@@ -7,6 +7,9 @@ export const Global = {
   ignore:'ignore',
   ajax:{
     root:'data/'
+  },
+  init:{
+    all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
   }
 };
 export let Log = [];
