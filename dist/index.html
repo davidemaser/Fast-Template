@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<script type="text/javascript" src="bundle.js?93ad78534bcee08683c9"></script></head>
-<body>
+<script type="text/javascript" src="bundle.js?ed8df13064b6b37bb555"></script></head>
+<body fast="template">
 <ft>class:new,render:div,content:{here's my content}</ft>
 <ft>template:div,content:{this is a template}</ft>
-<ft>class:old,render:section</ft>
+<ft ignore>class:old,render:section,json:|{"name": "faster",
+    "version": "1.0.0",
+    "description": "",
+    "main": "App.js"}|</ft>
 <ft>class:{default:this,hover:that},render:nav</ft>
+<ftx></ftx>
 </body>
 </html>

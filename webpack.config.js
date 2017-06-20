@@ -29,7 +29,7 @@ module.exports = {
           {
             loader: "sass-loader",
             options: {
-              includePaths: ["src/scss","src/styles"],
+              includePaths: ["src/css/scss","src/styles"],
               outputStyle: 'compressed'
             }
           }

@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body fast="template">
 <ft>class:new,render:div,content:{here's my content}</ft>
 <ft>template:div,content:{this is a template}</ft>
-<ft>class:old,render:section</ft>
+<ft ignore>class:old,render:section,json:|{"name": "faster",
+    "version": "1.0.0",
+    "description": "",
+    "main": "App.js"}|</ft>
 <ft>class:{default:this,hover:that},render:nav</ft>
+<ftx></ftx>
 </body>
 </html>
