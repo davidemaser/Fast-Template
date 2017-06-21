@@ -118,7 +118,7 @@ export const Faster = {
         let __this = $(this).html().trim();
         __this.length === 0 ? $(this).remove() : null;
       });
-      $(Global.experiment).each(function(){
+      $(Global.experiment.node).each(function(){
         let __this = $(this).html().trim();
         __this.length === 0 ? $(this).remove() : null;
       })
@@ -127,7 +127,7 @@ export const Faster = {
       $(`${Global.node}[${Global.ignore}]`).each(function(){
         $(this).remove();
       });
-      $(`${Global.experiment}[${Global.ignore}]`).each(function(){
+      $(`${Global.experiment.node}[${Global.ignore}]`).each(function(){
         $(this).remove();
       })
     }
@@ -166,6 +166,15 @@ export const Architect = {
       $(replace).insertBefore(origin);
       $(replace).html(content);
       $(origin).remove();
+    },
+    experiment(origin, replace, content){
+      if(content !== undefined && content !== '') {
+        let xContent = replace.replace('@return', content);
+        $(xContent).insertBefore(origin);
+        $(origin).remove();
+      }else{
+        $(origin).remove();
+      }
     }
   },
   render(){

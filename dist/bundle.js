@@ -74,14 +74,24 @@
  */
 const Global = {
   node:'ft',
-  experiment:'ftx',
+  experiment:{
+    node:'ftx',
+    render:'<span ftx-render>@return</span>',
+    nested:'nested',
+    date:{
+      full:'mm/dd/yyyy h:m:s',
+      noTime:'mm/dd/yyyy',
+      compact:'mm/dd/yy'
+    }
+  },
   ignore:'ignore',
   ajax:{
     root:'data/'
   },
   init:{
     all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
-  }
+  },
+
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Global;
 
@@ -89,6 +99,34 @@ let Log = [];
 
 /***/ }),
 /* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Logger__ = __webpack_require__(7);
+/**
+ * Created by David Maser on 19/06/2017.
+ */
+
+class Woops{
+  constructor(args){
+    this.args = args;
+    this.build();
+  }
+
+  build(){
+    if(typeof this.args === 'object'){
+      this.args.log === true ? new __WEBPACK_IMPORTED_MODULE_0__Logger__["a" /* default */](this.args) : null ;
+    }else{
+      console.log('Can\'t execute the Warning module');
+    }
+  }
+
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Woops;
+
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10348,42 +10386,14 @@ return jQuery;
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Logger__ = __webpack_require__(6);
-/**
- * Created by David Maser on 19/06/2017.
- */
-
-class Woops{
-  constructor(args){
-    this.args = args;
-    this.build();
-  }
-
-  build(){
-    if(typeof this.args === 'object'){
-      this.args.log === true ? new __WEBPACK_IMPORTED_MODULE_0__Logger__["a" /* default */](this.args) : null ;
-    }else{
-      console.log('Can\'t execute the Warning module');
-    }
-  }
-
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Woops;
-
-
-/***/ }),
 /* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_classes_Sniffer__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_classes_GetAjax__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_css_scss_Fast_scss__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_classes_GetAjax__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_css_scss_Fast_scss__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_css_scss_Fast_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__src_css_scss_Fast_scss__);
 /**
  * Created by David Maser on 19/06/2017.
@@ -10395,75 +10405,132 @@ $(function(){
   new __WEBPACK_IMPORTED_MODULE_0__src_classes_Sniffer__["a" /* default */]();
   new __WEBPACK_IMPORTED_MODULE_1__src_classes_GetAjax__["a" /* default */]('demo.json');
 });
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Faster__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Woops__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cycle__ = __webpack_require__(5);
 /**
  * Created by David Maser on 19/06/2017.
  */
 
 
 
-
 class Sniffer{
   constructor(args){
     this.args = args;
-    this.tag = __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].node;
-    this.ignore = __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].ignore;
+    this.tag = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].node;
+    this.ignore = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ignore;
     this.cycle();
   }
 
   cycle(){
-    let domNodes = [];
-    $(`${this.tag}:not([${this.ignore}])`).each(function(a){
-      $(this).attr('fst-id',a);
-      domNodes.push($(this).html());
-    });
-    domNodes.map((a,b)=>{
-      let nodeType,nodeString;
-      if(a.indexOf('render:') > -1){
-        nodeType = __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.node.type(a);
-        nodeString = `<${nodeType} class="${__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.class(a)}">`;
-      }else{
-        if(a.indexOf('template:') > -1 ){
-          nodeString = __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.template(a);
-        }else{
-          new __WEBPACK_IMPORTED_MODULE_2__Woops__["a" /* default */]({
-            origin:'Sniffer.cycle',
-            type:'Missing attribute',
-            message:'Unable to process this object. It has no assigned type or template',
-            log:false
-          });
-        }
-      }
-      nodeString = __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].parse.noLineBreaks(nodeString);
-      nodeString += __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.content(a) !== undefined ? `${__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.content(a)}</${nodeType}>` : null;
-      let nodeElement = $('body').find(`[fst-id="${b}"]`);
-      console.log(nodeType,__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.class(a),__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.content(a),__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.json(a,null,true));
-      $.when(__WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.element(nodeElement,nodeString,__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.content(a))).then(()=>{
-        __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].exec();
-      })
-    })
+    new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ft');
+    new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ftx');
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Sniffer;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
 /* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_Templates__ = __webpack_require__(7);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Faster__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Functions_Processor__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Woops__ = __webpack_require__(1);
+/**
+ * Created by David Maser on 21/06/2017.
+ */
+
+
+
+
+class Cycle{
+  constructor(type){
+    this.type = type;
+    this.tag = __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].node;
+    this.xTag = __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].experiment.node;
+    this.nested = __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].experiment.nested;
+    this.ignore = __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].ignore;
+    this.run();
+  }
+  run(){
+    switch (this.type){
+      case 'ft':
+        let ftNodes = [];
+        $(`${this.tag}:not([${this.ignore}])`).each(function(a){
+          $(this).attr('fst-id',a);
+          $(this).html() !== '' && $(this).html() !== undefined && $(this).html() !== null ? ftNodes.push($(this).html()) : $(this).remove();
+        });
+        ftNodes.map((a,b)=>{
+          let nodeType,nodeString;
+          if(a.indexOf('render:') > -1){
+            nodeType = __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.node.type(a);
+            nodeString = `<${nodeType} class="${__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.class(a)}">`;
+          }else{
+            if(a.indexOf('template:') > -1 ){
+              nodeString = __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.template(a);
+            }else{
+              new __WEBPACK_IMPORTED_MODULE_3__Woops__["a" /* default */]({
+                origin:'Sniffer.cycle',
+                type:'Missing attribute',
+                message:'Unable to process this object. It has no assigned type or template',
+                log:false
+              });
+            }
+          }
+          nodeString = __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].parse.noLineBreaks(nodeString);
+          nodeString += __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.content(a) !== undefined ? `${__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.content(a)}</${nodeType}>` : null;
+          let nodeElement = $('body').find(`[fst-id="${b}"]`);
+          $.when(__WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.element(nodeElement,nodeString,__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.content(a))).then(()=>{
+            __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].exec();
+          })
+        });
+        break;
+      case 'ftx':
+        let ftxNodes = [];
+        $(`${this.xTag}:not([${this.ignore}]):not([${this.nested}])`).each(function(a){
+          $(this).attr('fstx-id',a);
+          $(this).html() !== '' && $(this).html() !== undefined && $(this).html() !== null ? ftxNodes.push($(this).html()) : $(this).remove();
+        });
+        ftxNodes.map((a,b)=>{
+          let xType,xOption=null,bounds,xStatement;
+          if(a.indexOf(':') > -1){
+            xType = a.split(':')[0].replace('{','');
+            xOption = a.split(':')[1].split('}')[0];
+            bounds = [`{${xType}:${xOption}}`,`{~${xType}}`];
+            xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
+          }else{
+            xType = a.split('{')[1].split('}')[0];
+            bounds = [`{${xType}}`,`{~${xType}}`];
+            xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
+          }
+          let ftxNodeElement = $('body').find(`[fstx-id="${b}"]`);
+          __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxNodeElement,__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].experiment.render,__WEBPACK_IMPORTED_MODULE_2__Functions_Processor__["a" /* default */](xType,xOption,xStatement));
+        });
+        break;
+
+    }
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Cycle;
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_Templates__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(0);
 /**
  * Created by David Maser on 19/06/2017.
@@ -10585,7 +10652,7 @@ const Faster = {
         let __this = $(this).html().trim();
         __this.length === 0 ? $(this).remove() : null;
       });
-      $(__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].experiment).each(function(){
+      $(__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].experiment.node).each(function(){
         let __this = $(this).html().trim();
         __this.length === 0 ? $(this).remove() : null;
       })
@@ -10594,7 +10661,7 @@ const Faster = {
       $(`${__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].node}[${__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].ignore}]`).each(function(){
         $(this).remove();
       });
-      $(`${__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].experiment}[${__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].ignore}]`).each(function(){
+      $(`${__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].experiment.node}[${__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].ignore}]`).each(function(){
         $(this).remove();
       })
     }
@@ -10635,6 +10702,15 @@ const Architect = {
       $(replace).insertBefore(origin);
       $(replace).html(content);
       $(origin).remove();
+    },
+    experiment(origin, replace, content){
+      if(content !== undefined && content !== '') {
+        let xContent = replace.replace('@return', content);
+        $(xContent).insertBefore(origin);
+        $(origin).remove();
+      }else{
+        $(origin).remove();
+      }
     }
   },
   render(){
@@ -10643,10 +10719,10 @@ const Architect = {
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Architect;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10671,7 +10747,7 @@ class Logger{
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10690,12 +10766,136 @@ function Extract(){
 }
 
 /***/ }),
-/* 8 */
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = Processor;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FastMath__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FastDate__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FastCondition__ = __webpack_require__(12);
+/**
+ * Created by David Maser on 21/06/2017.
+ */
+
+
+
+function Processor(type,option,expression){
+  switch (type){
+    case 'math':
+      return __WEBPACK_IMPORTED_MODULE_0__FastMath__["a" /* default */](option,expression);
+      break;
+    case 'date':
+      return __WEBPACK_IMPORTED_MODULE_1__FastDate__["a" /* default */](option,expression);
+      break;
+    case 'if':
+      return __WEBPACK_IMPORTED_MODULE_2__FastCondition__["a" /* default */](option,expression);
+      break;
+  }
+}
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastMath;
+/**
+ * Created by David Maser on 21/06/2017.
+ */
+/**
+ * Function evals a string mathematical formula
+ * @param {string} option
+ * @param {string} expression
+ * @constructor
+ */
+function FastMath(option, expression) {
+  let value = parseInt(eval(expression),10);
+  if(option !== null && option !== undefined) {
+    return Math[option](value);
+  }else{
+    return value;
+  }
+}
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastDate;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/**
+ * Created by David Maser on 21/06/2017.
+ */
+
+function FastDate(option, expression){
+  expression = expression || __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].experiment.date.full;
+  let theDate = new Date();
+  let dateObj = {
+    mm: (theDate.getMonth() + 1).length === 0 ? `0${theDate.getMonth() + 1}` : theDate.getMonth(),
+    dd: (theDate.getDate() + 1).length === 0 ? `0${theDate.getDate() + 1}` : theDate.getDate(),
+    dow: theDate.getDay(),
+    yyyy: theDate.getFullYear(),
+    yy: theDate.getYear().toString().substr(-2),
+    h: theDate.getHours(),
+    m: theDate.getMinutes().length === 1 ? `0${theDate.getMinutes()}` : theDate.getMinutes(),
+    s: theDate.getSeconds().length === 1 ? `0${theDate.getSeconds()}` : theDate.getSeconds()
+  };
+  for(let v in dateObj){
+    expression = expression.replace(v,dateObj[v]);
+  }
+  return expression;
+}
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastCondition;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(1);
+/**
+ * Created by David Maser on 21/06/2017.
+ */
+
+function FastCondition(option, expression){
+  let comparative = option.indexOf('=') > -1 ? option.split('=') : option;
+  let optionArray = expression.indexOf('{else}') > -1 ? expression.split('{else}') : expression;
+  let result;
+  if(Array.isArray(comparative)){
+    let compareTo = comparative[0];
+    let compareValue = comparative[1];
+    switch(compareTo){
+      case 'hour':
+        let hourValue = new Date().getHours();
+        let hourCheck = parseInt(compareValue);
+        if(hourValue === hourCheck){
+          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
+        }else{
+          result = Array.isArray(optionArray) ? optionArray[1] : '';
+        }
+        break;
+    }
+  }else{
+    new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+      origin:'FastCondition',
+      type:'Format Error',
+      message:'Condition must be an array (formatted as x=y)',
+      log:false
+    });
+  }
+
+  return result;
+}
+
+/***/ }),
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Woops__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Woops__ = __webpack_require__(1);
 /**
  * Created by David Maser on 20/06/2017.
  */
@@ -10747,13 +10947,13 @@ class GetAjax{
 
 
 /***/ }),
-/* 9 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(10);
+var content = __webpack_require__(15);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -10761,7 +10961,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(12)(content, options);
+var update = __webpack_require__(17)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -10778,10 +10978,10 @@ if(false) {
 }
 
 /***/ }),
-/* 10 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(11)(undefined);
+exports = module.exports = __webpack_require__(16)(undefined);
 // imports
 
 
@@ -10792,7 +10992,7 @@ exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"render
 
 
 /***/ }),
-/* 11 */
+/* 16 */
 /***/ (function(module, exports) {
 
 /*
@@ -10874,7 +11074,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 12 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -10920,7 +11120,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(13);
+var	fixUrls = __webpack_require__(18);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -11233,7 +11433,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 13 */
+/* 18 */
 /***/ (function(module, exports) {
 
 
