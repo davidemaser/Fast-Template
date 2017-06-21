@@ -10876,6 +10876,24 @@ function FastCondition(option, expression){
           result = Array.isArray(optionArray) ? optionArray[1] : '';
         }
         break;
+      case 'day':
+        let dayValue = new Date().getDate();
+        let dayCheck = parseInt(compareValue);
+        if(dayValue === dayCheck){
+          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
+        }else{
+          result = Array.isArray(optionArray) ? optionArray[1] : '';
+        }
+        break;
+      case 'month':
+        let monthValue = (new Date().getMonth() + 1).length === 0 ? `0${new Date().getMonth() + 1}` : new Date().getMonth()+1;
+        let monthCheck = parseInt(compareValue);
+        if(monthValue === monthCheck){
+          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
+        }else{
+          result = Array.isArray(optionArray) ? optionArray[1] : '';
+        }
+        break;
     }
   }else{
     new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
