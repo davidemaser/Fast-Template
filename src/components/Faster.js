@@ -168,8 +168,8 @@ export const Architect = {
       $(origin).remove();
     },
     experiment(origin, replace, content){
-      content = JSON.stringify(content);
       if(content !== undefined && content !== '') {
+        content = typeof content === 'object' ? JSON.stringify(content) : content;
         let xContent = replace.replace('@return', content);
         $(xContent).insertBefore(origin);
         $(origin).remove();
