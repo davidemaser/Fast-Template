@@ -5,7 +5,7 @@ import {Global} from '../config/Global';
 import Woops from './Woops';
 import axios from 'axios';
 import {Architect} from '../components/Faster';
-import {BuildTemplate} from '../components/BuildTemplate';
+import {FastTemplate} from '../Functions/FastTemplate';
 export default function GetAjax(url, props,element) {
   this.url = url;
   this.props = props;
@@ -13,7 +13,7 @@ export default function GetAjax(url, props,element) {
   function build(a,b,template){
     /**@todo this function causes problems when rendering **/
     if(template !== null){
-      a = BuildTemplate(a,template);
+      a = FastTemplate(a,template);
     }
     Architect.build.experiment($('body').find(`[fstx-id="${b}"]`),Global.experiment.render,a);
   }

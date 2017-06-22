@@ -4,7 +4,7 @@
 import {Template} from '../config/Template';
 import {TemplateUtilities} from '../templates/TemplateUtilities';
 import {TemplateTableUtilities} from '../templates/TemplateTableUtilities';
-export function BuildTemplate(data, template) {
+export function FastTemplate(data, template) {
   let mainLayout = Template[template].layout;
   let d;
   let accepted = ['class','id','style'];

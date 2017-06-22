@@ -2,9 +2,8 @@
  * Created by David Maser on 19/06/2017.
  */
 import Sniffer from './src/classes/Sniffer';
-import GetAjax from './src/classes/GetAjax';
 import './src/css/scss/Fast.scss';
+import {Faster} from './src/components/Faster';
 $(function(){
-  new Sniffer();
-  //new GetAjax('../data/demo.json',null);
+  $.when(new Sniffer()).done(Faster.exec())
 });

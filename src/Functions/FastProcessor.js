@@ -5,7 +5,7 @@ import FastMath from './FastMath';
 import FastDate from './FastDate';
 import FastCondition from './FastCondition';
 import FastAjax from './FastAjax';
-export default function Processor(type,option,expression,element){
+export default function FastProcessor(type, option, expression, element){
   switch (type){
     case 'math':
       return FastMath(option,expression);

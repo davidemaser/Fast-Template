@@ -3,7 +3,7 @@
  */
 import {Faster,Architect} from '../components/Faster';
 import {Global} from '../config/Global';
-import Processor from '../Functions/Processor';
+import FastProcessor from '../Functions/FastProcessor';
 import Woops from './Woops';
 export default class Cycle{
   constructor(type){
@@ -42,9 +42,7 @@ export default class Cycle{
           nodeString = Faster.parse.noLineBreaks(nodeString);
           nodeString += Faster.extract.content(a) !== undefined ? `${Faster.extract.content(a)}</${nodeType}>` : null;
           let nodeElement = $('body').find(`[fst-id="${b}"]`);
-          $.when(Architect.build.element(nodeElement,nodeString,Faster.extract.content(a))).then(()=>{
-            Faster.exec();
-          })
+          Architect.build.element(nodeElement,nodeString,Faster.extract.content(a))
         });
         break;
       case 'ftx':
@@ -66,12 +64,11 @@ export default class Cycle{
             xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
           }
           let ftxNodeElement = $('body').find(`[fstx-id="${b}"]`);
-          $.when(Processor(xType,xOption,xStatement,b)).then((a)=>{
+          $.when(FastProcessor(xType,xOption,xStatement,b)).then((a)=>{
             Architect.build.experiment(ftxNodeElement,Global.experiment.render,a);
           });
         });
         break;
-
     }
   }
 }
