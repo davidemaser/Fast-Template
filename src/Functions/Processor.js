@@ -3,8 +3,9 @@
  */
 import FastMath from './FastMath';
 import FastDate from './FastDate';
-import FastCondtion from './FastCondition';
-export default function Processor(type,option,expression){
+import FastCondition from './FastCondition';
+import FastAjax from './FastAjax';
+export default function Processor(type,option,expression,element){
   switch (type){
     case 'math':
       return FastMath(option,expression);
@@ -13,7 +14,10 @@ export default function Processor(type,option,expression){
       return FastDate(option,expression);
       break;
     case 'if':
-      return FastCondtion(option,expression);
+      return FastCondition(option,expression);
+      break;
+    case 'json':
+      return new FastAjax(option,expression,element);
       break;
   }
 }

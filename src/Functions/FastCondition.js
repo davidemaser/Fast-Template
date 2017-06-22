@@ -3,11 +3,21 @@
  */
 import Woops from '../classes/Woops';
 export default function FastCondition(option, expression){
+  function execMath(args){
+    let execValue = args.replace('[','').replace(']','');
+    if(execValue.indexOf('(') > -1){
+      let operator = execValue.split('(')[0];
+      let value = parseInt(eval(execValue.split('(')[1].replace(')','')),10);
+      return Math[operator](value);
+    }else{
+      return parseInt(eval(execValue),10);
+    }
+  }
   let comparative = option.indexOf('=') > -1 ? option.split('=') : option;
   let optionArray = expression.indexOf('{else}') > -1 ? expression.split('{else}') : expression;
   let result;
   if(Array.isArray(comparative)){
-    let compareTo = comparative[0];
+    let compareTo = comparative[0].indexOf('(') > -1 ? execMath(comparative[0]) : comparative[0];
     let compareValue = comparative[1];
     switch(compareTo){
       case 'hour':
@@ -37,6 +47,22 @@ export default function FastCondition(option, expression){
           result = Array.isArray(optionArray) ? optionArray[1] : '';
         }
         break;
+        case 'year':
+        let yearValue = new Date().getFullYear();
+        let yearCheck = parseInt(compareValue);
+        if(yearValue === yearCheck){
+          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
+        }else{
+          result = Array.isArray(optionArray) ? optionArray[1] : '';
+        }
+        break;
+      default:
+        compareValue = isNaN(compareValue) ? compareValue : parseInt(compareValue);
+        if(compareTo === compareValue){
+          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
+        }else{
+          result = Array.isArray(optionArray) ? optionArray[1] : '';
+        }
     }
   }else{
     new Woops({

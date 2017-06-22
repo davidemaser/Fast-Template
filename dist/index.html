@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<script type="text/javascript" src="bundle.js?0acbca8e07469ecda179"></script></head>
+<script type="text/javascript" src="bundle.js?fc94133b909bd9fb3fc5"></script></head>
 <body fast="template">
 <ft>class:new,render:div,content:{here's my content}</ft>
 <ft>template:div,content:{this is a template}</ft>
@@ -17,8 +17,11 @@
 <ftx>{if:hour=17}this{else}that{~if}</ftx>
 <ftx>{if:day=10}this{else}<div class="hithere">pkkee</div>{~if}</ftx>
 <ftx>{if:month=6}this{else}that{~if}</ftx>
+<ftx>{if:[round(9*21)]=9}this{~if}</ftx>
+<ftx>{if:[floor(84/10)]=8}this expression is true{~if}</ftx>
 <ftx nested>
     <ftx></ftx>
 </ftx>
+<ftx>{json://davidemaser.github.io/data/temp-table.json}node=table.rows,show=5{~json}</ftx>
 </body>
 </html>

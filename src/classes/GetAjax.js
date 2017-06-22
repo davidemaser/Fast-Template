@@ -3,45 +3,55 @@
  */
 import {Global} from '../config/Global';
 import Woops from './Woops';
-export default class GetAjax{
-  constructor(url){
-    this.url = url;
-    this.ajaxUrl = `../${Global.ajax.root}${this.url}`;
-    this.execute();
+import axios from 'axios';
+import {Architect} from '../components/Faster';
+export default function GetAjax(url, props,element) {
+  this.url = url;
+  this.props = props;
+  element = element+1;
+  function build(a,b){
+    Architect.build.experiment($('body').find(`[fstx-id="${b}"]`),Global.experiment.render,a);
   }
-
-  execute(){
-    return new Promise((resolve, reject)=>{
-      let req = new XMLHttpRequest();
-      req.open("GET", this.ajaxUrl);
-      req.onload = () => {
-        if (req.status === 200) {
-          console.log(req.response);
-          resolve(req.response);
+  function processProps(data, props) {
+    if (typeof props === 'object') {
+      let returnData = data;
+      if (typeof(props['node']) !== 'undefined') {
+        if (props['node'].indexOf('.') > -1) {
+          let propArray = props['node'].split('.');
+          let p;
+          for (p in propArray) {
+            returnData = returnData[propArray[p]];
+          }
         } else {
-          reject(
-            new Woops({
-              origin:'GetAjax.execute',
-              type:'AJAX Error',
-              message:req.statusText,
-              log:false
-            })
-          )
+          returnData = returnData[props['node']];
         }
-      };
-
-      req.onerror = () => {
-        reject(
-          new Woops({
-            origin:'GetAjax.execute',
-            type:'AJAX Error',
-            message:'Unable to process the ajax request. Check the path to your json file',
-            log:false
-          })
-        );
-      };
-
-      req.send();
-    });
+      }
+      build(returnData,element);
+    }
   }
+
+  axios.get(this.url)
+    .then((response) => {
+      if (Global.ajax.useDefault === true) {
+        if (this.props !== undefined) {
+          return processProps(response[Global.ajax.root.node], this.props)
+        } else {
+          return processProps(response[Global.ajax.root.node], null)
+        }
+      } else {
+        if (this.props !== undefined) {
+          return processProps(response, this.props)
+        } else {
+          return processProps(response, null);
+        }
+      }
+    })
+    .catch((error) => {
+      new Woops({
+        origin: 'GetAjax.run',
+        type: 'AJAX Error',
+        message: error,
+        log: false
+      })
+    });
 }

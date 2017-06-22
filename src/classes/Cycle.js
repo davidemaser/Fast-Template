@@ -66,7 +66,9 @@ export default class Cycle{
             xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
           }
           let ftxNodeElement = $('body').find(`[fstx-id="${b}"]`);
-          Architect.build.experiment(ftxNodeElement,Global.experiment.render,Processor(xType,xOption,xStatement));
+          $.when(Processor(xType,xOption,xStatement,b)).then((a)=>{
+            Architect.build.experiment(ftxNodeElement,Global.experiment.render,a);
+          });
         });
         break;
 

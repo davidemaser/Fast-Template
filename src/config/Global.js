@@ -15,7 +15,11 @@ export const Global = {
   },
   ignore:'ignore',
   ajax:{
-    root:'data/'
+    useDefault:true,
+    root:{
+      node:'data',
+      url:'../data'
+    }
   },
   init:{
     all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']

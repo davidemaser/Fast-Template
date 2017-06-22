@@ -6,5 +6,5 @@ import GetAjax from './src/classes/GetAjax';
 import './src/css/scss/Fast.scss';
 $(function(){
   new Sniffer();
-  new GetAjax('demo.json');
+  //new GetAjax('../data/demo.json',null);
 });
