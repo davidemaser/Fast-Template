@@ -23,5 +23,48 @@ export const Template = {
         }
       },
     }
+  },
+  login:{
+    layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
+    class:' class="@class"',
+    id:' id="@id"',
+    style:' style="@style"',
+    action:' action="@action"',
+    elements:[
+      {
+        element:'input',
+        type:'text',
+        name:'userName',
+        placeholder:'',
+        class:'',
+        id:''
+      },
+      {
+        element:'input',
+        type:'password',
+        name:'passWord',
+        placeholder:'',
+        class:'',
+        id:''
+      },
+      {
+        element:'textarea',
+        placeholder:'',
+        class:'',
+        id:''
+      },
+      {
+        element:'select',
+        placeholder:'',
+        class:'',
+        id:'',
+        options:[
+          {
+            label:'',
+            value:''
+          }
+        ]
+      }
+    ]
   }
 };

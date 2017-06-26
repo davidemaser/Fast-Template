@@ -162,17 +162,17 @@ export const Faster = {
 };
 export const Architect = {
   build: {
-    element(origin, replace, content, args){
+    element(origin, replace, content){
       $(replace).insertBefore(origin);
       $(replace).html(content);
       $(origin).remove();
     },
-    experiment(origin, replace, content){
+    experiment(origin, replace, content, opt){
       if(content !== undefined && content !== '') {
         content = typeof content === 'object' ? JSON.stringify(content) : content;
         let xContent = replace.replace('@return', content);
         $(xContent).insertBefore(origin);
-        $(origin).remove();
+        opt !== true ? $(origin).remove() : null;
       }else{
         $(origin).remove();
       }

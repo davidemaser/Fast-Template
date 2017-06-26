@@ -10,6 +10,7 @@ export default class Cycle{
     this.type = type;
     this.tag = Global.node;
     this.xTag = Global.experiment.node;
+    this.xjTag = Global.ajax.node;
     this.nested = Global.experiment.nested;
     this.ignore = Global.ignore;
     this.run();
@@ -66,6 +67,30 @@ export default class Cycle{
           let ftxNodeElement = $('body').find(`[fstx-id="${b}"]`);
           $.when(FastProcessor(xType,xOption,xStatement,b)).then((a)=>{
             Architect.build.experiment(ftxNodeElement,Global.experiment.render,a);
+          });
+        });
+        break;
+      case 'ftxj':
+        let ftxjNodes = [];
+        $(`${this.xjTag}:not([${this.ignore}]):not([${this.nested}])`).each(function(a){
+          $(this).attr('fstxj-id',a);
+          $(this).html() !== '' && $(this).html() !== undefined && $(this).html() !== null ? ftxjNodes.push($(this).html()) : $(this).remove();
+        });
+        ftxjNodes.map((a,b)=>{
+          let xType,xOption=null,bounds,xStatement;
+          if(a.indexOf(':') > -1){
+            xType = a.split(':')[0].replace('{','');
+            xOption = a.split(':')[1].split('}')[0];
+            bounds = [`{${xType}:${xOption}}`,`{~${xType}}`];
+            xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
+          }else{
+            xType = a.split('{')[1].split('}')[0];
+            bounds = [`{${xType}}`,`{~${xType}}`];
+            xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
+          }
+          let ftxjNodeElement = $('body').find(`[fstxj-id="${b}"]`);
+          $.when(FastProcessor(xType,xOption,xStatement,b)).then((a)=>{
+            Architect.build.experiment(ftxjNodeElement,Global.ajax.render,a);
           });
         });
         break;

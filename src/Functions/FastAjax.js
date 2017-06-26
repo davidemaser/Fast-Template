@@ -21,7 +21,6 @@ export default class fastAjax{
     } else {
       jsonObject = null;
     }
-
     GetAjax(jsonSource, jsonObject, this.element);
   }
 }

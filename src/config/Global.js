@@ -15,7 +15,9 @@ export const Global = {
   },
   ignore:'ignore',
   ajax:{
+    node:'ftxj',
     useDefault:true,
+    render:'<span ftx-ajax>@return</span>',
     root:{
       node:'data',
       url:'../data'

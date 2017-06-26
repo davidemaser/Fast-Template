@@ -15,5 +15,6 @@ export default class Sniffer{
   cycle(){
     new Cycle('ft');
     new Cycle('ftx');
+    new Cycle('ftxj');
   }
 }

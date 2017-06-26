@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -396,7 +396,9 @@ const Global = {
   },
   ignore:'ignore',
   ajax:{
+    node:'ftxj',
     useDefault:true,
+    render:'<span ftx-ajax>@return</span>',
     root:{
       node:'data',
       url:'../data'
@@ -10676,7 +10678,7 @@ return jQuery;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Logger__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Logger__ = __webpack_require__(16);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -10701,111 +10703,11 @@ class Woops{
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(28);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(9);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(9);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
-
-/***/ }),
-/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_Templates__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_Templates__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(1);
 /**
  * Created by David Maser on 19/06/2017.
@@ -10973,17 +10875,17 @@ const Faster = {
 
 const Architect = {
   build: {
-    element(origin, replace, content, args){
+    element(origin, replace, content){
       $(replace).insertBefore(origin);
       $(replace).html(content);
       $(origin).remove();
     },
-    experiment(origin, replace, content){
+    experiment(origin, replace, content, opt){
       if(content !== undefined && content !== '') {
         content = typeof content === 'object' ? JSON.stringify(content) : content;
         let xContent = replace.replace('@return', content);
         $(xContent).insertBefore(origin);
-        $(origin).remove();
+        opt !== true ? $(origin).remove() : null;
       }else{
         $(origin).remove();
       }
@@ -10998,82 +10900,182 @@ const Architect = {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(28);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(9);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(9);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+
+/***/ }),
 /* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = GetAjax;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Woops__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Functions_FastTemplate__ = __webpack_require__(43);
 /**
- * Created by David Maser on 20/06/2017.
+ * Created by David Maser on 22/06/2017.
  */
-
-
-
-
-
-function GetAjax(url, props,element) {
-  this.url = url;
-  this.props = props;
-  element = element+1;
-  function build(a,b,template){
-    /**@todo this function causes problems when rendering **/
-    if(template !== null){
-      a = __WEBPACK_IMPORTED_MODULE_4__Functions_FastTemplate__["a" /* FastTemplate */](a,template);
+const Template = {
+  table:{
+    layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
+    class:' class="@class"',
+    id:' id="@id"',
+    style:' style="@style"',
+    elements:{
+      header:{
+        layout:'<thead></thead>'
+      },
+      footer:{
+        layout:'<tfoot></tfoot>'
+      },
+      body:{
+        layout:'<tbody>@body.rows</tbody>',
+        rows:{
+          layout:'<tr>@body.rows.columns</tr>',
+          style:'style="@table.rows.style"',
+          columns:'<td></td>'
+        }
+      },
     }
-    __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($('body').find(`[fstx-id="${b}"]`),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].experiment.render,a);
-  }
-  function processProps(data, props) {
-    if (typeof props === 'object') {
-      let returnData = data;
-      let dataTemplate = props['template'] !== undefined && props['template'] !=='' ? props['template'] : null;
-      if (typeof(props['node']) !== 'undefined') {
-        if (props['node'].indexOf('.') > -1) {
-          let propArray = props['node'].split('.');
-          let p;
-          for (p in propArray) {
-            returnData = returnData[propArray[p]];
+  },
+  login:{
+    layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
+    class:' class="@class"',
+    id:' id="@id"',
+    style:' style="@style"',
+    action:' action="@action"',
+    elements:[
+      {
+        element:'input',
+        type:'text',
+        name:'userName',
+        placeholder:'',
+        class:'',
+        id:''
+      },
+      {
+        element:'input',
+        type:'password',
+        name:'passWord',
+        placeholder:'',
+        class:'',
+        id:''
+      },
+      {
+        element:'textarea',
+        placeholder:'',
+        class:'',
+        id:''
+      },
+      {
+        element:'select',
+        placeholder:'',
+        class:'',
+        id:'',
+        options:[
+          {
+            label:'',
+            value:''
           }
-        } else {
-          returnData = returnData[props['node']];
-        }
+        ]
       }
-      build(returnData,element,dataTemplate);
-    }
+    ]
   }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = Template;
 
-  __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.url)
-    .then((response) => {
-      if (__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.useDefault === true) {
-        if (this.props !== undefined) {
-          return processProps(response[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.root.node], this.props)
-        } else {
-          return processProps(response[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.root.node], null)
-        }
-      } else {
-        if (this.props !== undefined) {
-          return processProps(response, this.props)
-        } else {
-          return processProps(response, null);
-        }
-      }
-    })
-    .catch((error) => {
-      new __WEBPACK_IMPORTED_MODULE_1__Woops__["a" /* default */]({
-        origin: 'GetAjax.run',
-        type: 'AJAX Error',
-        message: error,
-        log: false
-      })
-    });
-}
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 7 */
@@ -11539,46 +11541,11 @@ module.exports = Cancel;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
- * Created by David Maser on 22/06/2017.
- */
-const Template = {
-  table:{
-    layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
-    class:' class="@class"',
-    id:' id="@id"',
-    style:' style="@style"',
-    elements:{
-      header:{
-        layout:'<thead></thead>'
-      },
-      footer:{
-        layout:'<tfoot></tfoot>'
-      },
-      body:{
-        layout:'<tbody>@body.rows</tbody>',
-        rows:{
-          layout:'<tr>@body.rows.columns</tr>',
-          style:'style="@table.rows.style"',
-          columns:'<td></td>'
-        }
-      },
-    }
-  }
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = Template;
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_classes_Sniffer__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__ = __webpack_require__(46);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_classes_Sniffer__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_components_Faster__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_components_Faster__ = __webpack_require__(4);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -11591,12 +11558,12 @@ $(function(){
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cycle__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cycle__ = __webpack_require__(15);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -11614,19 +11581,20 @@ class Sniffer{
   cycle(){
     new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ft');
     new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ftx');
+    new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ftxj');
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Sniffer;
 
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Faster__ = __webpack_require__(5);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Faster__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Functions_FastProcessor__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Functions_FastProcessor__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Woops__ = __webpack_require__(3);
 /**
  * Created by David Maser on 21/06/2017.
@@ -11640,6 +11608,7 @@ class Cycle{
     this.type = type;
     this.tag = __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].node;
     this.xTag = __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].experiment.node;
+    this.xjTag = __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].ajax.node;
     this.nested = __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].experiment.nested;
     this.ignore = __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].ignore;
     this.run();
@@ -11699,6 +11668,30 @@ class Cycle{
           });
         });
         break;
+      case 'ftxj':
+        let ftxjNodes = [];
+        $(`${this.xjTag}:not([${this.ignore}]):not([${this.nested}])`).each(function(a){
+          $(this).attr('fstxj-id',a);
+          $(this).html() !== '' && $(this).html() !== undefined && $(this).html() !== null ? ftxjNodes.push($(this).html()) : $(this).remove();
+        });
+        ftxjNodes.map((a,b)=>{
+          let xType,xOption=null,bounds,xStatement;
+          if(a.indexOf(':') > -1){
+            xType = a.split(':')[0].replace('{','');
+            xOption = a.split(':')[1].split('}')[0];
+            bounds = [`{${xType}:${xOption}}`,`{~${xType}}`];
+            xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
+          }else{
+            xType = a.split('{')[1].split('}')[0];
+            bounds = [`{${xType}}`,`{~${xType}}`];
+            xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
+          }
+          let ftxjNodeElement = $('body').find(`[fstxj-id="${b}"]`);
+          $.when(__WEBPACK_IMPORTED_MODULE_2__Functions_FastProcessor__["a" /* default */](xType,xOption,xStatement,b)).then((a)=>{
+            __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxjNodeElement,__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].ajax.render,a);
+          });
+        });
+        break;
     }
   }
 }
@@ -11707,7 +11700,7 @@ class Cycle{
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11732,7 +11725,7 @@ class Logger{
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11751,18 +11744,20 @@ function Extract(){
 }
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastProcessor;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FastMath__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FastDate__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FastCondition__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FastAjax__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FastMath__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FastDate__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FastCondition__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FastAjax__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FastForm__ = __webpack_require__(46);
 /**
  * Created by David Maser on 21/06/2017.
  */
+
 
 
 
@@ -11781,11 +11776,14 @@ function FastProcessor(type, option, expression, element){
     case 'json':
       return new __WEBPACK_IMPORTED_MODULE_3__FastAjax__["a" /* default */](option,expression,element);
       break;
+    case 'form':
+      return __WEBPACK_IMPORTED_MODULE_4__FastForm__["a" /* default */](option,expression);
+      break;
   }
 }
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11809,7 +11807,7 @@ function FastMath(option, expression) {
 }
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11839,7 +11837,7 @@ function FastDate(option, expression){
 }
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11924,11 +11922,11 @@ function FastCondition(option, expression){
 }
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_GetAjax__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_GetAjax__ = __webpack_require__(23);
 /**
  * Created by David Maser on 22/06/2017.
  */
@@ -11952,12 +11950,90 @@ class fastAjax{
     } else {
       jsonObject = null;
     }
-
     __WEBPACK_IMPORTED_MODULE_0__classes_GetAjax__["a" /* default */](jsonSource, jsonObject, this.element);
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = fastAjax;
 
+
+/***/ }),
+/* 23 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = GetAjax;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Woops__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Functions_FastTemplate__ = __webpack_require__(43);
+/**
+ * Created by David Maser on 20/06/2017.
+ */
+
+
+
+
+
+function GetAjax(url, props,element) {
+  this.url = url;
+  this.props = props;
+  //element = element+1;
+  function build(a,b,template){
+    /**@todo this function causes problems when rendering **/
+    if(template !== null){
+      a = __WEBPACK_IMPORTED_MODULE_4__Functions_FastTemplate__["a" /* FastTemplate */](a,template);
+    }
+    console.log(a,b,template);
+    __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($('body').find(`[fstxj-id="${b}"]`),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].experiment.render,a,true);
+  }
+  function processProps(data, props) {
+    if (typeof props === 'object') {
+      let returnData = data;
+      let dataTemplate = props['template'] !== undefined && props['template'] !=='' ? props['template'] : null;
+      if (typeof(props['node']) !== 'undefined') {
+        if (props['node'].indexOf('.') > -1) {
+          let propArray = props['node'].split('.');
+          let p;
+          for (p in propArray) {
+            returnData = returnData[propArray[p]];
+          }
+        } else {
+          returnData = returnData[props['node']];
+        }
+      }
+      build(returnData,element,dataTemplate);
+    }
+  }
+
+  __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.url)
+    .then((response) => {
+      if (__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.useDefault === true) {
+        if (this.props !== undefined) {
+          return processProps(response[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.root.node], this.props)
+        } else {
+          return processProps(response[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.root.node], null)
+        }
+      } else {
+        if (this.props !== undefined) {
+          return processProps(response, this.props)
+        } else {
+          return processProps(response, null);
+        }
+      }
+    })
+    .catch((error) => {
+      new __WEBPACK_IMPORTED_MODULE_1__Woops__["a" /* default */]({
+        origin: 'GetAjax.run',
+        type: 'AJAX Error',
+        message: error,
+        log: false
+      })
+    });
+}
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 24 */
@@ -11975,7 +12051,7 @@ module.exports = __webpack_require__(25);
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(7);
 var Axios = __webpack_require__(27);
-var defaults = __webpack_require__(4);
+var defaults = __webpack_require__(5);
 
 /**
  * Create an instance of Axios
@@ -12058,7 +12134,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(4);
+var defaults = __webpack_require__(5);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(36);
 var dispatchRequest = __webpack_require__(37);
@@ -12590,7 +12666,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(38);
 var isCancel = __webpack_require__(11);
-var defaults = __webpack_require__(4);
+var defaults = __webpack_require__(5);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -12839,7 +12915,7 @@ module.exports = function spread(callback) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastTemplate;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_TemplateUtilities__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_TemplateTableUtilities__ = __webpack_require__(45);
 /**
@@ -12893,7 +12969,7 @@ const TemplateUtilities = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(13);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(6);
 /**
  * Created by David Maser on 22/06/2017.
  */
@@ -12935,12 +13011,94 @@ const TemplateTableUtilities = {
 
 /***/ }),
 /* 46 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastForm;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_FormElements__ = __webpack_require__(47);
+/**
+ * Created by David Maser on 26/06/2017.
+ */
+
+
+function FastForm(option, expression){
+  try {
+    function processExpression(obj) {
+      let expressionObj = {};
+      let e;
+      for (e in obj) {
+        expressionObj[obj[e].split(':')[0]] = obj[e].split(':')[1];
+      }
+      return expressionObj;
+    }
+
+    function processLayout(obj, layout) {
+      let o;
+      for (o in obj) {
+        let layoutOrigin = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][option][o].replace(`@${o}`, obj[o]);
+        layout = layout.replace(`@${option}.${o}`, layoutOrigin);
+      }
+      return layout;
+    }
+
+    let layout = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][option].layout;
+    let elements = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][option].elements;
+    let expressionArray = expression.split(',');
+    let expressionObj = processExpression(expressionArray);
+    let parsedLayout = processLayout(expressionObj, layout) || null;
+    let formElements = __WEBPACK_IMPORTED_MODULE_1__classes_FormElements__["a" /* default */](elements);
+    parsedLayout = formElements !== null ? parsedLayout.replace(`@${option}.elements`, formElements) : parsedLayout;
+
+    console.log(parsedLayout);
+    return parsedLayout;
+  }catch(e){
+
+  }
+}
+
+/***/ }),
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FormElements;
+/**
+ * Created by David Maser on 26/06/2017.
+ */
+function FormElements(obj){
+    this.obj = obj;
+    let o;
+    let elementString = '';
+    let ob = this.obj;
+    for(o in ob){
+      let b;
+      let bo = ob[o];
+      for(b in bo){
+        switch(bo[b]){
+          case 'input':
+            let elementTemplate = `<input type="${bo['type']}"`;
+            elementTemplate += bo.name !== undefined && bo.name !== '' ? ` name="${bo['name']}"` : '';
+            elementTemplate += bo.placeholder !== undefined && bo.placeholder !== '' ? ` placeholder="${bo['placeholder']}"` : '';
+            elementTemplate += bo.class !== undefined && bo.class !== '' ? ` class="${bo['class']}"` : '';
+            elementTemplate += bo.id !== undefined && bo.id !== '' ? ` id="${bo['id']}"` : '';
+            elementTemplate += ' />';
+            elementString += elementTemplate;
+            break;
+        }
+      }
+    }
+    return elementString;
+}
+
+/***/ }),
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(47);
+var content = __webpack_require__(49);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -12948,7 +13106,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(49)(content, options);
+var update = __webpack_require__(51)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -12965,10 +13123,10 @@ if(false) {
 }
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(48)(undefined);
+exports = module.exports = __webpack_require__(50)(undefined);
 // imports
 
 
@@ -12979,7 +13137,7 @@ exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"render
 
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports) {
 
 /*
@@ -13061,7 +13219,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -13107,7 +13265,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(50);
+var	fixUrls = __webpack_require__(52);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -13420,7 +13578,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports) {
 
 

@@ -9,13 +9,14 @@ import {FastTemplate} from '../Functions/FastTemplate';
 export default function GetAjax(url, props,element) {
   this.url = url;
   this.props = props;
-  element = element+1;
+  //element = element+1;
   function build(a,b,template){
     /**@todo this function causes problems when rendering **/
     if(template !== null){
       a = FastTemplate(a,template);
     }
-    Architect.build.experiment($('body').find(`[fstx-id="${b}"]`),Global.experiment.render,a);
+    console.log(a,b,template);
+    Architect.build.experiment($('body').find(`[fstxj-id="${b}"]`),Global.experiment.render,a,true);
   }
   function processProps(data, props) {
     if (typeof props === 'object') {

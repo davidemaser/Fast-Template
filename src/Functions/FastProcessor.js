@@ -5,6 +5,7 @@ import FastMath from './FastMath';
 import FastDate from './FastDate';
 import FastCondition from './FastCondition';
 import FastAjax from './FastAjax';
+import FastForm from './FastForm';
 export default function FastProcessor(type, option, expression, element){
   switch (type){
     case 'math':
@@ -18,6 +19,9 @@ export default function FastProcessor(type, option, expression, element){
       break;
     case 'json':
       return new FastAjax(option,expression,element);
+      break;
+    case 'form':
+      return FastForm(option,expression);
       break;
   }
 }
