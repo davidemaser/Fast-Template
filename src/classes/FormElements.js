@@ -2,14 +2,14 @@
  * Created by David Maser on 26/06/2017.
  */
 export default function FormElements(obj){
-  function handleOptions(obj){
+  function handleOptions(obj,type){
     if(typeof obj === 'object'){
       let o;
       let optionString = '';
       for(o in obj){
-        optionString += `<option value="${obj[o].value}"`;
+        optionString += `<${type} value="${obj[o].value}"`;
         optionString += obj[o].selected === true ? ' selected="selected"' : '';
-        optionString += `>${obj[o].label}</option>`;
+        optionString += type === 'radio' ? `label="${obj[o].label}" />` : `>${obj[o].label}</option>`;
       }
       return optionString;
     }
@@ -26,9 +26,10 @@ export default function FormElements(obj){
           case 'input':
             let iTemplate = `<input type="${bo['type']}"`;
             iTemplate += bo.name !== undefined && bo.name !== '' ? ` name="${bo['name']}"` : '';
-            iTemplate += bo.placeholder !== undefined && bo.placeholder !== '' ? ` placeholder="${bo['placeholder']}"` : '';
             iTemplate += bo.class !== undefined && bo.class !== '' ? ` class="${bo['class']}"` : '';
             iTemplate += bo.id !== undefined && bo.id !== '' ? ` id="${bo['id']}"` : '';
+            iTemplate += bo.id !== undefined && bo.checked === true ? ` checked="checked"` : '';
+            iTemplate += bo['type'] === 'button' || bo['type'] === 'submit' ? ` value="${bo.placeholder}"` : bo.placeholder !== undefined ? ` placeholder="${bo['placeholder']}"` : '';
             iTemplate += ' />';
             elementString += iTemplate;
             break;
@@ -49,9 +50,16 @@ export default function FormElements(obj){
             sTemplate += bo.class !== undefined && bo.class !== '' ? ` class="${bo['class']}"` : '';
             sTemplate += bo.id !== undefined && bo.id !== '' ? ` id="${bo['id']}"` : '';
             sTemplate += '>';
-            sTemplate += handleOptions(bo.options);
+            sTemplate += handleOptions(bo.options,'option');
             sTemplate += '</select>';
             elementString += sTemplate;
+            break;
+          case 'radiogroup':
+            let rTemplate = '<radiogroup>';
+            rTemplate += handleOptions(bo.options,'radio');
+            rTemplate += '</radiogroup>';
+            elementString += rTemplate;
+            break;
         }
       }
     }

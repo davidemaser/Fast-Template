@@ -30,8 +30,6 @@ export default function FastForm(option, expression){
     let parsedLayout = processLayout(expressionObj, layout) || null;
     let formElements = FormElements(elements);
     parsedLayout = formElements !== null ? parsedLayout.replace(`@${option}.elements`, formElements) : parsedLayout;
-
-    console.log(parsedLayout);
     return parsedLayout;
   }catch(e){
 

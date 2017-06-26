@@ -48,6 +48,43 @@ export const Template = {
         id:''
       },
       {
+        element:'input',
+        type:'checkbox',
+        name:'myCheck',
+        class:'',
+        id:'',
+        checked:true
+      },
+      {
+        element:'input',
+        type:'radio',
+        name:'myRadio',
+        class:'',
+        id:''
+      },
+      {
+        element:'radiogroup',
+        type:'radio',
+        name:'myRadio',
+        class:'',
+        id:'',
+        options:[
+          {
+            label:'hi',
+            value:'hi'
+          },
+          {
+            label:'bye',
+            value:'bye'
+          },
+          {
+            label:'what',
+            value:'what',
+            selected:true
+          }
+        ]
+      },
+      {
         element:'textarea',
         placeholder:'',
         name:'TEXT',
@@ -76,7 +113,15 @@ export const Template = {
             selected:true
           }
         ]
-      }
+      },
+      {
+        element:'input',
+        type:'submit',
+        name:'myButton',
+        placeholder:'CLICK',
+        class:'',
+        id:''
+      },
     ]
   }
 };
