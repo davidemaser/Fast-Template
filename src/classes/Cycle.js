@@ -89,9 +89,7 @@ export default class Cycle{
             xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
           }
           let ftxjNodeElement = $('body').find(`[fstxj-id="${b}"]`);
-          $.when(FastProcessor(xType,xOption,xStatement,b)).then((a)=>{
-            Architect.build.experiment(ftxjNodeElement,Global.ajax.render,a);
-          });
+          FastProcessor(xType,xOption,xStatement,b);
         });
         break;
     }

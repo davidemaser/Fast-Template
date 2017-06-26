@@ -10,18 +10,19 @@ export default function GetAjax(url, props,element) {
   this.url = url;
   this.props = props;
   //element = element+1;
-  function build(a,b,template){
-    /**@todo this function causes problems when rendering **/
+  function build(a,b,template,handle){
+    /**@todo this function causes problems when rendering a template **/
     if(template !== null){
       a = FastTemplate(a,template);
     }
-    console.log(a,b,template);
-    Architect.build.experiment($('body').find(`[fstxj-id="${b}"]`),Global.experiment.render,a,true);
+    window[handle] = handle !== null ? a : null;
+    Architect.build.experiment($('body').find(`[fstxj-id="${b}"]`),Global.ajax.render,a);
   }
   function processProps(data, props) {
     if (typeof props === 'object') {
       let returnData = data;
       let dataTemplate = props['template'] !== undefined && props['template'] !=='' ? props['template'] : null;
+      let saveHandle = props['saveAs'] !== undefined ? props['saveAs'] : null;
       if (typeof(props['node']) !== 'undefined') {
         if (props['node'].indexOf('.') > -1) {
           let propArray = props['node'].split('.');
@@ -33,7 +34,7 @@ export default function GetAjax(url, props,element) {
           returnData = returnData[props['node']];
         }
       }
-      build(returnData,element,dataTemplate);
+      build(returnData,element,dataTemplate,saveHandle);
     }
   }
 

@@ -396,7 +396,7 @@ const Global = {
   },
   ignore:'ignore',
   ajax:{
-    node:'ftxj',
+    node:'fta',
     useDefault:true,
     render:'<span ftx-ajax>@return</span>',
     root:{
@@ -11041,7 +11041,7 @@ const Template = {
         element:'input',
         type:'text',
         name:'userName',
-        placeholder:'',
+        placeholder:'USER NAME',
         class:'',
         id:''
       },
@@ -11049,25 +11049,37 @@ const Template = {
         element:'input',
         type:'password',
         name:'passWord',
-        placeholder:'',
+        placeholder:'PASSWORD',
         class:'',
         id:''
       },
       {
         element:'textarea',
         placeholder:'',
+        name:'TEXT',
+        rows:10,
+        cols:10,
         class:'',
         id:''
       },
       {
         element:'select',
-        placeholder:'',
+        name:'TEXT',
         class:'',
         id:'',
         options:[
           {
-            label:'',
-            value:''
+            label:'hi',
+            value:'hi'
+          },
+          {
+            label:'bye',
+            value:'bye'
+          },
+          {
+            label:'what',
+            value:'what',
+            selected:true
           }
         ]
       }
@@ -11687,9 +11699,7 @@ class Cycle{
             xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
           }
           let ftxjNodeElement = $('body').find(`[fstxj-id="${b}"]`);
-          $.when(__WEBPACK_IMPORTED_MODULE_2__Functions_FastProcessor__["a" /* default */](xType,xOption,xStatement,b)).then((a)=>{
-            __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxjNodeElement,__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].ajax.render,a);
-          });
+          __WEBPACK_IMPORTED_MODULE_2__Functions_FastProcessor__["a" /* default */](xType,xOption,xStatement,b);
         });
         break;
     }
@@ -11774,7 +11784,7 @@ function FastProcessor(type, option, expression, element){
       return __WEBPACK_IMPORTED_MODULE_2__FastCondition__["a" /* default */](option,expression);
       break;
     case 'json':
-      return new __WEBPACK_IMPORTED_MODULE_3__FastAjax__["a" /* default */](option,expression,element);
+      new __WEBPACK_IMPORTED_MODULE_3__FastAjax__["a" /* default */](option,expression,element);
       break;
     case 'form':
       return __WEBPACK_IMPORTED_MODULE_4__FastForm__["a" /* default */](option,expression);
@@ -11980,18 +11990,19 @@ function GetAjax(url, props,element) {
   this.url = url;
   this.props = props;
   //element = element+1;
-  function build(a,b,template){
-    /**@todo this function causes problems when rendering **/
+  function build(a,b,template,handle){
+    /**@todo this function causes problems when rendering a template **/
     if(template !== null){
       a = __WEBPACK_IMPORTED_MODULE_4__Functions_FastTemplate__["a" /* FastTemplate */](a,template);
     }
-    console.log(a,b,template);
-    __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($('body').find(`[fstxj-id="${b}"]`),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].experiment.render,a,true);
+    window[handle] = handle !== null ? a : null;
+    __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($('body').find(`[fstxj-id="${b}"]`),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.render,a);
   }
   function processProps(data, props) {
     if (typeof props === 'object') {
       let returnData = data;
       let dataTemplate = props['template'] !== undefined && props['template'] !=='' ? props['template'] : null;
+      let saveHandle = props['saveAs'] !== undefined ? props['saveAs'] : null;
       if (typeof(props['node']) !== 'undefined') {
         if (props['node'].indexOf('.') > -1) {
           let propArray = props['node'].split('.');
@@ -12003,7 +12014,7 @@ function GetAjax(url, props,element) {
           returnData = returnData[props['node']];
         }
       }
-      build(returnData,element,dataTemplate);
+      build(returnData,element,dataTemplate,saveHandle);
     }
   }
 
@@ -13067,6 +13078,18 @@ function FastForm(option, expression){
  * Created by David Maser on 26/06/2017.
  */
 function FormElements(obj){
+  function handleOptions(obj){
+    if(typeof obj === 'object'){
+      let o;
+      let optionString = '';
+      for(o in obj){
+        optionString += `<option value="${obj[o].value}"`;
+        optionString += obj[o].selected === true ? ' selected="selected"' : '';
+        optionString += `>${obj[o].label}</option>`;
+      }
+      return optionString;
+    }
+  }
     this.obj = obj;
     let o;
     let elementString = '';
@@ -13077,14 +13100,34 @@ function FormElements(obj){
       for(b in bo){
         switch(bo[b]){
           case 'input':
-            let elementTemplate = `<input type="${bo['type']}"`;
-            elementTemplate += bo.name !== undefined && bo.name !== '' ? ` name="${bo['name']}"` : '';
-            elementTemplate += bo.placeholder !== undefined && bo.placeholder !== '' ? ` placeholder="${bo['placeholder']}"` : '';
-            elementTemplate += bo.class !== undefined && bo.class !== '' ? ` class="${bo['class']}"` : '';
-            elementTemplate += bo.id !== undefined && bo.id !== '' ? ` id="${bo['id']}"` : '';
-            elementTemplate += ' />';
-            elementString += elementTemplate;
+            let iTemplate = `<input type="${bo['type']}"`;
+            iTemplate += bo.name !== undefined && bo.name !== '' ? ` name="${bo['name']}"` : '';
+            iTemplate += bo.placeholder !== undefined && bo.placeholder !== '' ? ` placeholder="${bo['placeholder']}"` : '';
+            iTemplate += bo.class !== undefined && bo.class !== '' ? ` class="${bo['class']}"` : '';
+            iTemplate += bo.id !== undefined && bo.id !== '' ? ` id="${bo['id']}"` : '';
+            iTemplate += ' />';
+            elementString += iTemplate;
             break;
+          case 'textarea':
+            let tTemplate = '<textarea';
+            tTemplate += bo.rows !== undefined && bo.rows !== '' ? ` rows="${bo['rows']}"` : '';
+            tTemplate += bo.cols !== undefined && bo.cols !== '' ? ` columns="${bo['cols']}"` : '';
+            tTemplate += bo.name !== undefined && bo.name !== '' ? ` name="${bo['name']}"` : '';
+            tTemplate += bo.placeholder !== undefined && bo.placeholder !== '' ? ` placeholder="${bo['placeholder']}"` : '';
+            tTemplate += bo.class !== undefined && bo.class !== '' ? ` class="${bo['class']}"` : '';
+            tTemplate += bo.id !== undefined && bo.id !== '' ? ` id="${bo['id']}"` : '';
+            tTemplate += ' />';
+            elementString += tTemplate;
+            break;
+          case 'select':
+            let sTemplate = '<select';
+            sTemplate += bo.name !== undefined && bo.name !== '' ? ` name="${bo['name']}"` : '';
+            sTemplate += bo.class !== undefined && bo.class !== '' ? ` class="${bo['class']}"` : '';
+            sTemplate += bo.id !== undefined && bo.id !== '' ? ` id="${bo['id']}"` : '';
+            sTemplate += '>';
+            sTemplate += handleOptions(bo.options);
+            sTemplate += '</select>';
+            elementString += sTemplate;
         }
       }
     }
@@ -13131,7 +13174,7 @@ exports = module.exports = __webpack_require__(50)(undefined);
 
 
 // module
-exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"rendered\"]{display:block}ftx{display:none}\n", ""]);
+exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"rendered\"]{display:block}ftx{display:none}ftxj{display:none}\n", ""]);
 
 // exports
 

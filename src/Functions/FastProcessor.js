@@ -18,7 +18,7 @@ export default function FastProcessor(type, option, expression, element){
       return FastCondition(option,expression);
       break;
     case 'json':
-      return new FastAjax(option,expression,element);
+      new FastAjax(option,expression,element);
       break;
     case 'form':
       return FastForm(option,expression);

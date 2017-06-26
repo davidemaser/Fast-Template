@@ -35,7 +35,7 @@ export const Template = {
         element:'input',
         type:'text',
         name:'userName',
-        placeholder:'',
+        placeholder:'USER NAME',
         class:'',
         id:''
       },
@@ -43,25 +43,37 @@ export const Template = {
         element:'input',
         type:'password',
         name:'passWord',
-        placeholder:'',
+        placeholder:'PASSWORD',
         class:'',
         id:''
       },
       {
         element:'textarea',
         placeholder:'',
+        name:'TEXT',
+        rows:10,
+        cols:10,
         class:'',
         id:''
       },
       {
         element:'select',
-        placeholder:'',
+        name:'TEXT',
         class:'',
         id:'',
         options:[
           {
-            label:'',
-            value:''
+            label:'hi',
+            value:'hi'
+          },
+          {
+            label:'bye',
+            value:'bye'
+          },
+          {
+            label:'what',
+            value:'what',
+            selected:true
           }
         ]
       }
