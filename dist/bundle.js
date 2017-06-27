@@ -11692,7 +11692,7 @@ class Sniffer{
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Faster__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Functions_FastProcessor__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Woops__ = __webpack_require__(4);
 /**
  * Created by David Maser on 21/06/2017.
@@ -11764,7 +11764,7 @@ class Cycle{
             xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
           }
           let ftxNodeElement = $('body').find(`[fstx-id="${b}"]`);
-          $.when(__WEBPACK_IMPORTED_MODULE_2__Functions_FastProcessor__["a" /* default */](xType,xOption,xStatement,b)).then((a)=>{
+          $.when(__WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__["a" /* default */](xType,xOption,xStatement,b)).then((a)=>{
             __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].noWrapperElements.indexOf(xType) > -1 ? __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxNodeElement,null,a) : __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxNodeElement,__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].experiment.render,a);
           });
         });
@@ -11788,7 +11788,7 @@ class Cycle{
             xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
           }
           let ftxjNodeElement = $('body').find(`[fstxj-id="${b}"]`);
-          __WEBPACK_IMPORTED_MODULE_2__Functions_FastProcessor__["a" /* default */](xType,xOption,xStatement,b);
+          __WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__["a" /* default */](xType,xOption,xStatement,b);
         });
         break;
     }
@@ -11824,229 +11824,11 @@ class Logger{
 
 
 /***/ }),
-/* 17 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastProcessor;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FastMath__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FastDate__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FastCondition__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FastAjax__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FastForm__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__FastGutter__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__FastPanel__ = __webpack_require__(48);
-/**
- * Created by David Maser on 21/06/2017.
- */
-
-
-
-
-
-
-
-function FastProcessor(type, option, expression, element){
-  switch (type){
-    case 'math':
-      return __WEBPACK_IMPORTED_MODULE_0__FastMath__["a" /* default */](option,expression);
-      break;
-    case 'date':
-      return __WEBPACK_IMPORTED_MODULE_1__FastDate__["a" /* default */](option,expression);
-      break;
-    case 'if':
-      return __WEBPACK_IMPORTED_MODULE_2__FastCondition__["a" /* default */](option,expression);
-      break;
-    case 'json':
-      new __WEBPACK_IMPORTED_MODULE_3__FastAjax__["a" /* default */](option,expression,element);
-      break;
-    case 'form':
-      return __WEBPACK_IMPORTED_MODULE_4__FastForm__["a" /* default */](option,expression);
-      break;
-    case 'gutter':
-      return __WEBPACK_IMPORTED_MODULE_5__FastGutter__["a" /* default */](option,expression);
-      break;
-    case 'panel':
-      return __WEBPACK_IMPORTED_MODULE_6__FastPanel__["a" /* default */](option,expression);
-      break;
-  }
-}
-
-/***/ }),
-/* 18 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastMath;
-/**
- * Created by David Maser on 21/06/2017.
- */
-/**
- * Function evals a string mathematical formula
- * @param {string} option
- * @param {string} expression
- * @constructor
- */
-function FastMath(option, expression) {
-  let value = parseInt(eval(expression),10);
-  if(option !== null && option !== undefined) {
-    return Math[option](value);
-  }else{
-    return value;
-  }
-}
-
-/***/ }),
-/* 19 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastDate;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
-/**
- * Created by David Maser on 21/06/2017.
- */
-
-function FastDate(option, expression){
-  expression = expression || __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].experiment.date.full;
-  let theDate = new Date();
-  let dateObj = {
-    mm: (theDate.getMonth() + 1).length === 0 ? `0${theDate.getMonth() + 1}` : theDate.getMonth(),
-    dd: (theDate.getDate() + 1).length === 0 ? `0${theDate.getDate() + 1}` : theDate.getDate(),
-    dow: theDate.getDay(),
-    yyyy: theDate.getFullYear(),
-    yy: theDate.getYear().toString().substr(-2),
-    h: theDate.getHours(),
-    m: theDate.getMinutes().length === 1 ? `0${theDate.getMinutes()}` : theDate.getMinutes(),
-    s: theDate.getSeconds().length === 1 ? `0${theDate.getSeconds()}` : theDate.getSeconds()
-  };
-  for(let v in dateObj){
-    expression = expression.replace(v,dateObj[v]);
-  }
-  return expression;
-}
-
-/***/ }),
-/* 20 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastCondition;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
-/**
- * Created by David Maser on 21/06/2017.
- */
-
-function FastCondition(option, expression){
-  function execMath(args){
-    let execValue = args.replace('[','').replace(']','');
-    if(execValue.indexOf('(') > -1){
-      let operator = execValue.split('(')[0];
-      let value = parseInt(eval(execValue.split('(')[1].replace(')','')),10);
-      return Math[operator](value);
-    }else{
-      return parseInt(eval(execValue),10);
-    }
-  }
-  let comparative = option.indexOf('=') > -1 ? option.split('=') : option;
-  let optionArray = expression.indexOf('{else}') > -1 ? expression.split('{else}') : expression;
-  let result;
-  if(Array.isArray(comparative)){
-    let compareTo = comparative[0].indexOf('(') > -1 ? execMath(comparative[0]) : comparative[0];
-    let compareValue = comparative[1];
-    switch(compareTo){
-      case 'hour':
-        let hourValue = new Date().getHours();
-        let hourCheck = parseInt(compareValue);
-        if(hourValue === hourCheck){
-          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
-        }else{
-          result = Array.isArray(optionArray) ? optionArray[1] : '';
-        }
-        break;
-      case 'day':
-        let dayValue = new Date().getDate();
-        let dayCheck = parseInt(compareValue);
-        if(dayValue === dayCheck){
-          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
-        }else{
-          result = Array.isArray(optionArray) ? optionArray[1] : '';
-        }
-        break;
-      case 'month':
-        let monthValue = (new Date().getMonth() + 1).length === 0 ? `0${new Date().getMonth() + 1}` : new Date().getMonth()+1;
-        let monthCheck = parseInt(compareValue);
-        if(monthValue === monthCheck){
-          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
-        }else{
-          result = Array.isArray(optionArray) ? optionArray[1] : '';
-        }
-        break;
-        case 'year':
-        let yearValue = new Date().getFullYear();
-        let yearCheck = parseInt(compareValue);
-        if(yearValue === yearCheck){
-          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
-        }else{
-          result = Array.isArray(optionArray) ? optionArray[1] : '';
-        }
-        break;
-      default:
-        compareValue = isNaN(compareValue) ? compareValue : parseInt(compareValue);
-        if(compareTo === compareValue){
-          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
-        }else{
-          result = Array.isArray(optionArray) ? optionArray[1] : '';
-        }
-    }
-  }else{
-    new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
-      origin:'FastCondition',
-      type:'Format Error',
-      message:'Condition must be an array (formatted as x=y)',
-      log:false
-    });
-  }
-
-  return result;
-}
-
-/***/ }),
-/* 21 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_GetAjax__ = __webpack_require__(22);
-/**
- * Created by David Maser on 22/06/2017.
- */
-
-class fastAjax{
-  constructor(option, expression,element){
-    this.option = option;
-    this.expression = expression;
-    this.element = element;
-    this.run();
-  }
-  run() {
-    let jsonSource = this.option;
-    let jsonObject = {};
-    if (this.expression.indexOf(',') > -1) {
-      let jsonParams = this.expression.indexOf(',') > -1 ? this.expression.split(',') : this.expression;
-      let j;
-      for (j in jsonParams) {
-        jsonObject[jsonParams[j].split('=')[0]] = jsonParams[j].split('=')[1];
-      }
-    } else {
-      jsonObject = null;
-    }
-    __WEBPACK_IMPORTED_MODULE_0__classes_GetAjax__["a" /* default */](jsonSource, jsonObject, this.element);
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = fastAjax;
-
-
-/***/ }),
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
 /* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -12057,7 +11839,7 @@ class fastAjax{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Functions_FastTemplate__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__functions_FastTemplate__ = __webpack_require__(60);
 /**
  * Created by David Maser on 20/06/2017.
  */
@@ -12073,7 +11855,7 @@ function GetAjax(url, props,element) {
   function build(a,b,template,handle){
     /**@todo this function causes problems when rendering a template **/
     if(template !== null){
-      a = __WEBPACK_IMPORTED_MODULE_4__Functions_FastTemplate__["a" /* FastTemplate */](a,template);
+      a = __WEBPACK_IMPORTED_MODULE_4__functions_FastTemplate__["a" /* FastTemplate */](a,template);
     }
     window[handle] = handle !== null ? a : null;
     __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($('body').find(`[fstxj-id="${b}"]`),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.render,a);
@@ -13001,37 +12783,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 42 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastTemplate;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_TemplateUtilities__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_TemplateTableUtilities__ = __webpack_require__(44);
-/**
- * Created by David Maser on 22/06/2017.
- */
-
-
-
-function FastTemplate(data, template) {
-  let mainLayout = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][template].layout;
-  let d;
-  let accepted = ['class','id','style'];
-  for (d in data) {
-    if(accepted.includes(d)) {
-      let rep = __WEBPACK_IMPORTED_MODULE_1__templates_TemplateUtilities__["a" /* TemplateUtilities */].handleStringRep(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][template][d], `@${d}`, __WEBPACK_IMPORTED_MODULE_1__templates_TemplateUtilities__["a" /* TemplateUtilities */].handleObject(data[d]));
-      mainLayout = mainLayout.replace(`@${template}.${d}`, rep);
-    }
-  }
-  if(template === 'table'){
-    mainLayout = __WEBPACK_IMPORTED_MODULE_2__templates_TemplateTableUtilities__["a" /* TemplateTableUtilities */].init(mainLayout);
-  }
-  return mainLayout;
-}
-
-/***/ }),
+/* 42 */,
 /* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -13101,89 +12853,10 @@ const TemplateTableUtilities = {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
-/* 45 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastForm;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FormElements__ = __webpack_require__(54);
-/**
- * Created by David Maser on 26/06/2017.
- */
-
-
-function FastForm(option, expression){
-  try {
-    function processExpression(obj) {
-      let expressionObj = {};
-      let e;
-      for (e in obj) {
-        expressionObj[obj[e].split(':')[0]] = obj[e].split(':')[1];
-      }
-      return expressionObj;
-    }
-
-    function processLayout(obj, layout) {
-      let o;
-      for (o in obj) {
-        let layoutOrigin = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][option][o].replace(`@${o}`, obj[o]);
-        layout = layout.replace(`@${option}.${o}`, layoutOrigin);
-      }
-      return layout;
-    }
-
-    let layout = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][option].layout;
-    let elements = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][option].elements;
-    let expressionArray = expression.split(',');
-    let expressionObj = processExpression(expressionArray);
-    let parsedLayout = processLayout(expressionObj, layout) || null;
-    let formElements = __WEBPACK_IMPORTED_MODULE_1__FormElements__["a" /* default */](elements);
-    parsedLayout = formElements !== null ? parsedLayout.replace(`@${option}.elements`, formElements) : parsedLayout;
-    return parsedLayout;
-  }catch(e){
-
-  }
-}
-
-/***/ }),
+/* 45 */,
 /* 46 */,
-/* 47 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastGutter;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
-/**
- * Created by David Maser on 27/06/2017.
- */
-
-function FastGutter(option, expression){
-  let templateString = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].gutter.layout;
-  templateString = expression !== undefined && expression !== '' ? templateString.replace('@render',expression) : templateString;
-
-  return templateString;
-}
-
-/***/ }),
-/* 48 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastPanel;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
-/**
- * Created by David Maser on 27/06/2017.
- */
-
-function FastPanel(option, expression){
-  let templateString = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].panel.layout;
-  templateString = expression !== undefined && expression !== '' ? templateString.replace('@render',expression) : templateString;
-
-  return templateString;
-}
-
-/***/ }),
+/* 47 */,
+/* 48 */,
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13765,7 +13438,308 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 54 */
+/* 54 */,
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastProcessor;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FastMath__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FastDate__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FastCondition__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FastAjax__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FastForm__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__FastGutter__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__FastPanel__ = __webpack_require__(64);
+/**
+ * Created by David Maser on 21/06/2017.
+ */
+
+
+
+
+
+
+
+function FastProcessor(type, option, expression, element){
+  switch (type){
+    case 'math':
+      return __WEBPACK_IMPORTED_MODULE_0__FastMath__["a" /* default */](option,expression);
+      break;
+    case 'date':
+      return __WEBPACK_IMPORTED_MODULE_1__FastDate__["a" /* default */](option,expression);
+      break;
+    case 'if':
+      return __WEBPACK_IMPORTED_MODULE_2__FastCondition__["a" /* default */](option,expression);
+      break;
+    case 'json':
+      new __WEBPACK_IMPORTED_MODULE_3__FastAjax__["a" /* default */](option,expression,element);
+      break;
+    case 'form':
+      return __WEBPACK_IMPORTED_MODULE_4__FastForm__["a" /* default */](option,expression);
+      break;
+    case 'gutter':
+      return __WEBPACK_IMPORTED_MODULE_5__FastGutter__["a" /* default */](option,expression);
+      break;
+    case 'panel':
+      return __WEBPACK_IMPORTED_MODULE_6__FastPanel__["a" /* default */](option,expression);
+      break;
+  }
+}
+
+/***/ }),
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastMath;
+/**
+ * Created by David Maser on 21/06/2017.
+ */
+/**
+ * Function evals a string mathematical formula
+ * @param {string} option
+ * @param {string} expression
+ * @constructor
+ */
+function FastMath(option, expression) {
+  let value = parseInt(eval(expression),10);
+  if(option !== null && option !== undefined) {
+    return Math[option](value);
+  }else{
+    return value;
+  }
+}
+
+/***/ }),
+/* 57 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastDate;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
+/**
+ * Created by David Maser on 21/06/2017.
+ */
+
+function FastDate(option, expression){
+  expression = expression || __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].experiment.date.full;
+  let theDate = new Date();
+  let dateObj = {
+    mm: (theDate.getMonth() + 1).length === 0 ? `0${theDate.getMonth() + 1}` : theDate.getMonth(),
+    dd: (theDate.getDate() + 1).length === 0 ? `0${theDate.getDate() + 1}` : theDate.getDate(),
+    dow: theDate.getDay(),
+    yyyy: theDate.getFullYear(),
+    yy: theDate.getYear().toString().substr(-2),
+    h: theDate.getHours(),
+    m: theDate.getMinutes().length === 1 ? `0${theDate.getMinutes()}` : theDate.getMinutes(),
+    s: theDate.getSeconds().length === 1 ? `0${theDate.getSeconds()}` : theDate.getSeconds()
+  };
+  for(let v in dateObj){
+    expression = expression.replace(v,dateObj[v]);
+  }
+  return expression;
+}
+
+/***/ }),
+/* 58 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastCondition;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
+/**
+ * Created by David Maser on 21/06/2017.
+ */
+
+function FastCondition(option, expression){
+  function execMath(args){
+    let execValue = args.replace('[','').replace(']','');
+    if(execValue.indexOf('(') > -1){
+      let operator = execValue.split('(')[0];
+      let value = parseInt(eval(execValue.split('(')[1].replace(')','')),10);
+      return Math[operator](value);
+    }else{
+      return parseInt(eval(execValue),10);
+    }
+  }
+  let comparative = option.indexOf('=') > -1 ? option.split('=') : option;
+  let optionArray = expression.indexOf('{else}') > -1 ? expression.split('{else}') : expression;
+  let result;
+  if(Array.isArray(comparative)){
+    let compareTo = comparative[0].indexOf('(') > -1 ? execMath(comparative[0]) : comparative[0];
+    let compareValue = comparative[1];
+    switch(compareTo){
+      case 'hour':
+        let hourValue = new Date().getHours();
+        let hourCheck = parseInt(compareValue);
+        if(hourValue === hourCheck){
+          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
+        }else{
+          result = Array.isArray(optionArray) ? optionArray[1] : '';
+        }
+        break;
+      case 'day':
+        let dayValue = new Date().getDate();
+        let dayCheck = parseInt(compareValue);
+        if(dayValue === dayCheck){
+          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
+        }else{
+          result = Array.isArray(optionArray) ? optionArray[1] : '';
+        }
+        break;
+      case 'month':
+        let monthValue = (new Date().getMonth() + 1).length === 0 ? `0${new Date().getMonth() + 1}` : new Date().getMonth()+1;
+        let monthCheck = parseInt(compareValue);
+        if(monthValue === monthCheck){
+          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
+        }else{
+          result = Array.isArray(optionArray) ? optionArray[1] : '';
+        }
+        break;
+        case 'year':
+        let yearValue = new Date().getFullYear();
+        let yearCheck = parseInt(compareValue);
+        if(yearValue === yearCheck){
+          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
+        }else{
+          result = Array.isArray(optionArray) ? optionArray[1] : '';
+        }
+        break;
+      default:
+        compareValue = isNaN(compareValue) ? compareValue : parseInt(compareValue);
+        if(compareTo === compareValue){
+          result = Array.isArray(optionArray) ? optionArray[0] : optionArray;
+        }else{
+          result = Array.isArray(optionArray) ? optionArray[1] : '';
+        }
+    }
+  }else{
+    new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+      origin:'FastCondition',
+      type:'Format Error',
+      message:'Condition must be an array (formatted as x=y)',
+      log:false
+    });
+  }
+
+  return result;
+}
+
+/***/ }),
+/* 59 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_GetAjax__ = __webpack_require__(22);
+/**
+ * Created by David Maser on 22/06/2017.
+ */
+
+class fastAjax{
+  constructor(option, expression,element){
+    this.option = option;
+    this.expression = expression;
+    this.element = element;
+    this.run();
+  }
+  run() {
+    let jsonSource = this.option;
+    let jsonObject = {};
+    if (this.expression.indexOf(',') > -1) {
+      let jsonParams = this.expression.indexOf(',') > -1 ? this.expression.split(',') : this.expression;
+      let j;
+      for (j in jsonParams) {
+        jsonObject[jsonParams[j].split('=')[0]] = jsonParams[j].split('=')[1];
+      }
+    } else {
+      jsonObject = null;
+    }
+    __WEBPACK_IMPORTED_MODULE_0__classes_GetAjax__["a" /* default */](jsonSource, jsonObject, this.element);
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = fastAjax;
+
+
+/***/ }),
+/* 60 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastTemplate;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_TemplateUtilities__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_TemplateTableUtilities__ = __webpack_require__(44);
+/**
+ * Created by David Maser on 22/06/2017.
+ */
+
+
+
+function FastTemplate(data, template) {
+  let mainLayout = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][template].layout;
+  let d;
+  let accepted = ['class','id','style'];
+  for (d in data) {
+    if(accepted.includes(d)) {
+      let rep = __WEBPACK_IMPORTED_MODULE_1__templates_TemplateUtilities__["a" /* TemplateUtilities */].handleStringRep(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][template][d], `@${d}`, __WEBPACK_IMPORTED_MODULE_1__templates_TemplateUtilities__["a" /* TemplateUtilities */].handleObject(data[d]));
+      mainLayout = mainLayout.replace(`@${template}.${d}`, rep);
+    }
+  }
+  if(template === 'table'){
+    mainLayout = __WEBPACK_IMPORTED_MODULE_2__templates_TemplateTableUtilities__["a" /* TemplateTableUtilities */].init(mainLayout);
+  }
+  return mainLayout;
+}
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastForm;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FormElements__ = __webpack_require__(62);
+/**
+ * Created by David Maser on 26/06/2017.
+ */
+
+
+function FastForm(option, expression){
+  try {
+    function processExpression(obj) {
+      let expressionObj = {};
+      let e;
+      for (e in obj) {
+        expressionObj[obj[e].split(':')[0]] = obj[e].split(':')[1];
+      }
+      return expressionObj;
+    }
+
+    function processLayout(obj, layout) {
+      let o;
+      for (o in obj) {
+        let layoutOrigin = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][option][o].replace(`@${o}`, obj[o]);
+        layout = layout.replace(`@${option}.${o}`, layoutOrigin);
+      }
+      return layout;
+    }
+
+    let layout = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][option].layout;
+    let elements = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][option].elements;
+    let expressionArray = expression.split(',');
+    let expressionObj = processExpression(expressionArray);
+    let parsedLayout = processLayout(expressionObj, layout) || null;
+    let formElements = __WEBPACK_IMPORTED_MODULE_1__FormElements__["a" /* default */](elements);
+    parsedLayout = formElements !== null ? parsedLayout.replace(`@${option}.elements`, formElements) : parsedLayout;
+    return parsedLayout;
+  }catch(e){
+
+  }
+}
+
+/***/ }),
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13836,6 +13810,42 @@ function FormElements(obj){
       }
     }
     return elementString;
+}
+
+/***/ }),
+/* 63 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastGutter;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/**
+ * Created by David Maser on 27/06/2017.
+ */
+
+function FastGutter(option, expression){
+  let templateString = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].gutter.layout;
+  templateString = expression !== undefined && expression !== '' ? templateString.replace('@render',expression) : templateString;
+
+  return templateString;
+}
+
+/***/ }),
+/* 64 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastPanel;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/**
+ * Created by David Maser on 27/06/2017.
+ */
+
+function FastPanel(option, expression){
+  let templateString = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].panel.layout;
+  templateString = expression !== undefined && expression !== '' ? templateString.replace('@render',expression) : templateString;
+
+  return templateString;
 }
 
 /***/ })

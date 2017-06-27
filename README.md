@@ -49,4 +49,4 @@ Tags can also have an ignore property assigned. These tags will not be parsed by
 ``<ftx>{object:option}expression{~object}</ftx>``
 
 #### Fast Ajax Tags
-``<fta>Fast Ajax tags</fta>``
+``<fta>{json:url}node=root_node,show=5,saveAs=something{~json}</fta>``
