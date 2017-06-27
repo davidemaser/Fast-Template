@@ -3,7 +3,7 @@
  */
 import {Faster,Architect} from '../components/Faster';
 import {Global} from '../config/Global';
-import FastProcessor from '../Functions/FastProcessor';
+import FastProcessor from '../functions/FastProcessor';
 import Woops from './Woops';
 export default class Cycle{
   constructor(type){

@@ -5,7 +5,7 @@ import {Global} from '../config/Global';
 import Woops from './Woops';
 import axios from 'axios';
 import {Architect} from '../components/Faster';
-import {FastTemplate} from '../Functions/FastTemplate';
+import {FastTemplate} from '../functions/FastTemplate';
 export default function GetAjax(url, props,element) {
   this.url = url;
   this.props = props;
