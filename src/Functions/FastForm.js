@@ -2,7 +2,7 @@
  * Created by David Maser on 26/06/2017.
  */
 import {Template} from '../config/Template';
-import FormElements from '../classes/FormElements';
+import FormElements from '../components/FormElements';
 export default function FastForm(option, expression){
   try {
     function processExpression(obj) {
