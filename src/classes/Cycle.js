@@ -73,7 +73,7 @@ export default class Cycle{
           });
         });
         break;
-      case 'ftxj':
+      case 'fta':
         let ftxjNodes = [];
         $(`${this.xjTag}:not([${this.ignore}]):not([${this.nested}])`).each(function(a){
           $(this).attr('fstxj-id',a);

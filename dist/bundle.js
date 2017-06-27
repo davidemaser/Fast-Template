@@ -71,7 +71,7 @@
 
 
 var bind = __webpack_require__(7);
-var isBuffer = __webpack_require__(26);
+var isBuffer = __webpack_require__(25);
 
 /*global toString:true*/
 
@@ -416,6 +416,162 @@ let Log = [];
 
 /***/ }),
 /* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * Created by David Maser on 22/06/2017.
+ */
+const Template = {
+  div:'<div data-atrribute="jeer">',
+  footer:'<footer>',
+  gutter:{
+    layout:'<section ftx-render class="ftx__gutter">@render</section>'
+  },
+  panel:{
+    layout:'<section ftx-render class="ftx__panel">@render</section>'
+  },
+  table:{
+    layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
+    class:' class="@class"',
+    id:' id="@id"',
+    style:' style="@style"',
+    elements:{
+      header:{
+        layout:'<thead></thead>'
+      },
+      footer:{
+        layout:'<tfoot></tfoot>'
+      },
+      body:{
+        layout:'<tbody>@body.rows</tbody>',
+        rows:{
+          layout:'<tr>@body.rows.columns</tr>',
+          style:'style="@table.rows.style"',
+          columns:'<td></td>'
+        }
+      },
+    }
+  },
+  login:{
+    layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
+    class:' class="@class"',
+    id:' id="@id"',
+    style:' style="@style"',
+    action:' action="@action"',
+    elements:[
+      {
+        element:'input',
+        type:'text',
+        name:'userName',
+        placeholder:'USER NAME',
+        class:'',
+        id:''
+      },
+      {
+        element:'input',
+        type:'password',
+        name:'passWord',
+        placeholder:'PASSWORD',
+        class:'',
+        id:''
+      },
+      {
+        element:'input',
+        type:'checkbox',
+        name:'myCheck',
+        class:'',
+        id:'',
+        checked:true
+      },
+      {
+        element:'input',
+        type:'radio',
+        name:'myRadio',
+        class:'',
+        id:''
+      },
+      {
+        element:'radiogroup',
+        type:'radio',
+        name:'myRadio',
+        class:'',
+        id:'',
+        options:[
+          {
+            label:'hi',
+            value:'hi'
+          },
+          {
+            label:'bye',
+            value:'bye'
+          },
+          {
+            label:'what',
+            value:'what',
+            selected:true
+          }
+        ]
+      },
+      {
+        element:'textarea',
+        placeholder:'',
+        name:'TEXT',
+        rows:10,
+        cols:10,
+        class:'',
+        id:''
+      },
+      {
+        element:'select',
+        name:'TEXT',
+        class:'',
+        id:'',
+        options:[
+          {
+            label:'hi',
+            value:'hi'
+          },
+          {
+            label:'bye',
+            value:'bye'
+          },
+          {
+            label:'what',
+            value:'what',
+            selected:true
+          }
+        ]
+      },
+      {
+        element:'input',
+        type:'submit',
+        name:'myButton',
+        placeholder:'CLICK',
+        class:'',
+        id:''
+      },
+    ]
+  },
+  account:{
+    layout:'<form@account.class@account.id@account.style@account.action>@account.elements</form>',
+    elements:[
+      {
+        element:'input',
+        type:'text',
+        name:'userName',
+        placeholder:'USER NAME',
+        class:'',
+        id:''
+      }
+    ]
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = Template;
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10675,7 +10831,7 @@ return jQuery;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10703,168 +10859,12 @@ class Woops{
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/**
- * Created by David Maser on 22/06/2017.
- */
-const Template = {
-  div:'<div data-atrribute="jeer">',
-  footer:'<footer>',
-  gutter:{
-    layout:'<section ftx-render class="ftx__gutter">@render</section>'
-  },
-  panel:{
-    layout:'<section ftx-render class="ftx__panel">@render</section>'
-  },
-  table:{
-    layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
-    class:' class="@class"',
-    id:' id="@id"',
-    style:' style="@style"',
-    elements:{
-      header:{
-        layout:'<thead></thead>'
-      },
-      footer:{
-        layout:'<tfoot></tfoot>'
-      },
-      body:{
-        layout:'<tbody>@body.rows</tbody>',
-        rows:{
-          layout:'<tr>@body.rows.columns</tr>',
-          style:'style="@table.rows.style"',
-          columns:'<td></td>'
-        }
-      },
-    }
-  },
-  login:{
-    layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
-    class:' class="@class"',
-    id:' id="@id"',
-    style:' style="@style"',
-    action:' action="@action"',
-    elements:[
-      {
-        element:'input',
-        type:'text',
-        name:'userName',
-        placeholder:'USER NAME',
-        class:'',
-        id:''
-      },
-      {
-        element:'input',
-        type:'password',
-        name:'passWord',
-        placeholder:'PASSWORD',
-        class:'',
-        id:''
-      },
-      {
-        element:'input',
-        type:'checkbox',
-        name:'myCheck',
-        class:'',
-        id:'',
-        checked:true
-      },
-      {
-        element:'input',
-        type:'radio',
-        name:'myRadio',
-        class:'',
-        id:''
-      },
-      {
-        element:'radiogroup',
-        type:'radio',
-        name:'myRadio',
-        class:'',
-        id:'',
-        options:[
-          {
-            label:'hi',
-            value:'hi'
-          },
-          {
-            label:'bye',
-            value:'bye'
-          },
-          {
-            label:'what',
-            value:'what',
-            selected:true
-          }
-        ]
-      },
-      {
-        element:'textarea',
-        placeholder:'',
-        name:'TEXT',
-        rows:10,
-        cols:10,
-        class:'',
-        id:''
-      },
-      {
-        element:'select',
-        name:'TEXT',
-        class:'',
-        id:'',
-        options:[
-          {
-            label:'hi',
-            value:'hi'
-          },
-          {
-            label:'bye',
-            value:'bye'
-          },
-          {
-            label:'what',
-            value:'what',
-            selected:true
-          }
-        ]
-      },
-      {
-        element:'input',
-        type:'submit',
-        name:'myButton',
-        placeholder:'CLICK',
-        class:'',
-        id:''
-      },
-    ]
-  },
-  account:{
-    layout:'<form@account.class@account.id@account.style@account.action>@account.elements</form>',
-    elements:[
-      {
-        element:'input',
-        type:'text',
-        name:'userName',
-        placeholder:'USER NAME',
-        class:'',
-        id:''
-      }
-    ]
-  }
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = Template;
-
-
-/***/ }),
 /* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(4);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(1);
 /**
  * Created by David Maser on 19/06/2017.
@@ -11073,7 +11073,7 @@ const Architect = {
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Architect;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
 /* 6 */
@@ -11083,7 +11083,7 @@ const Architect = {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(28);
+var normalizeHeaderName = __webpack_require__(27);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -11391,12 +11391,12 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(29);
-var buildURL = __webpack_require__(31);
-var parseHeaders = __webpack_require__(32);
-var isURLSameOrigin = __webpack_require__(33);
+var settle = __webpack_require__(28);
+var buildURL = __webpack_require__(30);
+var parseHeaders = __webpack_require__(31);
+var isURLSameOrigin = __webpack_require__(32);
 var createError = __webpack_require__(10);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(34);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(33);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -11493,7 +11493,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(35);
+      var cookies = __webpack_require__(34);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -11578,7 +11578,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(30);
+var enhanceError = __webpack_require__(29);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -11653,7 +11653,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 $(function(){
   $.when(new __WEBPACK_IMPORTED_MODULE_0__src_classes_Sniffer__["a" /* default */]()).done(__WEBPACK_IMPORTED_MODULE_2__src_components_Faster__["b" /* Faster */].exec())
 });
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
 /* 14 */
@@ -11679,7 +11679,7 @@ class Sniffer{
   cycle(){
     new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ft');
     new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ftx');
-    new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ftxj');
+    new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('fta');
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Sniffer;
@@ -11692,8 +11692,8 @@ class Sniffer{
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Faster__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Functions_FastProcessor__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Woops__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Functions_FastProcessor__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Woops__ = __webpack_require__(4);
 /**
  * Created by David Maser on 21/06/2017.
  */
@@ -11769,7 +11769,7 @@ class Cycle{
           });
         });
         break;
-      case 'ftxj':
+      case 'fta':
         let ftxjNodes = [];
         $(`${this.xjTag}:not([${this.ignore}]):not([${this.nested}])`).each(function(a){
           $(this).attr('fstxj-id',a);
@@ -11796,7 +11796,7 @@ class Cycle{
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Cycle;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
 /* 16 */
@@ -11824,19 +11824,18 @@ class Logger{
 
 
 /***/ }),
-/* 17 */,
-/* 18 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastProcessor;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FastMath__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FastDate__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FastCondition__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FastAjax__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FastForm__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__FastGutter__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__FastPanel__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FastMath__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FastDate__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FastCondition__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FastAjax__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FastForm__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__FastGutter__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__FastPanel__ = __webpack_require__(48);
 /**
  * Created by David Maser on 21/06/2017.
  */
@@ -11874,7 +11873,7 @@ function FastProcessor(type, option, expression, element){
 }
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11898,7 +11897,7 @@ function FastMath(option, expression) {
 }
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11928,12 +11927,12 @@ function FastDate(option, expression){
 }
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastCondition;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
 /**
  * Created by David Maser on 21/06/2017.
  */
@@ -12013,11 +12012,11 @@ function FastCondition(option, expression){
 }
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_GetAjax__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_GetAjax__ = __webpack_require__(22);
 /**
  * Created by David Maser on 22/06/2017.
  */
@@ -12048,17 +12047,17 @@ class fastAjax{
 
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = GetAjax;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Woops__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Woops__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Functions_FastTemplate__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Functions_FastTemplate__ = __webpack_require__(42);
 /**
  * Created by David Maser on 20/06/2017.
  */
@@ -12125,16 +12124,16 @@ function GetAjax(url, props,element) {
     });
 }
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(24);
 
 /***/ }),
 /* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(25);
-
-/***/ }),
-/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12142,7 +12141,7 @@ module.exports = __webpack_require__(25);
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(7);
-var Axios = __webpack_require__(27);
+var Axios = __webpack_require__(26);
 var defaults = __webpack_require__(6);
 
 /**
@@ -12177,14 +12176,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(12);
-axios.CancelToken = __webpack_require__(41);
+axios.CancelToken = __webpack_require__(40);
 axios.isCancel = __webpack_require__(11);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(42);
+axios.spread = __webpack_require__(41);
 
 module.exports = axios;
 
@@ -12193,7 +12192,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports) {
 
 /*!
@@ -12220,7 +12219,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12228,10 +12227,10 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(6);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(36);
-var dispatchRequest = __webpack_require__(37);
-var isAbsoluteURL = __webpack_require__(39);
-var combineURLs = __webpack_require__(40);
+var InterceptorManager = __webpack_require__(35);
+var dispatchRequest = __webpack_require__(36);
+var isAbsoluteURL = __webpack_require__(38);
+var combineURLs = __webpack_require__(39);
 
 /**
  * Create a new instance of Axios
@@ -12313,7 +12312,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12332,7 +12331,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12365,7 +12364,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12393,7 +12392,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12468,7 +12467,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12512,7 +12511,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12587,7 +12586,7 @@ module.exports = (
 
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12630,7 +12629,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12690,7 +12689,7 @@ module.exports = (
 
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12749,14 +12748,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(38);
+var transformData = __webpack_require__(37);
 var isCancel = __webpack_require__(11);
 var defaults = __webpack_require__(6);
 
@@ -12835,7 +12834,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12862,7 +12861,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12883,7 +12882,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12904,7 +12903,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12968,7 +12967,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13002,14 +13001,14 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastTemplate;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_TemplateUtilities__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_TemplateTableUtilities__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_TemplateUtilities__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_TemplateTableUtilities__ = __webpack_require__(44);
 /**
  * Created by David Maser on 22/06/2017.
  */
@@ -13033,7 +13032,7 @@ function FastTemplate(data, template) {
 }
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13057,11 +13056,11 @@ const TemplateUtilities = {
 
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(4);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
 /**
  * Created by David Maser on 22/06/2017.
  */
@@ -13099,16 +13098,16 @@ const TemplateTableUtilities = {
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = TemplateTableUtilities;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastForm;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_FormElements__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FormElements__ = __webpack_require__(54);
 /**
  * Created by David Maser on 26/06/2017.
  */
@@ -13139,7 +13138,7 @@ function FastForm(option, expression){
     let expressionArray = expression.split(',');
     let expressionObj = processExpression(expressionArray);
     let parsedLayout = processLayout(expressionObj, layout) || null;
-    let formElements = __WEBPACK_IMPORTED_MODULE_1__classes_FormElements__["a" /* default */](elements);
+    let formElements = __WEBPACK_IMPORTED_MODULE_1__FormElements__["a" /* default */](elements);
     parsedLayout = formElements !== null ? parsedLayout.replace(`@${option}.elements`, formElements) : parsedLayout;
     return parsedLayout;
   }catch(e){
@@ -13148,77 +13147,22 @@ function FastForm(option, expression){
 }
 
 /***/ }),
+/* 46 */,
 /* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = FormElements;
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastGutter;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
 /**
- * Created by David Maser on 26/06/2017.
+ * Created by David Maser on 27/06/2017.
  */
-function FormElements(obj){
-  function handleOptions(obj,type){
-    if(typeof obj === 'object'){
-      let o;
-      let optionString = '';
-      for(o in obj){
-        optionString += `<${type} value="${obj[o].value}"`;
-        optionString += obj[o].selected === true ? ' selected="selected"' : '';
-        optionString += type === 'radio' ? `label="${obj[o].label}" />` : `>${obj[o].label}</option>`;
-      }
-      return optionString;
-    }
-  }
-    this.obj = obj;
-    let o;
-    let elementString = '';
-    let ob = this.obj;
-    for(o in ob){
-      let b;
-      let bo = ob[o];
-      for(b in bo){
-        switch(bo[b]){
-          case 'input':
-            let iTemplate = `<input type="${bo['type']}"`;
-            iTemplate += bo.name !== undefined && bo.name !== '' ? ` name="${bo['name']}"` : '';
-            iTemplate += bo.class !== undefined && bo.class !== '' ? ` class="${bo['class']}"` : '';
-            iTemplate += bo.id !== undefined && bo.id !== '' ? ` id="${bo['id']}"` : '';
-            iTemplate += bo.id !== undefined && bo.checked === true ? ` checked="checked"` : '';
-            iTemplate += bo['type'] === 'button' || bo['type'] === 'submit' ? ` value="${bo.placeholder}"` : bo.placeholder !== undefined ? ` placeholder="${bo['placeholder']}"` : '';
-            iTemplate += ' />';
-            elementString += iTemplate;
-            break;
-          case 'textarea':
-            let tTemplate = '<textarea';
-            tTemplate += bo.rows !== undefined && bo.rows !== '' ? ` rows="${bo['rows']}"` : '';
-            tTemplate += bo.cols !== undefined && bo.cols !== '' ? ` columns="${bo['cols']}"` : '';
-            tTemplate += bo.name !== undefined && bo.name !== '' ? ` name="${bo['name']}"` : '';
-            tTemplate += bo.placeholder !== undefined && bo.placeholder !== '' ? ` placeholder="${bo['placeholder']}"` : '';
-            tTemplate += bo.class !== undefined && bo.class !== '' ? ` class="${bo['class']}"` : '';
-            tTemplate += bo.id !== undefined && bo.id !== '' ? ` id="${bo['id']}"` : '';
-            tTemplate += ' />';
-            elementString += tTemplate;
-            break;
-          case 'select':
-            let sTemplate = '<select';
-            sTemplate += bo.name !== undefined && bo.name !== '' ? ` name="${bo['name']}"` : '';
-            sTemplate += bo.class !== undefined && bo.class !== '' ? ` class="${bo['class']}"` : '';
-            sTemplate += bo.id !== undefined && bo.id !== '' ? ` id="${bo['id']}"` : '';
-            sTemplate += '>';
-            sTemplate += handleOptions(bo.options,'option');
-            sTemplate += '</select>';
-            elementString += sTemplate;
-            break;
-          case 'radiogroup':
-            let rTemplate = '<radiogroup>';
-            rTemplate += handleOptions(bo.options,'radio');
-            rTemplate += '</radiogroup>';
-            elementString += rTemplate;
-            break;
-        }
-      }
-    }
-    return elementString;
+
+function FastGutter(option, expression){
+  let templateString = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].gutter.layout;
+  templateString = expression !== undefined && expression !== '' ? templateString.replace('@render',expression) : templateString;
+
+  return templateString;
 }
 
 /***/ }),
@@ -13226,14 +13170,14 @@ function FormElements(obj){
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastGutter;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(4);
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastPanel;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
 /**
  * Created by David Maser on 27/06/2017.
  */
 
-function FastGutter(option, expression){
-  let templateString = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].gutter.layout;
+function FastPanel(option, expression){
+  let templateString = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].panel.layout;
   templateString = expression !== undefined && expression !== '' ? templateString.replace('@render',expression) : templateString;
 
   return templateString;
@@ -13279,7 +13223,7 @@ exports = module.exports = __webpack_require__(51)(undefined);
 
 
 // module
-exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"rendered\"]{display:block}ftx{display:none}ftxj{display:none}\n", ""]);
+exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"rendered\"]{display:block}ftx{display:none}fta{display:none}\n", ""]);
 
 // exports
 
@@ -13825,17 +13769,73 @@ module.exports = function (css) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastPanel;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(4);
+/* harmony export (immutable) */ __webpack_exports__["a"] = FormElements;
 /**
- * Created by David Maser on 27/06/2017.
+ * Created by David Maser on 26/06/2017.
  */
-
-function FastPanel(option, expression){
-  let templateString = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].panel.layout;
-  templateString = expression !== undefined && expression !== '' ? templateString.replace('@render',expression) : templateString;
-
-  return templateString;
+function FormElements(obj){
+  function handleOptions(obj,type){
+    if(typeof obj === 'object'){
+      let o;
+      let optionString = '';
+      for(o in obj){
+        optionString += `<${type} value="${obj[o].value}"`;
+        optionString += obj[o].selected === true ? ' selected="selected"' : '';
+        optionString += type === 'radio' ? `label="${obj[o].label}" />` : `>${obj[o].label}</option>`;
+      }
+      return optionString;
+    }
+  }
+    this.obj = obj;
+    let o;
+    let elementString = '';
+    let ob = this.obj;
+    for(o in ob){
+      let b;
+      let bo = ob[o];
+      for(b in bo){
+        switch(bo[b]){
+          case 'input':
+            let iTemplate = `<input type="${bo['type']}"`;
+            iTemplate += bo.name !== undefined && bo.name !== '' ? ` name="${bo['name']}"` : '';
+            iTemplate += bo.class !== undefined && bo.class !== '' ? ` class="${bo['class']}"` : '';
+            iTemplate += bo.id !== undefined && bo.id !== '' ? ` id="${bo['id']}"` : '';
+            iTemplate += bo.id !== undefined && bo.checked === true ? ` checked="checked"` : '';
+            iTemplate += bo['type'] === 'button' || bo['type'] === 'submit' ? ` value="${bo.placeholder}"` : bo.placeholder !== undefined ? ` placeholder="${bo['placeholder']}"` : '';
+            iTemplate += ' />';
+            elementString += iTemplate;
+            break;
+          case 'textarea':
+            let tTemplate = '<textarea';
+            tTemplate += bo.rows !== undefined && bo.rows !== '' ? ` rows="${bo['rows']}"` : '';
+            tTemplate += bo.cols !== undefined && bo.cols !== '' ? ` columns="${bo['cols']}"` : '';
+            tTemplate += bo.name !== undefined && bo.name !== '' ? ` name="${bo['name']}"` : '';
+            tTemplate += bo.placeholder !== undefined && bo.placeholder !== '' ? ` placeholder="${bo['placeholder']}"` : '';
+            tTemplate += bo.class !== undefined && bo.class !== '' ? ` class="${bo['class']}"` : '';
+            tTemplate += bo.id !== undefined && bo.id !== '' ? ` id="${bo['id']}"` : '';
+            tTemplate += ' />';
+            elementString += tTemplate;
+            break;
+          case 'select':
+            let sTemplate = '<select';
+            sTemplate += bo.name !== undefined && bo.name !== '' ? ` name="${bo['name']}"` : '';
+            sTemplate += bo.class !== undefined && bo.class !== '' ? ` class="${bo['class']}"` : '';
+            sTemplate += bo.id !== undefined && bo.id !== '' ? ` id="${bo['id']}"` : '';
+            sTemplate += '>';
+            sTemplate += handleOptions(bo.options,'option');
+            sTemplate += '</select>';
+            elementString += sTemplate;
+            break;
+          case 'radiogroup':
+            let rTemplate = '<radiogroup>';
+            rTemplate += handleOptions(bo.options,'radio');
+            rTemplate += '</radiogroup>';
+            elementString += rTemplate;
+            break;
+        }
+      }
+    }
+    return elementString;
 }
 
 /***/ })
