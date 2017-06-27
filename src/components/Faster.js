@@ -170,7 +170,7 @@ export const Architect = {
     experiment(origin, replace, content, opt){
       if(content !== undefined && content !== '') {
         content = typeof content === 'object' ? JSON.stringify(content) : content;
-        let xContent = replace.replace('@return', content);
+        let xContent = replace !== null ? replace.replace('@return', content) : content;
         $(xContent).insertBefore(origin);
         opt !== true ? $(origin).remove() : null;
       }else{

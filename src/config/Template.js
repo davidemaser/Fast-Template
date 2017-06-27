@@ -2,6 +2,12 @@
  * Created by David Maser on 22/06/2017.
  */
 export const Template = {
+  gutter:{
+    layout:'<section ftx-render class="ftx__gutter">@render</section>'
+  },
+  panel:{
+    layout:'<section ftx-render class="ftx__panel">@render</section>'
+  },
   table:{
     layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
     class:' class="@class"',
@@ -122,6 +128,19 @@ export const Template = {
         class:'',
         id:''
       },
+    ]
+  },
+  account:{
+    layout:'<form@account.class@account.id@account.style@account.action>@account.elements</form>',
+    elements:[
+      {
+        element:'input',
+        type:'text',
+        name:'userName',
+        placeholder:'USER NAME',
+        class:'',
+        id:''
+      }
     ]
   }
 };
