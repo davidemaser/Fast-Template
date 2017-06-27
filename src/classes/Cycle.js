@@ -27,7 +27,10 @@ export default class Cycle{
           let nodeType,nodeString;
           if(a.indexOf('render:') > -1){
             nodeType = Faster.extract.node.type(a);
-            nodeString = `<${nodeType} class="${Faster.extract.class(a)}">`;
+            nodeString = `<${nodeType}`;
+            nodeString += a.indexOf('class:')>-1 ? ` class="${Faster.extract.class(a)}"` : '';
+            nodeString += a.indexOf('id:')>-1 ? ` id="${Faster.extract.id(a)}"` : '';
+            nodeString += '>';
           }else{
             if(a.indexOf('template:') > -1 ){
               nodeString = Faster.extract.template(a);

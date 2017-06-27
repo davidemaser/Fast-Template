@@ -2,7 +2,7 @@
  * Created by David Maser on 19/06/2017.
  */
 import Woops from '../classes/Woops';
-import {Templates} from '../templates/Templates';
+import {Template} from '../config/Template';
 import {Global} from '../config/Global';
 export const Faster = {
   exec(){
@@ -72,6 +72,25 @@ export const Faster = {
         })
       }
     },
+    id(obj,callback){
+      try{
+        if(obj.indexOf('id') > -1){
+          let __this = obj.split('id:')[1].split(',')[0];
+          if (callback !== undefined && callback !== null && typeof callback === 'function') {
+            return callback(__this);
+          }else{
+            return __this !== undefined ? __this: null;
+          }
+        }
+      }catch(e){
+        new Woops({
+          origin:'',
+          type:'',
+          message:'',
+          log:false
+        })
+      }
+    },
     content(obj,callback){
       try{
         if(obj.indexOf('content:') > -1){
@@ -97,9 +116,9 @@ export const Faster = {
         if(obj.indexOf('template:') > -1){
           let __this = obj.split('template:')[1].split(',')[0];
           if (callback !== undefined && callback !== null && typeof callback === 'function') {
-            return callback(Templates[__this]);
+            return callback(Template[__this]);
           }else{
-            return Templates[__this];
+            return Template[__this];
           }
         }
       }catch(e){

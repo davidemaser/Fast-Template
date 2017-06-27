@@ -10711,6 +10711,8 @@ class Woops{
  * Created by David Maser on 22/06/2017.
  */
 const Template = {
+  div:'<div data-atrribute="jeer">',
+  footer:'<footer>',
   gutter:{
     layout:'<section ftx-render class="ftx__gutter">@render</section>'
   },
@@ -10862,7 +10864,7 @@ const Template = {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_Templates__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(1);
 /**
  * Created by David Maser on 19/06/2017.
@@ -10938,6 +10940,25 @@ const Faster = {
         })
       }
     },
+    id(obj,callback){
+      try{
+        if(obj.indexOf('id') > -1){
+          let __this = obj.split('id:')[1].split(',')[0];
+          if (callback !== undefined && callback !== null && typeof callback === 'function') {
+            return callback(__this);
+          }else{
+            return __this !== undefined ? __this: null;
+          }
+        }
+      }catch(e){
+        new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+          origin:'',
+          type:'',
+          message:'',
+          log:false
+        })
+      }
+    },
     content(obj,callback){
       try{
         if(obj.indexOf('content:') > -1){
@@ -10963,9 +10984,9 @@ const Faster = {
         if(obj.indexOf('template:') > -1){
           let __this = obj.split('template:')[1].split(',')[0];
           if (callback !== undefined && callback !== null && typeof callback === 'function') {
-            return callback(__WEBPACK_IMPORTED_MODULE_1__templates_Templates__["a" /* Templates */][__this]);
+            return callback(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */][__this]);
           }else{
-            return __WEBPACK_IMPORTED_MODULE_1__templates_Templates__["a" /* Templates */][__this];
+            return __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */][__this];
           }
         }
       }catch(e){
@@ -11702,7 +11723,10 @@ class Cycle{
           let nodeType,nodeString;
           if(a.indexOf('render:') > -1){
             nodeType = __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.node.type(a);
-            nodeString = `<${nodeType} class="${__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.class(a)}">`;
+            nodeString = `<${nodeType}`;
+            nodeString += a.indexOf('class:')>-1 ? ` class="${__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.class(a)}"` : '';
+            nodeString += a.indexOf('id:')>-1 ? ` id="${__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.id(a)}"` : '';
+            nodeString += '>';
           }else{
             if(a.indexOf('template:') > -1 ){
               nodeString = __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.template(a);
@@ -11800,25 +11824,7 @@ class Logger{
 
 
 /***/ }),
-/* 17 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export Extract */
-/**
- * Created by David Maser on 19/06/2017.
- */
-const Templates = {
-  div:'<div data-atrribute="jeer">',
-  footer:'<footer>'
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = Templates;
-
-function Extract(){
-
-}
-
-/***/ }),
+/* 17 */,
 /* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

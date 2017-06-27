@@ -2,6 +2,8 @@
  * Created by David Maser on 22/06/2017.
  */
 export const Template = {
+  div:'<div data-atrribute="jeer">',
+  footer:'<footer>',
   gutter:{
     layout:'<section ftx-render class="ftx__gutter">@render</section>'
   },
