@@ -1,11 +1,27 @@
-# FAST Template
+FAST Template
+======
+
 ### A scalable and scriptable templating engine model
+
+Installation
+------
+
+- Fork this projects repo and clone locally git clone ...
+- CD into the project root
+- Execute npm install (install Node.js and NPM if not already done)
+- Execute npm run build to build a local distribution.
+
+Webpack configuration can be modified in the webpack.config.js file. 
+
+Introduction
+------
 
 Fast is a flexible templating engine that uses common html/xml tag formatting to simplify the creation of complex components and data fed objects.
 
 Fast uses special tags within an html page that allows the user to inject a template assignment or data call simply, without having to code or tweak an existing component or layout.
 
 #### Fast Tags 
+
 ``<ft>Standard Fast tags</ft>``
 
 Standard Fast tags allow you to create basic template objects and render simple html and/or JSON. FT tags, contrary to FTX tags are not objects. The tag content is a string and is parsed as such.
