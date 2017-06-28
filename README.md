@@ -48,5 +48,41 @@ Tags can also have an ignore property assigned. These tags will not be parsed by
 #### Fast eXperiment tags
 ``<ftx>{object:option}expression{~object}</ftx>``
 
+Experiment tags are, as their name implies, the result of an experiment to render advanced properties using a simple template tag. These tags can be used to execute mathemtical equations, conditional clauses, build forms and page elements and render data in a table layout.
+An FTX tag contains an object within which an expression determines the rendered result or modifies the parameters of the returned data.
+
+FTX tags are made up of an opening and a closing tag ``{tag}{~tag}``. The tilda symbol close the FTX object. Between these tags, object parameters can be passed or, more simply, html can be injected. The following example shows the use of the
+FTX form object.
+ 
+``{form:login}{~form}`` If left as such, the basic login form will be rendered. This basic form will need to have an event handler bound to the button or submit event. 
+``{form:login}action:a_url{~form}`` In this example, we've added the action property that will be added to the form object.
+
+Each object has a specific list of accepted properties that can be chained together in the expression. Each property is separated by a comma. Properties are formatted as ``property:value``.
+Certain properties can accept objects or arrays.
+
 #### Fast Ajax Tags
 ``<fta>{json:url}node=root_node,show=5,saveAs=something{~json}</fta>``
+
+Fast Ajax tags allow you to execute an XHR request without ever touching the actual ajax call. The JSON data returned can be passed to a template and rendered or saved as a global object and used by other functions in the application (template models are currently in work).
+
+The Fast Ajax tag only has one require parameter, the URL. Callbacks can be bound to the function to execute a custom function with the returned data.
+
+The Fast Ajax object can accept the following properties:
+
+url: the url to the JSON file (the root of your data objects can be defined in the Global config file)
+
+node: defines the starting node in the JSON. If, for example your json is formatted as below:
+````
+{
+  "thing":[
+    {
+    "param":"value"
+    }
+  ]
+}
+````
+defining thing as the starting node ``node:thing`` would return only the data in the thing array.
+
+show: defines the number of the results to show from the returned data.
+
+saveAs: defines the name that the object will saves as. The object is bound to the window ``window['object']`` and is globally accessible.
