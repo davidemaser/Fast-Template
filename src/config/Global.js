@@ -27,6 +27,15 @@ export const Global = {
   init:{
     all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
   },
-
+  options:{
+    app:{
+      onFail:['killFunctions','emptyCache','log','restart'],
+      onEnter:['runSniffer','runCycle','waitAndSnoop'],
+      onLeave:['pauseFunctions','registerWait','stopFunctions','waitFor10ThenKillAll']
+    },
+    views:{
+      model:'default'
+    }
+  }
 };
 export let Log = [];
