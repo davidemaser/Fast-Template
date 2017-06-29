@@ -10872,7 +10872,7 @@ class Woops{
     try {
       if (typeof this.args === 'object') {
         this.args.log === true ? new __WEBPACK_IMPORTED_MODULE_0__Logger__["a" /* default */](this.args) : null;
-        new __WEBPACK_IMPORTED_MODULE_1__classes_RegisterState__["a" /* default */](this.args.origin, this.args.error, 'appErrors');
+        new __WEBPACK_IMPORTED_MODULE_1__classes_RegisterState__["a" /* default */](this.args.origin, this.args.message, 'appErrors');
       } else {
         console.log('Can\'t execute the Warning module');
       }
@@ -11692,9 +11692,11 @@ $(function(){
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cycle__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_Init__ = __webpack_require__(58);
 /**
  * Created by David Maser on 19/06/2017.
  */
+
 
 
 
@@ -11710,6 +11712,7 @@ class Sniffer{
     new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ft');
     new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ftx');
     new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('fta');
+    new __WEBPACK_IMPORTED_MODULE_2__plugins_Init__["a" /* default */]();
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Sniffer;
@@ -13956,7 +13959,7 @@ class RegisterState{
   /**
    *
    * @param {string} obj
-   * @param {boolean} val
+   * @param {(boolean|object)} val
    * @param {string} parent
    */
   constructor(obj,val,parent){
@@ -13980,6 +13983,84 @@ class RegisterState{
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = RegisterState;
+
+
+/***/ }),
+/* 58 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Woops__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(57);
+/**
+ * Created by David Maser on 29/06/2017.
+ */
+
+
+
+class InitPlugins{
+  constructor(){
+    this.run();
+  }
+  run(){
+    let runList;
+    if(Array.isArray(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* PluginConfig */].installed)){
+      runList = __WEBPACK_IMPORTED_MODULE_0__config__["a" /* PluginConfig */].installed;
+      let p;
+      for(p in runList){
+        if(typeof __WEBPACK_IMPORTED_MODULE_0__config__["a" /* PluginConfig */].library[runList[p]] === 'object'){
+          new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */](runList[p],__WEBPACK_IMPORTED_MODULE_0__config__["a" /* PluginConfig */].library[runList[p]],'plugins');
+          //execute plugin
+        }else{
+          new __WEBPACK_IMPORTED_MODULE_1__classes_Woops__["a" /* default */]({
+            origin: 'InitPlugins.run',
+            type: 'Plugin',
+            message: 'Plugin Not found in configuration file',
+            log: false
+          })
+        }
+      }
+    }else{
+      runList = __WEBPACK_IMPORTED_MODULE_0__config__["a" /* PluginConfig */].installed;
+      if(typeof __WEBPACK_IMPORTED_MODULE_0__config__["a" /* PluginConfig */].library[runList]){
+        new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */](runList,true,'plugins');
+        //execute plugin
+      }
+    }
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = InitPlugins;
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * Created by David Maser on 29/06/2017.
+ */
+const PluginConfig = {
+  installed:['langy','stripper'],
+  library:{
+    langy:{
+      run:'onLoad',
+      process:'init',
+      use:'defaults',
+      path:'./',
+      package:true
+    },
+    stripper:{
+      run:'afterLoad',
+      process:'run',
+      use:'defaults',
+      path:'./dist/',
+      package:true
+    }
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = PluginConfig;
 
 
 /***/ })

@@ -13,7 +13,7 @@ export default class Woops{
     try {
       if (typeof this.args === 'object') {
         this.args.log === true ? new Logger(this.args) : null;
-        new RegisterState(this.args.origin, this.args.error, 'appErrors');
+        new RegisterState(this.args.origin, this.args.message, 'appErrors');
       } else {
         console.log('Can\'t execute the Warning module');
       }

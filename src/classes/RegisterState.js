@@ -6,7 +6,7 @@ export default class RegisterState{
   /**
    *
    * @param {string} obj
-   * @param {boolean} val
+   * @param {(boolean|object)} val
    * @param {string} parent
    */
   constructor(obj,val,parent){
