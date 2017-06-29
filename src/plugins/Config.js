@@ -2,6 +2,9 @@
  * Created by David Maser on 29/06/2017.
  */
 export const PluginConfig = {
+  registerTo:'window',
+  scope:'public',
+  nameSpace:'fpi',
   installed:['langy','stripper'],
   library:{
     langy:{

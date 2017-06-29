@@ -410,7 +410,7 @@ const Global = {
     all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
   },
   options:{
-    noWrapperElements:['panel','gutter'],
+    noWrapperElements:['panel','gutter','html'],
     app:{
       onFail:['killFunctions','emptyCache','log','restart'],
       onEnter:['runSniffer','runCycle','waitAndSnoop'],
@@ -11801,6 +11801,7 @@ class Cycle{
           }
           let ftxNodeElement = $('body').find(`[fstx-id="${b}"]`);
           $.when(__WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__["a" /* default */](xType,xOption,xStatement,b)).then((a)=>{
+            console.log(a);
             __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].options.noWrapperElements.indexOf(xType) > -1 ? __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxNodeElement,null,a) : __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxNodeElement,__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].experiment.render,a);
           });
         });
@@ -11873,9 +11874,11 @@ class Logger{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__FastGutter__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__FastPanel__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__FastModal__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__FastHtml__ = __webpack_require__(62);
 /**
  * Created by David Maser on 21/06/2017.
  */
+
 
 
 
@@ -11909,6 +11912,9 @@ function FastProcessor(type, option, expression, element){
       break;
     case 'modal':
       return __WEBPACK_IMPORTED_MODULE_7__FastModal__["a" /* default */](option,expression);
+      break;
+    case 'html':
+      return __WEBPACK_IMPORTED_MODULE_8__FastHtml__["a" /* default */](option,expression);
       break;
   }
 }
@@ -14047,6 +14053,9 @@ class FastPlugin{
  * Created by David Maser on 29/06/2017.
  */
 const PluginConfig = {
+  registerTo:'window',
+  scope:'public',
+  nameSpace:'fpi',
   installed:['langy','stripper'],
   library:{
     langy:{
@@ -14074,6 +14083,97 @@ const PluginAbstractor = {
   exports:true
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = PluginAbstractor;
+
+
+/***/ }),
+/* 62 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastHtml;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FastHtmlTags__ = __webpack_require__(63);
+/**
+ * Created by David Maser on 29/06/2017.
+ */
+
+function FastHtml(option, expression){
+  let htmlStore = {};
+  let htmlArray = expression.trim().split(/\r?\n/);
+  if(Array.isArray(htmlArray)){
+    let a;
+    for(a in htmlArray){
+      htmlStore[a] = htmlArray[a].trim();
+    }
+  }
+  function multiplyTag(tag,rep){
+    let r;
+    let outPutString = '';
+    for(r=1;r<=rep;r++){
+      outPutString += `<${tag}>`;
+      outPutString += __WEBPACK_IMPORTED_MODULE_0__FastHtmlTags__["a" /* FastHtmlTags */][tag].closes === true ? `</${tag}>` : '';
+    }
+    return outPutString;
+  }
+  function buildTag(obj){
+    if(Array.isArray(obj)){
+      let rootObj = obj[0].trim();
+      let rootNode;
+      let o;
+      let objString;
+      let objLength = obj.length;
+      for(o = 1;o<objLength;o++){
+        let elem = obj[o].trim();
+        if(elem.indexOf('*') > -1){
+          objString = multiplyTag(elem.split('*')[0],elem.split('*')[1]);
+        }else{
+          objString = `<${elem}>`;
+          objString += __WEBPACK_IMPORTED_MODULE_0__FastHtmlTags__["a" /* FastHtmlTags */][elem].closes === true ? `</${elem}>` : '';
+        }
+      }
+      rootNode = __WEBPACK_IMPORTED_MODULE_0__FastHtmlTags__["a" /* FastHtmlTags */][rootObj].closes === true ? `<${rootObj}>${objString}</${rootObj}>` : `<${rootObj}>${objString}`;
+      return rootNode;
+    }
+  }
+  function parseObject(obj){
+    let isProps = ['class','id'];
+    if(typeof obj === 'object'){
+      let o;
+      let objArray;
+      let htmlString = '';
+      for(o in obj){
+        if(obj[o].indexOf('--') > -1){
+          objArray = obj[o].split('--');
+        }else{
+          objArray = obj[o];
+        }
+        htmlString += buildTag(objArray);
+      }
+      return htmlString;
+    }
+  }
+  return parseObject(htmlStore);
+}
+
+/***/ }),
+/* 63 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * Created by David Maser on 29/06/2017.
+ */
+const FastHtmlTags = {
+  div:{
+    closes:true
+  },
+  section:{
+    closes:true
+  },
+  nav:{
+    closes:true
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastHtmlTags;
 
 
 /***/ })
