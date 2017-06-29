@@ -384,7 +384,6 @@ module.exports = {
  */
 const Global = {
   appObj:'fast',
-  noWrapperElements:['panel','gutter'],
   node:'ft',
   experiment:{
     node:'ftx',
@@ -404,12 +403,14 @@ const Global = {
     root:{
       node:'data',
       url:'../data'
-    }
+    },
+    overWriteSaves:false
   },
   init:{
     all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
   },
   options:{
+    noWrapperElements:['panel','gutter'],
     app:{
       onFail:['killFunctions','emptyCache','log','restart'],
       onEnter:['runSniffer','runCycle','waitAndSnoop'],
@@ -10855,9 +10856,11 @@ return jQuery;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Logger__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_RegisterState__ = __webpack_require__(57);
 /**
  * Created by David Maser on 19/06/2017.
  */
+
 
 class Woops{
   constructor(args){
@@ -10866,10 +10869,15 @@ class Woops{
   }
 
   build(){
-    if(typeof this.args === 'object'){
-      this.args.log === true ? new __WEBPACK_IMPORTED_MODULE_0__Logger__["a" /* default */](this.args) : null ;
-    }else{
-      console.log('Can\'t execute the Warning module');
+    try {
+      if (typeof this.args === 'object') {
+        this.args.log === true ? new __WEBPACK_IMPORTED_MODULE_0__Logger__["a" /* default */](this.args) : null;
+        new __WEBPACK_IMPORTED_MODULE_1__classes_RegisterState__["a" /* default */](this.args.origin, this.args.error, 'appErrors');
+      } else {
+        console.log('Can\'t execute the Warning module');
+      }
+    }catch(e){
+      console.log('Error module threw an error. Ironic isn\'t it');
     }
   }
 
@@ -11790,7 +11798,7 @@ class Cycle{
           }
           let ftxNodeElement = $('body').find(`[fstx-id="${b}"]`);
           $.when(__WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__["a" /* default */](xType,xOption,xStatement,b)).then((a)=>{
-            __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].noWrapperElements.indexOf(xType) > -1 ? __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxNodeElement,null,a) : __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxNodeElement,__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].experiment.render,a);
+            __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].options.noWrapperElements.indexOf(xType) > -1 ? __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxNodeElement,null,a) : __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxNodeElement,__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].experiment.render,a);
           });
         });
         break;
@@ -12047,9 +12055,11 @@ function FastCondition(option, expression){
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_GetAjax__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_RegisterState__ = __webpack_require__(57);
 /**
  * Created by David Maser on 22/06/2017.
  */
+
 
 class fastAjax{
   constructor(option, expression,element){
@@ -12059,6 +12069,7 @@ class fastAjax{
     this.run();
   }
   run() {
+    new __WEBPACK_IMPORTED_MODULE_1__classes_RegisterState__["a" /* default */]('jsonLoaded',false,'appData');
     let jsonSource = this.option;
     let jsonObject = {};
     if (this.expression.indexOf(',') > -1) {
@@ -12107,7 +12118,8 @@ function GetAjax(url, props,element) {
     if(template !== null){
       a = __WEBPACK_IMPORTED_MODULE_4__functions_FastTemplate__["a" /* FastTemplate */](a,template);
     }
-    handle !== null ? new __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__["a" /* default */](handle,a,true) : null;
+    handle !== null ? new __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__["a" /* default */](handle,a,'appData') : null;
+    new __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__["a" /* default */]('jsonLoaded',true,'appData');
     __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($('body').find(`[fstxj-id="${b}"]`),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.render,a);
   }
   function processProps(data, props) {
@@ -13893,7 +13905,7 @@ function FastModal(option, expression){
   let expressionArray = expression.split(',');
   let expressionObj = {};
   let e,o;
-  new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',false,false);
+  new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',false,'modal');
   for(e in expressionArray){
     expressionObj[expressionArray[e].split(':')[0]] =  expressionArray[e].split(':')[1];
   }
@@ -13907,21 +13919,21 @@ function FastModal(option, expression){
     }
   }
   $('body').on('click','.ftx__modal__cta button,.ftx__modal__prompt button',function(){
-    if(window[__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appObj]['modalIsOpen'] === false){
+    if(window[__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appObj]['modal']['modalIsOpen'] === false){
       $(this).parent().parent().find('.ftx__modal').toggle();
-      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',true,false);
+      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',true,'modal');
     }
   }).on('click','.ftx__modal__prompt button[ftx-user-agrees]',function(){
-    if(window[__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appObj]['modalIsOpen'] === true){
+    if(window[__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appObj]['modal']['modalIsOpen'] === true){
       $(this).parent().parent().parent().parent().find('.ftx__modal').toggle();
-      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',false,false);
-      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('userHasAccepted',true,false);
+      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',false,'modal');
+      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('userHasAccepted',true,'modal');
     }
   }).on('click','.ftx__modal__prompt button[ftx-user-refuses]',function(){
-    if(window[__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appObj]['modalIsOpen'] === true){
+    if(window[__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appObj]['modal']['modalIsOpen'] === true){
       $(this).parent().parent().parent().parent().find('.ftx__modal').toggle();
-      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',false,false);
-      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('userHasAccepted',false,false);
+      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',false,'modal');
+      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('userHasAccepted',false,'modal');
     }
   });
   return templateString;
@@ -13945,22 +13957,22 @@ class RegisterState{
    *
    * @param {string} obj
    * @param {boolean} val
-   * @param {boolean} isData
+   * @param {string} parent
    */
-  constructor(obj,val,isData){
+  constructor(obj,val,parent){
     this.obj = obj;
     this.val = val;
-    this.isData = isData;
+    this.parent = parent;
     this.run();
   }
   run(){
     typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] !== 'object' ? window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] = {} : null;
-    if(this.isData === true){
-      if(typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj].appData === 'object'){
-        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj]['appData'][this.obj] = this.val;
+    if(this.parent !== '' && this.parent !== undefined){
+      if(typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent] === 'object'){
+        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent][this.obj] = this.val;
       }else{
-        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj].appData = {};
-        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj]['appData'][this.obj] = this.val;
+        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent] = {};
+        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent][this.obj] = this.val;
       }
     }else{
       window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.obj] = this.val;

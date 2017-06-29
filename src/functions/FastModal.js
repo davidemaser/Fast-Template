@@ -13,7 +13,7 @@ export default function FastModal(option, expression){
   let expressionArray = expression.split(',');
   let expressionObj = {};
   let e,o;
-  new RegisterState('modalIsOpen',false,false);
+  new RegisterState('modalIsOpen',false,'modal');
   for(e in expressionArray){
     expressionObj[expressionArray[e].split(':')[0]] =  expressionArray[e].split(':')[1];
   }
@@ -27,21 +27,21 @@ export default function FastModal(option, expression){
     }
   }
   $('body').on('click','.ftx__modal__cta button,.ftx__modal__prompt button',function(){
-    if(window[Global.appObj]['modalIsOpen'] === false){
+    if(window[Global.appObj]['modal']['modalIsOpen'] === false){
       $(this).parent().parent().find('.ftx__modal').toggle();
-      new RegisterState('modalIsOpen',true,false);
+      new RegisterState('modalIsOpen',true,'modal');
     }
   }).on('click','.ftx__modal__prompt button[ftx-user-agrees]',function(){
-    if(window[Global.appObj]['modalIsOpen'] === true){
+    if(window[Global.appObj]['modal']['modalIsOpen'] === true){
       $(this).parent().parent().parent().parent().find('.ftx__modal').toggle();
-      new RegisterState('modalIsOpen',false,false);
-      new RegisterState('userHasAccepted',true,false);
+      new RegisterState('modalIsOpen',false,'modal');
+      new RegisterState('userHasAccepted',true,'modal');
     }
   }).on('click','.ftx__modal__prompt button[ftx-user-refuses]',function(){
-    if(window[Global.appObj]['modalIsOpen'] === true){
+    if(window[Global.appObj]['modal']['modalIsOpen'] === true){
       $(this).parent().parent().parent().parent().find('.ftx__modal').toggle();
-      new RegisterState('modalIsOpen',false,false);
-      new RegisterState('userHasAccepted',false,false);
+      new RegisterState('modalIsOpen',false,'modal');
+      new RegisterState('userHasAccepted',false,'modal');
     }
   });
   return templateString;

@@ -2,6 +2,7 @@
  * Created by David Maser on 22/06/2017.
  */
 import GetAjax from '../classes/GetAjax';
+import RegisterState from '../classes/RegisterState';
 export default class fastAjax{
   constructor(option, expression,element){
     this.option = option;
@@ -10,6 +11,7 @@ export default class fastAjax{
     this.run();
   }
   run() {
+    new RegisterState('jsonLoaded',false,'appData');
     let jsonSource = this.option;
     let jsonObject = {};
     if (this.expression.indexOf(',') > -1) {

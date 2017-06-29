@@ -16,7 +16,8 @@ export default function GetAjax(url, props,element) {
     if(template !== null){
       a = FastTemplate(a,template);
     }
-    handle !== null ? new RegisterState(handle,a,true) : null;
+    handle !== null ? new RegisterState(handle,a,'appData') : null;
+    new RegisterState('jsonLoaded',true,'appData');
     Architect.build.experiment($('body').find(`[fstxj-id="${b}"]`),Global.ajax.render,a);
   }
   function processProps(data, props) {

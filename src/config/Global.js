@@ -3,7 +3,6 @@
  */
 export const Global = {
   appObj:'fast',
-  noWrapperElements:['panel','gutter'],
   node:'ft',
   experiment:{
     node:'ftx',
@@ -23,12 +22,14 @@ export const Global = {
     root:{
       node:'data',
       url:'../data'
-    }
+    },
+    overWriteSaves:false
   },
   init:{
     all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
   },
   options:{
+    noWrapperElements:['panel','gutter'],
     app:{
       onFail:['killFunctions','emptyCache','log','restart'],
       onEnter:['runSniffer','runCycle','waitAndSnoop'],

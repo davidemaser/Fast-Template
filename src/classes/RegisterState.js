@@ -7,22 +7,22 @@ export default class RegisterState{
    *
    * @param {string} obj
    * @param {boolean} val
-   * @param {boolean} isData
+   * @param {string} parent
    */
-  constructor(obj,val,isData){
+  constructor(obj,val,parent){
     this.obj = obj;
     this.val = val;
-    this.isData = isData;
+    this.parent = parent;
     this.run();
   }
   run(){
     typeof window[Global.appObj] !== 'object' ? window[Global.appObj] = {} : null;
-    if(this.isData === true){
-      if(typeof window[Global.appObj].appData === 'object'){
-        window[Global.appObj]['appData'][this.obj] = this.val;
+    if(this.parent !== '' && this.parent !== undefined){
+      if(typeof window[Global.appObj][this.parent] === 'object'){
+        window[Global.appObj][this.parent][this.obj] = this.val;
       }else{
-        window[Global.appObj].appData = {};
-        window[Global.appObj]['appData'][this.obj] = this.val;
+        window[Global.appObj][this.parent] = {};
+        window[Global.appObj][this.parent][this.obj] = this.val;
       }
     }else{
       window[Global.appObj][this.obj] = this.val;
