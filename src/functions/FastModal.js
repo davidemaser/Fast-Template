@@ -20,12 +20,12 @@ export default function FastModal(option, expression){
     templateString = templateString.replace(`@modal.${o}`,expressionObj[o]);
   }
   $('body').on('click','.ftx__modal__cta button,.ftx__modal__prompt button',function(){
-    if(window['modalIsOpen'] === false){
+    if(window.fast['modalIsOpen'] === false){
       $(this).parent().parent().find('.ftx__modal').toggle();
       new RegisterObject('modalIsOpen',true);
     }
   }).on('click','.ftx__modal__prompt button',function(){
-    if(window['modalIsOpen'] === true){
+    if(window.fast['modalIsOpen'] === true){
       $(this).parent().parent().parent().parent().find('.ftx__modal').toggle();
       new RegisterObject('modalIsOpen',false);
       new RegisterObject('userHasAccepted',true);

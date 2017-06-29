@@ -5,6 +5,7 @@ import {Faster,Architect} from '../components/Faster';
 import {Global} from '../config/Global';
 import FastProcessor from '../functions/FastProcessor';
 import Woops from './Woops';
+import RegisterObject from '../classes/RegisterObject';
 export default class Cycle{
   constructor(type){
     this.type = type;
@@ -16,6 +17,7 @@ export default class Cycle{
     this.run();
   }
   run(){
+    new RegisterObject('app','cycling');
     switch (this.type){
       case 'ft':
         let ftNodes = [];

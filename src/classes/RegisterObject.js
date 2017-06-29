@@ -8,6 +8,7 @@ export default class RegisterObject{
     this.run();
   }
   run(){
-    window[this.obj] = this.val;
+    typeof window['fast'] !== 'object' ? window['fast'] = {} : null;
+    window.fast[this.obj] = this.val;
   }
 }
