@@ -3,7 +3,7 @@
  */
 import {Global} from '../config/Global';
 import Cycle from './Cycle';
-import InitPlugins from '../plugins/Init';
+import FastPlugin from '../plugins/FastPlugin';
 
 export default class Sniffer{
   constructor(args){
@@ -17,6 +17,6 @@ export default class Sniffer{
     new Cycle('ft');
     new Cycle('ftx');
     new Cycle('fta');
-    new InitPlugins();
+    new FastPlugin();
   }
 }

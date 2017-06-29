@@ -1,11 +1,12 @@
 /**
  * Created by David Maser on 29/06/2017.
  */
-import {PluginConfig} from './config';
+import {PluginConfig,PluginAbstractor} from './Config';
 import Woops from '../classes/Woops';
 import RegisterState from '../classes/RegisterState';
-export default class InitPlugins{
+export default class FastPlugin{
   constructor(){
+    this.abstractRun = PluginAbstractor.run;
     this.run();
   }
   run(){
@@ -19,7 +20,7 @@ export default class InitPlugins{
           //execute plugin
         }else{
           new Woops({
-            origin: 'InitPlugins.run',
+            origin: 'FastPlugin.run',
             type: 'Plugin',
             message: 'Plugin Not found in configuration file',
             log: false

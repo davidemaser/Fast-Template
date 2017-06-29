@@ -2,7 +2,7 @@
  * Created by David Maser on 19/06/2017.
  */
 export const Global = {
-  appObj:'fast',
+  appObj:'__fast__',
   node:'ft',
   experiment:{
     node:'ftx',

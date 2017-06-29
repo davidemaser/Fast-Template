@@ -11,7 +11,7 @@ Installation
 - Execute npm install (install Node.js and NPM if not already done)
 - Execute npm run build to build a local distribution.
 
-Webpack configuration can be modified in the webpack.config.js file. 
+Webpack configuration can be modified in the webpack.Config.js file. 
 
 Introduction
 ------

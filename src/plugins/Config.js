@@ -20,3 +20,9 @@ export const PluginConfig = {
     }
   }
 };
+export const PluginAbstractor = {
+  run:false,
+  list:PluginConfig.installed,
+  import:'library',
+  exports:true
+};

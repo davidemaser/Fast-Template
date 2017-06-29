@@ -383,7 +383,7 @@ module.exports = {
  * Created by David Maser on 19/06/2017.
  */
 const Global = {
-  appObj:'fast',
+  appObj:'__fast__',
   node:'ft',
   experiment:{
     node:'ftx',
@@ -11692,7 +11692,7 @@ $(function(){
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cycle__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_Init__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(60);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -11712,7 +11712,7 @@ class Sniffer{
     new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ft');
     new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ftx');
     new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('fta');
-    new __WEBPACK_IMPORTED_MODULE_2__plugins_Init__["a" /* default */]();
+    new __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__["a" /* default */]();
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Sniffer;
@@ -13957,7 +13957,9 @@ function FastModal(option, expression){
 
 class RegisterState{
   /**
-   *
+   * This class registers states and state changes and a global object
+   * Type __fast__ (or the name of the app defined in config/Global)
+   * in console to view the object and it's properties
    * @param {string} obj
    * @param {(boolean|object)} val
    * @param {string} parent
@@ -13986,11 +13988,13 @@ class RegisterState{
 
 
 /***/ }),
-/* 58 */
+/* 58 */,
+/* 59 */,
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Config__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(57);
 /**
@@ -13999,22 +14003,23 @@ class RegisterState{
 
 
 
-class InitPlugins{
+class FastPlugin{
   constructor(){
+    this.abstractRun = __WEBPACK_IMPORTED_MODULE_0__Config__["a" /* PluginAbstractor */].run;
     this.run();
   }
   run(){
     let runList;
-    if(Array.isArray(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* PluginConfig */].installed)){
-      runList = __WEBPACK_IMPORTED_MODULE_0__config__["a" /* PluginConfig */].installed;
+    if(Array.isArray(__WEBPACK_IMPORTED_MODULE_0__Config__["b" /* PluginConfig */].installed)){
+      runList = __WEBPACK_IMPORTED_MODULE_0__Config__["b" /* PluginConfig */].installed;
       let p;
       for(p in runList){
-        if(typeof __WEBPACK_IMPORTED_MODULE_0__config__["a" /* PluginConfig */].library[runList[p]] === 'object'){
-          new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */](runList[p],__WEBPACK_IMPORTED_MODULE_0__config__["a" /* PluginConfig */].library[runList[p]],'plugins');
+        if(typeof __WEBPACK_IMPORTED_MODULE_0__Config__["b" /* PluginConfig */].library[runList[p]] === 'object'){
+          new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */](runList[p],__WEBPACK_IMPORTED_MODULE_0__Config__["b" /* PluginConfig */].library[runList[p]],'plugins');
           //execute plugin
         }else{
           new __WEBPACK_IMPORTED_MODULE_1__classes_Woops__["a" /* default */]({
-            origin: 'InitPlugins.run',
+            origin: 'FastPlugin.run',
             type: 'Plugin',
             message: 'Plugin Not found in configuration file',
             log: false
@@ -14022,19 +14027,19 @@ class InitPlugins{
         }
       }
     }else{
-      runList = __WEBPACK_IMPORTED_MODULE_0__config__["a" /* PluginConfig */].installed;
-      if(typeof __WEBPACK_IMPORTED_MODULE_0__config__["a" /* PluginConfig */].library[runList]){
+      runList = __WEBPACK_IMPORTED_MODULE_0__Config__["b" /* PluginConfig */].installed;
+      if(typeof __WEBPACK_IMPORTED_MODULE_0__Config__["b" /* PluginConfig */].library[runList]){
         new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */](runList,true,'plugins');
         //execute plugin
       }
     }
   }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = InitPlugins;
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastPlugin;
 
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14060,7 +14065,15 @@ const PluginConfig = {
     }
   }
 };
-/* harmony export (immutable) */ __webpack_exports__["a"] = PluginConfig;
+/* harmony export (immutable) */ __webpack_exports__["b"] = PluginConfig;
+
+const PluginAbstractor = {
+  run:false,
+  list:PluginConfig.installed,
+  import:'library',
+  exports:true
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = PluginAbstractor;
 
 
 /***/ })
