@@ -8,6 +8,7 @@ import FastAjax from './FastAjax';
 import FastForm from './FastForm';
 import FastGutter from './FastGutter';
 import FastPanel from './FastPanel';
+import FastModal from './FastModal';
 export default function FastProcessor(type, option, expression, element){
   switch (type){
     case 'math':
@@ -30,6 +31,9 @@ export default function FastProcessor(type, option, expression, element){
       break;
     case 'panel':
       return FastPanel(option,expression);
+      break;
+    case 'modal':
+      return FastModal(option,expression);
       break;
   }
 }

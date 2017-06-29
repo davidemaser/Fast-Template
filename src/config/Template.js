@@ -10,6 +10,11 @@ export const Template = {
   panel:{
     layout:'<section ftx-render class="ftx__panel">@render</section>'
   },
+  modal:{
+    full:{
+      layout:'<div class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div><div class="ftx__modal__prompt"><button>@modal.prompt</button></div></div></div>'
+    }
+  },
   table:{
     layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
     class:' class="@class"',
