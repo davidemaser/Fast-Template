@@ -6,6 +6,7 @@ import Woops from './Woops';
 import axios from 'axios';
 import {Architect} from '../components/Faster';
 import {FastTemplate} from '../functions/FastTemplate';
+import RegisterState from '../classes/RegisterState';
 export default function GetAjax(url, props,element) {
   this.url = url;
   this.props = props;
@@ -15,7 +16,7 @@ export default function GetAjax(url, props,element) {
     if(template !== null){
       a = FastTemplate(a,template);
     }
-    window[handle] = handle !== null ? a : null;
+    handle !== null ? new RegisterState(handle,a,true) : null;
     Architect.build.experiment($('body').find(`[fstxj-id="${b}"]`),Global.ajax.render,a);
   }
   function processProps(data, props) {

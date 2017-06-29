@@ -4,13 +4,13 @@
 import Woops from '../classes/Woops';
 import {Template} from '../config/Template';
 import {Global} from '../config/Global';
-import RegisterObject from '../classes/RegisterObject';
+import RegisterState from '../classes/RegisterState';
 export const Faster = {
   exec(){
     this.remove.emptyTags();
     this.remove.ignoredTags();
     Architect.render();
-    new RegisterObject('app','rendered');
+    new RegisterState('app','rendered');
   },
   extract: {
     node: {

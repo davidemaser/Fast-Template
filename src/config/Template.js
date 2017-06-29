@@ -12,7 +12,11 @@ export const Template = {
   },
   modal:{
     full:{
-      layout:'<div class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div><div class="ftx__modal__prompt"><button>@modal.prompt</button></div></div></div>'
+      layout:'<div class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
+      prompt:{
+        simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.promptConfirm</button></div>',
+        full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.promptConfirm</button><button ftx-user-refuses>@modal.promptRefuse</button></div>'
+      }
     }
   },
   table:{

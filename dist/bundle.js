@@ -383,6 +383,7 @@ module.exports = {
  * Created by David Maser on 19/06/2017.
  */
 const Global = {
+  appObj:'fast',
   noWrapperElements:['panel','gutter'],
   node:'ft',
   experiment:{
@@ -442,7 +443,11 @@ const Template = {
   },
   modal:{
     full:{
-      layout:'<div class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div><div class="ftx__modal__prompt"><button>@modal.prompt</button></div></div></div>'
+      layout:'<div class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
+      prompt:{
+        simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.promptConfirm</button></div>',
+        full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.promptConfirm</button><button ftx-user-refuses>@modal.promptRefuse</button></div>'
+      }
     }
   },
   table:{
@@ -10880,7 +10885,7 @@ class Woops{
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_RegisterObject__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_RegisterState__ = __webpack_require__(57);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -10893,7 +10898,7 @@ const Faster = {
     this.remove.emptyTags();
     this.remove.ignoredTags();
     Architect.render();
-    new __WEBPACK_IMPORTED_MODULE_3__classes_RegisterObject__["a" /* default */]('app','rendered');
+    new __WEBPACK_IMPORTED_MODULE_3__classes_RegisterState__["a" /* default */]('app','rendered');
   },
   extract: {
     node: {
@@ -11711,7 +11716,7 @@ class Sniffer{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Woops__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__classes_RegisterObject__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RegisterState__ = __webpack_require__(57);
 /**
  * Created by David Maser on 21/06/2017.
  */
@@ -11731,7 +11736,7 @@ class Cycle{
     this.run();
   }
   run(){
-    new __WEBPACK_IMPORTED_MODULE_4__classes_RegisterObject__["a" /* default */]('app','cycling');
+    new __WEBPACK_IMPORTED_MODULE_4__RegisterState__["a" /* default */]('app','cycling');
     switch (this.type){
       case 'ft':
         let ftNodes = [];
@@ -12083,9 +12088,11 @@ class fastAjax{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__functions_FastTemplate__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__ = __webpack_require__(57);
 /**
  * Created by David Maser on 20/06/2017.
  */
+
 
 
 
@@ -12100,7 +12107,7 @@ function GetAjax(url, props,element) {
     if(template !== null){
       a = __WEBPACK_IMPORTED_MODULE_4__functions_FastTemplate__["a" /* FastTemplate */](a,template);
     }
-    window[handle] = handle !== null ? a : null;
+    handle !== null ? new __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__["a" /* default */](handle,a,true) : null;
     __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($('body').find(`[fstxj-id="${b}"]`),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.render,a);
   }
   function processProps(data, props) {
@@ -13869,7 +13876,8 @@ module.exports = function (css) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastModal;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_RegisterObject__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(57);
 /**
  * Created by David Maser on 29/06/2017.
  */
@@ -13878,29 +13886,42 @@ module.exports = function (css) {
  */
 
 
+
 function FastModal(option, expression){
   let templateString = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal[option].layout;
+  let templatePrompt = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal[option].prompt;
   let expressionArray = expression.split(',');
   let expressionObj = {};
-  let e;
-  let o;
-  new __WEBPACK_IMPORTED_MODULE_1__classes_RegisterObject__["a" /* default */]('modalIsOpen',false);
+  let e,o;
+  new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',false,false);
   for(e in expressionArray){
     expressionObj[expressionArray[e].split(':')[0]] =  expressionArray[e].split(':')[1];
   }
   for(o in expressionObj){
-    templateString = templateString.replace(`@modal.${o}`,expressionObj[o]);
+    if(o === 'prompt' && expressionObj[o] !== '' && expressionObj[o] !== undefined){
+      templatePrompt = templatePrompt[expressionObj[o]];
+      templatePrompt = templatePrompt.replace('@modal.promptConfirm',expressionObj['promptConfirm']).replace('@modal.promptRefuse',expressionObj['promptRefuse']);
+      templateString = templateString.replace('@inject.prompt',templatePrompt);
+    }else{
+      templateString = templateString.replace(`@modal.${o}`,expressionObj[o]);
+    }
   }
   $('body').on('click','.ftx__modal__cta button,.ftx__modal__prompt button',function(){
-    if(window.fast['modalIsOpen'] === false){
+    if(window[__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appObj]['modalIsOpen'] === false){
       $(this).parent().parent().find('.ftx__modal').toggle();
-      new __WEBPACK_IMPORTED_MODULE_1__classes_RegisterObject__["a" /* default */]('modalIsOpen',true);
+      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',true,false);
     }
-  }).on('click','.ftx__modal__prompt button',function(){
-    if(window.fast['modalIsOpen'] === true){
+  }).on('click','.ftx__modal__prompt button[ftx-user-agrees]',function(){
+    if(window[__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appObj]['modalIsOpen'] === true){
       $(this).parent().parent().parent().parent().find('.ftx__modal').toggle();
-      new __WEBPACK_IMPORTED_MODULE_1__classes_RegisterObject__["a" /* default */]('modalIsOpen',false);
-      new __WEBPACK_IMPORTED_MODULE_1__classes_RegisterObject__["a" /* default */]('userHasAccepted',true);
+      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',false,false);
+      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('userHasAccepted',true,false);
+    }
+  }).on('click','.ftx__modal__prompt button[ftx-user-refuses]',function(){
+    if(window[__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appObj]['modalIsOpen'] === true){
+      $(this).parent().parent().parent().parent().find('.ftx__modal').toggle();
+      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',false,false);
+      new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('userHasAccepted',false,false);
     }
   });
   return templateString;
@@ -13909,25 +13930,44 @@ function FastModal(option, expression){
 
 /***/ }),
 /* 55 */,
-/* 56 */
+/* 56 */,
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /**
  * Created by David Maser on 29/06/2017.
  */
-class RegisterObject{
-  constructor(obj,val){
+
+class RegisterState{
+  /**
+   *
+   * @param {string} obj
+   * @param {boolean} val
+   * @param {boolean} isData
+   */
+  constructor(obj,val,isData){
     this.obj = obj;
     this.val = val;
+    this.isData = isData;
     this.run();
   }
   run(){
-    typeof window['fast'] !== 'object' ? window['fast'] = {} : null;
-    window.fast[this.obj] = this.val;
+    typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] !== 'object' ? window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] = {} : null;
+    if(this.isData === true){
+      if(typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj].appData === 'object'){
+        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj]['appData'][this.obj] = this.val;
+      }else{
+        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj].appData = {};
+        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj]['appData'][this.obj] = this.val;
+      }
+    }else{
+      window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.obj] = this.val;
+    }
   }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = RegisterObject;
+/* harmony export (immutable) */ __webpack_exports__["a"] = RegisterState;
 
 
 /***/ })
