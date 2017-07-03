@@ -181,6 +181,7 @@ export const Faster = {
     }
   }
 };
+
 export const Architect = {
   build: {
     element(origin, replace, content){
@@ -203,3 +204,9 @@ export const Architect = {
     $('body').attr('faster','render');
   }
 };
+if(typeof window['faster'] === 'object'){
+  window['__faster__']['core'] = Faster;
+}else{
+  window['__faster__'] = {};
+  window['__faster__']['core'] = Faster;
+}

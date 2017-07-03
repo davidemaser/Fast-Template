@@ -11129,6 +11129,7 @@ const Faster = {
 };
 /* harmony export (immutable) */ __webpack_exports__["b"] = Faster;
 
+
 const Architect = {
   build: {
     element(origin, replace, content){
@@ -11153,6 +11154,12 @@ const Architect = {
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Architect;
 
+if(typeof window['faster'] === 'object'){
+  window['__faster__']['core'] = Faster;
+}else{
+  window['__faster__'] = {};
+  window['__faster__']['core'] = Faster;
+}
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
 
 /***/ }),
