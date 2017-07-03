@@ -9,7 +9,7 @@ export default class RegisterState{
    * in console to view the object and it's properties
    * @param {string} obj
    * @param {(boolean|object)} val
-   * @param {string} parent
+   * @param {(string|null)} parent
    */
   constructor(obj,val,parent){
     this.obj = obj;

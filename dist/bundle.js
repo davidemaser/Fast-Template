@@ -447,7 +447,7 @@ class RegisterState{
    * in console to view the object and it's properties
    * @param {string} obj
    * @param {(boolean|object)} val
-   * @param {string} parent
+   * @param {(string|null)} parent
    */
   constructor(obj,val,parent){
     this.obj = obj;
@@ -498,10 +498,13 @@ const Template = {
       }
     }
   },
+  class:' class="@class"',
+  id:' id="@id"',
+  name:' name="@name"',
   table:{
     layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
-    class:' class="@class"',
-    id:' id="@id"',
+    class:this.class,
+    id:this.id,
     style:' style="@style"',
     elements:{
       header:{
@@ -514,7 +517,7 @@ const Template = {
         layout:'<tbody>@body.rows</tbody>',
         rows:{
           layout:'<tr>@body.rows.columns</tr>',
-          style:'style="@table.rows.style"',
+          style:' style="@table.rows.style"',
           columns:'<td></td>'
         }
       },
@@ -11794,7 +11797,7 @@ class Cycle{
     this.run();
   }
   run(){
-    new __WEBPACK_IMPORTED_MODULE_4__RegisterState__["a" /* default */]('app','cycling');
+    new __WEBPACK_IMPORTED_MODULE_4__RegisterState__["a" /* default */]('app','cycling',null);
     switch (this.type){
       case 'ft':
         let ftNodes = [];
@@ -13422,9 +13425,13 @@ function FastModal(option, expression){
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastHtml;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlUtilities__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_Woops__ = __webpack_require__(5);
 /**
  * Created by David Maser on 29/06/2017.
  */
+
+
 
 function FastHtml(option, expression){
   let HtmlTags = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].FastHtmlTags;
@@ -13436,31 +13443,30 @@ function FastHtml(option, expression){
       htmlStore[a] = htmlArray[a].trim();
     }
   }
-  function parseClosure(arr){
-    let rightArr = arr.reverse();
-    let arrString = '';
-    rightArr.map(function(a){
-      arrString += `</${a}>`;
-    });
-    return arrString.length > 0 ? arrString : '';
-  }
-  function multiplyTag(tag,rep){
-    let r;
-    let outPutString = '';
-    for(r=1;r<=rep;r++){
-      outPutString += `<${tag}>`;
-      outPutString += HtmlTags['closes'].includes(tag) ? `</${tag}>` : '';
-    }
-    return outPutString;
-  }
   function buildTag(obj){
     if(Array.isArray(obj)){
       let rootObj = obj[0].trim();
+      let rootObjProps;
+      if(rootObj.indexOf('[')>-1){
+        rootObjProps = rootObj.split('[')[1].split(']')[0];
+        rootObj = rootObj.replace(`[${rootObjProps}]`,'');
+      }else{
+        rootObjProps = null;
+      }
+      let rootObjPropString = rootObjProps !== null && rootObjProps !== undefined ? __WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlUtilities__["a" /* FastHtmlUtilities */].buildProps(rootObjProps) : '';
       let rootNode;
       let objString='';
       let closureArr = [];
       obj.map(function(a,b){
         if(b>0) {
+          let objProps;
+          if(a.indexOf('[')>-1){
+            objProps = a.split('[')[1].split(']')[0];
+            a = a.replace(`[${objProps}]`,'');
+          }else{
+            objProps = null;
+          }
+          let propString = objProps !== null && objProps !== undefined ? __WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlUtilities__["a" /* FastHtmlUtilities */].buildProps(objProps) : '';
           let elem = a.trim();
           let elemContent;
           if(elem.indexOf('{') > -1 && elem.indexOf('}') > -1){
@@ -13468,20 +13474,19 @@ function FastHtml(option, expression){
             elem = elem.split('{')[0];
           }
           if (elem.indexOf('*') > -1) {
-            objString += multiplyTag(elem.split('*')[0], elem.split('*')[1]);
+            objString += __WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlUtilities__["a" /* FastHtmlUtilities */].multiplyTag(elem.split('*')[0], elem.split('*')[1]);
           } else {
-            objString += `<${elem}>`;
+            objString += `<${elem}${propString}>`;
             objString += elemContent !== undefined ? elemContent : '';
             objString += HtmlTags['closes'].includes(elem) ? closureArr.push(elem) : '';
           }
         }
       });
-      rootNode = HtmlTags['closes'].includes(rootObj) ? `<${rootObj}>${objString.replace(/[0-9]/g, '')}${parseClosure(closureArr)}</${rootObj}>` : `<${rootObj}>${objString.replace(/[0-9]/g, '')}${parseClosure(closureArr)}`;
+      rootNode = HtmlTags['closes'].includes(rootObj) ? `<${rootObj}${rootObjPropString}>${objString.replace(/[0-9]/g, '')}${__WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlUtilities__["a" /* FastHtmlUtilities */].parseClosure(closureArr)}</${rootObj}>` : `<${rootObj}>${objString.replace(/[0-9]/g, '')}${__WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlUtilities__["a" /* FastHtmlUtilities */].parseClosure(closureArr)}`;
       return rootNode;
     }
   }
   function parseObject(obj){
-    let isProps = ['class','id'];
     if(typeof obj === 'object'){
       let o;
       let objArray;
@@ -13492,10 +13497,16 @@ function FastHtml(option, expression){
         }else{
           objArray = obj[o];
         }
-        console.log(objArray)
         htmlString += buildTag(objArray);
       }
       return htmlString;
+    }else{
+      new __WEBPACK_IMPORTED_MODULE_2__classes_Woops__["a" /* default */]({
+        origin:'FastHtml.parseObject',
+        type:'Expecting Object',
+        message:'Function was expecting an object but did not receive one',
+        log:false
+      });
     }
   }
   return parseObject(htmlStore);
@@ -14171,6 +14182,63 @@ module.exports = function (css) {
 	// send back the fixed css
 	return fixedCss;
 };
+
+
+/***/ }),
+/* 60 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
+/**
+ * Created by David Maser on 29/06/2017.
+ */
+
+
+const FastHtmlUtilities = {
+  HtmlTags:__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].FastHtmlTags,
+  parseClosure(arr){
+    let rightArr = arr.reverse();
+    let arrString = '';
+    rightArr.map(function (a) {
+      arrString += `</${a}>`;
+    });
+    return arrString.length > 0 ? arrString : '';
+  },
+  parseTemplateString(obj){
+    let o;
+    let propString = '';
+    for (o in obj) {
+      propString += __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */][o] !== undefined ? __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */][o].replace(`@${o}`, obj[o]) : ` ${o}="${obj[o]}"`;
+    }
+    return propString;
+  },
+  buildProps(obj){
+    let objArray;
+    let objBuild = {};
+    if (obj.indexOf(',') > -1) {
+      objArray = obj.split(',');
+      let o;
+      for (o in objArray) {
+        objBuild[objArray[o].split('=')[0]] = objArray[o].split('=')[1];
+      }
+    } else {
+      objBuild[obj.split('=')[0]] = obj.split('=')[1];
+    }
+    return this.parseTemplateString(objBuild);
+  },
+  multiplyTag(tag,rep){
+    let r;
+    let outPutString = '';
+    for(r=1;r<=rep;r++){
+      outPutString += `<${tag}>`;
+      outPutString += this.HtmlTags['closes'].includes(tag) ? `</${tag}>` : '';
+    }
+    return outPutString;
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastHtmlUtilities;
 
 
 /***/ })
