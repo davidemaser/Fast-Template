@@ -1,4 +1,4 @@
-FAST Template
+FASTER Template
 ======
 
 ### A scalable and scriptable templating engine model
@@ -16,17 +16,17 @@ Webpack configuration can be modified in the webpack.Config.js file.
 Introduction
 ------
 
-Fast is a flexible templating engine that uses common html/xml tag formatting to simplify the creation of complex components and data fed objects.
+Faster is a flexible templating engine that uses common html/xml tag formatting to simplify the creation of complex components and data fed objects.
 
-Fast uses special tags within an html page that allows the user to inject a template assignment or data call simply, without having to code or tweak an existing component or layout.
+Faster uses special tags within an html page that allows the user to inject a template assignment or data call simply, without having to code or tweak an existing component or layout.
 
-#### Fast Tags 
+#### Faster Tags 
 
-``<ft>Standard Fast tags</ft>``
+``<ft>Standard Faster tags</ft>``
 
-Standard Fast tags allow you to create basic template objects and render simple html and/or JSON. FT tags, contrary to FTX tags are not objects. The tag content is a string and is parsed as such.
+Standard Faster tags allow you to create basic template objects and render simple html and/or JSON. FT tags, contrary to FTX tags are not objects. The tag content is a string and is parsed as such.
 
-Below is a list of attributes that can be used in Fast Tags.
+Below is a list of attributes that can be used in Faster Tags.
 
 - class - defines the class to be assigned to the host
 - render - define a html object into which the content will be rendered (i.e div, section, nav...)
@@ -59,9 +59,9 @@ will render as
       
 ``<section class="old">Compiled JSON here</section>``
 
-Tags can also have an ignore property assigned. These tags will not be parsed by Fast and will be removed from the dom. Ignore property is formatted as: ``<ft ignore>``
+Tags can also have an ignore property assigned. These tags will not be parsed by Faster and will be removed from the dom. Ignore property is formatted as: ``<ft ignore>``
 
-#### Fast eXperiment tags
+#### Faster eXperiment tags
 ``<ftx>{object:option}expression{~object}</ftx>``
 
 Experiment tags are, as their name implies, the result of an experiment to render advanced properties using a simple template tag. These tags can be used to execute mathemtical equations, conditional clauses, build forms and page elements and render data in a table layout.
@@ -76,14 +76,14 @@ FTX form object.
 Each object has a specific list of accepted properties that can be chained together in the expression. Each property is separated by a comma. Properties are formatted as ``property:value``.
 Certain properties can accept objects or arrays.
 
-#### Fast Ajax Tags
+#### Faster Ajax Tags
 ``<fta>{json:url}node=root_node,show=5,saveAs=something{~json}</fta>``
 
-Fast Ajax tags allow you to execute an XHR request without ever touching the actual ajax call. The JSON data returned can be passed to a template and rendered or saved as a global object and used by other functions in the application (template models are currently in work).
+Faster Ajax tags allow you to execute an XHR request without ever touching the actual ajax call. The JSON data returned can be passed to a template and rendered or saved as a global object and used by other functions in the application (template models are currently in work).
 
-The Fast Ajax tag only has one require parameter, the URL. Callbacks can be bound to the function to execute a custom function with the returned data.
+The Faster Ajax tag only has one require parameter, the URL. Callbacks can be bound to the function to execute a custom function with the returned data.
 
-The Fast Ajax object can accept the following properties:
+The Faster Ajax object can accept the following properties:
 
 url: the url to the JSON file (the root of your data objects can be defined in the Global config file)
 
