@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<script type="text/javascript" src="bundle.js?d008d3a0d7d8eecc33fc"></script></head>
+<script type="text/javascript" src="bundle.js?049bfa8bd145d135de82"></script></head>
 <body fast="template">
 <ft>class:new,render:div,content:{here's my content}</ft>
 <ft>template:div,content:{this is a template}</ft>
@@ -27,7 +27,8 @@
 <ftx>{modal:full}title:this is the title,message:this would be the message part,prompt:full,promptConfirm:I Agree,promptRefuse:No,cta:Click Here{~modal}</ftx>
 <ftx>{html}
     section -- div*3
-    div -- nav -- div
+    section -- nav -- section -- div -- p{this will render in the paragraph}
+    strong -- i{<span>this will be italic</span>}
     {~html}</ftx>
 </body>
 </html>

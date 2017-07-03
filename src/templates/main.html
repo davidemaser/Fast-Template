@@ -27,7 +27,8 @@
 <ftx>{modal:full}title:this is the title,message:this would be the message part,prompt:full,promptConfirm:I Agree,promptRefuse:No,cta:Click Here{~modal}</ftx>
 <ftx>{html}
     section -- div*3
-    div -- nav -- div
+    section -- nav -- section -- div -- p{this will render in the paragraph}
+    strong -- i{<span>this will be italic</span>}
     {~html}</ftx>
 </body>
 </html>
