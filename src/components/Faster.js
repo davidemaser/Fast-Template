@@ -200,6 +200,6 @@ export const Architect = {
     }
   },
   render(){
-    $('body').attr('fast','render');
+    $('body').attr('faster','render');
   }
 };

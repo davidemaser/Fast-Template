@@ -5,7 +5,7 @@ import {Global} from '../config/Global';
 export default class RegisterState{
   /**
    * This class registers states and state changes and a global object
-   * Type __fast__ (or the name of the app defined in config/Global)
+   * Type __faster__ (or the name of the app defined in config/Global)
    * in console to view the object and it's properties
    * @param {string} obj
    * @param {(boolean|object)} val

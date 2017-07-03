@@ -1,8 +1,9 @@
 /**
  * Created by David Maser on 29/06/2017.
  */
-import {FastHtmlTags} from './FastHtmlTags';
+import {Global} from '../config/Global';
 export default function FastHtml(option, expression){
+  let HtmlTags = Global.FastHtmlTags;
   let htmlStore = {};
   let htmlArray = expression.trim().split(/\r?\n/);
   if(Array.isArray(htmlArray)){
@@ -24,7 +25,7 @@ export default function FastHtml(option, expression){
     let outPutString = '';
     for(r=1;r<=rep;r++){
       outPutString += `<${tag}>`;
-      outPutString += FastHtmlTags['closes'].includes(tag) ? `</${tag}>` : '';
+      outPutString += HtmlTags['closes'].includes(tag) ? `</${tag}>` : '';
     }
     return outPutString;
   }
@@ -47,11 +48,11 @@ export default function FastHtml(option, expression){
           } else {
             objString += `<${elem}>`;
             objString += elemContent !== undefined ? elemContent : '';
-            objString += FastHtmlTags['closes'].includes(elem) ? closureArr.push(elem) : '';
+            objString += HtmlTags['closes'].includes(elem) ? closureArr.push(elem) : '';
           }
         }
       });
-      rootNode = FastHtmlTags['closes'].includes(rootObj) ? `<${rootObj}>${objString.replace(/[0-9]/g, '')}${parseClosure(closureArr)}</${rootObj}>` : `<${rootObj}>${objString.replace(/[0-9]/g, '')}${parseClosure(closureArr)}`;
+      rootNode = HtmlTags['closes'].includes(rootObj) ? `<${rootObj}>${objString.replace(/[0-9]/g, '')}${parseClosure(closureArr)}</${rootObj}>` : `<${rootObj}>${objString.replace(/[0-9]/g, '')}${parseClosure(closureArr)}`;
       return rootNode;
     }
   }

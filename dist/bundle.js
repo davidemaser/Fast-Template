@@ -383,7 +383,7 @@ module.exports = {
  * Created by David Maser on 19/06/2017.
  */
 const Global = {
-  appObj:'__fast__',
+  appObj:'__faster__',
   node:'ft',
   experiment:{
     node:'ftx',
@@ -419,6 +419,11 @@ const Global = {
     views:{
       model:'default'
     }
+  },
+  FastHtmlTags:{
+    closes : [
+      'div','section','button','nav','p','span','header','footer','strong','i','h1','h2','h3','h4','h5','h6','ul','li','menu','pre','select','u'
+    ]
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Global;
@@ -438,7 +443,7 @@ let Log = [];
 class RegisterState{
   /**
    * This class registers states and state changes and a global object
-   * Type __fast__ (or the name of the app defined in config/Global)
+   * Type __faster__ (or the name of the app defined in config/Global)
    * in console to view the object and it's properties
    * @param {string} obj
    * @param {(boolean|object)} val
@@ -11140,7 +11145,7 @@ const Architect = {
     }
   },
   render(){
-    $('body').attr('fast','render');
+    $('body').attr('faster','render');
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Architect;
@@ -13416,12 +13421,13 @@ function FastModal(option, expression){
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastHtml;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FastHtmlTags__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /**
  * Created by David Maser on 29/06/2017.
  */
 
 function FastHtml(option, expression){
+  let HtmlTags = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].FastHtmlTags;
   let htmlStore = {};
   let htmlArray = expression.trim().split(/\r?\n/);
   if(Array.isArray(htmlArray)){
@@ -13443,7 +13449,7 @@ function FastHtml(option, expression){
     let outPutString = '';
     for(r=1;r<=rep;r++){
       outPutString += `<${tag}>`;
-      outPutString += __WEBPACK_IMPORTED_MODULE_0__FastHtmlTags__["a" /* FastHtmlTags */]['closes'].includes(tag) ? `</${tag}>` : '';
+      outPutString += HtmlTags['closes'].includes(tag) ? `</${tag}>` : '';
     }
     return outPutString;
   }
@@ -13466,11 +13472,11 @@ function FastHtml(option, expression){
           } else {
             objString += `<${elem}>`;
             objString += elemContent !== undefined ? elemContent : '';
-            objString += __WEBPACK_IMPORTED_MODULE_0__FastHtmlTags__["a" /* FastHtmlTags */]['closes'].includes(elem) ? closureArr.push(elem) : '';
+            objString += HtmlTags['closes'].includes(elem) ? closureArr.push(elem) : '';
           }
         }
       });
-      rootNode = __WEBPACK_IMPORTED_MODULE_0__FastHtmlTags__["a" /* FastHtmlTags */]['closes'].includes(rootObj) ? `<${rootObj}>${objString.replace(/[0-9]/g, '')}${parseClosure(closureArr)}</${rootObj}>` : `<${rootObj}>${objString.replace(/[0-9]/g, '')}${parseClosure(closureArr)}`;
+      rootNode = HtmlTags['closes'].includes(rootObj) ? `<${rootObj}>${objString.replace(/[0-9]/g, '')}${parseClosure(closureArr)}</${rootObj}>` : `<${rootObj}>${objString.replace(/[0-9]/g, '')}${parseClosure(closureArr)}`;
       return rootNode;
     }
   }
@@ -13496,22 +13502,7 @@ function FastHtml(option, expression){
 }
 
 /***/ }),
-/* 52 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/**
- * Created by David Maser on 29/06/2017.
- */
-const FastHtmlTags = {
-  closes : [
-    'div','section','button','nav','p','span','header','footer','strong','i','h1','h2','h3','h4','h5','h6','ul','li','menu','pre','select','u'
-  ]
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastHtmlTags;
-
-
-/***/ }),
+/* 52 */,
 /* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
