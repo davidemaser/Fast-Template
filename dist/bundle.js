@@ -420,7 +420,7 @@ const Global = {
       model:'default'
     }
   },
-  FastHtmlTags:{
+  fastHtmlTags:{
     closes : [
       'div','section','button','nav','p','span','header','footer','strong','i','h1','h2','h3','h4','h5','h6','ul','li','menu','pre','select','u'
     ]
@@ -11851,7 +11851,6 @@ class Cycle{
           }
           let ftxNodeElement = $('body').find(`[fstx-id="${b}"]`);
           $.when(__WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__["a" /* default */](xType,xOption,xStatement,b)).then((a)=>{
-            console.log(a);
             __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].options.noWrapperElements.indexOf(xType) > -1 ? __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxNodeElement,null,a) : __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxNodeElement,__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].experiment.render,a);
           });
         });
@@ -13433,8 +13432,15 @@ function FastModal(option, expression){
 
 
 
+/**
+ * Function that reads and parses code into html
+ * @param {string} option
+ * @param {string} expression
+ * @returns {string}
+ * @constructor
+ */
 function FastHtml(option, expression){
-  let HtmlTags = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].FastHtmlTags;
+  let HtmlTags = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].fastHtmlTags;
   let htmlStore = {};
   let htmlArray = expression.trim().split(/\r?\n/);
   if(Array.isArray(htmlArray)){
@@ -13443,6 +13449,7 @@ function FastHtml(option, expression){
       htmlStore[a] = htmlArray[a].trim();
     }
   }
+
   function buildTag(obj){
     if(Array.isArray(obj)){
       let rootObj = obj[0].trim();
@@ -13474,7 +13481,7 @@ function FastHtml(option, expression){
             elem = elem.split('{')[0];
           }
           if (elem.indexOf('*') > -1) {
-            objString += __WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlUtilities__["a" /* FastHtmlUtilities */].multiplyTag(elem.split('*')[0], elem.split('*')[1]);
+            objString += objProps !== undefined ? __WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlUtilities__["a" /* FastHtmlUtilities */].multiplyTag(elem.split('*')[0], elem.split('*')[1],objProps) : __WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlUtilities__["a" /* FastHtmlUtilities */].multiplyTag(elem.split('*')[0], elem.split('*')[1]);
           } else {
             objString += `<${elem}${propString}>`;
             objString += elemContent !== undefined ? elemContent : '';
@@ -14197,7 +14204,7 @@ module.exports = function (css) {
 
 
 const FastHtmlUtilities = {
-  HtmlTags:__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].FastHtmlTags,
+  HtmlTags:__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].fastHtmlTags,
   parseClosure(arr){
     let rightArr = arr.reverse();
     let arrString = '';
@@ -14228,11 +14235,17 @@ const FastHtmlUtilities = {
     }
     return this.parseTemplateString(objBuild);
   },
-  multiplyTag(tag,rep){
+  multiplyTag(tag,rep,val){
+    val = val.indexOf(',') ? val.split(',') : val;
     let r;
     let outPutString = '';
     for(r=1;r<=rep;r++){
       outPutString += `<${tag}>`;
+      if(Array.isArray(val)){
+        outPutString += val !== undefined && val[r-1] !== undefined ? val[r-1] : '';
+      }else{
+        outPutString += val !== undefined ? val : '';
+      }
       outPutString += this.HtmlTags['closes'].includes(tag) ? `</${tag}>` : '';
     }
     return outPutString;

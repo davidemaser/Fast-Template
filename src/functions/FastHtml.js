@@ -4,8 +4,15 @@
 import {Global} from '../config/Global';
 import {FastHtmlUtilities} from '../functions/FastHtmlUtilities';
 import Woops from '../classes/Woops';
+/**
+ * Function that reads and parses code into html
+ * @param {string} option
+ * @param {string} expression
+ * @returns {string}
+ * @constructor
+ */
 export default function FastHtml(option, expression){
-  let HtmlTags = Global.FastHtmlTags;
+  let HtmlTags = Global.fastHtmlTags;
   let htmlStore = {};
   let htmlArray = expression.trim().split(/\r?\n/);
   if(Array.isArray(htmlArray)){
@@ -14,6 +21,7 @@ export default function FastHtml(option, expression){
       htmlStore[a] = htmlArray[a].trim();
     }
   }
+
   function buildTag(obj){
     if(Array.isArray(obj)){
       let rootObj = obj[0].trim();
@@ -45,7 +53,7 @@ export default function FastHtml(option, expression){
             elem = elem.split('{')[0];
           }
           if (elem.indexOf('*') > -1) {
-            objString += FastHtmlUtilities.multiplyTag(elem.split('*')[0], elem.split('*')[1]);
+            objString += objProps !== undefined ? FastHtmlUtilities.multiplyTag(elem.split('*')[0], elem.split('*')[1],objProps) : FastHtmlUtilities.multiplyTag(elem.split('*')[0], elem.split('*')[1]);
           } else {
             objString += `<${elem}${propString}>`;
             objString += elemContent !== undefined ? elemContent : '';

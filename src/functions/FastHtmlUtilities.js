@@ -4,7 +4,7 @@
 import {Global} from '../config/Global';
 import {Template} from '../config/Template';
 export const FastHtmlUtilities = {
-  HtmlTags:Global.FastHtmlTags,
+  HtmlTags:Global.fastHtmlTags,
   parseClosure(arr){
     let rightArr = arr.reverse();
     let arrString = '';
@@ -35,11 +35,17 @@ export const FastHtmlUtilities = {
     }
     return this.parseTemplateString(objBuild);
   },
-  multiplyTag(tag,rep){
+  multiplyTag(tag,rep,val){
+    val = val.indexOf(',') ? val.split(',') : val;
     let r;
     let outPutString = '';
     for(r=1;r<=rep;r++){
       outPutString += `<${tag}>`;
+      if(Array.isArray(val)){
+        outPutString += val !== undefined && val[r-1] !== undefined ? val[r-1] : '';
+      }else{
+        outPutString += val !== undefined ? val : '';
+      }
       outPutString += this.HtmlTags['closes'].includes(tag) ? `</${tag}>` : '';
     }
     return outPutString;
