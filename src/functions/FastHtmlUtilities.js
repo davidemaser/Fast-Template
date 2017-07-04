@@ -29,10 +29,10 @@ export const FastHtmlUtilities = {
       objArray = obj.split(',');
       let o;
       for (o in objArray) {
-        objArray[o].indexOf('ftx-bind') > -1 ? new FastHtmlEvents(objArray[o],obj) : objBuild[objArray[o].split('=')[0]] = objArray[o].split('=')[1];
+        objArray[o].indexOf('bind') > -1 ? new FastHtmlEvents(objArray[o],obj) : objBuild[objArray[o].split('=')[0]] = objArray[o].split('=')[1];
       }
     } else {
-        obj.indexOf('ftx-bind') > -1 ? new FastHtmlEvents(obj) : objBuild[obj.split('=')[0]] = obj.split('=')[1];
+        obj.indexOf('bind') > -1 ? new FastHtmlEvents(obj) : objBuild[obj.split('=')[0]] = obj.split('=')[1];
     }
     return this.parseTemplateString(objBuild);
   },
