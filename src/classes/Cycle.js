@@ -17,7 +17,7 @@ export default class Cycle{
     this.run();
   }
   run(){
-    new RegisterState('app','cycling',null);
+    new RegisterState('app','cycling');
     switch (this.type){
       case 'ft':
         let ftNodes = [];

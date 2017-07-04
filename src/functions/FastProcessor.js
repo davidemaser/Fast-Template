@@ -10,6 +10,7 @@ import FastGutter from './FastGutter';
 import FastPanel from './FastPanel';
 import FastModal from './FastModal';
 import FastHtml from './FastHtml';
+import FastAnimator from './FastAnimator';
 export default function FastProcessor(type, option, expression, element){
   switch (type){
     case 'math':
@@ -38,6 +39,9 @@ export default function FastProcessor(type, option, expression, element){
       break;
     case 'html':
       return FastHtml(option,expression);
+      break;
+    case 'animate':
+      new FastAnimator(option,expression);
       break;
   }
 }

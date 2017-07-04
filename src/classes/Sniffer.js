@@ -14,9 +14,9 @@ export default class Sniffer{
   }
 
   cycle(){
-    new Cycle('ft');
-    new Cycle('ftx');
-    new Cycle('fta');
+    new Cycle('ft'); //basic Faster tags
+    new Cycle('ftx'); //Faster experimental tags
+    new Cycle('fta'); //Faster Ajax tags
     new FastPlugin();
   }
 }
