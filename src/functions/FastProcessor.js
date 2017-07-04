@@ -41,7 +41,7 @@ export default function FastProcessor(type, option, expression, element){
       return FastHtml(option,expression);
       break;
     case 'animate':
-      new FastAnimator(option,expression);
+      return new FastAnimator(option,expression);
       break;
   }
 }

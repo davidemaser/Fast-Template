@@ -11982,7 +11982,7 @@ function FastProcessor(type, option, expression, element){
       return __WEBPACK_IMPORTED_MODULE_8__FastHtml__["a" /* default */](option,expression);
       break;
     case 'animate':
-      new __WEBPACK_IMPORTED_MODULE_9__FastAnimator__["a" /* default */](option,expression);
+      return new __WEBPACK_IMPORTED_MODULE_9__FastAnimator__["a" /* default */](option,expression);
       break;
   }
 }
