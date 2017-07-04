@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<script type="text/javascript" src="bundle.js?bef94b7cff203a7480e0"></script></head>
+<script type="text/javascript" src="bundle.js?e5b38e718efd22418888"></script></head>
 <body faster="template">
 <ft>class:new,render:div,content:{here's my content}</ft>
 <ft>template:div,content:{this is a template}</ft>
@@ -26,7 +26,7 @@
 <ftx>{modal:full}title:this is the title,message:this would be the message part,prompt:full,promptConfirm:I Agree,promptRefuse:No,cta:Click Here{~modal}</ftx>
 <ftx>{html}
     section[name=A_NAME_HERE] -- div*3[first,second,third]
-    section[class=this] -- nav -- section[name=mine] -- div[class=this,id=that] -- p[data-render=long]{this will render in the paragraph}
+    section[class=this,id=that] -- nav -- section[name=mine] -- div[class=this,id=another,ftx-bind=click(test)] -- p[data-render=long]{this will render in the paragraph}
     strong -- i{<span>this will be italic</span>}
     {~html}</ftx>
 </body>

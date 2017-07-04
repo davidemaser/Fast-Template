@@ -14205,9 +14205,11 @@ module.exports = function (css) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastHtmlEvents__ = __webpack_require__(61);
 /**
  * Created by David Maser on 29/06/2017.
  */
+
 
 
 const FastHtmlUtilities = {
@@ -14235,10 +14237,10 @@ const FastHtmlUtilities = {
       objArray = obj.split(',');
       let o;
       for (o in objArray) {
-        objBuild[objArray[o].split('=')[0]] = objArray[o].split('=')[1];
+        objArray[o].indexOf('ftx-bind') > -1 ? new __WEBPACK_IMPORTED_MODULE_2__functions_FastHtmlEvents__["a" /* default */](objArray[o],obj) : objBuild[objArray[o].split('=')[0]] = objArray[o].split('=')[1];
       }
     } else {
-      objBuild[obj.split('=')[0]] = obj.split('=')[1];
+        obj.indexOf('ftx-bind') > -1 ? new __WEBPACK_IMPORTED_MODULE_2__functions_FastHtmlEvents__["a" /* default */](obj) : objBuild[obj.split('=')[0]] = obj.split('=')[1];
     }
     return this.parseTemplateString(objBuild);
   },
@@ -14259,6 +14261,70 @@ const FastHtmlUtilities = {
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastHtmlUtilities;
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlFunctions__ = __webpack_require__(62);
+/**
+ * Created by David Maser on 04/07/2017.
+ */
+
+
+class FastHtmlEvents{
+  constructor(obj,origin){
+    this.obj = obj;
+    this.origin = origin;
+    this.root = window;
+    this.level = 'body';
+    this.run();
+  }
+  run(){
+    if(this.origin.indexOf('id=')>-1) {
+      let objElement = this.origin.split('id=')[1];
+      objElement = objElement.indexOf(',') > -1 ? objElement.split(',')[0] : objElement;
+      let objDefine = this.obj.split('=')[1];
+      let objEvent = objDefine.split('(')[0];
+      let objFunction = objDefine.split('(')[1].split(')')[0];
+      this.bind(objEvent,objElement, objFunction);
+    }else{
+      new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+        origin:'FastHtmlEvents.run',
+        type:'ID Not Defined',
+        message:'Object needs to have an assigned ID in order for events to be bound to it',
+        log:false
+      })
+    }
+  }
+  bind(ev,elem,fn){
+    $(this.level).on(ev,`#${elem}`,()=>{
+      __WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlFunctions__["a" /* FastHtmlFunctions */][fn](elem);
+    })
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastHtmlEvents;
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
+
+/***/ }),
+/* 62 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * Created by David Maser on 04/07/2017.
+ */
+const FastHtmlFunctions = {
+  test:function(elem){
+    elem = elem || null;
+    console.log('this function was executed by FastHtmlEvents',elem);
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastHtmlFunctions;
 
 
 /***/ })

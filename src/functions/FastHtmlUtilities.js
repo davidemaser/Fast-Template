@@ -3,6 +3,7 @@
  */
 import {Global} from '../config/Global';
 import {Template} from '../config/Template';
+import FastHtmlEvents from '../functions/FastHtmlEvents';
 export const FastHtmlUtilities = {
   HtmlTags:Global.fastHtmlTags,
   parseClosure(arr){
@@ -28,10 +29,10 @@ export const FastHtmlUtilities = {
       objArray = obj.split(',');
       let o;
       for (o in objArray) {
-        objBuild[objArray[o].split('=')[0]] = objArray[o].split('=')[1];
+        objArray[o].indexOf('ftx-bind') > -1 ? new FastHtmlEvents(objArray[o],obj) : objBuild[objArray[o].split('=')[0]] = objArray[o].split('=')[1];
       }
     } else {
-      objBuild[obj.split('=')[0]] = obj.split('=')[1];
+        obj.indexOf('ftx-bind') > -1 ? new FastHtmlEvents(obj) : objBuild[obj.split('=')[0]] = obj.split('=')[1];
     }
     return this.parseTemplateString(objBuild);
   },
