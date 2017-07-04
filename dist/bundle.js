@@ -424,6 +424,13 @@ const Global = {
     closes : [
       'div','section','button','nav','p','span','header','footer','strong','i','h1','h2','h3','h4','h5','h6','ul','li','menu','pre','select','u'
     ]
+  },
+  fastAnimator:{
+    container:{
+      layout:'<div @container.class></div>',
+      class:'animation-layer',
+      position:'absolute'
+    }
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Global;
@@ -432,174 +439,6 @@ let Log = [];
 
 /***/ }),
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/**
- * Created by David Maser on 22/06/2017.
- */
-const Template = {
-  div:'<div data-atrribute="jeer">',
-  footer:'<footer>',
-  gutter:{
-    layout:'<section ftx-render class="ftx__gutter">@render</section>'
-  },
-  panel:{
-    layout:'<section ftx-render class="ftx__panel">@render</section>'
-  },
-  modal:{
-    full:{
-      layout:'<div class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
-      prompt:{
-        simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.promptConfirm</button></div>',
-        full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.promptConfirm</button><button ftx-user-refuses>@modal.promptRefuse</button></div>'
-      }
-    }
-  },
-  class:' class="@class"',
-  id:' id="@id"',
-  name:' name="@name"',
-  table:{
-    layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
-    class:this.class,
-    id:this.id,
-    style:' style="@style"',
-    elements:{
-      header:{
-        layout:'<thead></thead>'
-      },
-      footer:{
-        layout:'<tfoot></tfoot>'
-      },
-      body:{
-        layout:'<tbody>@body.rows</tbody>',
-        rows:{
-          layout:'<tr>@body.rows.columns</tr>',
-          style:' style="@table.rows.style"',
-          columns:'<td></td>'
-        }
-      },
-    }
-  },
-  login:{
-    layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
-    class:' class="@class"',
-    id:' id="@id"',
-    style:' style="@style"',
-    action:' action="@action"',
-    elements:[
-      {
-        element:'input',
-        type:'text',
-        name:'userName',
-        placeholder:'USER NAME',
-        class:'',
-        id:''
-      },
-      {
-        element:'input',
-        type:'password',
-        name:'passWord',
-        placeholder:'PASSWORD',
-        class:'',
-        id:''
-      },
-      {
-        element:'input',
-        type:'checkbox',
-        name:'myCheck',
-        class:'',
-        id:'',
-        checked:true
-      },
-      {
-        element:'input',
-        type:'radio',
-        name:'myRadio',
-        class:'',
-        id:''
-      },
-      {
-        element:'radiogroup',
-        type:'radio',
-        name:'myRadio',
-        class:'',
-        id:'',
-        options:[
-          {
-            label:'hi',
-            value:'hi'
-          },
-          {
-            label:'bye',
-            value:'bye'
-          },
-          {
-            label:'what',
-            value:'what',
-            selected:true
-          }
-        ]
-      },
-      {
-        element:'textarea',
-        placeholder:'',
-        name:'TEXT',
-        rows:10,
-        cols:10,
-        class:'',
-        id:''
-      },
-      {
-        element:'select',
-        name:'TEXT',
-        class:'',
-        id:'',
-        options:[
-          {
-            label:'hi',
-            value:'hi'
-          },
-          {
-            label:'bye',
-            value:'bye'
-          },
-          {
-            label:'what',
-            value:'what',
-            selected:true
-          }
-        ]
-      },
-      {
-        element:'input',
-        type:'submit',
-        name:'myButton',
-        placeholder:'CLICK',
-        class:'',
-        id:''
-      },
-    ]
-  },
-  account:{
-    layout:'<form@account.class@account.id@account.style@account.action>@account.elements</form>',
-    elements:[
-      {
-        element:'input',
-        type:'text',
-        name:'userName',
-        placeholder:'USER NAME',
-        class:'',
-        id:''
-      }
-    ]
-  }
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = Template;
-
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10859,6 +10698,174 @@ return jQuery;
 
 
 /***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * Created by David Maser on 22/06/2017.
+ */
+const Template = {
+  div:'<div data-atrribute="jeer">',
+  footer:'<footer>',
+  gutter:{
+    layout:'<section ftx-render class="ftx__gutter">@render</section>'
+  },
+  panel:{
+    layout:'<section ftx-render class="ftx__panel">@render</section>'
+  },
+  modal:{
+    full:{
+      layout:'<div class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
+      prompt:{
+        simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.promptConfirm</button></div>',
+        full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.promptConfirm</button><button ftx-user-refuses>@modal.promptRefuse</button></div>'
+      }
+    }
+  },
+  class:' class="@class"',
+  id:' id="@id"',
+  name:' name="@name"',
+  table:{
+    layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
+    class:this.class,
+    id:this.id,
+    style:' style="@style"',
+    elements:{
+      header:{
+        layout:'<thead></thead>'
+      },
+      footer:{
+        layout:'<tfoot></tfoot>'
+      },
+      body:{
+        layout:'<tbody>@body.rows</tbody>',
+        rows:{
+          layout:'<tr>@body.rows.columns</tr>',
+          style:' style="@table.rows.style"',
+          columns:'<td></td>'
+        }
+      },
+    }
+  },
+  login:{
+    layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
+    class:' class="@class"',
+    id:' id="@id"',
+    style:' style="@style"',
+    action:' action="@action"',
+    elements:[
+      {
+        element:'input',
+        type:'text',
+        name:'userName',
+        placeholder:'USER NAME',
+        class:'',
+        id:''
+      },
+      {
+        element:'input',
+        type:'password',
+        name:'passWord',
+        placeholder:'PASSWORD',
+        class:'',
+        id:''
+      },
+      {
+        element:'input',
+        type:'checkbox',
+        name:'myCheck',
+        class:'',
+        id:'',
+        checked:true
+      },
+      {
+        element:'input',
+        type:'radio',
+        name:'myRadio',
+        class:'',
+        id:''
+      },
+      {
+        element:'radiogroup',
+        type:'radio',
+        name:'myRadio',
+        class:'',
+        id:'',
+        options:[
+          {
+            label:'hi',
+            value:'hi'
+          },
+          {
+            label:'bye',
+            value:'bye'
+          },
+          {
+            label:'what',
+            value:'what',
+            selected:true
+          }
+        ]
+      },
+      {
+        element:'textarea',
+        placeholder:'',
+        name:'TEXT',
+        rows:10,
+        cols:10,
+        class:'',
+        id:''
+      },
+      {
+        element:'select',
+        name:'TEXT',
+        class:'',
+        id:'',
+        options:[
+          {
+            label:'hi',
+            value:'hi'
+          },
+          {
+            label:'bye',
+            value:'bye'
+          },
+          {
+            label:'what',
+            value:'what',
+            selected:true
+          }
+        ]
+      },
+      {
+        element:'input',
+        type:'submit',
+        name:'myButton',
+        placeholder:'CLICK',
+        class:'',
+        id:''
+      },
+    ]
+  },
+  account:{
+    layout:'<form@account.class@account.id@account.style@account.action>@account.elements</form>',
+    elements:[
+      {
+        element:'input',
+        type:'text',
+        name:'userName',
+        placeholder:'USER NAME',
+        class:'',
+        id:''
+      }
+    ]
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = Template;
+
+
+/***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -10941,7 +10948,7 @@ class RegisterState{
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_RegisterState__ = __webpack_require__(5);
 /**
@@ -11160,7 +11167,7 @@ if(typeof window['faster'] === 'object'){
   window['__faster__'] = {};
   window['__faster__']['core'] = Faster;
 }
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 7 */
@@ -11728,7 +11735,7 @@ module.exports = Cancel;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_classes_Sniffer__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_components_Faster__ = __webpack_require__(6);
 /**
@@ -11740,7 +11747,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 $(function(){
   $.when(new __WEBPACK_IMPORTED_MODULE_0__src_classes_Sniffer__["a" /* default */]()).done(__WEBPACK_IMPORTED_MODULE_2__src_components_Faster__["b" /* Faster */].exec())
 });
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 15 */
@@ -11749,7 +11756,7 @@ $(function(){
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cycle__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(57);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -11889,7 +11896,7 @@ class Cycle{
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Cycle;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 17 */
@@ -12238,7 +12245,7 @@ function GetAjax(url, props,element) {
     });
 }
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 24 */
@@ -13120,7 +13127,7 @@ module.exports = function spread(callback) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastTemplate;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_TemplateUtilities__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_TemplateTableUtilities__ = __webpack_require__(45);
 /**
@@ -13174,7 +13181,7 @@ const TemplateUtilities = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
 /**
  * Created by David Maser on 22/06/2017.
  */
@@ -13212,7 +13219,7 @@ const TemplateTableUtilities = {
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = TemplateTableUtilities;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 46 */
@@ -13220,7 +13227,7 @@ const TemplateTableUtilities = {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastForm;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FormElements__ = __webpack_require__(47);
 /**
  * Created by David Maser on 26/06/2017.
@@ -13340,7 +13347,7 @@ function FormElements(obj){
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastGutter;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
 /**
  * Created by David Maser on 27/06/2017.
  */
@@ -13358,7 +13365,7 @@ function FastGutter(option, expression){
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastPanel;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
 /**
  * Created by David Maser on 27/06/2017.
  */
@@ -13376,7 +13383,7 @@ function FastPanel(option, expression){
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastModal;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(5);
 /**
@@ -13427,7 +13434,7 @@ function FastModal(option, expression){
   });
   return templateString;
 }
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 51 */
@@ -13537,7 +13544,7 @@ function FastHtml(option, expression){
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastHtmlEvents__ = __webpack_require__(53);
 /**
  * Created by David Maser on 29/06/2017.
@@ -13641,7 +13648,7 @@ class FastHtmlEvents{
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastHtmlEvents;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 54 */
@@ -13665,9 +13672,11 @@ const FastHtmlFunctions = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FastAnimatorFunctions__ = __webpack_require__(56);
 /**
  * Created by David Maser on 04/07/2017.
  */
+
 class FastAnimator{
   constructor(option,expression){
     this.option = option;
@@ -13675,39 +13684,21 @@ class FastAnimator{
     this.run();
   }
   run(){
-    if(this.option !== null) {
+      if(this.option !== null) {
       switch (this.option) {
         case 'points':
           let target = this.expression.indexOf('object') > -1 ? this.expression.split('object:')[1].split(',')[0] : null;
           let points = this.expression.indexOf('points') > -1 ? this.expression.split('points:[')[1].split(']')[0] : null;
           let pointsArray;
           pointsArray = points.indexOf(',') > -1 ? points.split(',') : points;
-          this.buildAnimationMap(target, pointsArray);
+          __WEBPACK_IMPORTED_MODULE_0__FastAnimatorFunctions__["a" /* FastAnimatorFunctions */].buildAnimationMap(target, pointsArray);
           break;
-      }
-    }
-  }
-
-  buildAnimationMap(target,points){
-    let objectId = `#${target}`;
-    let pointMap = {};
-    if(Array.isArray(points)){
-      let p;
-      for(p in points){
-        pointMap[p] = {};
-        pointMap[p]['x'] = points[p].split('-')[0];
-        pointMap[p]['y'] = points[p].split('-')[1];
-      }
-    }
-    FastAnimator.animateByPoints(objectId,pointMap);
-  }
-
-  static animateByPoints(id, obj){
-    //console.log(id,obj);
-    if(typeof obj === 'object'){
-      let o;
-      for(o in obj){
-        console.log(obj[o].x,obj[o].y);
+        case 'attributes':
+          break;
+        case 'size':
+          break;
+        case 'alpha':
+          break;
       }
     }
   }
@@ -13720,7 +13711,75 @@ class FastAnimator{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Config__ = __webpack_require__(57);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
+/**
+ * Created by David Maser on 04/07/2017.
+ */
+
+
+const FastAnimatorFunctions={
+  /**
+   * Function detaches the guest div from the dom and prepends
+   * it to the host layer
+   * @param id
+   */
+  detachElement(id){
+     $('body').prepend(
+       __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].fastAnimator.container.layout.replace('@container.class',`class=${__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].fastAnimator.container.class}`)
+     );
+     let guest = $(`#${id}`).detach();
+     $(`.${__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].fastAnimator.container.class}`).prepend(guest).css({
+      position:__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].fastAnimator.container.position
+     });
+  },
+  /**
+   * Function builds an animation map object from the array of points
+   * passed in the fastX object expression
+   * @param {string} target
+   * @param {array} points
+   */
+  buildAnimationMap(target,points){
+    let pointMap = {};
+    if(Array.isArray(points)){
+      let p;
+      for(p in points){
+        pointMap[p] = {};
+        pointMap[p]['x'] = points[p].split('-')[0];
+        pointMap[p]['y'] = points[p].split('-')[1];
+      }
+    }
+    this.animateByPoints(target,pointMap);
+  },
+  /**
+   * Function animates an element along a specified x,y point map.
+   * Guest layer is detached from the dom prior to the animation
+   * and attached to the host animation layer throughout the duration
+   * of the animation
+   * @param {string} id
+   * @param {object} obj
+   */
+  animateByPoints(id, obj){
+    window.setTimeout(()=>{
+      this.detachElement(id);
+    },10);
+    if(typeof obj === 'object'){
+      let o;
+      for(o in obj){
+        console.log(obj[o].x,obj[o].y);
+      }
+    }
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastAnimatorFunctions;
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+
+/***/ }),
+/* 57 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Config__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(5);
 /**
@@ -13765,7 +13824,7 @@ class FastPlugin{
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13806,13 +13865,13 @@ const PluginAbstractor = {
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(59);
+var content = __webpack_require__(60);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -13820,7 +13879,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(61)(content, options);
+var update = __webpack_require__(62)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -13837,10 +13896,10 @@ if(false) {
 }
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(60)(undefined);
+exports = module.exports = __webpack_require__(61)(undefined);
 // imports
 
 
@@ -13851,7 +13910,7 @@ exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"render
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 /*
@@ -13933,7 +13992,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -13979,7 +14038,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(62);
+var	fixUrls = __webpack_require__(63);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -14292,7 +14351,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports) {
 
 
