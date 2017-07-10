@@ -4,19 +4,19 @@
 import {Template} from '../config/Template';
 export default function FastNav(option,expression){
   option = option || 'horizontal';
-  let objLayout = Template.nav.layout;
+  let objLayout = Template.nav.layout[option];
   let objNode = Template.nav.node.layout;
   let objNodeEntry = Template.nav.node.entry;
   let objNodeString = objNode.replace('@node',objNodeEntry);
   let objString = objLayout.replace('@nav.node',objNodeString);
-  let jsonParse,jsonObj;
+  let isValidJson,jsonObj;
   try{
     jsonObj = JSON.parse(expression);
-    jsonParse = true;
+    isValidJson = true;
   }catch(e){
-    jsonParse = false;
+    isValidJson = false;
   }
-  if(jsonParse){
+  if(isValidJson){
     if(typeof jsonObj === 'object'){
       let o,nodeString='';
       for(o in jsonObj){
