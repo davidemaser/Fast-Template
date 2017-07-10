@@ -4,6 +4,13 @@
 export const Template = {
   div:'<div data-atrribute="jeer">',
   footer:'<footer>',
+  nav:{
+    layout:'<nav ftx-render class="ftx__nav">@nav.node</nav>',
+    node:{
+      layout:'<div class="ftx__nav_dropdown">@node</div>',
+      entry:'<div class="ftx__nav_node">@node.entry</div>'
+    }
+  },
   gutter:{
     layout:'<section ftx-render class="ftx__gutter">@render</section>'
   },

@@ -11,6 +11,7 @@ import FastPanel from './FastPanel';
 import FastModal from './FastModal';
 import FastHtml from './FastHtml';
 import FastAnimator from './FastAnimator';
+import FastNav from './FastNav';
 export default function FastProcessor(type, option, expression, element){
   switch (type){
     case 'math':
@@ -42,6 +43,9 @@ export default function FastProcessor(type, option, expression, element){
       break;
     case 'animate':
       return new FastAnimator(option,expression);
+      break;
+    case 'nav':
+      return FastNav(option,expression);
       break;
   }
 }

@@ -3,7 +3,7 @@
  */
 import GetAjax from '../classes/GetAjax';
 import RegisterState from '../classes/RegisterState';
-export default class fastAjax{
+export default class FastAjax{
   constructor(option, expression,element){
     this.option = option;
     this.expression = expression;
