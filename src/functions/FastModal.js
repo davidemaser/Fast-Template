@@ -20,7 +20,7 @@ export default function FastModal(option, expression){
   for(o in expressionObj){
     if(o === 'prompt' && expressionObj[o] !== '' && expressionObj[o] !== undefined){
       templatePrompt = templatePrompt[expressionObj[o]];
-      templatePrompt = templatePrompt.replace('@modal.promptConfirm',expressionObj['promptConfirm']).replace('@modal.promptRefuse',expressionObj['promptRefuse']);
+      templatePrompt = templatePrompt.replace('@modal.prompt.confirm',expressionObj['promptConfirm']).replace('@modal.prompt.refuse',expressionObj['promptRefuse']);
       templateString = templateString.replace('@inject.prompt',templatePrompt);
     }else{
       templateString = templateString.replace(`@modal.${o}`,expressionObj[o]);

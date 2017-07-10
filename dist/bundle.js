@@ -10709,7 +10709,10 @@ const Template = {
   div:'<div data-atrribute="jeer">',
   footer:'<footer>',
   nav:{
-    layout:'<nav ftx-render class="ftx__nav">@nav.node</nav>',
+    layout:{
+      horizontal:'<nav ftx-render class="ftx__nav_horizontal">@nav.node</nav>',
+      vertical:'<nav ftx-render class="ftx__nav_vertical">@nav.node</nav>'
+    },
     node:{
       layout:'<div class="ftx__nav_dropdown">@node</div>',
       entry:'<div class="ftx__nav_node">@node.entry</div>'
@@ -10725,8 +10728,8 @@ const Template = {
     full:{
       layout:'<div class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
       prompt:{
-        simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.promptConfirm</button></div>',
-        full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.promptConfirm</button><button ftx-user-refuses>@modal.promptRefuse</button></div>'
+        simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button></div>',
+        full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button><button ftx-user-refuses>@modal.prompt.refuse</button></div>'
       }
     }
   },
@@ -13420,7 +13423,7 @@ function FastModal(option, expression){
   for(o in expressionObj){
     if(o === 'prompt' && expressionObj[o] !== '' && expressionObj[o] !== undefined){
       templatePrompt = templatePrompt[expressionObj[o]];
-      templatePrompt = templatePrompt.replace('@modal.promptConfirm',expressionObj['promptConfirm']).replace('@modal.promptRefuse',expressionObj['promptRefuse']);
+      templatePrompt = templatePrompt.replace('@modal.prompt.confirm',expressionObj['promptConfirm']).replace('@modal.prompt.refuse',expressionObj['promptRefuse']);
       templateString = templateString.replace('@inject.prompt',templatePrompt);
     }else{
       templateString = templateString.replace(`@modal.${o}`,expressionObj[o]);
@@ -14470,19 +14473,19 @@ module.exports = function (css) {
 
 function FastNav(option,expression){
   option = option || 'horizontal';
-  let objLayout = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].nav.layout;
+  let objLayout = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].nav.layout[option];
   let objNode = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].nav.node.layout;
   let objNodeEntry = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].nav.node.entry;
   let objNodeString = objNode.replace('@node',objNodeEntry);
   let objString = objLayout.replace('@nav.node',objNodeString);
-  let jsonParse,jsonObj;
+  let isValidJson,jsonObj;
   try{
     jsonObj = JSON.parse(expression);
-    jsonParse = true;
+    isValidJson = true;
   }catch(e){
-    jsonParse = false;
+    isValidJson = false;
   }
-  if(jsonParse){
+  if(isValidJson){
     if(typeof jsonObj === 'object'){
       let o,nodeString='';
       for(o in jsonObj){
