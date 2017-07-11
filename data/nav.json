@@ -1,0 +1,18 @@
+{
+  "item":{
+    "parent":{
+      "link":"link",
+      "label":"label"
+    },
+    "children":[
+      {
+        "link":"link",
+        "label":"label"
+      },
+      {
+        "link":"link",
+        "label":"label"
+      }
+    ]
+  }
+}
