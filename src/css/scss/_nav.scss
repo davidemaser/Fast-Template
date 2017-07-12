@@ -1,0 +1,20 @@
+nav{
+  &.ftx__nav_horizontal {
+    display: block;
+    padding: 5px;
+    position: relative;
+  }
+}
+
+div{
+  &[ftx-role="nav-parent"] {
+    .ftx__nav_dropdown {
+      display: none;
+      position: absolute;
+    }
+    &:hover .ftx__nav_dropdown {
+      display: block;
+    }
+    display: inline-block;
+  }
+}

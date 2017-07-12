@@ -29,7 +29,7 @@ export const Global = {
     all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
   },
   options:{
-    noWrapperElements:['panel','gutter','html'],
+    noWrapperElements:['panel','gutter','html','nav'],
     app:{
       onFail:['killFunctions','emptyCache','log','restart'],
       onEnter:['runSniffer','runCycle','waitAndSnoop'],

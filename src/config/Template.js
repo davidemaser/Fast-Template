@@ -5,7 +5,7 @@ export const Template = {
   div:'<div data-atrribute="jeer">',
   footer:'<footer>',
   nav:{
-    link:'<span ftx-role="nav-parent" ftx-link="@link">@label</span>',
+    link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
     layout:{
       horizontal:'<nav ftx-render class="ftx__nav_horizontal">@nav.node</nav>',
       vertical:'<nav ftx-render class="ftx__nav_vertical">@nav.node</nav>'

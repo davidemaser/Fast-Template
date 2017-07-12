@@ -410,7 +410,7 @@ const Global = {
     all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
   },
   options:{
-    noWrapperElements:['panel','gutter','html'],
+    noWrapperElements:['panel','gutter','html','nav'],
     app:{
       onFail:['killFunctions','emptyCache','log','restart'],
       onEnter:['runSniffer','runCycle','waitAndSnoop'],
@@ -10709,7 +10709,7 @@ const Template = {
   div:'<div data-atrribute="jeer">',
   footer:'<footer>',
   nav:{
-    link:'<span ftx-role="nav-parent" ftx-link="@link">@label</span>',
+    link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
     layout:{
       horizontal:'<nav ftx-render class="ftx__nav_horizontal">@nav.node</nav>',
       vertical:'<nav ftx-render class="ftx__nav_vertical">@nav.node</nav>'
@@ -13796,14 +13796,16 @@ const FastAnimatorFunctions={
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastNav;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_Woops__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_Woops__ = __webpack_require__(4);
 /**
  * Created by David Maser on 10/07/2017.
  */
 
 
 
-function FastNav(option,expression){
+
+function FastNav(option,expression,element){
   option = option || 'horizontal';
   let objLayout = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].nav.layout[option];
   let objParentTag = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].nav.link;
@@ -13823,7 +13825,7 @@ function FastNav(option,expression){
         parseNavObj(data);
       },
       error:function(){
-        new __WEBPACK_IMPORTED_MODULE_2__classes_Woops__["a" /* default */]({
+        new __WEBPACK_IMPORTED_MODULE_3__classes_Woops__["a" /* default */]({
 
         })
       }
@@ -13863,7 +13865,8 @@ function FastNav(option,expression){
       }
       objForm = parseParents(itemArray);
     }
-    return objLayout.replace('@nav.node',objForm);
+    __WEBPACK_IMPORTED_MODULE_2__components_Faster__["a" /* Architect */].build.experiment($('body').find(`[fstx-id="${element}"]`),null,objLayout.replace('@nav.node',objForm));
+    //return objLayout.replace('@nav.node',objForm);
   }
   function parseParents(obj){
     let parentString = '';
@@ -13871,7 +13874,7 @@ function FastNav(option,expression){
     if(typeof obj === 'object') {
       obj.map(function(a){
         parentTag = objParentTag.replace('@link',a.item.parent.link).replace('@label',a.item.parent.label);
-        parentString += parentTag+parseChildren(a.item.children);
+        parentString += parentTag.replace('@nav',parseChildren(a.item.children));
       });
     }
     return parentString;
@@ -14023,7 +14026,7 @@ exports = module.exports = __webpack_require__(62)(undefined);
 
 
 // module
-exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"rendered\"]{display:block}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}\n", ""]);
+exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"rendered\"]{display:block}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}nav.ftx__nav_horizontal{display:block;padding:5px;position:relative}div[ftx-role=\"nav-parent\"]{display:inline-block}div[ftx-role=\"nav-parent\"] .ftx__nav_dropdown{display:none;position:absolute}div[ftx-role=\"nav-parent\"]:hover .ftx__nav_dropdown{display:block}\n", ""]);
 
 // exports
 

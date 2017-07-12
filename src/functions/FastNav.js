@@ -3,8 +3,9 @@
  */
 import {Global} from '../config/Global';
 import {Template} from '../config/Template';
+import {Architect} from '../components/Faster';
 import Woops from '../classes/Woops';
-export default function FastNav(option,expression){
+export default function FastNav(option,expression,element){
   option = option || 'horizontal';
   let objLayout = Template.nav.layout[option];
   let objParentTag = Template.nav.link;
@@ -64,7 +65,8 @@ export default function FastNav(option,expression){
       }
       objForm = parseParents(itemArray);
     }
-    return objLayout.replace('@nav.node',objForm);
+    Architect.build.experiment($('body').find(`[fstx-id="${element}"]`),null,objLayout.replace('@nav.node',objForm));
+    //return objLayout.replace('@nav.node',objForm);
   }
   function parseParents(obj){
     let parentString = '';
@@ -72,7 +74,7 @@ export default function FastNav(option,expression){
     if(typeof obj === 'object') {
       obj.map(function(a){
         parentTag = objParentTag.replace('@link',a.item.parent.link).replace('@label',a.item.parent.label);
-        parentString += parentTag+parseChildren(a.item.children);
+        parentString += parentTag.replace('@nav',parseChildren(a.item.children));
       });
     }
     return parentString;
