@@ -1,8 +1,8 @@
 /**
  * Created by David Maser on 22/06/2017.
  */
-import GetAjax from '../classes/GetAjax';
-import RegisterState from '../classes/RegisterState';
+import GetAjax from './GetAjax';
+import RegisterState from './RegisterState';
 export default class FastAjax{
   constructor(option, expression,element){
     this.option = option;
