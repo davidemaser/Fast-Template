@@ -15,6 +15,10 @@ export const Template = {
       entry:'<div class="ftx__nav_node" ftx-link="@node.link">@node.entry</div>'
     }
   },
+  accordion:{
+    parent:'<div class="ftx__accordion">@accordion.item</div>',
+    item:'<div class="accordion_item"><div class="item__title">@accordion.item.title</div><div class="item__body">@accordion.item.body</div></div>'
+  },
   gutter:{
     layout:'<section ftx-render class="ftx__gutter">@render</section>'
   },

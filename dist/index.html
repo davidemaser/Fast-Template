@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<script type="text/javascript" src="bundle.js?d28769ea2d439272bd8e"></script></head>
+<script type="text/javascript" src="bundle.js?a088fb521da4eefe94a2"></script></head>
 <body faster="template">
 <ft>class:new,render:div,content:{here's my content}</ft>
 <ft>template:div,content:{this is a template}</ft>
@@ -31,5 +31,11 @@
     {~html}</ftx>
 <ftx>{animate:points}object:that,points:[1-500,5-200,8-185,100-800]{~animate}</ftx>
 <ftx>{nav:horizontal}{json:nav}{~nav}</ftx>
+<ftx>
+    {accordion}
+    [title=A_NAME_HERE] This is the content
+    [title=ANOTHER_NAME_HERE] This is more content
+    {~accordion}
+</ftx>
 </body>
 </html>

@@ -12,6 +12,7 @@ import FastModal from './FastModal';
 import FastHtml from './FastHtml';
 import FastAnimator from './FastAnimator';
 import FastNav from './FastNav';
+import FastAccordion from './FastAccordion';
 export default function FastProcessor(type, option, expression, element){
   switch (type){
     case 'math':
@@ -46,6 +47,9 @@ export default function FastProcessor(type, option, expression, element){
       break;
     case 'nav':
       return FastNav(option,expression,element);
+      break;
+    case 'accordion':
+      return FastAccordion(option,expression);
       break;
   }
 }
