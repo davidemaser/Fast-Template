@@ -12203,8 +12203,6 @@ class FastAjax{
 
 
 function GetAjax(url, props,element) {
-  this.url = url;
-  this.props = props;
   //element = element+1;
   function build(a,b,template,handle){
     /**@todo this function causes problems when rendering a template **/
@@ -12235,17 +12233,17 @@ function GetAjax(url, props,element) {
     }
   }
 
-  __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.url)
+  __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(url)
     .then((response) => {
       if (__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.useDefault === true) {
-        if (this.props !== undefined) {
-          return processProps(response[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.root.node], this.props)
+        if (props !== undefined) {
+          return processProps(response[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.root.node], props)
         } else {
           return processProps(response[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.root.node], null)
         }
       } else {
-        if (this.props !== undefined) {
-          return processProps(response, this.props)
+        if (props !== undefined) {
+          return processProps(response, props)
         } else {
           return processProps(response, null);
         }
@@ -13781,7 +13779,7 @@ const FastAnimatorFunctions={
     if(typeof obj === 'object'){
       let o;
       for(o in obj){
-        console.log(obj[o].x,obj[o].y);
+        //console.log(obj[o].x,obj[o].y);
       }
     }
   }
@@ -13851,7 +13849,7 @@ function FastNav(option,expression){
   }
 
   let objNodeString = objNode.replace('@node',objNodeEntry);
-  let objString = objLayout.replace('@nav.node',objNodeString);
+  //let objString = objLayout.replace('@nav.node',objNodeString);
 
   function parseNavObj(obj){
     let itemArray = [];
@@ -13859,7 +13857,9 @@ function FastNav(option,expression){
     if(typeof obj === 'object'){
       let o;
       for(o in obj){
-        itemArray.push(obj[o]);
+        if(obj.hasOwnProperty(o)) {
+          itemArray.push(obj[o]);
+        }
       }
       objForm = parseParents(itemArray);
     }

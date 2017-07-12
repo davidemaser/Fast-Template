@@ -50,7 +50,7 @@ export default function FastNav(option,expression){
   }
 
   let objNodeString = objNode.replace('@node',objNodeEntry);
-  let objString = objLayout.replace('@nav.node',objNodeString);
+  //let objString = objLayout.replace('@nav.node',objNodeString);
 
   function parseNavObj(obj){
     let itemArray = [];
@@ -58,7 +58,9 @@ export default function FastNav(option,expression){
     if(typeof obj === 'object'){
       let o;
       for(o in obj){
-        itemArray.push(obj[o]);
+        if(obj.hasOwnProperty(o)) {
+          itemArray.push(obj[o]);
+        }
       }
       objForm = parseParents(itemArray);
     }
