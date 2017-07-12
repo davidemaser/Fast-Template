@@ -8,8 +8,6 @@ import {Architect} from '../components/Faster';
 import {FastTemplate} from '../functions/FastTemplate';
 import RegisterState from '../classes/RegisterState';
 export default function GetAjax(url, props,element) {
-  this.url = url;
-  this.props = props;
   //element = element+1;
   function build(a,b,template,handle){
     /**@todo this function causes problems when rendering a template **/
@@ -40,17 +38,17 @@ export default function GetAjax(url, props,element) {
     }
   }
 
-  axios.get(this.url)
+  axios.get(url)
     .then((response) => {
       if (Global.ajax.useDefault === true) {
-        if (this.props !== undefined) {
-          return processProps(response[Global.ajax.root.node], this.props)
+        if (props !== undefined) {
+          return processProps(response[Global.ajax.root.node], props)
         } else {
           return processProps(response[Global.ajax.root.node], null)
         }
       } else {
-        if (this.props !== undefined) {
-          return processProps(response, this.props)
+        if (props !== undefined) {
+          return processProps(response, props)
         } else {
           return processProps(response, null);
         }

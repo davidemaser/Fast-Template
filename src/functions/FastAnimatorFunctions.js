@@ -51,7 +51,7 @@ export const FastAnimatorFunctions={
     if(typeof obj === 'object'){
       let o;
       for(o in obj){
-        console.log(obj[o].x,obj[o].y);
+        //console.log(obj[o].x,obj[o].y);
       }
     }
   }
