@@ -11874,7 +11874,7 @@ class Cycle{
             xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
           }
           let ftxNodeElement = $('body').find(`[fstx-id="${b}"]`);
-          $.when(__WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__["a" /* default */](xType,xOption,xStatement,b)).then((a)=>{
+          $.when(Object(__WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__["a" /* default */])(xType,xOption,xStatement,b)).then((a)=>{
             __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].options.noWrapperElements.indexOf(xType) > -1 ? __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxNodeElement,null,a) : __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.experiment(ftxNodeElement,__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].experiment.render,a);
           });
         });
@@ -11898,7 +11898,7 @@ class Cycle{
             xStatement = a.split(bounds[0])[1].split(bounds[1])[0];
           }
           let ftxjNodeElement = $('body').find(`[fstxj-id="${b}"]`);
-          __WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__["a" /* default */](xType,xOption,xStatement,b);
+          Object(__WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__["a" /* default */])(xType,xOption,xStatement,b);
         });
         break;
     }
@@ -11967,37 +11967,37 @@ class Logger{
 function FastProcessor(type, option, expression, element){
   switch (type){
     case 'math':
-      return __WEBPACK_IMPORTED_MODULE_0__FastMath__["a" /* default */](option,expression);
+      return Object(__WEBPACK_IMPORTED_MODULE_0__FastMath__["a" /* default */])(option,expression);
       break;
     case 'date':
-      return __WEBPACK_IMPORTED_MODULE_1__FastDate__["a" /* default */](option,expression);
+      return Object(__WEBPACK_IMPORTED_MODULE_1__FastDate__["a" /* default */])(option,expression);
       break;
     case 'if':
-      return __WEBPACK_IMPORTED_MODULE_2__FastCondition__["a" /* default */](option,expression);
+      return Object(__WEBPACK_IMPORTED_MODULE_2__FastCondition__["a" /* default */])(option,expression);
       break;
     case 'json':
       new __WEBPACK_IMPORTED_MODULE_3__FastAjax__["a" /* default */](option,expression,element);
       break;
     case 'form':
-      return __WEBPACK_IMPORTED_MODULE_4__FastForm__["a" /* default */](option,expression);
+      return Object(__WEBPACK_IMPORTED_MODULE_4__FastForm__["a" /* default */])(option,expression);
       break;
     case 'gutter':
-      return __WEBPACK_IMPORTED_MODULE_5__FastGutter__["a" /* default */](option,expression);
+      return Object(__WEBPACK_IMPORTED_MODULE_5__FastGutter__["a" /* default */])(option,expression);
       break;
     case 'panel':
-      return __WEBPACK_IMPORTED_MODULE_6__FastPanel__["a" /* default */](option,expression);
+      return Object(__WEBPACK_IMPORTED_MODULE_6__FastPanel__["a" /* default */])(option,expression);
       break;
     case 'modal':
-      return __WEBPACK_IMPORTED_MODULE_7__FastModal__["a" /* default */](option,expression);
+      return Object(__WEBPACK_IMPORTED_MODULE_7__FastModal__["a" /* default */])(option,expression);
       break;
     case 'html':
-      return __WEBPACK_IMPORTED_MODULE_8__FastHtml__["a" /* default */](option,expression);
+      return Object(__WEBPACK_IMPORTED_MODULE_8__FastHtml__["a" /* default */])(option,expression);
       break;
     case 'animate':
       return new __WEBPACK_IMPORTED_MODULE_9__FastAnimator__["a" /* default */](option,expression);
       break;
     case 'nav':
-      return __WEBPACK_IMPORTED_MODULE_10__FastNav__["a" /* default */](option,expression);
+      return Object(__WEBPACK_IMPORTED_MODULE_10__FastNav__["a" /* default */])(option,expression);
       break;
   }
 }
@@ -12173,7 +12173,7 @@ class FastAjax{
     } else {
       jsonObject = null;
     }
-    __WEBPACK_IMPORTED_MODULE_0__classes_GetAjax__["a" /* default */](jsonSource, jsonObject, this.element);
+    Object(__WEBPACK_IMPORTED_MODULE_0__classes_GetAjax__["a" /* default */])(jsonSource, jsonObject, this.element);
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastAjax;
@@ -12202,13 +12202,11 @@ class FastAjax{
 
 
 function GetAjax(url, props,element) {
-  this.url = url;
-  this.props = props;
   //element = element+1;
   function build(a,b,template,handle){
     /**@todo this function causes problems when rendering a template **/
     if(template !== null){
-      a = __WEBPACK_IMPORTED_MODULE_4__functions_FastTemplate__["a" /* FastTemplate */](a,template);
+      a = Object(__WEBPACK_IMPORTED_MODULE_4__functions_FastTemplate__["a" /* FastTemplate */])(a,template);
     }
     handle !== null ? new __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__["a" /* default */](handle,a,'appData') : null;
     new __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__["a" /* default */]('jsonLoaded',true,'appData');
@@ -12234,17 +12232,17 @@ function GetAjax(url, props,element) {
     }
   }
 
-  __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.url)
+  __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(url)
     .then((response) => {
       if (__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.useDefault === true) {
-        if (this.props !== undefined) {
-          return processProps(response[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.root.node], this.props)
+        if (props !== undefined) {
+          return processProps(response[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.root.node], props)
         } else {
           return processProps(response[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.root.node], null)
         }
       } else {
-        if (this.props !== undefined) {
-          return processProps(response, this.props)
+        if (props !== undefined) {
+          return processProps(response, props)
         } else {
           return processProps(response, null);
         }
@@ -13274,7 +13272,7 @@ function FastForm(option, expression){
     let expressionArray = expression.split(',');
     let expressionObj = processExpression(expressionArray);
     let parsedLayout = processLayout(expressionObj, layout) || null;
-    let formElements = __WEBPACK_IMPORTED_MODULE_1__FormElements__["a" /* default */](elements);
+    let formElements = Object(__WEBPACK_IMPORTED_MODULE_1__FormElements__["a" /* default */])(elements);
     parsedLayout = formElements !== null ? parsedLayout.replace(`@${option}.elements`, formElements) : parsedLayout;
     return parsedLayout;
   }catch(e){
@@ -13780,7 +13778,7 @@ const FastAnimatorFunctions={
     if(typeof obj === 'object'){
       let o;
       for(o in obj){
-        console.log(obj[o].x,obj[o].y);
+        //console.log(obj[o].x,obj[o].y);
       }
     }
   }
