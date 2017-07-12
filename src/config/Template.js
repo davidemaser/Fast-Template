@@ -6,7 +6,7 @@ export const Template = {
   footer:'<footer>',
   nav:{
     layout:{
-      horizontal:'<nav ftx-render class="ftx__nav_horizontal">@nav.node</nav>',
+      horizontal:'<nav ftx-render class="ftx__nav_horizontal"><span ftx-role="nav-parent" ftx-link="@link">@label</span>@nav.node</nav>',
       vertical:'<nav ftx-render class="ftx__nav_vertical">@nav.node</nav>'
     },
     node:{
