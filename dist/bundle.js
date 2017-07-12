@@ -65,70 +65,6 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Log; });
-/**
- * Created by David Maser on 19/06/2017.
- */
-const Global = {
-  appObj:'__faster__',
-  node:'ft',
-  experiment:{
-    node:'ftx',
-    render:'<span ftx-render>@return</span>',
-    nested:'nested',
-    date:{
-      full:'mm/dd/yyyy h:m:s',
-      noTime:'mm/dd/yyyy',
-      compact:'mm/dd/yy'
-    }
-  },
-  ignore:'ignore',
-  ajax:{
-    node:'fta',
-    useDefault:true,
-    render:'<span ftx-ajax>@return</span>',
-    root:{
-      node:'data',
-      url:'../data'
-    },
-    overWriteSaves:false
-  },
-  init:{
-    all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
-  },
-  options:{
-    noWrapperElements:['panel','gutter','html'],
-    app:{
-      onFail:['killFunctions','emptyCache','log','restart'],
-      onEnter:['runSniffer','runCycle','waitAndSnoop'],
-      onLeave:['pauseFunctions','registerWait','stopFunctions','waitFor10ThenKillAll']
-    },
-    views:{
-      model:'default'
-    }
-  },
-  fastHtmlTags:{
-    closes : [
-      'div','section','button','nav','p','span','header','footer','strong','i','h1','h2','h3','h4','h5','h6','ul','li','menu','pre','select','u'
-    ]
-  },
-  fastAnimator:{
-    container:{
-      layout:'<div @container.class></div>',
-      class:'animation-layer',
-      position:'absolute'
-    }
-  }
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = Global;
-
-let Log = [];
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -436,6 +372,70 @@ module.exports = {
   trim: trim
 };
 
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Log; });
+/**
+ * Created by David Maser on 19/06/2017.
+ */
+const Global = {
+  appObj:'__faster__',
+  node:'ft',
+  experiment:{
+    node:'ftx',
+    render:'<span ftx-render>@return</span>',
+    nested:'nested',
+    date:{
+      full:'mm/dd/yyyy h:m:s',
+      noTime:'mm/dd/yyyy',
+      compact:'mm/dd/yy'
+    }
+  },
+  ignore:'ignore',
+  ajax:{
+    node:'fta',
+    useDefault:true,
+    render:'<span ftx-ajax>@return</span>',
+    root:{
+      node:'data',
+      url:'../data'
+    },
+    overWriteSaves:false
+  },
+  init:{
+    all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
+  },
+  options:{
+    noWrapperElements:['panel','gutter','html'],
+    app:{
+      onFail:['killFunctions','emptyCache','log','restart'],
+      onEnter:['runSniffer','runCycle','waitAndSnoop'],
+      onLeave:['pauseFunctions','registerWait','stopFunctions','waitFor10ThenKillAll']
+    },
+    views:{
+      model:'default'
+    }
+  },
+  fastHtmlTags:{
+    closes : [
+      'div','section','button','nav','p','span','header','footer','strong','i','h1','h2','h3','h4','h5','h6','ul','li','menu','pre','select','u'
+    ]
+  },
+  fastAnimator:{
+    container:{
+      layout:'<div @container.class></div>',
+      class:'animation-layer',
+      position:'absolute'
+    }
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = Global;
+
+let Log = [];
 
 /***/ }),
 /* 2 */
@@ -10709,13 +10709,14 @@ const Template = {
   div:'<div data-atrribute="jeer">',
   footer:'<footer>',
   nav:{
+    link:'<span ftx-role="nav-parent" ftx-link="@link">@label</span>',
     layout:{
-      horizontal:'<nav ftx-render class="ftx__nav_horizontal"><span ftx-role="nav-parent" ftx-link="@link">@label</span>@nav.node</nav>',
+      horizontal:'<nav ftx-render class="ftx__nav_horizontal">@nav.node</nav>',
       vertical:'<nav ftx-render class="ftx__nav_vertical">@nav.node</nav>'
     },
     node:{
       layout:'<div class="ftx__nav_dropdown">@node</div>',
-      entry:'<div class="ftx__nav_node">@node.entry</div>'
+      entry:'<div class="ftx__nav_node" ftx-link="@node.link">@node.entry</div>'
     }
   },
   gutter:{
@@ -10915,7 +10916,7 @@ class Woops{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /**
  * Created by David Maser on 29/06/2017.
  */
@@ -10959,7 +10960,7 @@ class RegisterState{
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_RegisterState__ = __webpack_require__(5);
 /**
  * Created by David Maser on 19/06/2017.
@@ -11186,7 +11187,7 @@ if(typeof window['faster'] === 'object'){
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 var normalizeHeaderName = __webpack_require__(28);
 
 var DEFAULT_CONTENT_TYPE = {
@@ -11494,7 +11495,7 @@ process.umask = function() { return 0; };
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 var settle = __webpack_require__(29);
 var buildURL = __webpack_require__(31);
 var parseHeaders = __webpack_require__(32);
@@ -11764,7 +11765,7 @@ $(function(){
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cycle__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(58);
 /**
@@ -11798,7 +11799,7 @@ class Sniffer{
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Faster__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RegisterState__ = __webpack_require__(5);
@@ -11913,7 +11914,7 @@ class Cycle{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -11997,7 +11998,7 @@ function FastProcessor(type, option, expression, element){
       return new __WEBPACK_IMPORTED_MODULE_9__FastAnimator__["a" /* default */](option,expression);
       break;
     case 'nav':
-      return __WEBPACK_IMPORTED_MODULE_10__FastNav__["a" /* default */](option,expression);
+      return __WEBPACK_IMPORTED_MODULE_10__FastNav__["a" /* default */](option,expression,element);
       break;
   }
 }
@@ -12032,7 +12033,7 @@ function FastMath(option, expression) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastDate;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /**
  * Created by David Maser on 21/06/2017.
  */
@@ -12185,7 +12186,7 @@ class FastAjax{
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = GetAjax;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
@@ -12275,7 +12276,7 @@ module.exports = __webpack_require__(25);
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 var bind = __webpack_require__(8);
 var Axios = __webpack_require__(27);
 var defaults = __webpack_require__(7);
@@ -12362,7 +12363,7 @@ function isSlowBuffer (obj) {
 
 
 var defaults = __webpack_require__(7);
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(36);
 var dispatchRequest = __webpack_require__(37);
 var isAbsoluteURL = __webpack_require__(39);
@@ -12454,7 +12455,7 @@ module.exports = Axios;
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -12534,7 +12535,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -12609,7 +12610,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 /**
  * Parse headers into an object
@@ -12653,7 +12654,7 @@ module.exports = function parseHeaders(headers) {
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -12771,7 +12772,7 @@ module.exports = btoa;
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -12831,7 +12832,7 @@ module.exports = (
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -12890,7 +12891,7 @@ module.exports = InterceptorManager;
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 var transformData = __webpack_require__(38);
 var isCancel = __webpack_require__(12);
 var defaults = __webpack_require__(7);
@@ -12976,7 +12977,7 @@ module.exports = function dispatchRequest(config) {
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 /**
  * Transform the data for a request or a response
@@ -13399,7 +13400,7 @@ function FastPanel(option, expression){
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastModal;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(5);
 /**
  * Created by David Maser on 29/06/2017.
@@ -13457,7 +13458,7 @@ function FastModal(option, expression){
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastHtml;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlUtilities__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_Woops__ = __webpack_require__(4);
 /**
@@ -13558,7 +13559,7 @@ function FastHtml(option, expression){
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastHtmlEvents__ = __webpack_require__(53);
 /**
@@ -13726,7 +13727,7 @@ class FastAnimator{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /**
  * Created by David Maser on 04/07/2017.
  */
@@ -13795,7 +13796,7 @@ const FastAnimatorFunctions={
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastNav;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_Woops__ = __webpack_require__(4);
 /**
@@ -13807,6 +13808,7 @@ const FastAnimatorFunctions={
 function FastNav(option,expression){
   option = option || 'horizontal';
   let objLayout = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].nav.layout[option];
+  let objParentTag = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].nav.link;
   let objNode = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].nav.node.layout;
   let objNodeEntry = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].nav.node.entry;
   let ajaxUrl = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.root.url;
@@ -13846,36 +13848,47 @@ function FastNav(option,expression){
         return objLayout.replace('@nav.node',nodeString);
       }
     }
-  };
+  }
 
   let objNodeString = objNode.replace('@node',objNodeEntry);
   let objString = objLayout.replace('@nav.node',objNodeString);
 
   function parseNavObj(obj){
     let itemArray = [];
+    let objForm;
     if(typeof obj === 'object'){
       let o;
       for(o in obj){
         itemArray.push(obj[o]);
       }
-      parseParents(itemArray)
+      objForm = parseParents(itemArray);
     }
+    return objLayout.replace('@nav.node',objForm);
   }
   function parseParents(obj){
+    let parentString = '';
+    let parentTag;
     if(typeof obj === 'object') {
       obj.map(function(a){
-        let navItemLabel = a.item.parent.label;
-        let navItemLink = a.item.parent.link;
-        console.log(objLayout.replace('@link',navItemLink).replace('@label',navItemLabel),a.item)
-      })
+        parentTag = objParentTag.replace('@link',a.item.parent.link).replace('@label',a.item.parent.label);
+        parentString += parentTag+parseChildren(a.item.children);
+      });
     }
+    return parentString;
   }
   function parseChildren(obj){
     let c,childString = '';
-    for(c in obj){
-      childString += objNodeEntry.replace('@node.entry',obj[c])
+    if(Array.isArray(obj)){
+      obj.map(function(a){
+        childString+=objNodeEntry.replace('@node.entry',a.label).replace('@node.link',a.link);
+      });
+      return objNode.replace('@node',childString);
+    }else{
+      for(c in obj){
+        childString += objNodeEntry.replace('@node.entry',obj[c])
+      }
+      return objNode.replace('@node',childString);
     }
-    return objNode.replace('@node',childString);
   }
 }
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))

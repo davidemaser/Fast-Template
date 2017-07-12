@@ -45,7 +45,7 @@ export default function FastProcessor(type, option, expression, element){
       return new FastAnimator(option,expression);
       break;
     case 'nav':
-      return FastNav(option,expression);
+      return FastNav(option,expression,element);
       break;
   }
 }

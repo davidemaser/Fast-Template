@@ -7,6 +7,7 @@ import Woops from '../classes/Woops';
 export default function FastNav(option,expression){
   option = option || 'horizontal';
   let objLayout = Template.nav.layout[option];
+  let objParentTag = Template.nav.link;
   let objNode = Template.nav.node.layout;
   let objNodeEntry = Template.nav.node.entry;
   let ajaxUrl = Global.ajax.root.url;
@@ -46,35 +47,46 @@ export default function FastNav(option,expression){
         return objLayout.replace('@nav.node',nodeString);
       }
     }
-  };
+  }
 
   let objNodeString = objNode.replace('@node',objNodeEntry);
   let objString = objLayout.replace('@nav.node',objNodeString);
 
   function parseNavObj(obj){
     let itemArray = [];
+    let objForm;
     if(typeof obj === 'object'){
       let o;
       for(o in obj){
         itemArray.push(obj[o]);
       }
-      parseParents(itemArray)
+      objForm = parseParents(itemArray);
     }
+    return objLayout.replace('@nav.node',objForm);
   }
   function parseParents(obj){
+    let parentString = '';
+    let parentTag;
     if(typeof obj === 'object') {
       obj.map(function(a){
-        let navItemLabel = a.item.parent.label;
-        let navItemLink = a.item.parent.link;
-        console.log(objLayout.replace('@link',navItemLink).replace('@label',navItemLabel),a.item)
-      })
+        parentTag = objParentTag.replace('@link',a.item.parent.link).replace('@label',a.item.parent.label);
+        parentString += parentTag+parseChildren(a.item.children);
+      });
     }
+    return parentString;
   }
   function parseChildren(obj){
     let c,childString = '';
-    for(c in obj){
-      childString += objNodeEntry.replace('@node.entry',obj[c])
+    if(Array.isArray(obj)){
+      obj.map(function(a){
+        childString+=objNodeEntry.replace('@node.entry',a.label).replace('@node.link',a.link);
+      });
+      return objNode.replace('@node',childString);
+    }else{
+      for(c in obj){
+        childString += objNodeEntry.replace('@node.entry',obj[c])
+      }
+      return objNode.replace('@node',childString);
     }
-    return objNode.replace('@node',childString);
   }
 }

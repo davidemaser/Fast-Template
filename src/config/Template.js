@@ -5,13 +5,14 @@ export const Template = {
   div:'<div data-atrribute="jeer">',
   footer:'<footer>',
   nav:{
+    link:'<span ftx-role="nav-parent" ftx-link="@link">@label</span>',
     layout:{
-      horizontal:'<nav ftx-render class="ftx__nav_horizontal"><span ftx-role="nav-parent" ftx-link="@link">@label</span>@nav.node</nav>',
+      horizontal:'<nav ftx-render class="ftx__nav_horizontal">@nav.node</nav>',
       vertical:'<nav ftx-render class="ftx__nav_vertical">@nav.node</nav>'
     },
     node:{
       layout:'<div class="ftx__nav_dropdown">@node</div>',
-      entry:'<div class="ftx__nav_node">@node.entry</div>'
+      entry:'<div class="ftx__nav_node" ftx-link="@node.link">@node.entry</div>'
     }
   },
   gutter:{
