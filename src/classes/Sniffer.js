@@ -4,7 +4,6 @@
 import {Global} from '../config/Global';
 import Cycle from './Cycle';
 import FastPlugin from '../plugins/FastPlugin';
-
 export default class Sniffer{
   constructor(args){
     this.args = args;

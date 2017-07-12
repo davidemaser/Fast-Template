@@ -10906,7 +10906,6 @@ class Woops{
       console.log('Error module threw an error. Ironic isn\'t it');
     }
   }
-
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Woops;
 
@@ -11774,7 +11773,6 @@ $(function(){
 
 
 
-
 class Sniffer{
   constructor(args){
     this.args = args;
@@ -11919,6 +11917,7 @@ class Cycle{
  * Created by David Maser on 19/06/2017.
  */
 
+const logView = Symbol('local');
 class Logger{
   constructor(args){
     this.args = args;
@@ -12203,7 +12202,6 @@ class FastAjax{
 
 
 function GetAjax(url, props,element) {
-  //element = element+1;
   function build(a,b,template,handle){
     /**@todo this function causes problems when rendering a template **/
     if(template !== null){

@@ -8,7 +8,6 @@ import {Architect} from '../components/Faster';
 import {FastTemplate} from '../functions/FastTemplate';
 import RegisterState from '../classes/RegisterState';
 export default function GetAjax(url, props,element) {
-  //element = element+1;
   function build(a,b,template,handle){
     /**@todo this function causes problems when rendering a template **/
     if(template !== null){

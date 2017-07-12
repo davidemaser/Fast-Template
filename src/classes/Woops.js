@@ -21,5 +21,4 @@ export default class Woops{
       console.log('Error module threw an error. Ironic isn\'t it');
     }
   }
-
 }
