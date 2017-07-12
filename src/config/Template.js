@@ -52,7 +52,7 @@ export const Template = {
           style:' style="@table.rows.style"',
           columns:'<td></td>'
         }
-      },
+      }
     }
   },
   login:{
