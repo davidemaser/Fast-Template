@@ -1,0 +1,20 @@
+.ftx__accordion {
+  display: block;
+  .item__title {
+    background: #ddd;
+    padding: 5px;
+  }
+  .item__body {
+    padding: 10px 5px;
+  }
+}
+
+.accordion_item {
+  display: block;
+  border-left: solid 1px #000;
+  border-right: solid 1px #000;
+  border-top: solid 1px #000;
+  &:last-child {
+    border-bottom: 1px solid #000;
+  }
+}

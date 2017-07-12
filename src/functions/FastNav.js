@@ -65,7 +65,7 @@ export default function FastNav(option,expression,element){
       }
       objForm = parseParents(itemArray);
     }
-    Architect.build.experiment($('body').find(`[fstx-id="${element}"]`),null,objLayout.replace('@nav.node',objForm));
+    Architect.build.experiment($('body').find(`[fstx-id="${element}"]`),null,objLayout.replace('@nav.node',objForm),true);
     //return objLayout.replace('@nav.node',objForm);
   }
   function parseParents(obj){
