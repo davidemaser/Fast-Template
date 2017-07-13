@@ -4,6 +4,13 @@
 import {Global} from '../config/Global';
 import {Template} from '../config/Template';
 import {Architect} from '../components/Faster';
+/**
+ *
+ * @param {string} option
+ * @param {string|object} expression
+ * @param {string|object} element
+ * @constructor
+ */
 export default function FastTable(option,expression,element){
   let objLayout = Template.table.layout[option];
   let objRow = Template.table.row.layout;

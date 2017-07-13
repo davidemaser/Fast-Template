@@ -74,7 +74,7 @@
  */
 const Global = {
   appObj:'__faster__',
-  appStatus:'dev',
+  appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
   node:'ft',
   experiment:{
     node:'ftx',
@@ -11015,6 +11015,7 @@ class RegisterState{
 
 
 
+
 const Faster = {
   exec(){
     this.remove.emptyTags();
@@ -11024,6 +11025,12 @@ const Faster = {
   },
   extract: {
     node: {
+      /**
+       *
+       * @param {object} obj
+       * @param {function} callback
+       * @returns {object}
+       */
       type(obj, callback){
         try {
           let __this = obj.split('render:')[1].split(',')[0];
@@ -11042,6 +11049,13 @@ const Faster = {
         }
       }
     },
+    /**
+     *
+     * @param {object} obj
+     * @param {function} callback
+     * @param {boolean} parse
+     * @returns {*}
+     */
     json(obj,callback,parse){
       try {
         if(obj.indexOf('json') > -1){
@@ -11057,6 +11071,12 @@ const Faster = {
         console.log(e);
       }
     },
+    /**
+     *
+     * @param {object} obj
+     * @param {function} callback
+     * @returns {*}
+     */
     class(obj,callback){
       let splitToArray = (a) =>{
         if(a.indexOf(',') > -1){
@@ -11084,6 +11104,12 @@ const Faster = {
         })
       }
     },
+    /**
+     *
+     * @param {object} obj
+     * @param {function} callback
+     * @returns {*}
+     */
     id(obj,callback){
       try{
         if(obj.indexOf('id') > -1){
@@ -11103,6 +11129,12 @@ const Faster = {
         })
       }
     },
+    /**
+     *
+     * @param {object} obj
+     * @param {function} callback
+     * @returns {*}
+     */
     content(obj,callback){
       try{
         if(obj.indexOf('content:') > -1){
@@ -11123,6 +11155,12 @@ const Faster = {
         })
       }
     },
+    /**
+     *
+     * @param {object} obj
+     * @param {function} callback
+     * @returns {*}
+     */
     template(obj,callback){
       try{
         if(obj.indexOf('template:') > -1){
@@ -11164,6 +11202,11 @@ const Faster = {
     }
   },
   parse:{
+    /**
+     *
+     * @param {object} obj
+     * @returns {XML|void|string|*}
+     */
     noLineBreaks(obj){
       try{
         return obj.replace(/(\r\n|\n|\r)/gm,'');
@@ -11176,6 +11219,10 @@ const Faster = {
         })
       }
     },
+    /**
+     *
+     * @param {object} obj
+     */
     asJSON(obj){
       try{
         return JSON.parse(obj);
@@ -11196,6 +11243,12 @@ const Faster = {
 
 const Architect = {
   build: {
+    /**
+     *
+     * @param {string} origin
+     * @param {string} replace
+     * @param {string} content
+     */
     element(origin, replace, content){
       try {
         $(replace).insertBefore(origin);
@@ -11210,6 +11263,13 @@ const Architect = {
         });
       }
     },
+    /**
+     *
+     * @param {string} origin
+     * @param {string} replace
+     * @param {string} content
+     * @param {boolean} opt
+     */
     experiment(origin, replace, content, opt){
       try {
         if (content !== undefined && content !== '') {
@@ -12090,6 +12150,15 @@ class Logger{
 
 
 
+/**
+ *
+ * @param {string} type
+ * @param {string} option
+ * @param {string|object} expression
+ * @param {string|object} element
+ * @returns {object}
+ * @constructor
+ */
 function FastProcessor(type, option, expression, element){
   switch (type){
     case 'math':
@@ -13938,6 +14007,13 @@ const FastAnimatorFunctions={
 
 
 
+/**
+ *
+ * @param {string} option
+ * @param {string} expression
+ * @param {string} element
+ * @constructor
+ */
 function FastNav(option,expression,element){
   option = option || 'horizontal';
   let objLayout = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].nav.layout[option];
@@ -13951,6 +14027,10 @@ function FastNav(option,expression,element){
   }else{
     getLocalJson();
   }
+  /**
+   *
+   * @param {string} url
+   */
   function getRemoteJson(url){
     $.ajax({
       url:url,
@@ -13988,7 +14068,10 @@ function FastNav(option,expression,element){
 
   let objNodeString = objNode.replace('@node',objNodeEntry);
   //let objString = objLayout.replace('@nav.node',objNodeString);
-
+  /**
+   *
+   * @param {object} obj
+   */
   function parseNavObj(obj){
     let itemArray = [];
     let objForm;
@@ -14004,6 +14087,12 @@ function FastNav(option,expression,element){
     __WEBPACK_IMPORTED_MODULE_2__components_Faster__["a" /* Architect */].build.experiment($('body').find(`[fstx-id="${element}"]`),null,objLayout.replace('@nav.node',objForm),true);
     //return objLayout.replace('@nav.node',objForm);
   }
+
+  /**
+   *
+   * @param {object} obj
+   * @returns {string}
+   */
   function parseParents(obj){
     let parentString = '';
     let parentTag;
@@ -14018,6 +14107,12 @@ function FastNav(option,expression,element){
     }
     return parentString;
   }
+
+  /**
+   *
+   * @param {object} obj
+   * @returns {string}
+   */
   function parseChildren(obj){
     let c,childString = '';
     if(Array.isArray(obj)){
@@ -14051,6 +14146,10 @@ function FastNav(option,expression,element){
  */
 
 
+/**
+ *
+ * @type {{accordObj: {}, do: builder.do, init: builder.init}}
+ */
 const builder = {
   accordObj:{},
   do:function(){
@@ -14068,6 +14167,12 @@ const builder = {
     });
     return __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.parent.replace('@accordion.item',objString);
   },
+  /**
+   *
+   * @param {string} a
+   * @param {object[]} b
+   * @returns {*}
+   */
   init:function(a,b){
     if(Array.isArray(b)){
       let o;
@@ -14081,6 +14186,13 @@ const builder = {
     }
   }
 };
+/**
+ *
+ * @param {string} option
+ * @param {string} expression
+ * @returns {*}
+ * @constructor
+ */
 function FastAccordion(option,expression){
   let trimObj = expression.trim().split(/\r?\n/);
   return builder.init(option,trimObj);
@@ -14102,6 +14214,13 @@ function FastAccordion(option,expression){
 
 
 
+/**
+ *
+ * @param {string} option
+ * @param {string|object} expression
+ * @param {string|object} element
+ * @constructor
+ */
 function FastTable(option,expression,element){
   let objLayout = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].table.layout[option];
   let objRow = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].table.row.layout;

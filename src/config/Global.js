@@ -3,7 +3,7 @@
  */
 export const Global = {
   appObj:'__faster__',
-  appStatus:'dev',
+  appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
   node:'ft',
   experiment:{
     node:'ftx',

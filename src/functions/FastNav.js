@@ -6,6 +6,13 @@ import {Template} from '../config/Template';
 import {Architect} from '../components/Faster';
 import {FastUtilities} from '../functions/FastUtilities';
 import Woops from '../classes/Woops';
+/**
+ *
+ * @param {string} option
+ * @param {string} expression
+ * @param {string} element
+ * @constructor
+ */
 export default function FastNav(option,expression,element){
   option = option || 'horizontal';
   let objLayout = Template.nav.layout[option];
@@ -19,6 +26,10 @@ export default function FastNav(option,expression,element){
   }else{
     getLocalJson();
   }
+  /**
+   *
+   * @param {string} url
+   */
   function getRemoteJson(url){
     $.ajax({
       url:url,
@@ -56,7 +67,10 @@ export default function FastNav(option,expression,element){
 
   let objNodeString = objNode.replace('@node',objNodeEntry);
   //let objString = objLayout.replace('@nav.node',objNodeString);
-
+  /**
+   *
+   * @param {object} obj
+   */
   function parseNavObj(obj){
     let itemArray = [];
     let objForm;
@@ -72,6 +86,12 @@ export default function FastNav(option,expression,element){
     Architect.build.experiment($('body').find(`[fstx-id="${element}"]`),null,objLayout.replace('@nav.node',objForm),true);
     //return objLayout.replace('@nav.node',objForm);
   }
+
+  /**
+   *
+   * @param {object} obj
+   * @returns {string}
+   */
   function parseParents(obj){
     let parentString = '';
     let parentTag;
@@ -86,6 +106,12 @@ export default function FastNav(option,expression,element){
     }
     return parentString;
   }
+
+  /**
+   *
+   * @param {object} obj
+   * @returns {string}
+   */
   function parseChildren(obj){
     let c,childString = '';
     if(Array.isArray(obj)){

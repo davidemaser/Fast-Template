@@ -5,7 +5,7 @@
   "main": "App.js",
   "scripts": {
     "build": "webpack",
-    "test": "echo \"Haven't written any yet :) \" && exit 1"
+    "doc": "jsdoc -P package.json -c jsdoc.conf.json"
   },
   "author": "David Maser",
   "repository": {
@@ -20,6 +20,7 @@
     "jasmine": "^2.6.0",
     "jasmine-core": "^2.6.4",
     "jquery": "^3.2.1",
+    "jsdoc": "^3.5.2",
     "json-loader": "^0.5.4",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.1.1",

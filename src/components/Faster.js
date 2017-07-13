@@ -5,6 +5,7 @@ import Woops from '../classes/Woops';
 import {Template} from '../config/Template';
 import {Global} from '../config/Global';
 import RegisterState from '../classes/RegisterState';
+
 export const Faster = {
   exec(){
     this.remove.emptyTags();
@@ -14,6 +15,12 @@ export const Faster = {
   },
   extract: {
     node: {
+      /**
+       *
+       * @param {object} obj
+       * @param {function} callback
+       * @returns {object}
+       */
       type(obj, callback){
         try {
           let __this = obj.split('render:')[1].split(',')[0];
@@ -32,6 +39,13 @@ export const Faster = {
         }
       }
     },
+    /**
+     *
+     * @param {object} obj
+     * @param {function} callback
+     * @param {boolean} parse
+     * @returns {*}
+     */
     json(obj,callback,parse){
       try {
         if(obj.indexOf('json') > -1){
@@ -47,6 +61,12 @@ export const Faster = {
         console.log(e);
       }
     },
+    /**
+     *
+     * @param {object} obj
+     * @param {function} callback
+     * @returns {*}
+     */
     class(obj,callback){
       let splitToArray = (a) =>{
         if(a.indexOf(',') > -1){
@@ -74,6 +94,12 @@ export const Faster = {
         })
       }
     },
+    /**
+     *
+     * @param {object} obj
+     * @param {function} callback
+     * @returns {*}
+     */
     id(obj,callback){
       try{
         if(obj.indexOf('id') > -1){
@@ -93,6 +119,12 @@ export const Faster = {
         })
       }
     },
+    /**
+     *
+     * @param {object} obj
+     * @param {function} callback
+     * @returns {*}
+     */
     content(obj,callback){
       try{
         if(obj.indexOf('content:') > -1){
@@ -113,6 +145,12 @@ export const Faster = {
         })
       }
     },
+    /**
+     *
+     * @param {object} obj
+     * @param {function} callback
+     * @returns {*}
+     */
     template(obj,callback){
       try{
         if(obj.indexOf('template:') > -1){
@@ -154,6 +192,11 @@ export const Faster = {
     }
   },
   parse:{
+    /**
+     *
+     * @param {object} obj
+     * @returns {XML|void|string|*}
+     */
     noLineBreaks(obj){
       try{
         return obj.replace(/(\r\n|\n|\r)/gm,'');
@@ -166,6 +209,10 @@ export const Faster = {
         })
       }
     },
+    /**
+     *
+     * @param {object} obj
+     */
     asJSON(obj){
       try{
         return JSON.parse(obj);
@@ -184,6 +231,12 @@ export const Faster = {
 
 export const Architect = {
   build: {
+    /**
+     *
+     * @param {string} origin
+     * @param {string} replace
+     * @param {string} content
+     */
     element(origin, replace, content){
       try {
         $(replace).insertBefore(origin);
@@ -198,6 +251,13 @@ export const Architect = {
         });
       }
     },
+    /**
+     *
+     * @param {string} origin
+     * @param {string} replace
+     * @param {string} content
+     * @param {boolean} opt
+     */
     experiment(origin, replace, content, opt){
       try {
         if (content !== undefined && content !== '') {

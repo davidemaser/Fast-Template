@@ -14,6 +14,15 @@ import FastAnimator from './FastAnimator';
 import FastNav from './FastNav';
 import FastAccordion from './FastAccordion';
 import FastTable from './FastTable';
+/**
+ *
+ * @param {string} type
+ * @param {string} option
+ * @param {string|object} expression
+ * @param {string|object} element
+ * @returns {object}
+ * @constructor
+ */
 export default function FastProcessor(type, option, expression, element){
   switch (type){
     case 'math':
