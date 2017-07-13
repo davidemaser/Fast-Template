@@ -26,20 +26,20 @@ export default function FastModal(option, expression){
       templateString = templateString.replace(`@modal.${o}`,expressionObj[o]);
     }
   }
-  $('body').on('click','.ftx__modal__cta button,.ftx__modal__prompt button',function(){
+  $('body').on('click',Template.modal.params.trigger,function(){
     if(window[Global.appObj]['modal']['modalIsOpen'] === false){
-      $(this).parent().parent().find('.ftx__modal').toggle();
+      $(this).parent().parent().find(Template.modal.params.target).slideToggle(Template.modal.params.speed);
       new RegisterState('modalIsOpen',true,'modal');
     }
-  }).on('click','.ftx__modal__prompt button[ftx-user-agrees]',function(){
+  }).on('click',Template.modal.params.prompts.yes.trigger,function(){
     if(window[Global.appObj]['modal']['modalIsOpen'] === true){
-      $(this).parent().parent().parent().parent().find('.ftx__modal').toggle();
+      $(this).parent().parent().parent().parent().find(Template.modal.params.prompts.yes.target).slideToggle(Template.modal.params.prompts.yes.speed);
       new RegisterState('modalIsOpen',false,'modal');
       new RegisterState('userHasAccepted',true,'modal');
     }
-  }).on('click','.ftx__modal__prompt button[ftx-user-refuses]',function(){
+  }).on('click',Template.modal.params.prompts.no.trigger,function(){
     if(window[Global.appObj]['modal']['modalIsOpen'] === true){
-      $(this).parent().parent().parent().parent().find('.ftx__modal').toggle();
+      $(this).parent().parent().parent().parent().find(Template.modal.params.prompts.no.target).slideToggle(Template.modal.params.prompts.no.speed);
       new RegisterState('modalIsOpen',false,'modal');
       new RegisterState('userHasAccepted',false,'modal');
     }

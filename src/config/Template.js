@@ -17,7 +17,12 @@ export const Template = {
   },
   accordion:{
     parent:'<div class="ftx__accordion">@accordion.item</div>',
-    item:'<div class="accordion_item"><div class="item__title">@accordion.item.title</div><div class="item__body">@accordion.item.body</div></div>'
+    item:'<div class="accordion_item"><div class="item__title">@accordion.item.title</div><div class="item__body">@accordion.item.body</div></div>',
+    params:{
+      speed:500,
+      trigger:'.ftx__accordion .accordion_item .item__title',
+      target:'.item__body'
+    }
   },
   gutter:{
     layout:'<section ftx-render class="ftx__gutter">@render</section>'
@@ -31,6 +36,23 @@ export const Template = {
       prompt:{
         simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button></div>',
         full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button><button ftx-user-refuses>@modal.prompt.refuse</button></div>'
+      }
+    },
+    params:{
+      speed:100,
+      trigger:'.ftx__modal__cta button,.ftx__modal__prompt button',
+      target:'.ftx__modal',
+      prompts:{
+        yes:{
+          speed:100,
+          trigger:'.ftx__modal__prompt button[ftx-user-agrees]',
+          target:'.ftx__modal'
+        },
+        no:{
+          speed:100,
+          trigger:'.ftx__modal__prompt button[ftx-user-refuses]',
+          target:'.ftx__modal'
+        }
       }
     }
   },

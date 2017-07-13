@@ -2,6 +2,7 @@
  * Created by David Maser on 12/07/2017.
  */
 import {Template} from '../config/Template';
+import RegisterEvents from '../classes/RegisterEvents';
 const builder = {
   accordObj:{},
   do:function(){
@@ -11,6 +12,9 @@ const builder = {
     for(o in obj){
       objString += Template.accordion.item.replace('@accordion.item.title',o).replace('@accordion.item.body',obj[o]);
     }
+    $('body').on('click',Template.accordion.params.trigger,function(){
+      $(this).parent().find(Template.accordion.params.target).slideToggle(Template.accordion.params.speed);
+    });
     return Template.accordion.parent.replace('@accordion.item',objString);
   },
   init:function(a,b){

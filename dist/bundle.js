@@ -461,7 +461,12 @@ const Template = {
   },
   accordion:{
     parent:'<div class="ftx__accordion">@accordion.item</div>',
-    item:'<div class="accordion_item"><div class="item__title">@accordion.item.title</div><div class="item__body">@accordion.item.body</div></div>'
+    item:'<div class="accordion_item"><div class="item__title">@accordion.item.title</div><div class="item__body">@accordion.item.body</div></div>',
+    params:{
+      speed:500,
+      trigger:'.ftx__accordion .accordion_item .item__title',
+      target:'.item__body'
+    }
   },
   gutter:{
     layout:'<section ftx-render class="ftx__gutter">@render</section>'
@@ -475,6 +480,23 @@ const Template = {
       prompt:{
         simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button></div>',
         full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button><button ftx-user-refuses>@modal.prompt.refuse</button></div>'
+      }
+    },
+    params:{
+      speed:100,
+      trigger:'.ftx__modal__cta button,.ftx__modal__prompt button',
+      target:'.ftx__modal',
+      prompts:{
+        yes:{
+          speed:100,
+          trigger:'.ftx__modal__prompt button[ftx-user-agrees]',
+          target:'.ftx__modal'
+        },
+        no:{
+          speed:100,
+          trigger:'.ftx__modal__prompt button[ftx-user-refuses]',
+          target:'.ftx__modal'
+        }
       }
     }
   },
@@ -13435,20 +13457,20 @@ function FastModal(option, expression){
       templateString = templateString.replace(`@modal.${o}`,expressionObj[o]);
     }
   }
-  $('body').on('click','.ftx__modal__cta button,.ftx__modal__prompt button',function(){
+  $('body').on('click',__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal.params.trigger,function(){
     if(window[__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appObj]['modal']['modalIsOpen'] === false){
-      $(this).parent().parent().find('.ftx__modal').toggle();
+      $(this).parent().parent().find(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal.params.target).slideToggle(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal.params.speed);
       new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',true,'modal');
     }
-  }).on('click','.ftx__modal__prompt button[ftx-user-agrees]',function(){
+  }).on('click',__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal.params.prompts.yes.trigger,function(){
     if(window[__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appObj]['modal']['modalIsOpen'] === true){
-      $(this).parent().parent().parent().parent().find('.ftx__modal').toggle();
+      $(this).parent().parent().parent().parent().find(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal.params.prompts.yes.target).slideToggle(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal.params.prompts.yes.speed);
       new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',false,'modal');
       new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('userHasAccepted',true,'modal');
     }
-  }).on('click','.ftx__modal__prompt button[ftx-user-refuses]',function(){
+  }).on('click',__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal.params.prompts.no.trigger,function(){
     if(window[__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appObj]['modal']['modalIsOpen'] === true){
-      $(this).parent().parent().parent().parent().find('.ftx__modal').toggle();
+      $(this).parent().parent().parent().parent().find(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal.params.prompts.no.target).slideToggle(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal.params.prompts.no.speed);
       new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',false,'modal');
       new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('userHasAccepted',false,'modal');
     }
@@ -13908,11 +13930,13 @@ function FastNav(option,expression,element){
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastAccordion;
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastAccordion;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_RegisterEvents__ = __webpack_require__(66);
 /**
  * Created by David Maser on 12/07/2017.
  */
+
 
 const builder = {
   accordObj:{},
@@ -13923,6 +13947,9 @@ const builder = {
     for(o in obj){
       objString += __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.item.replace('@accordion.item.title',o).replace('@accordion.item.body',obj[o]);
     }
+    $('body').on('click',__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.params.trigger,function(){
+      $(this).parent().find(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.params.target).slideToggle(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.params.speed);
+    });
     return __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.parent.replace('@accordion.item',objString);
   },
   init:function(a,b){
@@ -13942,6 +13969,7 @@ function FastAccordion(option,expression){
   let trimObj = expression.trim().split(/\r?\n/);
   return builder.init(option,trimObj);
 }
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
 /* 59 */
@@ -14073,7 +14101,7 @@ exports = module.exports = __webpack_require__(63)(undefined);
 
 
 // module
-exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"rendered\"]{display:block}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}nav.ftx__nav_horizontal{display:block;padding:5px;position:relative}div[ftx-role=\"nav-parent\"]{display:inline-block}div[ftx-role=\"nav-parent\"] .ftx__nav_dropdown{display:none;position:absolute}div[ftx-role=\"nav-parent\"]:hover .ftx__nav_dropdown{display:block}.ftx__accordion{display:block}.ftx__accordion .item__title{background:#ddd;padding:5px}.ftx__accordion .item__body{padding:10px 5px}.accordion_item{display:block;border-left:solid 1px #000;border-right:solid 1px #000;border-top:solid 1px #000}.accordion_item:last-child{border-bottom:1px solid #000}\n", ""]);
+exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"rendered\"]{display:block}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}nav.ftx__nav_horizontal{display:block;padding:5px;position:relative}div[ftx-role=\"nav-parent\"]{display:inline-block}div[ftx-role=\"nav-parent\"] .ftx__nav_dropdown{display:none;position:absolute}div[ftx-role=\"nav-parent\"]:hover .ftx__nav_dropdown{display:block}.ftx__accordion{display:block}.ftx__accordion .item__title{background:#ddd;padding:5px;cursor:pointer}.ftx__accordion .item__body{padding:10px 5px}.accordion_item{display:block;border-left:solid 1px #000;border-right:solid 1px #000;border-top:solid 1px #000}.accordion_item:last-child{border-bottom:1px solid #000}.accordion_item:not(:first-child) .item__body{display:none}\n", ""]);
 
 // exports
 
@@ -14613,6 +14641,42 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/**
+ * Created by David Maser on 29/06/2017.
+ */
+class RegisterEvents{
+  constructor(element,event,target,fn,speed){
+    this.element = element;
+    this.target = target;
+    this.fn = fn;
+    this.event = event;
+    this.speed = speed || 500;
+    this.parent = 'body';
+    this.run();
+  }
+  run(){
+    switch(this.fn){
+      case 't':
+        $(this.parent).on(this.event,this.element,function(){
+          $(this.target).toggle(this.speed);
+        });
+        break;
+      case 'st':
+        $(this.parent).on(this.event,this.element,function(){
+          $(this.target).slideToggle(this.speed);
+        });
+    }
+  }
+}
+/* unused harmony export default */
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ })
 /******/ ]);

@@ -3,6 +3,7 @@
   .item__title {
     background: #ddd;
     padding: 5px;
+    cursor: pointer;
   }
   .item__body {
     padding: 10px 5px;
@@ -16,5 +17,10 @@
   border-top: solid 1px #000;
   &:last-child {
     border-bottom: 1px solid #000;
+  }
+  &:not(:first-child){
+    .item__body {
+      display: none;
+    }
   }
 }
