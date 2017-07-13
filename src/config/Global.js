@@ -3,6 +3,7 @@
  */
 export const Global = {
   appObj:'__faster__',
+  appStatus:'dev',
   node:'ft',
   experiment:{
     node:'ftx',

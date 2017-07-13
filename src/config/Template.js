@@ -15,6 +15,26 @@ export const Template = {
       entry:'<div class="ftx__nav_node" ftx-link="@node.link">@node.entry</div>'
     }
   },
+  table:{
+    layout:{
+      basic:'<table class="ftx__table">@table.header@table.body@table.footer</table>'
+    },
+    header:{
+      layout:'<thead>@table.row</thead>'
+    },
+    footer:{
+      layout:'<tfoot>@table.row</tfoot>'
+    },
+    body:{
+      layout:'<tbody>@table.row</tbody>'
+    },
+    row:{
+      layout:'<tr>@table.column</tr>'
+    },
+    column:{
+      layout:'<td>@content</td>'
+    }
+  },
   accordion:{
     parent:'<div class="ftx__accordion">@accordion.item</div>',
     item:'<div class="accordion_item"><div class="item__title">@accordion.item.title</div><div class="item__body">@accordion.item.body</div></div>',
@@ -59,7 +79,7 @@ export const Template = {
   class:' class="@class"',
   id:' id="@id"',
   name:' name="@name"',
-  table:{
+  /*table:{
     layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
     class:this.class,
     id:this.id,
@@ -80,7 +100,7 @@ export const Template = {
         }
       }
     }
-  },
+  },*/
   login:{
     layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
     class:' class="@class"',

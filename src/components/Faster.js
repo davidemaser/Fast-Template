@@ -204,9 +204,9 @@ export const Architect = {
           content = typeof content === 'object' ? JSON.stringify(content) : content;
           let xContent = replace !== null ? replace.replace('@return', content) : content;
           $(xContent).insertBefore(origin);
-          opt !== true ? $(origin).remove() : null;
+          Global.appStatus !== 'dev' && opt !== true ? $(origin).remove() : null;
         } else {
-          $(origin).remove();
+          Global.appStatus !== 'dev' ? $(origin).remove() : null;
         }
       }catch(e){
           new Woops({

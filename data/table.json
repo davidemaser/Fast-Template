@@ -1,0 +1,25 @@
+{
+  "table":{
+    "columns":{
+      "header":["first header","second header","third header","fourth header"],
+      "sortable":true
+    },
+    "rows":[
+      {
+        "line":[
+          "this is first content",
+          "and this is second content",
+          "and this is the third content",
+          "and this is the third content"
+        ]
+      },{
+        "line":[
+          "this is first content",
+          "and this is second content",
+          "and this is the third content",
+          "and this is the third content"
+        ]
+      }
+    ]
+  }
+}
