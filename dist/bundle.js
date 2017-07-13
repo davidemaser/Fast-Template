@@ -13932,11 +13932,9 @@ function FastNav(option,expression,element){
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastAccordion;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_RegisterEvents__ = __webpack_require__(66);
 /**
  * Created by David Maser on 12/07/2017.
  */
-
 
 const builder = {
   accordObj:{},
@@ -14641,42 +14639,6 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
-
-/***/ }),
-/* 66 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/**
- * Created by David Maser on 29/06/2017.
- */
-class RegisterEvents{
-  constructor(element,event,target,fn,speed){
-    this.element = element;
-    this.target = target;
-    this.fn = fn;
-    this.event = event;
-    this.speed = speed || 500;
-    this.parent = 'body';
-    this.run();
-  }
-  run(){
-    switch(this.fn){
-      case 't':
-        $(this.parent).on(this.event,this.element,function(){
-          $(this.target).toggle(this.speed);
-        });
-        break;
-      case 'st':
-        $(this.parent).on(this.event,this.element,function(){
-          $(this.target).slideToggle(this.speed);
-        });
-    }
-  }
-}
-/* unused harmony export default */
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ })
 /******/ ]);
