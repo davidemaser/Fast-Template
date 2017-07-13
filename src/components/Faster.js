@@ -24,9 +24,9 @@ export const Faster = {
           }
         }catch(e){
           new Woops({
-            origin:'',
-            type:'',
-            message:'',
+            origin:'Faster.extract.node.type',
+            type:'Unknown Error',
+            message:'Unable to format Object',
             log:false
           })
         }
@@ -67,9 +67,9 @@ export const Faster = {
         }
       }catch(e){
         new Woops({
-          origin:'',
-          type:'',
-          message:'',
+          origin:'Faster.extract.node.class',
+          type:'Unknown Error',
+          message:'Unable to format Object',
           log:false
         })
       }
@@ -86,9 +86,9 @@ export const Faster = {
         }
       }catch(e){
         new Woops({
-          origin:'',
-          type:'',
-          message:'',
+          origin:'Faster.extract.node.id',
+          type:'Unknown Error',
+          message:'Unable to format Object',
           log:false
         })
       }
@@ -106,9 +106,9 @@ export const Faster = {
         }
       }catch(e){
         new Woops({
-          origin:'',
-          type:'',
-          message:'',
+          origin:'Faster.extract.node.content',
+          type:'Unknown Error',
+          message:'Unable to format Object',
           log:false
         })
       }
@@ -125,9 +125,9 @@ export const Faster = {
         }
       }catch(e){
         new Woops({
-          origin:'',
-          type:'',
-          message:'',
+          origin:'Faster.extract.node.template',
+          type:'Unknown Error',
+          message:'Unable to format Object',
           log:false
         })
       }
@@ -185,18 +185,36 @@ export const Faster = {
 export const Architect = {
   build: {
     element(origin, replace, content){
-      $(replace).insertBefore(origin);
-      $(replace).html(content);
-      $(origin).remove();
+      try {
+        $(replace).insertBefore(origin);
+        $(replace).html(content);
+        $(origin).remove();
+      }catch(e) {
+        new Woops({
+          origin: 'Architect.build.element',
+          type: 'Function Error',
+          message: 'Unable to execute the Arhitect Builder',
+          log: false
+        });
+      }
     },
     experiment(origin, replace, content, opt){
-      if(content !== undefined && content !== '') {
-        content = typeof content === 'object' ? JSON.stringify(content) : content;
-        let xContent = replace !== null ? replace.replace('@return', content) : content;
-        $(xContent).insertBefore(origin);
-        opt !== true ? $(origin).remove() : null;
-      }else{
-        $(origin).remove();
+      try {
+        if (content !== undefined && content !== '') {
+          content = typeof content === 'object' ? JSON.stringify(content) : content;
+          let xContent = replace !== null ? replace.replace('@return', content) : content;
+          $(xContent).insertBefore(origin);
+          opt !== true ? $(origin).remove() : null;
+        } else {
+          $(origin).remove();
+        }
+      }catch(e){
+          new Woops({
+            origin:'Architect.build.experiment',
+            type:'Function Error',
+            message:'Unable to execute the Arhitect Builder',
+            log:false
+          })
       }
     }
   },

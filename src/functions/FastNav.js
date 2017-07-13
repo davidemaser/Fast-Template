@@ -4,6 +4,7 @@
 import {Global} from '../config/Global';
 import {Template} from '../config/Template';
 import {Architect} from '../components/Faster';
+import {FastUtilities} from '../functions/FastUtilities';
 import Woops from '../classes/Woops';
 export default function FastNav(option,expression,element){
   option = option || 'horizontal';
@@ -26,7 +27,10 @@ export default function FastNav(option,expression,element){
       },
       error:function(){
         new Woops({
-
+          origin:'FastNav.getRemoteJson',
+          type:'AJAX Error',
+          message:'Unable to handle the AJAX request',
+          log:false
         })
       }
     })
@@ -73,7 +77,10 @@ export default function FastNav(option,expression,element){
     let parentTag;
     if(typeof obj === 'object') {
       obj.map(function(a){
-        parentTag = objParentTag.replace('@link',a.item.parent.link).replace('@label',a.item.parent.label);
+        parentTag = FastUtilities.stripper(objParentTag,{
+          '@link':a.item.parent.link,
+          '@label':a.item.parent.label
+        });
         parentString += parentTag.replace('@nav',parseChildren(a.item.children));
       });
     }
@@ -83,7 +90,10 @@ export default function FastNav(option,expression,element){
     let c,childString = '';
     if(Array.isArray(obj)){
       obj.map(function(a){
-        childString+=objNodeEntry.replace('@node.entry',a.label).replace('@node.link',a.link);
+        childString+=FastUtilities.stripper(objNodeEntry,{
+          '@node.entry':a.label,
+          '@node.link':a.link
+        });
       });
       return objNode.replace('@node',childString);
     }else{

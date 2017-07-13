@@ -3,6 +3,15 @@
  */
 import Woops from '../classes/Woops';
 export const FastUtilities = {
+  stripper:function(src,obj){
+    if(typeof obj === 'object'){
+      let o;
+      for(o in obj){
+        src = src.replace(o,obj[o]);
+      }
+      return src;
+    }
+  },
   load:function (url, target){
     $(target).load(url);
   },
@@ -10,7 +19,12 @@ export const FastUtilities = {
     $.getScript(url).done((script, textStatus) => {
       fn();
     }).fail(function (jqxhr, settings, exception) {
-      new Woops({})
+      new Woops({
+        origin:'FastUtilities.getScript',
+        type:'AJAX Error',
+        message:`Unable to load the remote script ${exception}`,
+        log:false
+      })
     });
   },
   countFtx:function(){

@@ -2,6 +2,7 @@
  * Created by David Maser on 12/07/2017.
  */
 import {Template} from '../config/Template';
+import {FastUtilities} from '../functions/FastUtilities';
 const builder = {
   accordObj:{},
   do:function(){
@@ -9,7 +10,10 @@ const builder = {
     let obj = builder.accordObj;
     let objString = '';
     for(o in obj){
-      objString += Template.accordion.item.replace('@accordion.item.title',o).replace('@accordion.item.body',obj[o]);
+      objString += FastUtilities.stripper(Template.accordion.item,{
+        '@accordion.item.title':o,
+        '@accordion.item.body':obj[o]
+      });
     }
     $('body').on('click',Template.accordion.params.trigger,function(){
       $(this).parent().find(Template.accordion.params.target).slideToggle(Template.accordion.params.speed);

@@ -11013,9 +11013,9 @@ const Faster = {
           }
         }catch(e){
           new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
-            origin:'',
-            type:'',
-            message:'',
+            origin:'Faster.extract.node.type',
+            type:'Unknown Error',
+            message:'Unable to format Object',
             log:false
           })
         }
@@ -11056,9 +11056,9 @@ const Faster = {
         }
       }catch(e){
         new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
-          origin:'',
-          type:'',
-          message:'',
+          origin:'Faster.extract.node.class',
+          type:'Unknown Error',
+          message:'Unable to format Object',
           log:false
         })
       }
@@ -11075,9 +11075,9 @@ const Faster = {
         }
       }catch(e){
         new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
-          origin:'',
-          type:'',
-          message:'',
+          origin:'Faster.extract.node.id',
+          type:'Unknown Error',
+          message:'Unable to format Object',
           log:false
         })
       }
@@ -11095,9 +11095,9 @@ const Faster = {
         }
       }catch(e){
         new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
-          origin:'',
-          type:'',
-          message:'',
+          origin:'Faster.extract.node.content',
+          type:'Unknown Error',
+          message:'Unable to format Object',
           log:false
         })
       }
@@ -11114,9 +11114,9 @@ const Faster = {
         }
       }catch(e){
         new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
-          origin:'',
-          type:'',
-          message:'',
+          origin:'Faster.extract.node.template',
+          type:'Unknown Error',
+          message:'Unable to format Object',
           log:false
         })
       }
@@ -11176,18 +11176,36 @@ const Faster = {
 const Architect = {
   build: {
     element(origin, replace, content){
-      $(replace).insertBefore(origin);
-      $(replace).html(content);
-      $(origin).remove();
+      try {
+        $(replace).insertBefore(origin);
+        $(replace).html(content);
+        $(origin).remove();
+      }catch(e) {
+        new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+          origin: 'Architect.build.element',
+          type: 'Function Error',
+          message: 'Unable to execute the Arhitect Builder',
+          log: false
+        });
+      }
     },
     experiment(origin, replace, content, opt){
-      if(content !== undefined && content !== '') {
-        content = typeof content === 'object' ? JSON.stringify(content) : content;
-        let xContent = replace !== null ? replace.replace('@return', content) : content;
-        $(xContent).insertBefore(origin);
-        opt !== true ? $(origin).remove() : null;
-      }else{
-        $(origin).remove();
+      try {
+        if (content !== undefined && content !== '') {
+          content = typeof content === 'object' ? JSON.stringify(content) : content;
+          let xContent = replace !== null ? replace.replace('@return', content) : content;
+          $(xContent).insertBefore(origin);
+          opt !== true ? $(origin).remove() : null;
+        } else {
+          $(origin).remove();
+        }
+      }catch(e){
+          new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+            origin:'Architect.build.experiment',
+            type:'Function Error',
+            message:'Unable to execute the Arhitect Builder',
+            log:false
+          })
       }
     }
   },
@@ -13826,10 +13844,12 @@ const FastAnimatorFunctions={
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_Woops__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions_FastUtilities__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__classes_Woops__ = __webpack_require__(4);
 /**
  * Created by David Maser on 10/07/2017.
  */
+
 
 
 
@@ -13854,8 +13874,11 @@ function FastNav(option,expression,element){
         parseNavObj(data);
       },
       error:function(){
-        new __WEBPACK_IMPORTED_MODULE_3__classes_Woops__["a" /* default */]({
-
+        new __WEBPACK_IMPORTED_MODULE_4__classes_Woops__["a" /* default */]({
+          origin:'FastNav.getRemoteJson',
+          type:'AJAX Error',
+          message:'Unable to handle the AJAX request',
+          log:false
         })
       }
     })
@@ -13902,7 +13925,10 @@ function FastNav(option,expression,element){
     let parentTag;
     if(typeof obj === 'object') {
       obj.map(function(a){
-        parentTag = objParentTag.replace('@link',a.item.parent.link).replace('@label',a.item.parent.label);
+        parentTag = __WEBPACK_IMPORTED_MODULE_3__functions_FastUtilities__["a" /* FastUtilities */].stripper(objParentTag,{
+          '@link':a.item.parent.link,
+          '@label':a.item.parent.label
+        });
         parentString += parentTag.replace('@nav',parseChildren(a.item.children));
       });
     }
@@ -13912,7 +13938,10 @@ function FastNav(option,expression,element){
     let c,childString = '';
     if(Array.isArray(obj)){
       obj.map(function(a){
-        childString+=objNodeEntry.replace('@node.entry',a.label).replace('@node.link',a.link);
+        childString+=__WEBPACK_IMPORTED_MODULE_3__functions_FastUtilities__["a" /* FastUtilities */].stripper(objNodeEntry,{
+          '@node.entry':a.label,
+          '@node.link':a.link
+        });
       });
       return objNode.replace('@node',childString);
     }else{
@@ -13932,9 +13961,11 @@ function FastNav(option,expression,element){
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastAccordion;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__ = __webpack_require__(67);
 /**
  * Created by David Maser on 12/07/2017.
  */
+
 
 const builder = {
   accordObj:{},
@@ -13943,7 +13974,10 @@ const builder = {
     let obj = builder.accordObj;
     let objString = '';
     for(o in obj){
-      objString += __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.item.replace('@accordion.item.title',o).replace('@accordion.item.body',obj[o]);
+      objString += __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["a" /* FastUtilities */].stripper(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.item,{
+        '@accordion.item.title':o,
+        '@accordion.item.body':obj[o]
+      });
     }
     $('body').on('click',__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.params.trigger,function(){
       $(this).parent().find(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.params.target).slideToggle(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.params.speed);
@@ -14639,6 +14673,64 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 66 */,
+/* 67 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
+/**
+ * Created by David Maser on 13/07/2017.
+ */
+
+const FastUtilities = {
+  stripper:function(src,obj){
+    if(typeof obj === 'object'){
+      let o;
+      for(o in obj){
+        src = src.replace(o,obj[o]);
+      }
+      return src;
+    }
+  },
+  load:function (url, target){
+    $(target).load(url);
+  },
+  getScript:function (url, fn){
+    $.getScript(url).done((script, textStatus) => {
+      fn();
+    }).fail(function (jqxhr, settings, exception) {
+      new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+        origin:'FastUtilities.getScript',
+        type:'AJAX Error',
+        message:`Unable to load the remote script ${exception}`,
+        log:false
+      })
+    });
+  },
+  countFtx:function(){
+    let countLog = {};
+    $('span[ftx-render]').each((a,b)=>{
+      countLog[a] = b;
+    })
+  },
+  poll:{
+    server:function(){
+
+    },
+    ip:function(){
+
+    },
+    database:function(qs){
+
+    }
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastUtilities;
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ })
 /******/ ]);
