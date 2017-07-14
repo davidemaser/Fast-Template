@@ -13,9 +13,12 @@ export default class Sniffer{
   }
 
   cycle(){
-    new Cycle('ft'); //basic Faster tags
-    new Cycle('ftx'); //Faster experimental tags
-    new Cycle('fta'); //Faster Ajax tags
+    let order = Global.cycleOrder;
+    if(Array.isArray(order)){
+      order.map(function(tag){
+        new Cycle(tag);
+      });
+    }
     new FastPlugin();
   }
 }

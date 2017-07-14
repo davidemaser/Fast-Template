@@ -3,8 +3,10 @@
  */
 export const Global = {
   appObj:'__faster__',
+  appRoot:'body',
   appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
   node:'ft',
+  cycleOrder:['ftx','ft','fta'],
   experiment:{
     node:'ftx',
     render:'<span ftx-render>@return</span>',

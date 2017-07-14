@@ -74,8 +74,10 @@
  */
 const Global = {
   appObj:'__faster__',
+  appRoot:'body',
   appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
   node:'ft',
+  cycleOrder:['ftx','ft','fta'],
   experiment:{
     node:'ftx',
     render:'<span ftx-render>@return</span>',
@@ -11964,9 +11966,12 @@ class Sniffer{
   }
 
   cycle(){
-    new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ft'); //basic Faster tags
-    new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('ftx'); //Faster experimental tags
-    new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */]('fta'); //Faster Ajax tags
+    let order = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].cycleOrder;
+    if(Array.isArray(order)){
+      order.map(function(tag){
+        new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */](tag);
+      });
+    }
     new __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__["a" /* default */]();
   }
 }
@@ -14313,25 +14318,27 @@ function FastTable(option,expression,element){
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastSticky;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /**
  * Created by David Maser on 14/07/2017.
  */
+
 function FastSticky(option,expression) {
   let domItem = $('<div/>').html(expression).contents();
   option === 'top' ? stickToTop() : stickToBottom();
   function stickToTop(){
     domItem.addClass('ftx__sticky top');
-    $('body').prepend(domItem);
+    $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).prepend(domItem);
   }
   function stickToBottom(){
     domItem.addClass('ftx__sticky bottom');
-    $('body').prepend(domItem);
+    $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).prepend(domItem);
   }
   let $header = $("header");
   let $clone = $header.before($header.clone().addClass("clone"));
   $(window).on("scroll", function() {
-    let fromTop = $("body").scrollTop();
-    $('body').toggleClass("down", (fromTop > 200));
+    let fromTop = $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).scrollTop();
+    $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).toggleClass("down", (fromTop > 200));
   });
 }
 
