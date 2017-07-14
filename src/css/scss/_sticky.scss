@@ -1,0 +1,30 @@
+/*
+.ftx__sticky {
+  width: 100%;
+  left: 0;
+  &.top {
+    top: 0;
+  }
+  &.bottom {
+    bottom: 0;
+  }
+}
+*/
+header {
+  position: relative;
+  width: 100%;
+  height: 60px;
+}
+
+header.clone {
+  position: fixed;
+  top: -65px;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  transition: 0.2s top cubic-bezier(.3,.73,.3,.74);
+}
+
+body.down header.clone {
+  top: 0;
+}

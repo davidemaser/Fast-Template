@@ -14,6 +14,7 @@ import FastAnimator from './FastAnimator';
 import FastNav from './FastNav';
 import FastAccordion from './FastAccordion';
 import FastTable from './FastTable';
+import FastSticky from './FastSticky';
 /**
  *
  * @param {string} type
@@ -63,6 +64,9 @@ export default function FastProcessor(type, option, expression, element){
       break;
     case 'accordion':
       return FastAccordion(option,expression);
+      break;
+    case 'sticky':
+      return FastSticky(option,expression);
       break;
 
   }
