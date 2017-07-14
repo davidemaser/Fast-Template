@@ -75,7 +75,7 @@
 const Global = {
   appObj:'__faster__',
   appRoot:'body',
-  appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
+  appStatus:'dev', //change this to dev if you want to see the pre-processed Faster tags
   node:'ft',
   cycleOrder:['ftx','ft','fta'],
   experiment:{
@@ -103,7 +103,7 @@ const Global = {
     all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
   },
   options:{
-    noWrapperElements:['panel','gutter','html','nav'],
+    noWrapperElements:['panel','gutter','html','nav','placeholder','group'],
     app:{
       onFail:['killFunctions','emptyCache','log','restart'],
       onEnter:['runSniffer','runCycle','waitAndSnoop'],
@@ -11876,6 +11876,14 @@ module.exports = Cancel;
  */
 
 const FastUtilities = {
+  ui:{
+    placeholder:function(type){
+      return `<div class="ftx__placeholder ${type}"></div>`
+    },
+    group:function(option,expression){
+      return `<section class="ftx__group ${option}" role="group">${expression}</section>`;
+    }
+  },
   stripper:function(src,obj){
     if(typeof obj === 'object'){
       let o;
@@ -12140,9 +12148,11 @@ class Logger{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__FastAccordion__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__FastTable__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__FastSticky__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__FastUtilities__ = __webpack_require__(14);
 /**
  * Created by David Maser on 21/06/2017.
  */
+
 
 
 
@@ -12167,6 +12177,7 @@ class Logger{
  * @constructor
  */
 function FastProcessor(type, option, expression, element){
+  console.log(type);
   switch (type){
     case 'math':
       return __WEBPACK_IMPORTED_MODULE_0__FastMath__["a" /* default */](option,expression);
@@ -12209,6 +12220,12 @@ function FastProcessor(type, option, expression, element){
       break;
     case 'sticky':
       return __WEBPACK_IMPORTED_MODULE_13__FastSticky__["a" /* default */](option,expression);
+      break;
+    case 'placeholder':
+      return __WEBPACK_IMPORTED_MODULE_14__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
+      break;
+    case 'group':
+      return __WEBPACK_IMPORTED_MODULE_14__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
       break;
 
   }
@@ -14474,7 +14491,7 @@ exports = module.exports = __webpack_require__(66)(undefined);
 
 
 // module
-exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"rendered\"]{display:block}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}nav.ftx__nav_horizontal{display:block;padding:5px;position:relative}div[ftx-role=\"nav-parent\"]{display:inline-block}div[ftx-role=\"nav-parent\"] .ftx__nav_dropdown{display:none;position:absolute}div[ftx-role=\"nav-parent\"]:hover .ftx__nav_dropdown{display:block}.ftx__accordion{display:block}.ftx__accordion .item__title{background:#ddd;padding:5px;cursor:pointer}.ftx__accordion .item__body{padding:10px 5px}.accordion_item{display:block;border-left:solid 1px #000;border-right:solid 1px #000;border-top:solid 1px #000}.accordion_item:last-child{border-bottom:1px solid #000}.accordion_item:not(:first-child) .item__body{display:none}header{position:relative;width:100%;height:60px}header.clone{position:fixed;top:-65px;left:0;right:0;z-index:999;transition:0.2s top cubic-bezier(0.3, 0.73, 0.3, 0.74)}body.down header.clone{top:0}\n", ""]);
+exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"rendered\"]{display:block}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}nav.ftx__nav_horizontal{display:block;padding:5px;position:relative}div[ftx-role=\"nav-parent\"]{display:inline-block}div[ftx-role=\"nav-parent\"] .ftx__nav_dropdown{display:none;position:absolute}div[ftx-role=\"nav-parent\"]:hover .ftx__nav_dropdown{display:block}.ftx__accordion{display:block}.ftx__accordion .item__title{background:#ddd;padding:5px;cursor:pointer}.ftx__accordion .item__body{padding:10px 5px}.accordion_item{display:block;border-left:solid 1px #000;border-right:solid 1px #000;border-top:solid 1px #000}.accordion_item:last-child{border-bottom:1px solid #000}.accordion_item:not(:first-child) .item__body{display:none}header{position:relative;width:100%;height:60px}header.clone{position:fixed;top:-65px;left:0;right:0;z-index:999;transition:0.2s top cubic-bezier(0.3, 0.73, 0.3, 0.74)}body.down header.clone{top:0}.ftx__placeholder{display:block;width:100%;clear:both}.ftx__placeholder.small{height:10px}.ftx__placeholder.large{height:100px}.ftx__placeholder.medium{height:50px}\n", ""]);
 
 // exports
 

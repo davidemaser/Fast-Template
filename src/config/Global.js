@@ -4,7 +4,7 @@
 export const Global = {
   appObj:'__faster__',
   appRoot:'body',
-  appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
+  appStatus:'dev', //change this to dev if you want to see the pre-processed Faster tags
   node:'ft',
   cycleOrder:['ftx','ft','fta'],
   experiment:{
@@ -32,7 +32,7 @@ export const Global = {
     all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
   },
   options:{
-    noWrapperElements:['panel','gutter','html','nav'],
+    noWrapperElements:['panel','gutter','html','nav','placeholder','group'],
     app:{
       onFail:['killFunctions','emptyCache','log','restart'],
       onEnter:['runSniffer','runCycle','waitAndSnoop'],

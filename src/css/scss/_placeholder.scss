@@ -1,0 +1,14 @@
+.ftx__placeholder {
+  display: block;
+  width: 100%;
+  clear: both;
+  &.small {
+    height: 10px;
+  }
+  &.large {
+    height: 100px;
+  }
+  &.medium {
+    height: 50px;
+  }
+}

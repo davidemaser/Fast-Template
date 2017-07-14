@@ -3,6 +3,14 @@
  */
 import Woops from '../classes/Woops';
 export const FastUtilities = {
+  ui:{
+    placeholder:function(type){
+      return `<div class="ftx__placeholder ${type}"></div>`
+    },
+    group:function(option,expression){
+      return `<section class="ftx__group ${option}" role="group">${expression}</section>`;
+    }
+  },
   stripper:function(src,obj){
     if(typeof obj === 'object'){
       let o;

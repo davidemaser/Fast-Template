@@ -15,6 +15,7 @@ import FastNav from './FastNav';
 import FastAccordion from './FastAccordion';
 import FastTable from './FastTable';
 import FastSticky from './FastSticky';
+import {FastUtilities} from './FastUtilities';
 /**
  *
  * @param {string} type
@@ -25,6 +26,7 @@ import FastSticky from './FastSticky';
  * @constructor
  */
 export default function FastProcessor(type, option, expression, element){
+  console.log(type);
   switch (type){
     case 'math':
       return FastMath(option,expression);
@@ -67,6 +69,12 @@ export default function FastProcessor(type, option, expression, element){
       break;
     case 'sticky':
       return FastSticky(option,expression);
+      break;
+    case 'placeholder':
+      return FastUtilities.ui.placeholder(option);
+      break;
+    case 'group':
+      return FastUtilities.ui.group(option,expression);
       break;
 
   }
