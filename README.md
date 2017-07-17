@@ -22,7 +22,7 @@ Faster uses special tags within an html page that allows the user to inject a te
 
 #### Faster Tags 
 
-``<ft>Standard Faster tags</ft>``
+><b>&lt;ft&gt;Standard Faster tags&lt;/ft&gt;</b>
 
 Standard Faster tags allow you to create basic template objects and render simple html and/or JSON. FT tags, contrary to FTX tags are not objects. The tag content is a string and is parsed as such.
 
@@ -62,7 +62,7 @@ will render as
 Tags can also have an ignore property assigned. These tags will not be parsed by Faster and will be removed from the dom. Ignore property is formatted as: ``<ft ignore>``
 
 #### Faster eXperiment tags
-``<ftx>{object:option}expression{~object}</ftx>``
+><b>&lt;ftx&gt;{object:option}expression{~object}&lt;/ftx&gt;</b>
 
 Experiment tags are, as their name implies, the result of an experiment to render advanced properties using a simple template tag. These tags can be used to execute mathemtical equations, conditional clauses, build forms and page elements and render data in a table layout.
 An FTX tag contains an object within which an expression determines the rendered result or modifies the parameters of the returned data.
@@ -76,8 +76,57 @@ FTX form object.
 Each object has a specific list of accepted properties that can be chained together in the expression. Each property is separated by a comma. Properties are formatted as ``property:value``.
 Certain properties can accept objects or arrays.
 
+Below is a list of currently supported tags, how to implement them as well as accepted properties and options
+
+#### math 
+><b>{math}formula here{~math}</b>
+
+The math tag has no options. The expression can be any mathematical formula
+#### date 
+><b>{date:option}date string {~date}</b>
+
+The date tag has one option that can be either 'full' or 'short'. A full date view will display in the format dd/mm/yyyy h:m:s. A short date view will format only the date without the time. The
+expression can be used to define the date string to render (i.e dd/mm/yy h:m)
+#### if 
+><b>{if:something=this}do this{else}do that{~if}</b>
+
+The if tag allows you to insert logic. The option is the condition to check. It can be a string comparison, a mathematical comparison or a boolean comparison. In the case of mathematical operations,
+if the condition calls a function than wrap it in square brackets (i.e. ``{if:[round(238*1.85)]=4}``). The expression returned by the tag can be a string.
+#### form 
+><b>{form}{~form}</b>
+#### panel
+><b>{panel}{~panel}</b>
+#### gutter
+><b>{gutter}{~gutter}</b>
+#### modal
+><b>{modal}{~modal}</b>
+#### html
+><b>{html}{~html}</b>
+#### animate
+><b>{animate}{~animate}</b>
+#### nav
+><b>{nav}{~nav}</b>
+#### placeholder
+><b>{placeholder}{~placeholder}</b>
+#### accordion
+><b>{accordion}{~accordion}</b>
+#### table
+><b>{table}{~table}</b>
+#### group
+><b>{group}{~group}</b>
+#### sticky
+><b>{sticky}{~sticky}</b>
+#### search
+><b>{search}{~search}</b>
+#### bind
+><b>{bind}{~bind}</b>
+#### random
+><b>{random}{~random}</b>
+
+
+
 #### Faster Ajax Tags
-``<fta>{json:url}node=root_node,show=5,saveAs=something{~json}</fta>``
+><b>&lt;fta&gt;{json:url}node=root_node,show=5,saveAs=something{~json}&lt;/fta&gt;</b>
 
 Faster Ajax tags allow you to execute an XHR request without ever touching the actual ajax call. The JSON data returned can be passed to a template and rendered or saved as a global object and used by other functions in the application (template models are currently in work).
 
