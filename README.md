@@ -149,3 +149,14 @@ defining thing as the starting node ``node:thing`` would return only the data in
 
 - show: defines the number of the results to show from the returned data.
 - saveAs: defines the name that the object will saves as. The object is bound to the window ``window['object']`` and is globally accessible.
+
+### Customizing Templates
+
+All templates used by Faster are completely customizable by modifying their associated code in the template config file. You can also very easily create your
+own templates and use them to extend Faster's capabilities. Templates follow a simple structure that is defined below and contains only strict html and Faster 
+placeholders. Continue reading below to learn how to extend templates and create your own.
+
+##### Schema
+
+Template objects follow a simple and straightforward schema. The object name is the same as the option passed in the Faster tag. (i.e. ``{form:login}``). This means
+that within the template.js file, you need to have a node with the option name of your tag. 

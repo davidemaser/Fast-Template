@@ -11425,18 +11425,42 @@ module.exports = defaults;
 
 const FastUtilities = {
   ui:{
+    /**
+     * Simple function that creates a placeholder object in the
+     * page.
+     * @param {string} type
+     * @returns {string}
+     */
     placeholder:function(type){
       return `<div class="ftx__placeholder ${type}"></div>`
     },
+    /**
+     * This function unbinds existing elements from the dom and
+     * groups them all together in a single parent. This is useful
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
     group:function(option,expression){
-      option = option === null ? '' : option;
-      return `<section class="ftx__group ${option}" role="group">${expression}</section>`;
+      option = option !== null ? option : 'section';
+      return `<${option} class="ftx__group ${option}" role="group">${expression}</${option}>`;
     },
+    /**
+     * This function takes an existing element and unbinds it from the dom and
+     * appends it into a new clone host
+     * @param {string} option
+     * @param {string} expression
+     */
     bind:function(option,expression){
       $('body').prepend('<section ftx-clone></section>');
       expression = expression.indexOf(',') > -1 ? expression.split(',') : expression;
       if(Array.isArray(expression)){
         expression.map(function(a){
+          /*
+          set a timeout so that all other dynamic elements
+          can render before unbinding them and appending
+          them to their new host
+          */
           window.setTimeout(function(){
             $(`#${a}`).attr('ftx-cloned','true').appendTo('section[ftx-clone]');
           },100);
@@ -11447,6 +11471,13 @@ const FastUtilities = {
         },100);
       }
     },
+    /**
+     * This function takes an array of html elements and randomizes their position
+     * on the page, within a parent container
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
     random:function(option,expression){
       option = option !== null ? option : 'section';
       let elementArray = expression.trim().split(/\r?\n/);
