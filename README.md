@@ -1,7 +1,7 @@
 FASTER Template
 ======
 
-### A scalable and scriptable templating engine model
+## A scalable and scriptable templating engine model
 
 Installation
 ------
@@ -20,7 +20,7 @@ Faster is a flexible templating engine that uses common html/xml tag formatting 
 
 Faster uses special tags within an html page that allows the user to inject a template assignment or data call simply, without having to code or tweak an existing component or layout.
 
-#### Faster Tags 
+### Faster Tags 
 
 ><b>&lt;ft&gt;Standard Faster tags&lt;/ft&gt;</b>
 
@@ -61,7 +61,7 @@ will render as
 
 Tags can also have an ignore property assigned. These tags will not be parsed by Faster and will be removed from the dom. Ignore property is formatted as: ``<ft ignore>``
 
-#### Faster eXperiment tags
+### Faster eXperiment tags
 ><b>&lt;ftx&gt;{object:option}expression{~object}&lt;/ftx&gt;</b>
 
 Experiment tags are, as their name implies, the result of an experiment to render advanced properties using a simple template tag. These tags can be used to execute mathemtical equations, conditional clauses, build forms and page elements and render data in a table layout.
@@ -125,7 +125,7 @@ if the condition calls a function than wrap it in square brackets (i.e. ``{if:[r
 
 
 
-#### Faster Ajax Tags
+### Faster Ajax Tags
 ><b>&lt;fta&gt;{json:url}node=root_node,show=5,saveAs=something{~json}&lt;/fta&gt;</b>
 
 Faster Ajax tags allow you to execute an XHR request without ever touching the actual ajax call. The JSON data returned can be passed to a template and rendered or saved as a global object and used by other functions in the application (template models are currently in work).
