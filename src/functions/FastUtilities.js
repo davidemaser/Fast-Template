@@ -8,7 +8,47 @@ export const FastUtilities = {
       return `<div class="ftx__placeholder ${type}"></div>`
     },
     group:function(option,expression){
+      option = option === null ? '' : option;
       return `<section class="ftx__group ${option}" role="group">${expression}</section>`;
+    },
+    bind:function(option,expression){
+      $('body').prepend('<section ftx-clone></section>');
+      expression = expression.indexOf(',') > -1 ? expression.split(',') : expression;
+      if(Array.isArray(expression)){
+        expression.map(function(a){
+          window.setTimeout(function(){
+            $(`#${a}`).attr('ftx-cloned','true').appendTo('section[ftx-clone]');
+          },100);
+        })
+      }else{
+        window.setTimeout(function(){
+          $(`#${expression}`).attr('ftx-cloned','true').appendTo('section[ftx-clone]');
+        },100);
+      }
+    }
+  },
+  components:{
+    search:function(option,expression){
+      let template = {
+        layout:'<div class="ftx__component search"><input ftx-target="@search.target" name="ftx_search" id="ftx_comp_search" type="text" placeholder="@search.placeholder" />@search.button</div>',
+        button:'<button>@search.label</button>'
+      };
+      let templateStr;
+      let expArray = expression.indexOf(',') > -1 ? expression.split(',') : expression;
+      switch(option){
+        case 'default':
+          templateStr = template.layout.replace('@search.button',template.button);
+          break;
+      }
+      if(Array.isArray(expArray)){
+        expArray.map(function(a){
+          templateStr = templateStr.replace(`@search.${a.split(':')[0]}`,a.split(':')[1]);
+        })
+      }
+      return templateStr;
+    },
+    card:function(option,expression){
+
     }
   },
   stripper:function(src,obj){

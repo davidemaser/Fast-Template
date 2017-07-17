@@ -76,6 +76,12 @@ export default function FastProcessor(type, option, expression, element){
     case 'group':
       return FastUtilities.ui.group(option,expression);
       break;
+    case 'search':
+      return FastUtilities.components.search(option,expression);
+      break;
+    case 'bind':
+      return FastUtilities.ui.bind(option,expression);
+      break;
 
   }
 }

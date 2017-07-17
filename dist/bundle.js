@@ -10397,7 +10397,7 @@ return jQuery;
 "use strict";
 
 
-var bind = __webpack_require__(8);
+var bind = __webpack_require__(9);
 var isBuffer = __webpack_require__(27);
 
 /*global toString:true*/
@@ -11330,10 +11330,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(10);
+    adapter = __webpack_require__(11);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(10);
+    adapter = __webpack_require__(11);
   }
   return adapter;
 }
@@ -11404,10 +11404,115 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
 /* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
+/**
+ * Created by David Maser on 13/07/2017.
+ */
+
+const FastUtilities = {
+  ui:{
+    placeholder:function(type){
+      return `<div class="ftx__placeholder ${type}"></div>`
+    },
+    group:function(option,expression){
+      option = option === null ? '' : option;
+      return `<section class="ftx__group ${option}" role="group">${expression}</section>`;
+    },
+    bind:function(option,expression){
+      $('body').prepend('<section ftx-clone></section>');
+      expression = expression.indexOf(',') > -1 ? expression.split(',') : expression;
+      if(Array.isArray(expression)){
+        expression.map(function(a){
+          window.setTimeout(function(){
+            $(`#${a}`).attr('ftx-cloned','true').appendTo('section[ftx-clone]');
+          },100);
+        })
+      }else{
+        window.setTimeout(function(){
+          $(`#${expression}`).attr('ftx-cloned','true').appendTo('section[ftx-clone]');
+        },100);
+      }
+    }
+  },
+  components:{
+    search:function(option,expression){
+      let template = {
+        layout:'<div class="ftx__component search"><input ftx-target="@search.target" name="ftx_search" id="ftx_comp_search" type="text" placeholder="@search.placeholder" />@search.button</div>',
+        button:'<button>@search.label</button>'
+      };
+      let templateStr;
+      let expArray = expression.indexOf(',') > -1 ? expression.split(',') : expression;
+      switch(option){
+        case 'default':
+          templateStr = template.layout.replace('@search.button',template.button);
+          break;
+      }
+      if(Array.isArray(expArray)){
+        expArray.map(function(a){
+          templateStr = templateStr.replace(`@search.${a.split(':')[0]}`,a.split(':')[1]);
+        })
+      }
+      return templateStr;
+    },
+    card:function(option,expression){
+
+    }
+  },
+  stripper:function(src,obj){
+    if(typeof obj === 'object'){
+      let o;
+      for(o in obj){
+        src = src.replace(o,obj[o]);
+      }
+      return src;
+    }
+  },
+  load:function (url, target){
+    $(target).load(url);
+  },
+  getScript:function (url, fn){
+    $.getScript(url).done((script, textStatus) => {
+      fn();
+    }).fail(function (jqxhr, settings, exception) {
+      new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+        origin:'FastUtilities.getScript',
+        type:'AJAX Error',
+        message:`Unable to load the remote script ${exception}`,
+        log:false
+      })
+    });
+  },
+  countFtx:function(){
+    let countLog = {};
+    $('span[ftx-render]').each((a,b)=>{
+      countLog[a] = b;
+    })
+  },
+  poll:{
+    server:function(){
+
+    },
+    ip:function(){
+
+    },
+    database:function(qs){
+
+    }
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastUtilities;
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11425,7 +11530,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -11615,7 +11720,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11626,7 +11731,7 @@ var settle = __webpack_require__(30);
 var buildURL = __webpack_require__(32);
 var parseHeaders = __webpack_require__(33);
 var isURLSameOrigin = __webpack_require__(34);
-var createError = __webpack_require__(11);
+var createError = __webpack_require__(12);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(35);
 
 module.exports = function xhrAdapter(config) {
@@ -11800,10 +11905,10 @@ module.exports = function xhrAdapter(config) {
   });
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11828,7 +11933,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11840,7 +11945,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11864,71 +11969,6 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
-
-/***/ }),
-/* 14 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
-/**
- * Created by David Maser on 13/07/2017.
- */
-
-const FastUtilities = {
-  ui:{
-    placeholder:function(type){
-      return `<div class="ftx__placeholder ${type}"></div>`
-    },
-    group:function(option,expression){
-      return `<section class="ftx__group ${option}" role="group">${expression}</section>`;
-    }
-  },
-  stripper:function(src,obj){
-    if(typeof obj === 'object'){
-      let o;
-      for(o in obj){
-        src = src.replace(o,obj[o]);
-      }
-      return src;
-    }
-  },
-  load:function (url, target){
-    $(target).load(url);
-  },
-  getScript:function (url, fn){
-    $.getScript(url).done((script, textStatus) => {
-      fn();
-    }).fail(function (jqxhr, settings, exception) {
-      new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
-        origin:'FastUtilities.getScript',
-        type:'AJAX Error',
-        message:`Unable to load the remote script ${exception}`,
-        log:false
-      })
-    });
-  },
-  countFtx:function(){
-    let countLog = {};
-    $('span[ftx-render]').each((a,b)=>{
-      countLog[a] = b;
-    })
-  },
-  poll:{
-    server:function(){
-
-    },
-    ip:function(){
-
-    },
-    database:function(qs){
-
-    }
-  }
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastUtilities;
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
 /* 15 */
@@ -12148,7 +12188,7 @@ class Logger{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__FastAccordion__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__FastTable__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__FastSticky__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__FastUtilities__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__FastUtilities__ = __webpack_require__(8);
 /**
  * Created by David Maser on 21/06/2017.
  */
@@ -12226,6 +12266,12 @@ function FastProcessor(type, option, expression, element){
       break;
     case 'group':
       return __WEBPACK_IMPORTED_MODULE_14__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
+      break;
+    case 'search':
+      return __WEBPACK_IMPORTED_MODULE_14__FastUtilities__["a" /* FastUtilities */].components.search(option,expression);
+      break;
+    case 'bind':
+      return __WEBPACK_IMPORTED_MODULE_14__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
       break;
 
   }
@@ -12502,7 +12548,7 @@ module.exports = __webpack_require__(26);
 
 
 var utils = __webpack_require__(2);
-var bind = __webpack_require__(8);
+var bind = __webpack_require__(9);
 var Axios = __webpack_require__(28);
 var defaults = __webpack_require__(7);
 
@@ -12537,9 +12583,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(13);
+axios.Cancel = __webpack_require__(14);
 axios.CancelToken = __webpack_require__(42);
-axios.isCancel = __webpack_require__(12);
+axios.isCancel = __webpack_require__(13);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -12699,7 +12745,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(11);
+var createError = __webpack_require__(12);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -13118,7 +13164,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(2);
 var transformData = __webpack_require__(39);
-var isCancel = __webpack_require__(12);
+var isCancel = __webpack_require__(13);
 var defaults = __webpack_require__(7);
 
 /**
@@ -13271,7 +13317,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(13);
+var Cancel = __webpack_require__(14);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -14024,7 +14070,7 @@ const FastAnimatorFunctions={
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions_FastUtilities__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions_FastUtilities__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__classes_Woops__ = __webpack_require__(4);
 /**
  * Created by David Maser on 10/07/2017.
@@ -14167,7 +14213,7 @@ function FastNav(option,expression,element){
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastAccordion;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__ = __webpack_require__(8);
 /**
  * Created by David Maser on 12/07/2017.
  */
