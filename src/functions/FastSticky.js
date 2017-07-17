@@ -13,10 +13,10 @@ export default function FastSticky(option,expression) {
     domItem.addClass('ftx__sticky bottom');
     $(Global.appRoot).prepend(domItem);
   }
-  let $header = $("header");
-  let $clone = $header.before($header.clone().addClass("clone"));
-  $(window).on("scroll", function() {
+  let header = $('header');
+  let clone = header.before(header.clone().addClass('clone'));
+  $(window).on('scroll', function() {
     let fromTop = $(Global.appRoot).scrollTop();
-    $(Global.appRoot).toggleClass("down", (fromTop > 200));
+    $(Global.appRoot).toggleClass('down', (fromTop > 200));
   });
 }

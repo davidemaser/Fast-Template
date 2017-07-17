@@ -82,6 +82,9 @@ export default function FastProcessor(type, option, expression, element){
     case 'bind':
       return FastUtilities.ui.bind(option,expression);
       break;
+    case 'random':
+      return FastUtilities.ui.random(option,expression);
+      break;
 
   }
 }

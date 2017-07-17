@@ -12,6 +12,7 @@ export const FastUtilities = {
       return `<section class="ftx__group ${option}" role="group">${expression}</section>`;
     },
     bind:function(option,expression){
+      let objArray = [];
       $('body').prepend('<section ftx-clone></section>');
       expression = expression.indexOf(',') > -1 ? expression.split(',') : expression;
       if(Array.isArray(expression)){
@@ -25,6 +26,20 @@ export const FastUtilities = {
           $(`#${expression}`).attr('ftx-cloned','true').appendTo('section[ftx-clone]');
         },100);
       }
+    },
+    random:function(option,expression){
+      let elementArray = expression.trim().split(/\r?\n/);
+      let randomTemplate = '<section ftx-render class="ftx__random">@content</section>';
+      return randomTemplate.replace('@content',this.shuffleArray(elementArray).join().replace(/,/g,''));
+    },
+    shuffleArray: function (array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        let temp = array[i].trim();
+        array[i] = array[j].trim();
+        array[j] = temp;
+      }
+      return array;
     }
   },
   components:{

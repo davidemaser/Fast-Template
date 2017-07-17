@@ -11426,6 +11426,7 @@ const FastUtilities = {
       return `<section class="ftx__group ${option}" role="group">${expression}</section>`;
     },
     bind:function(option,expression){
+      let objArray = [];
       $('body').prepend('<section ftx-clone></section>');
       expression = expression.indexOf(',') > -1 ? expression.split(',') : expression;
       if(Array.isArray(expression)){
@@ -11439,6 +11440,20 @@ const FastUtilities = {
           $(`#${expression}`).attr('ftx-cloned','true').appendTo('section[ftx-clone]');
         },100);
       }
+    },
+    random:function(option,expression){
+      let elementArray = expression.trim().split(/\r?\n/);
+      let randomTemplate = '<section ftx-render class="ftx__random">@content</section>';
+      return randomTemplate.replace('@content',this.shuffleArray(elementArray).join().replace(/,/g,''));
+    },
+    shuffleArray: function (array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        let temp = array[i].trim();
+        array[i] = array[j].trim();
+        array[j] = temp;
+      }
+      return array;
     }
   },
   components:{
@@ -12272,6 +12287,9 @@ function FastProcessor(type, option, expression, element){
       break;
     case 'bind':
       return __WEBPACK_IMPORTED_MODULE_14__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
+      break;
+    case 'random':
+      return __WEBPACK_IMPORTED_MODULE_14__FastUtilities__["a" /* FastUtilities */].ui.random(option,expression);
       break;
 
   }
@@ -14397,11 +14415,11 @@ function FastSticky(option,expression) {
     domItem.addClass('ftx__sticky bottom');
     $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).prepend(domItem);
   }
-  let $header = $("header");
-  let $clone = $header.before($header.clone().addClass("clone"));
-  $(window).on("scroll", function() {
+  let header = $('header');
+  let clone = header.before(header.clone().addClass('clone'));
+  $(window).on('scroll', function() {
     let fromTop = $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).scrollTop();
-    $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).toggleClass("down", (fromTop > 200));
+    $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).toggleClass('down', (fromTop > 200));
   });
 }
 
