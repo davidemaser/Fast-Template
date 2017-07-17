@@ -134,9 +134,8 @@ The Faster Ajax tag only has one require parameter, the URL. Callbacks can be bo
 
 The Faster Ajax object can accept the following properties:
 
-url: the url to the JSON file (the root of your data objects can be defined in the Global config file)
-
-node: defines the starting node in the JSON. If, for example your json is formatted as below:
+- url: the url to the JSON file (the root of your data objects can be defined in the Global config file)
+- node: defines the starting node in the JSON. If, for example your json is formatted as below:
 ````
 {
   "thing":[
@@ -148,6 +147,5 @@ node: defines the starting node in the JSON. If, for example your json is format
 ````
 defining thing as the starting node ``node:thing`` would return only the data in the thing array.
 
-show: defines the number of the results to show from the returned data.
-
-saveAs: defines the name that the object will saves as. The object is bound to the window ``window['object']`` and is globally accessible.
+- show: defines the number of the results to show from the returned data.
+- saveAs: defines the name that the object will saves as. The object is bound to the window ``window['object']`` and is globally accessible.
