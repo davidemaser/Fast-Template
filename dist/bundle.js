@@ -10811,118 +10811,120 @@ const Template = {
       }
     }
   },*/
-  login:{
-    layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
-    class:' class="@class"',
-    id:' id="@id"',
-    style:' style="@style"',
-    action:' action="@action"',
-    elements:[
-      {
-        element:'input',
-        type:'text',
-        name:'userName',
-        placeholder:'USER NAME',
-        class:'',
-        id:''
-      },
-      {
-        element:'input',
-        type:'password',
-        name:'passWord',
-        placeholder:'PASSWORD',
-        class:'',
-        id:''
-      },
-      {
-        element:'input',
-        type:'checkbox',
-        name:'myCheck',
-        class:'',
-        id:'',
-        checked:true
-      },
-      {
-        element:'input',
-        type:'radio',
-        name:'myRadio',
-        class:'',
-        id:''
-      },
-      {
-        element:'radiogroup',
-        type:'radio',
-        name:'myRadio',
-        class:'',
-        id:'',
-        options:[
-          {
-            label:'hi',
-            value:'hi'
-          },
-          {
-            label:'bye',
-            value:'bye'
-          },
-          {
-            label:'what',
-            value:'what',
-            selected:true
-          }
-        ]
-      },
-      {
-        element:'textarea',
-        placeholder:'',
-        name:'TEXT',
-        rows:10,
-        cols:10,
-        class:'',
-        id:''
-      },
-      {
-        element:'select',
-        name:'TEXT',
-        class:'',
-        id:'',
-        options:[
-          {
-            label:'hi',
-            value:'hi'
-          },
-          {
-            label:'bye',
-            value:'bye'
-          },
-          {
-            label:'what',
-            value:'what',
-            selected:true
-          }
-        ]
-      },
-      {
-        element:'input',
-        type:'submit',
-        name:'myButton',
-        placeholder:'CLICK',
-        class:'',
-        id:''
-      },
-    ]
-  },
-  account:{
-    layout:'<form@account.class@account.id@account.style@account.action>@account.elements</form>',
-    elements:[
-      {
-        element:'input',
-        type:'text',
-        name:'userName',
-        placeholder:'USER NAME',
-        class:'',
-        id:''
-      }
-    ]
+  forms:{
+    login:{
+      layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
+      class:' class="@class"',
+      id:' id="@id"',
+      style:' style="@style"',
+      action:' action="@action"',
+      elements:[
+        {
+          element:'input',
+          type:'text',
+          name:'userName',
+          placeholder:'USER NAME',
+          class:'',
+          id:''
+        },
+        {
+          element:'input',
+          type:'password',
+          name:'passWord',
+          placeholder:'PASSWORD',
+          class:'',
+          id:''
+        },
+        {
+          element:'input',
+          type:'checkbox',
+          name:'myCheck',
+          class:'',
+          id:'',
+          checked:true
+        },
+        {
+          element:'input',
+          type:'radio',
+          name:'myRadio',
+          class:'',
+          id:''
+        },
+        {
+          element:'radiogroup',
+          type:'radio',
+          name:'myRadio',
+          class:'',
+          id:'',
+          options:[
+            {
+              label:'hi',
+              value:'hi'
+            },
+            {
+              label:'bye',
+              value:'bye'
+            },
+            {
+              label:'what',
+              value:'what',
+              selected:true
+            }
+          ]
+        },
+        {
+          element:'textarea',
+          placeholder:'',
+          name:'TEXT',
+          rows:10,
+          cols:10,
+          class:'',
+          id:''
+        },
+        {
+          element:'select',
+          name:'TEXT',
+          class:'',
+          id:'',
+          options:[
+            {
+              label:'hi',
+              value:'hi'
+            },
+            {
+              label:'bye',
+              value:'bye'
+            },
+            {
+              label:'what',
+              value:'what',
+              selected:true
+            }
+          ]
+        },
+        {
+          element:'input',
+          type:'submit',
+          name:'myButton',
+          placeholder:'CLICK',
+          class:'',
+          id:''
+        },
+      ]
+    },
+    account:{
+      layout:'<form@account.class@account.id@account.style@account.action>@account.elements</form>',
+      elements:[
+        {
+          element:'input',
+          type:'text',
+          name:'userName',
+          placeholder:'USER NAME',
+          class:'',
+          id:''
+        }
+      ]
+    }
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Template;
@@ -13543,7 +13545,7 @@ const TemplateTableUtilities = {
  */
 
 
-function FastForm(option, expression){
+function FastForm(option, expression) {
   try {
     function processExpression(obj) {
       let expressionObj = {};
@@ -13557,21 +13559,21 @@ function FastForm(option, expression){
     function processLayout(obj, layout) {
       let o;
       for (o in obj) {
-        let layoutOrigin = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][option][o].replace(`@${o}`, obj[o]);
+        let layoutOrigin = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].forms[option][o].replace(`@${o}`, obj[o]);
         layout = layout.replace(`@${option}.${o}`, layoutOrigin);
       }
       return layout;
     }
 
-    let layout = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][option].layout;
-    let elements = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][option].elements;
+    let layout = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].forms[option].layout;
+    let elements = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].forms[option].elements;
     let expressionArray = expression.split(',');
     let expressionObj = processExpression(expressionArray);
     let parsedLayout = processLayout(expressionObj, layout) || null;
     let formElements = __WEBPACK_IMPORTED_MODULE_1__FormElements__["a" /* default */](elements);
     parsedLayout = formElements !== null ? parsedLayout.replace(`@${option}.elements`, formElements) : parsedLayout;
     return parsedLayout;
-  }catch(e){
+  } catch (e) {
 
   }
 }

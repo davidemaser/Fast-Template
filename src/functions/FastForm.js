@@ -3,7 +3,7 @@
  */
 import {Template} from '../config/Template';
 import FormElements from './FormElements';
-export default function FastForm(option, expression){
+export default function FastForm(option, expression) {
   try {
     function processExpression(obj) {
       let expressionObj = {};
@@ -17,21 +17,21 @@ export default function FastForm(option, expression){
     function processLayout(obj, layout) {
       let o;
       for (o in obj) {
-        let layoutOrigin = Template[option][o].replace(`@${o}`, obj[o]);
+        let layoutOrigin = Template.forms[option][o].replace(`@${o}`, obj[o]);
         layout = layout.replace(`@${option}.${o}`, layoutOrigin);
       }
       return layout;
     }
 
-    let layout = Template[option].layout;
-    let elements = Template[option].elements;
+    let layout = Template.forms[option].layout;
+    let elements = Template.forms[option].elements;
     let expressionArray = expression.split(',');
     let expressionObj = processExpression(expressionArray);
     let parsedLayout = processLayout(expressionObj, layout) || null;
     let formElements = FormElements(elements);
     parsedLayout = formElements !== null ? parsedLayout.replace(`@${option}.elements`, formElements) : parsedLayout;
     return parsedLayout;
-  }catch(e){
+  } catch (e) {
 
   }
 }
