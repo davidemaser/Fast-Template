@@ -2,6 +2,7 @@
  * Created by David Maser on 13/07/2017.
  */
 import Woops from '../classes/Woops';
+import {Template} from '../config/Template';
 export const FastUtilities = {
   ui:{
     placeholder:function(type){
@@ -12,7 +13,6 @@ export const FastUtilities = {
       return `<section class="ftx__group ${option}" role="group">${expression}</section>`;
     },
     bind:function(option,expression){
-      let objArray = [];
       $('body').prepend('<section ftx-clone></section>');
       expression = expression.indexOf(',') > -1 ? expression.split(',') : expression;
       if(Array.isArray(expression)){
@@ -28,9 +28,9 @@ export const FastUtilities = {
       }
     },
     random:function(option,expression){
+      option = option !== null ? option : 'section';
       let elementArray = expression.trim().split(/\r?\n/);
-      let randomTemplate = '<section ftx-render class="ftx__random">@content</section>';
-      return randomTemplate.replace('@content',this.shuffleArray(elementArray).join().replace(/,/g,''));
+      return Template.random.layout.replace(/@option/g,option).replace('@content',this.shuffleArray(elementArray).join(''));
     },
     shuffleArray: function (array) {
       for (let i = array.length - 1; i > 0; i--) {

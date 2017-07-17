@@ -76,6 +76,9 @@ export const Template = {
       }
     }
   },
+  random:{
+    layout:'<@option ftx-render class="ftx__random">@content</@option>'
+  },
   class:' class="@class"',
   id:' id="@id"',
   name:' name="@name"',

@@ -10783,6 +10783,9 @@ const Template = {
       }
     }
   },
+  random:{
+    layout:'<@option ftx-render class="ftx__random">@content</@option>'
+  },
   class:' class="@class"',
   id:' id="@id"',
   name:' name="@name"',
@@ -11412,9 +11415,11 @@ module.exports = defaults;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
 /**
  * Created by David Maser on 13/07/2017.
  */
+
 
 const FastUtilities = {
   ui:{
@@ -11426,7 +11431,6 @@ const FastUtilities = {
       return `<section class="ftx__group ${option}" role="group">${expression}</section>`;
     },
     bind:function(option,expression){
-      let objArray = [];
       $('body').prepend('<section ftx-clone></section>');
       expression = expression.indexOf(',') > -1 ? expression.split(',') : expression;
       if(Array.isArray(expression)){
@@ -11442,9 +11446,9 @@ const FastUtilities = {
       }
     },
     random:function(option,expression){
+      option = option !== null ? option : 'section';
       let elementArray = expression.trim().split(/\r?\n/);
-      let randomTemplate = '<section ftx-render class="ftx__random">@content</section>';
-      return randomTemplate.replace('@content',this.shuffleArray(elementArray).join().replace(/,/g,''));
+      return __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].random.layout.replace(/@option/g,option).replace('@content',this.shuffleArray(elementArray).join(''));
     },
     shuffleArray: function (array) {
       for (let i = array.length - 1; i > 0; i--) {
