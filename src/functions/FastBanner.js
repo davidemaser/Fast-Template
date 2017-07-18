@@ -2,13 +2,21 @@
  * Created by David Maser on 18/07/2017.
  */
 import {Template} from '../config/Template';
+import {FastUtilities} from './FastUtilities';
 export default function (option,expression) {
   const parser = {
+    handleAction:function(param){
+      $('body').on('click','.ftx__banner_button',function(){
+        let ctaAction = $(this).parent().parent().attr('ftx-action');
+        console.log(ctaAction);
+      })
+    },
     params:function(obj){
       let subItem = 'banner';
       let o;
       let objString = '';
       let parentString = '';
+      let ctaAction;
       for (o in obj) {
         let objType = obj[o].split(':')[0].replace('{','').replace('}','');
         let objTemplate = Template[subItem][objType];
@@ -23,7 +31,9 @@ export default function (option,expression) {
           objString += objTemplate.replace(`@${subItem}.${objType}`,objContent);
         }
       }
-      return parentString.replace('@banner.content',objString);
+      let uniqueId = FastUtilities.genFtxId();
+      this.handleAction(uniqueId);
+      return parentString.replace('@ftx.id',uniqueId).replace('@banner.content',objString);
     },
     init: function (obj) {
       if (obj.indexOf(',') > -1) {

@@ -138,6 +138,11 @@ export const FastUtilities = {
       countLog[a] = b;
     })
   },
+  genFtxId:function(){
+    let d = new Date();
+    let uniqueArray = FastUtilities.ui.shuffleArray(['f','as','t','e','r']).join('');
+    return `${uniqueArray}${d.getHours()}-${d.getMilliseconds()}`;
+  },
   poll:{
     server:function(){
 
