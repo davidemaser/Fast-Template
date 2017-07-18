@@ -279,7 +279,7 @@ export const Architect = {
     }
   },
   render(){
-    $('body').attr('faster','render');
+    $('body').attr('faster','rendered');
   }
 };
 if(typeof window['faster'] === 'object'){

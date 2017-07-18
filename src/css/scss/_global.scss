@@ -1,8 +1,9 @@
-body[fast="template"] {
+body[faster="template"] {
   display:none;
 }
-body[fast="rendered"] {
+body[faster="rendered"] {
   display:block;
+  margin:0;
 }
 ftx{
   display:none;

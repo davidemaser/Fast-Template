@@ -10392,6 +10392,243 @@ return jQuery;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * Created by David Maser on 22/06/2017.
+ */
+const Template = {
+  div:'<div data-atrribute="jeer">',
+  footer:'<footer>',
+  banner:{
+    layout:'<section class="ftx__banner @option">@content</section>',
+    image:'<div class="ftx__banner container" style="background:url(@banner.image);background-size: cover;background-repeat: no-repeat;">@banner.content</div>',
+    title:'<h1 class="ftx__banner_title">@banner.title</h1>',
+    subtext:'<p class="ftx__banner_subtext">@banner.subtext</p>',
+    button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
+  },
+  nav:{
+    link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
+    layout:{
+      horizontal:'<nav ftx-render class="ftx__nav_horizontal">@nav.node</nav>',
+      vertical:'<nav ftx-render class="ftx__nav_vertical">@nav.node</nav>'
+    },
+    node:{
+      layout:'<div class="ftx__nav_dropdown">@node</div>',
+      entry:'<div class="ftx__nav_node" ftx-link="@node.link">@node.entry</div>'
+    }
+  },
+  table:{
+    layout:{
+      basic:'<table class="ftx__table">@table.header@table.body@table.footer</table>'
+    },
+    header:{
+      layout:'<thead>@table.row</thead>'
+    },
+    footer:{
+      layout:'<tfoot>@table.row</tfoot>'
+    },
+    body:{
+      layout:'<tbody>@table.row</tbody>'
+    },
+    row:{
+      layout:'<tr>@table.column</tr>'
+    },
+    column:{
+      layout:'<td>@content</td>'
+    }
+  },
+  accordion:{
+    parent:'<div class="ftx__accordion">@accordion.item</div>',
+    item:'<div class="accordion_item"><div class="item__title">@accordion.item.title</div><div class="item__body">@accordion.item.body</div></div>',
+    params:{
+      speed:500,
+      trigger:'.ftx__accordion .accordion_item .item__title',
+      target:'.item__body'
+    }
+  },
+  gutter:{
+    layout:'<section ftx-render class="ftx__gutter">@render</section>'
+  },
+  panel:{
+    layout:'<section ftx-render class="ftx__panel">@render</section>'
+  },
+  modal:{
+    full:{
+      layout:'<div class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
+      prompt:{
+        simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button></div>',
+        full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button><button ftx-user-refuses>@modal.prompt.refuse</button></div>'
+      }
+    },
+    params:{
+      speed:100,
+      trigger:'.ftx__modal__cta button,.ftx__modal__prompt button',
+      target:'.ftx__modal',
+      prompts:{
+        yes:{
+          speed:100,
+          trigger:'.ftx__modal__prompt button[ftx-user-agrees]',
+          target:'.ftx__modal'
+        },
+        no:{
+          speed:100,
+          trigger:'.ftx__modal__prompt button[ftx-user-refuses]',
+          target:'.ftx__modal'
+        }
+      }
+    }
+  },
+  random:{
+    layout:'<@option ftx-render class="ftx__random">@content</@option>'
+  },
+  class:' class="@class"',
+  id:' id="@id"',
+  name:' name="@name"',
+  /*table:{
+    layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
+    class:this.class,
+    id:this.id,
+    style:' style="@style"',
+    elements:{
+      header:{
+        layout:'<thead></thead>'
+      },
+      footer:{
+        layout:'<tfoot></tfoot>'
+      },
+      body:{
+        layout:'<tbody>@body.rows</tbody>',
+        rows:{
+          layout:'<tr>@body.rows.columns</tr>',
+          style:' style="@table.rows.style"',
+          columns:'<td></td>'
+        }
+      }
+    }
+  },*/
+  forms:{
+    login:{
+      layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
+      class:' class="@class"',
+      id:' id="@id"',
+      style:' style="@style"',
+      action:' action="@action"',
+      elements:[
+        {
+          element:'input',
+          type:'text',
+          name:'userName',
+          placeholder:'USER NAME',
+          class:'',
+          id:''
+        },
+        {
+          element:'input',
+          type:'password',
+          name:'passWord',
+          placeholder:'PASSWORD',
+          class:'',
+          id:''
+        },
+        {
+          element:'input',
+          type:'checkbox',
+          name:'myCheck',
+          class:'',
+          id:'',
+          checked:true
+        },
+        {
+          element:'input',
+          type:'radio',
+          name:'myRadio',
+          class:'',
+          id:''
+        },
+        {
+          element:'radiogroup',
+          type:'radio',
+          name:'myRadio',
+          class:'',
+          id:'',
+          options:[
+            {
+              label:'hi',
+              value:'hi'
+            },
+            {
+              label:'bye',
+              value:'bye'
+            },
+            {
+              label:'what',
+              value:'what',
+              selected:true
+            }
+          ]
+        },
+        {
+          element:'textarea',
+          placeholder:'',
+          name:'TEXT',
+          rows:10,
+          cols:10,
+          class:'',
+          id:''
+        },
+        {
+          element:'select',
+          name:'TEXT',
+          class:'',
+          id:'',
+          options:[
+            {
+              label:'hi',
+              value:'hi'
+            },
+            {
+              label:'bye',
+              value:'bye'
+            },
+            {
+              label:'what',
+              value:'what',
+              selected:true
+            }
+          ]
+        },
+        {
+          element:'input',
+          type:'submit',
+          name:'myButton',
+          placeholder:'CLICK',
+          class:'',
+          id:''
+        },
+      ]
+    },
+    account:{
+      layout:'<form@account.class@account.id@account.style@account.action>@account.elements</form>',
+      elements:[
+        {
+          element:'input',
+          type:'text',
+          name:'userName',
+          placeholder:'USER NAME',
+          class:'',
+          id:''
+        }
+      ]
+    }
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = Template;
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10701,243 +10938,6 @@ module.exports = {
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/**
- * Created by David Maser on 22/06/2017.
- */
-const Template = {
-  div:'<div data-atrribute="jeer">',
-  footer:'<footer>',
-  banner:{
-    layout:'<section class="ftx__banner @option">@content</section>',
-    image:'<div class="ftx__banner container" style="background:url(@banner.image);background-size: cover;background-repeat: no-repeat;">@banner.content</div>',
-    title:'<h1 class="ftx__banner_title">@banner.title</h1>',
-    subtext:'<p class="ftx__banner_subtext">@banner.subtext</p>',
-    button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
-  },
-  nav:{
-    link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
-    layout:{
-      horizontal:'<nav ftx-render class="ftx__nav_horizontal">@nav.node</nav>',
-      vertical:'<nav ftx-render class="ftx__nav_vertical">@nav.node</nav>'
-    },
-    node:{
-      layout:'<div class="ftx__nav_dropdown">@node</div>',
-      entry:'<div class="ftx__nav_node" ftx-link="@node.link">@node.entry</div>'
-    }
-  },
-  table:{
-    layout:{
-      basic:'<table class="ftx__table">@table.header@table.body@table.footer</table>'
-    },
-    header:{
-      layout:'<thead>@table.row</thead>'
-    },
-    footer:{
-      layout:'<tfoot>@table.row</tfoot>'
-    },
-    body:{
-      layout:'<tbody>@table.row</tbody>'
-    },
-    row:{
-      layout:'<tr>@table.column</tr>'
-    },
-    column:{
-      layout:'<td>@content</td>'
-    }
-  },
-  accordion:{
-    parent:'<div class="ftx__accordion">@accordion.item</div>',
-    item:'<div class="accordion_item"><div class="item__title">@accordion.item.title</div><div class="item__body">@accordion.item.body</div></div>',
-    params:{
-      speed:500,
-      trigger:'.ftx__accordion .accordion_item .item__title',
-      target:'.item__body'
-    }
-  },
-  gutter:{
-    layout:'<section ftx-render class="ftx__gutter">@render</section>'
-  },
-  panel:{
-    layout:'<section ftx-render class="ftx__panel">@render</section>'
-  },
-  modal:{
-    full:{
-      layout:'<div class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
-      prompt:{
-        simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button></div>',
-        full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button><button ftx-user-refuses>@modal.prompt.refuse</button></div>'
-      }
-    },
-    params:{
-      speed:100,
-      trigger:'.ftx__modal__cta button,.ftx__modal__prompt button',
-      target:'.ftx__modal',
-      prompts:{
-        yes:{
-          speed:100,
-          trigger:'.ftx__modal__prompt button[ftx-user-agrees]',
-          target:'.ftx__modal'
-        },
-        no:{
-          speed:100,
-          trigger:'.ftx__modal__prompt button[ftx-user-refuses]',
-          target:'.ftx__modal'
-        }
-      }
-    }
-  },
-  random:{
-    layout:'<@option ftx-render class="ftx__random">@content</@option>'
-  },
-  class:' class="@class"',
-  id:' id="@id"',
-  name:' name="@name"',
-  /*table:{
-    layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
-    class:this.class,
-    id:this.id,
-    style:' style="@style"',
-    elements:{
-      header:{
-        layout:'<thead></thead>'
-      },
-      footer:{
-        layout:'<tfoot></tfoot>'
-      },
-      body:{
-        layout:'<tbody>@body.rows</tbody>',
-        rows:{
-          layout:'<tr>@body.rows.columns</tr>',
-          style:' style="@table.rows.style"',
-          columns:'<td></td>'
-        }
-      }
-    }
-  },*/
-  forms:{
-    login:{
-      layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
-      class:' class="@class"',
-      id:' id="@id"',
-      style:' style="@style"',
-      action:' action="@action"',
-      elements:[
-        {
-          element:'input',
-          type:'text',
-          name:'userName',
-          placeholder:'USER NAME',
-          class:'',
-          id:''
-        },
-        {
-          element:'input',
-          type:'password',
-          name:'passWord',
-          placeholder:'PASSWORD',
-          class:'',
-          id:''
-        },
-        {
-          element:'input',
-          type:'checkbox',
-          name:'myCheck',
-          class:'',
-          id:'',
-          checked:true
-        },
-        {
-          element:'input',
-          type:'radio',
-          name:'myRadio',
-          class:'',
-          id:''
-        },
-        {
-          element:'radiogroup',
-          type:'radio',
-          name:'myRadio',
-          class:'',
-          id:'',
-          options:[
-            {
-              label:'hi',
-              value:'hi'
-            },
-            {
-              label:'bye',
-              value:'bye'
-            },
-            {
-              label:'what',
-              value:'what',
-              selected:true
-            }
-          ]
-        },
-        {
-          element:'textarea',
-          placeholder:'',
-          name:'TEXT',
-          rows:10,
-          cols:10,
-          class:'',
-          id:''
-        },
-        {
-          element:'select',
-          name:'TEXT',
-          class:'',
-          id:'',
-          options:[
-            {
-              label:'hi',
-              value:'hi'
-            },
-            {
-              label:'bye',
-              value:'bye'
-            },
-            {
-              label:'what',
-              value:'what',
-              selected:true
-            }
-          ]
-        },
-        {
-          element:'input',
-          type:'submit',
-          name:'myButton',
-          placeholder:'CLICK',
-          class:'',
-          id:''
-        },
-      ]
-    },
-    account:{
-      layout:'<form@account.class@account.id@account.style@account.action>@account.elements</form>',
-      elements:[
-        {
-          element:'input',
-          type:'text',
-          name:'userName',
-          placeholder:'USER NAME',
-          class:'',
-          id:''
-        }
-      ]
-    }
-  }
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = Template;
-
-
-/***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -11019,7 +11019,7 @@ class RegisterState{
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_RegisterState__ = __webpack_require__(5);
 /**
@@ -11305,7 +11305,7 @@ const Architect = {
     }
   },
   render(){
-    $('body').attr('faster','render');
+    $('body').attr('faster','rendered');
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Architect;
@@ -11325,7 +11325,7 @@ if(typeof window['faster'] === 'object'){
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 var normalizeHeaderName = __webpack_require__(29);
 
 var DEFAULT_CONTENT_TYPE = {
@@ -11424,7 +11424,7 @@ module.exports = defaults;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
 /**
  * Created by David Maser on 13/07/2017.
  */
@@ -11785,7 +11785,7 @@ process.umask = function() { return 0; };
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 var settle = __webpack_require__(30);
 var buildURL = __webpack_require__(32);
 var parseHeaders = __webpack_require__(33);
@@ -12036,7 +12036,7 @@ module.exports = Cancel;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_classes_Sniffer__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_components_Faster__ = __webpack_require__(6);
 /**
@@ -12057,7 +12057,7 @@ $(function(){
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cycle__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(63);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -12247,7 +12247,7 @@ class Logger{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__FastAccordion__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__FastTable__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__FastSticky__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__FastBanner__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__FastBanner__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__FastUtilities__ = __webpack_require__(8);
 /**
  * Created by David Maser on 21/06/2017.
@@ -12613,7 +12613,7 @@ module.exports = __webpack_require__(26);
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 var bind = __webpack_require__(9);
 var Axios = __webpack_require__(28);
 var defaults = __webpack_require__(7);
@@ -12700,7 +12700,7 @@ function isSlowBuffer (obj) {
 
 
 var defaults = __webpack_require__(7);
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 var InterceptorManager = __webpack_require__(37);
 var dispatchRequest = __webpack_require__(38);
 var isAbsoluteURL = __webpack_require__(40);
@@ -12792,7 +12792,7 @@ module.exports = Axios;
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -12872,7 +12872,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -12947,7 +12947,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 /**
  * Parse headers into an object
@@ -12991,7 +12991,7 @@ module.exports = function parseHeaders(headers) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -13109,7 +13109,7 @@ module.exports = btoa;
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -13169,7 +13169,7 @@ module.exports = (
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -13228,7 +13228,7 @@ module.exports = InterceptorManager;
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 var transformData = __webpack_require__(39);
 var isCancel = __webpack_require__(13);
 var defaults = __webpack_require__(7);
@@ -13314,7 +13314,7 @@ module.exports = function dispatchRequest(config) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 /**
  * Transform the data for a request or a response
@@ -13480,7 +13480,7 @@ module.exports = function spread(callback) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastTemplate;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_TemplateUtilities__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_TemplateTableUtilities__ = __webpack_require__(46);
 /**
@@ -13534,7 +13534,7 @@ const TemplateUtilities = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
 /**
  * Created by David Maser on 22/06/2017.
  */
@@ -13580,7 +13580,7 @@ const TemplateTableUtilities = {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastForm;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FormElements__ = __webpack_require__(48);
 /**
  * Created by David Maser on 26/06/2017.
@@ -13700,7 +13700,7 @@ function FormElements(obj){
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastGutter;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
 /**
  * Created by David Maser on 27/06/2017.
  */
@@ -13718,7 +13718,7 @@ function FastGutter(option, expression){
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastPanel;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
 /**
  * Created by David Maser on 27/06/2017.
  */
@@ -13736,7 +13736,7 @@ function FastPanel(option, expression){
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastModal;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(5);
 /**
@@ -13897,7 +13897,7 @@ function FastHtml(option, expression){
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastHtmlEvents__ = __webpack_require__(54);
 /**
  * Created by David Maser on 29/06/2017.
@@ -14134,7 +14134,7 @@ const FastAnimatorFunctions={
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastNav;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions_FastUtilities__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__classes_Woops__ = __webpack_require__(4);
@@ -14278,7 +14278,7 @@ function FastNav(option,expression,element){
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastAccordion;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__ = __webpack_require__(8);
 /**
  * Created by David Maser on 12/07/2017.
@@ -14345,7 +14345,7 @@ function FastAccordion(option,expression){
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastTable;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(6);
 /**
  * Created by David Maser on 13/07/2017.
@@ -14478,7 +14478,56 @@ function FastSticky(option,expression) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Config__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/**
+ * Created by David Maser on 18/07/2017.
+ */
+
+/* harmony default export */ __webpack_exports__["a"] = (function (option,expression) {
+  const parser = {
+    params:function(obj){
+      let subItem = 'banner';
+      let o;
+      let objString = '';
+      let parentString;
+      for (o in obj) {
+        let objType = obj[o].split(':')[0].replace('{','').replace('}','');
+        let objTemplate = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][subItem][objType];
+        let objContent = obj[o].split(':')[1].replace('{','').replace('}','');
+        if(objType === 'image'){
+          parentString = objTemplate.replace(`@${subItem}.${objType}`,objContent)
+        }else{
+          objString += objTemplate.replace(`@${subItem}.${objType}`,objContent);
+        }
+      }
+      return parentString.replace('@banner.content',objString);
+    },
+    init: function (obj) {
+      if (obj.indexOf(',') > -1) {
+        return this.params(obj.split(','));
+      }
+    },
+
+  };
+  option = option !== null ? option : '';
+  let bannerArray = expression.trim().split(/\r?\n/);
+  let bannerTemplate = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].banner.layout;
+  let bannerContent = '';
+  if(Array.isArray(bannerArray)){
+    bannerArray.map(function(a){
+      bannerContent += a.indexOf('{') > -1 ? parser.init(a.trim()) : a.trim();
+    })
+  }
+  bannerTemplate = bannerTemplate.replace('@option',option).replace('@content',bannerContent);
+  return bannerTemplate;
+});
+
+/***/ }),
+/* 63 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Config__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(5);
 /**
@@ -14523,7 +14572,7 @@ class FastPlugin{
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14564,13 +14613,13 @@ const PluginAbstractor = {
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(65);
+var content = __webpack_require__(66);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -14578,7 +14627,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(67)(content, options);
+var update = __webpack_require__(68)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -14595,21 +14644,21 @@ if(false) {
 }
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(66)(undefined);
+exports = module.exports = __webpack_require__(67)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"rendered\"]{display:block}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}nav.ftx__nav_horizontal{display:block;padding:5px;position:relative}div[ftx-role=\"nav-parent\"]{display:inline-block}div[ftx-role=\"nav-parent\"] .ftx__nav_dropdown{display:none;position:absolute}div[ftx-role=\"nav-parent\"]:hover .ftx__nav_dropdown{display:block}.ftx__accordion{display:block}.ftx__accordion .item__title{background:#ddd;padding:5px;cursor:pointer}.ftx__accordion .item__body{padding:10px 5px}.accordion_item{display:block;border-left:solid 1px #000;border-right:solid 1px #000;border-top:solid 1px #000}.accordion_item:last-child{border-bottom:1px solid #000}.accordion_item:not(:first-child) .item__body{display:none}header{position:relative;width:100%;height:60px}header.clone{position:fixed;top:-65px;left:0;right:0;z-index:999;transition:0.2s top cubic-bezier(0.3, 0.73, 0.3, 0.74)}body.down header.clone{top:0}.ftx__placeholder{display:block;width:100%;clear:both}.ftx__placeholder.small{height:10px}.ftx__placeholder.large{height:100px}.ftx__placeholder.medium{height:50px}.ftx__banner{position:relative}.ftx__banner h1{text-transform:uppercase}.ftx__banner h1,.ftx__banner p{width:100%;text-align:center}.ftx__banner.full{width:100%;height:500px}.ftx__banner.full>div{width:100%;height:100%}.ftx__banner.container{padding:5px 0}.ftx__banner.container>*{margin:5px 10px}.ftx__banner_row{text-align:center}\n", ""]);
+exports.push([module.i, "body[faster=\"template\"]{display:none}body[faster=\"rendered\"]{display:block;margin:0}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}nav.ftx__nav_horizontal{display:block;padding:5px;position:relative}div[ftx-role=\"nav-parent\"]{display:inline-block}div[ftx-role=\"nav-parent\"] .ftx__nav_dropdown{display:none;position:absolute}div[ftx-role=\"nav-parent\"]:hover .ftx__nav_dropdown{display:block}.ftx__accordion{display:block}.ftx__accordion .item__title{background:#ddd;padding:5px;cursor:pointer}.ftx__accordion .item__body{padding:10px 5px}.accordion_item{display:block;border-left:solid 1px #000;border-right:solid 1px #000;border-top:solid 1px #000}.accordion_item:last-child{border-bottom:1px solid #000}.accordion_item:not(:first-child) .item__body{display:none}header{position:relative;width:100%;height:60px}header.clone{position:fixed;top:-65px;left:0;right:0;z-index:999;transition:0.2s top cubic-bezier(0.3, 0.73, 0.3, 0.74)}body.down header.clone{top:0}.ftx__placeholder{display:block;width:100%;clear:both}.ftx__placeholder.small{height:10px}.ftx__placeholder.large{height:100px}.ftx__placeholder.medium{height:50px}.ftx__banner{overflow:hidden;position:relative}.ftx__banner h1{text-transform:uppercase}.ftx__banner h1,.ftx__banner p{width:100%;text-align:center}.ftx__banner.full{width:100%;height:500px}.ftx__banner.full>div{width:100%;height:100%}.ftx__banner.container{padding:5px 0}.ftx__banner.container>*{margin:5px 10px}.ftx__banner_row{text-align:center}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports) {
 
 /*
@@ -14691,7 +14740,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -14737,7 +14786,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(68);
+var	fixUrls = __webpack_require__(69);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -15050,7 +15099,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports) {
 
 
@@ -15143,55 +15192,6 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
-
-/***/ }),
-/* 69 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
-/**
- * Created by David Maser on 18/07/2017.
- */
-
-/* harmony default export */ __webpack_exports__["a"] = (function (option,expression) {
-  const parser = {
-    params:function(obj){
-      let subItem = 'banner';
-      let o;
-      let objString = '';
-      let parentString;
-      for (o in obj) {
-        let objType = obj[o].split(':')[0].replace('{','').replace('}','');
-        let objTemplate = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][subItem][objType];
-        let objContent = obj[o].split(':')[1].replace('{','').replace('}','');
-        if(objType === 'image'){
-          parentString = objTemplate.replace(`@${subItem}.${objType}`,objContent)
-        }else{
-          objString += objTemplate.replace(`@${subItem}.${objType}`,objContent);
-        }
-      }
-      return parentString.replace('@banner.content',objString);
-    },
-    init: function (obj) {
-      if (obj.indexOf(',') > -1) {
-        return this.params(obj.split(','));
-      }
-    },
-
-  };
-  option = option !== null ? option : '';
-  let bannerArray = expression.trim().split(/\r?\n/);
-  let bannerTemplate = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].banner.layout;
-  let bannerContent = '';
-  if(Array.isArray(bannerArray)){
-    bannerArray.map(function(a){
-      bannerContent += a.indexOf('{') > -1 ? parser.init(a.trim()) : a.trim();
-    })
-  }
-  bannerTemplate = bannerTemplate.replace('@option',option).replace('@content',bannerContent);
-  return bannerTemplate;
-});
 
 /***/ })
 /******/ ]);
