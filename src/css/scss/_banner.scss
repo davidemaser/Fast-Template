@@ -1,0 +1,27 @@
+.ftx__banner{
+  h1{
+    text-transform: uppercase;
+  }
+  h1,p {
+    width: 100%;
+    text-align: center;
+  }
+  position: relative;
+  &.full {
+    width: 100%;
+    height: 500px;
+    >div{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &.container{
+    padding: 5px 0;
+    >* {
+      margin: 5px 10px;
+    }
+  }
+}
+.ftx__banner_row {
+  text-align: center;
+}

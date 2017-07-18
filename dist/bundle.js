@@ -103,7 +103,7 @@ const Global = {
     all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
   },
   options:{
-    noWrapperElements:['panel','gutter','html','nav','placeholder','group'],
+    noWrapperElements:['panel','gutter','html','nav','placeholder','group','banner'],
     app:{
       onFail:['killFunctions','emptyCache','log','restart'],
       onEnter:['runSniffer','runCycle','waitAndSnoop'],
@@ -10711,6 +10711,13 @@ module.exports = {
 const Template = {
   div:'<div data-atrribute="jeer">',
   footer:'<footer>',
+  banner:{
+    layout:'<section class="ftx__banner @option">@content</section>',
+    image:'<div class="ftx__banner container" style="background:url(@banner.image);background-size: cover;background-repeat: no-repeat;">@banner.content</div>',
+    title:'<h1 class="ftx__banner_title">@banner.title</h1>',
+    subtext:'<p class="ftx__banner_subtext">@banner.subtext</p>',
+    button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
+  },
   nav:{
     link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
     layout:{
@@ -12240,10 +12247,12 @@ class Logger{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__FastAccordion__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__FastTable__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__FastSticky__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__FastUtilities__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__FastBanner__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__FastUtilities__ = __webpack_require__(8);
 /**
  * Created by David Maser on 21/06/2017.
  */
+
 
 
 
@@ -12269,7 +12278,6 @@ class Logger{
  * @constructor
  */
 function FastProcessor(type, option, expression, element){
-  console.log(type);
   switch (type){
     case 'math':
       return __WEBPACK_IMPORTED_MODULE_0__FastMath__["a" /* default */](option,expression);
@@ -12314,19 +12322,22 @@ function FastProcessor(type, option, expression, element){
       return __WEBPACK_IMPORTED_MODULE_13__FastSticky__["a" /* default */](option,expression);
       break;
     case 'placeholder':
-      return __WEBPACK_IMPORTED_MODULE_14__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
+      return __WEBPACK_IMPORTED_MODULE_15__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
       break;
     case 'group':
-      return __WEBPACK_IMPORTED_MODULE_14__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_15__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
       break;
     case 'search':
-      return __WEBPACK_IMPORTED_MODULE_14__FastUtilities__["a" /* FastUtilities */].components.search(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_15__FastUtilities__["a" /* FastUtilities */].components.search(option,expression);
       break;
     case 'bind':
-      return __WEBPACK_IMPORTED_MODULE_14__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_15__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
       break;
     case 'random':
-      return __WEBPACK_IMPORTED_MODULE_14__FastUtilities__["a" /* FastUtilities */].ui.random(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_15__FastUtilities__["a" /* FastUtilities */].ui.random(option,expression);
+      break;
+    case 'banner':
+      return __WEBPACK_IMPORTED_MODULE_14__FastBanner__["a" /* default */](option,expression);
       break;
 
   }
@@ -14592,7 +14603,7 @@ exports = module.exports = __webpack_require__(66)(undefined);
 
 
 // module
-exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"rendered\"]{display:block}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}nav.ftx__nav_horizontal{display:block;padding:5px;position:relative}div[ftx-role=\"nav-parent\"]{display:inline-block}div[ftx-role=\"nav-parent\"] .ftx__nav_dropdown{display:none;position:absolute}div[ftx-role=\"nav-parent\"]:hover .ftx__nav_dropdown{display:block}.ftx__accordion{display:block}.ftx__accordion .item__title{background:#ddd;padding:5px;cursor:pointer}.ftx__accordion .item__body{padding:10px 5px}.accordion_item{display:block;border-left:solid 1px #000;border-right:solid 1px #000;border-top:solid 1px #000}.accordion_item:last-child{border-bottom:1px solid #000}.accordion_item:not(:first-child) .item__body{display:none}header{position:relative;width:100%;height:60px}header.clone{position:fixed;top:-65px;left:0;right:0;z-index:999;transition:0.2s top cubic-bezier(0.3, 0.73, 0.3, 0.74)}body.down header.clone{top:0}.ftx__placeholder{display:block;width:100%;clear:both}.ftx__placeholder.small{height:10px}.ftx__placeholder.large{height:100px}.ftx__placeholder.medium{height:50px}\n", ""]);
+exports.push([module.i, "body[fast=\"template\"]{display:none}body[fast=\"rendered\"]{display:block}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}nav.ftx__nav_horizontal{display:block;padding:5px;position:relative}div[ftx-role=\"nav-parent\"]{display:inline-block}div[ftx-role=\"nav-parent\"] .ftx__nav_dropdown{display:none;position:absolute}div[ftx-role=\"nav-parent\"]:hover .ftx__nav_dropdown{display:block}.ftx__accordion{display:block}.ftx__accordion .item__title{background:#ddd;padding:5px;cursor:pointer}.ftx__accordion .item__body{padding:10px 5px}.accordion_item{display:block;border-left:solid 1px #000;border-right:solid 1px #000;border-top:solid 1px #000}.accordion_item:last-child{border-bottom:1px solid #000}.accordion_item:not(:first-child) .item__body{display:none}header{position:relative;width:100%;height:60px}header.clone{position:fixed;top:-65px;left:0;right:0;z-index:999;transition:0.2s top cubic-bezier(0.3, 0.73, 0.3, 0.74)}body.down header.clone{top:0}.ftx__placeholder{display:block;width:100%;clear:both}.ftx__placeholder.small{height:10px}.ftx__placeholder.large{height:100px}.ftx__placeholder.medium{height:50px}.ftx__banner{position:relative}.ftx__banner h1{text-transform:uppercase}.ftx__banner h1,.ftx__banner p{width:100%;text-align:center}.ftx__banner.full{width:100%;height:500px}.ftx__banner.full>div{width:100%;height:100%}.ftx__banner.container{padding:5px 0}.ftx__banner.container>*{margin:5px 10px}.ftx__banner_row{text-align:center}\n", ""]);
 
 // exports
 
@@ -15132,6 +15143,55 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 69 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(3);
+/**
+ * Created by David Maser on 18/07/2017.
+ */
+
+/* harmony default export */ __webpack_exports__["a"] = (function (option,expression) {
+  const parser = {
+    params:function(obj){
+      let subItem = 'banner';
+      let o;
+      let objString = '';
+      let parentString;
+      for (o in obj) {
+        let objType = obj[o].split(':')[0].replace('{','').replace('}','');
+        let objTemplate = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][subItem][objType];
+        let objContent = obj[o].split(':')[1].replace('{','').replace('}','');
+        if(objType === 'image'){
+          parentString = objTemplate.replace(`@${subItem}.${objType}`,objContent)
+        }else{
+          objString += objTemplate.replace(`@${subItem}.${objType}`,objContent);
+        }
+      }
+      return parentString.replace('@banner.content',objString);
+    },
+    init: function (obj) {
+      if (obj.indexOf(',') > -1) {
+        return this.params(obj.split(','));
+      }
+    },
+
+  };
+  option = option !== null ? option : '';
+  let bannerArray = expression.trim().split(/\r?\n/);
+  let bannerTemplate = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].banner.layout;
+  let bannerContent = '';
+  if(Array.isArray(bannerArray)){
+    bannerArray.map(function(a){
+      bannerContent += a.indexOf('{') > -1 ? parser.init(a.trim()) : a.trim();
+    })
+  }
+  bannerTemplate = bannerTemplate.replace('@option',option).replace('@content',bannerContent);
+  return bannerTemplate;
+});
 
 /***/ })
 /******/ ]);

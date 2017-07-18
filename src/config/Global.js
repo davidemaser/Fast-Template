@@ -32,7 +32,7 @@ export const Global = {
     all:['this.Faster.remove.emptyTags','this.Faster.remove.ignoredTags','Architect.render']
   },
   options:{
-    noWrapperElements:['panel','gutter','html','nav','placeholder','group'],
+    noWrapperElements:['panel','gutter','html','nav','placeholder','group','banner'],
     app:{
       onFail:['killFunctions','emptyCache','log','restart'],
       onEnter:['runSniffer','runCycle','waitAndSnoop'],

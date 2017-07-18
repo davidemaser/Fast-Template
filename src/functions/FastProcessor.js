@@ -15,6 +15,7 @@ import FastNav from './FastNav';
 import FastAccordion from './FastAccordion';
 import FastTable from './FastTable';
 import FastSticky from './FastSticky';
+import FastBanner from './FastBanner';
 import {FastUtilities} from './FastUtilities';
 /**
  *
@@ -26,7 +27,6 @@ import {FastUtilities} from './FastUtilities';
  * @constructor
  */
 export default function FastProcessor(type, option, expression, element){
-  console.log(type);
   switch (type){
     case 'math':
       return FastMath(option,expression);
@@ -84,6 +84,9 @@ export default function FastProcessor(type, option, expression, element){
       break;
     case 'random':
       return FastUtilities.ui.random(option,expression);
+      break;
+    case 'banner':
+      return FastBanner(option,expression);
       break;
 
   }

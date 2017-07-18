@@ -4,6 +4,13 @@
 export const Template = {
   div:'<div data-atrribute="jeer">',
   footer:'<footer>',
+  banner:{
+    layout:'<section class="ftx__banner @option">@content</section>',
+    image:'<div class="ftx__banner container" style="background:url(@banner.image);background-size: cover;background-repeat: no-repeat;">@banner.content</div>',
+    title:'<h1 class="ftx__banner_title">@banner.title</h1>',
+    subtext:'<p class="ftx__banner_subtext">@banner.subtext</p>',
+    button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
+  },
   nav:{
     link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
     layout:{
