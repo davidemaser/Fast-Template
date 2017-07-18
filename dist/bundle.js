@@ -10408,6 +10408,18 @@ const Template = {
     subtext:'<p class="ftx__banner_subtext">@banner.subtext</p>',
     button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
   },
+  video:{
+    layout:'<video src="@video.url" @options>@video.track</video>',
+    options:{
+      layout:'@autoplay @controls @poster',
+      autoplay:'autoplay',
+      control:'controls',
+      poster:'poster="@video.poster"'
+    },
+    track:{
+      subtitles:'<track kind="subtitles" src="@video.subtitles.url" srclang="@video.subtitles.lang">'
+    }
+  },
   nav:{
     link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
     layout:{
@@ -12052,7 +12064,7 @@ module.exports = Cancel;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_classes_Sniffer__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__src_css_scss_Fast_scss__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_components_Faster__ = __webpack_require__(6);
 /**
@@ -12073,7 +12085,7 @@ $(function(){
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cycle__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(64);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -12264,10 +12276,12 @@ class Logger{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__FastTable__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__FastSticky__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__FastBanner__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__FastUtilities__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__FastVideo__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__FastUtilities__ = __webpack_require__(7);
 /**
  * Created by David Maser on 21/06/2017.
  */
+
 
 
 
@@ -12338,25 +12352,28 @@ function FastProcessor(type, option, expression, element){
       return __WEBPACK_IMPORTED_MODULE_13__FastSticky__["a" /* default */](option,expression);
       break;
     case 'placeholder':
-      return __WEBPACK_IMPORTED_MODULE_15__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
+      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
       break;
     case 'group':
-      return __WEBPACK_IMPORTED_MODULE_15__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
       break;
     case 'search':
-      return __WEBPACK_IMPORTED_MODULE_15__FastUtilities__["a" /* FastUtilities */].components.search(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].components.search(option,expression);
       break;
     case 'bind':
-      return __WEBPACK_IMPORTED_MODULE_15__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
       break;
     case 'random':
-      return __WEBPACK_IMPORTED_MODULE_15__FastUtilities__["a" /* FastUtilities */].ui.random(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ui.random(option,expression);
       break;
     case 'mobile':
-      return __WEBPACK_IMPORTED_MODULE_15__FastUtilities__["a" /* FastUtilities */].ui.mobile(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ui.mobile(option,expression);
       break;
     case 'banner':
       return __WEBPACK_IMPORTED_MODULE_14__FastBanner__["a" /* default */](option,expression);
+      break;
+    case 'video':
+      return __WEBPACK_IMPORTED_MODULE_15__FastVideo__["a" /* default */](option,expression);
       break;
 
   }
@@ -14562,7 +14579,75 @@ function FastSticky(option,expression) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Config__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/**
+ * Created by David Maser on 18/07/2017.
+ */
+
+/* harmony default export */ __webpack_exports__["a"] = (function (option,expression) {
+  let videoLayout = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.layout;
+  const util = {
+    extract:{
+      source:function(){
+        let urlValue;
+        if(expression.indexOf('url:')>-1){
+          urlValue = expression.split('url:')[1];
+          urlValue = urlValue.indexOf(',') ? urlValue.split(',')[0] : urlValue;
+        }
+        return urlValue;
+      }
+    },
+    buildSubTitles:function(){
+      let subTitleArray;
+      let subTitleObj = {};
+      if(expression.indexOf('subtitles:')>-1){
+        let subString = expression.split('subtitles:[')[1].split(']')[0];
+        if(subString.indexOf(',')>-1){
+          subTitleArray = subString.split(',');
+        }
+      }
+      let s;
+      let subTitleString = '';
+      for(s in subTitleArray){
+        subTitleString += __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.track.subtitles.replace('@video.subtitles.url',subTitleArray[s].split(' ')[1]).replace('@video.subtitles.lang',subTitleArray[s].split(' ')[0]);
+        subTitleObj[subTitleArray[s].split(' ')[0]] = subTitleArray[s].split(' ')[1];
+      }
+      return subTitleString;
+    },
+    buildOptions:function(){
+      let optionString = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.options.layout;
+      if(expression.indexOf('controls:')>-1){
+        let optionControls = expression.split('controls:')[1];
+        optionControls = optionControls.indexOf(',') ? optionControls.split(',')[0] : optionControls;
+        if(optionControls.indexOf('true')>-1){
+          optionString = optionString.replace('@controls',__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.options.control);
+        }
+      }
+      if(expression.indexOf('autoplay:')>-1){
+        let optionAutoplay = expression.split('autoplay:')[1];
+        optionAutoplay = optionAutoplay.indexOf(',') ? optionAutoplay.split(',')[0] : optionAutoplay;
+        if(optionAutoplay.indexOf('true')>-1){
+          optionString = optionString.replace('@autoplay',__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.options.autoplay);
+        }
+      }
+      if(expression.indexOf('poster:')>-1){
+        let optionPoster = expression.split('poster:')[1];
+        optionPoster = optionPoster.indexOf(',') ? optionPoster.split(',')[0] : optionPoster;
+          let posterTemplate = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.options.poster;
+          optionString = optionString.replace('@poster',posterTemplate.replace('@video.poster',optionPoster));
+      }
+      return optionString;
+    }
+  };
+  return videoLayout.replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles()).replace('@video.url',util.extract.source);
+});
+
+/***/ }),
+/* 64 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Config__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(5);
 /**
@@ -14607,7 +14692,7 @@ class FastPlugin{
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14648,13 +14733,13 @@ const PluginAbstractor = {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(66);
+var content = __webpack_require__(67);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -14662,7 +14747,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(68)(content, options);
+var update = __webpack_require__(69)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -14679,10 +14764,10 @@ if(false) {
 }
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(67)(undefined);
+exports = module.exports = __webpack_require__(68)(undefined);
 // imports
 
 
@@ -14693,7 +14778,7 @@ exports.push([module.i, "body[faster=\"template\"]{display:none}body[faster=\"re
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports) {
 
 /*
@@ -14775,7 +14860,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -14821,7 +14906,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(69);
+var	fixUrls = __webpack_require__(70);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -15134,7 +15219,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports) {
 
 

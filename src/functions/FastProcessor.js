@@ -16,6 +16,7 @@ import FastAccordion from './FastAccordion';
 import FastTable from './FastTable';
 import FastSticky from './FastSticky';
 import FastBanner from './FastBanner';
+import FastVideo from './FastVideo';
 import {FastUtilities} from './FastUtilities';
 /**
  *
@@ -90,6 +91,9 @@ export default function FastProcessor(type, option, expression, element){
       break;
     case 'banner':
       return FastBanner(option,expression);
+      break;
+    case 'video':
+      return FastVideo(option,expression);
       break;
 
   }

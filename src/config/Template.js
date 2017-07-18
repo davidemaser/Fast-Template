@@ -11,6 +11,18 @@ export const Template = {
     subtext:'<p class="ftx__banner_subtext">@banner.subtext</p>',
     button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
   },
+  video:{
+    layout:'<video src="@video.url" @options>@video.track</video>',
+    options:{
+      layout:'@autoplay @controls @poster',
+      autoplay:'autoplay',
+      control:'controls',
+      poster:'poster="@video.poster"'
+    },
+    track:{
+      subtitles:'<track kind="subtitles" src="@video.subtitles.url" srclang="@video.subtitles.lang">'
+    }
+  },
   nav:{
     link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
     layout:{
