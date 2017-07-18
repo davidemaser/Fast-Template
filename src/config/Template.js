@@ -6,7 +6,7 @@ export const Template = {
   footer:'<footer>',
   banner:{
     layout:'<section class="ftx__banner @option">@content</section>',
-    image:'<div class="ftx__banner container" style="background:url(@banner.image);background-size: cover;background-repeat: no-repeat;">@banner.content</div>',
+    image:'<div class="ftx__banner container" ftx-action="@banner.action" style="background:url(@banner.image);background-size: cover;background-repeat: no-repeat;">@banner.content</div>',
     title:'<h1 class="ftx__banner_title">@banner.title</h1>',
     subtext:'<p class="ftx__banner_subtext">@banner.subtext</p>',
     button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'

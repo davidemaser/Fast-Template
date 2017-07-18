@@ -85,6 +85,9 @@ export default function FastProcessor(type, option, expression, element){
     case 'random':
       return FastUtilities.ui.random(option,expression);
       break;
+    case 'mobile':
+      return FastUtilities.ui.mobile(option,expression);
+      break;
     case 'banner':
       return FastBanner(option,expression);
       break;

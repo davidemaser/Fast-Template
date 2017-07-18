@@ -71,6 +71,17 @@ export const FastUtilities = {
         array[j] = temp;
       }
       return array;
+    },
+    /**
+     * Simple function that wraps elements in a mobile container. Option can be set to default
+     * or 1 of the accepted breakpoint values
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
+    mobile:function(option,expression){
+      option = option !== null ? option : 'default';
+      return `<section class="ftx__mobile size__${option}">${expression}</section>`;
     }
   },
   components:{

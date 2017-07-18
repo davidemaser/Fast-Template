@@ -8,13 +8,17 @@ export default function (option,expression) {
       let subItem = 'banner';
       let o;
       let objString = '';
-      let parentString;
+      let parentString = '';
       for (o in obj) {
         let objType = obj[o].split(':')[0].replace('{','').replace('}','');
         let objTemplate = Template[subItem][objType];
         let objContent = obj[o].split(':')[1].replace('{','').replace('}','');
         if(objType === 'image'){
-          parentString = objTemplate.replace(`@${subItem}.${objType}`,objContent)
+          parentString = objTemplate.replace(`@${subItem}.${objType}`,objContent);
+        }else if(objType === 'action'){
+          if(parentString.length > 0){
+            parentString = parentString.replace(`@${subItem}.${objType}`,objContent);
+          }
         }else{
           objString += objTemplate.replace(`@${subItem}.${objType}`,objContent);
         }

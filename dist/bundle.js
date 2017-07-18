@@ -10403,7 +10403,7 @@ const Template = {
   footer:'<footer>',
   banner:{
     layout:'<section class="ftx__banner @option">@content</section>',
-    image:'<div class="ftx__banner container" style="background:url(@banner.image);background-size: cover;background-repeat: no-repeat;">@banner.content</div>',
+    image:'<div class="ftx__banner container" ftx-action="@banner.action" style="background:url(@banner.image);background-size: cover;background-repeat: no-repeat;">@banner.content</div>',
     title:'<h1 class="ftx__banner_title">@banner.title</h1>',
     subtext:'<p class="ftx__banner_subtext">@banner.subtext</p>',
     button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
@@ -11498,6 +11498,17 @@ const FastUtilities = {
         array[j] = temp;
       }
       return array;
+    },
+    /**
+     * Simple function that wraps elements in a mobile container. Option can be set to default
+     * or 1 of the accepted breakpoint values
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
+    mobile:function(option,expression){
+      option = option !== null ? option : 'default';
+      return `<section class="ftx__mobile size__${option}">${expression}</section>`;
     }
   },
   components:{
@@ -12335,6 +12346,9 @@ function FastProcessor(type, option, expression, element){
       break;
     case 'random':
       return __WEBPACK_IMPORTED_MODULE_15__FastUtilities__["a" /* FastUtilities */].ui.random(option,expression);
+      break;
+    case 'mobile':
+      return __WEBPACK_IMPORTED_MODULE_15__FastUtilities__["a" /* FastUtilities */].ui.mobile(option,expression);
       break;
     case 'banner':
       return __WEBPACK_IMPORTED_MODULE_14__FastBanner__["a" /* default */](option,expression);
@@ -14489,13 +14503,17 @@ function FastSticky(option,expression) {
       let subItem = 'banner';
       let o;
       let objString = '';
-      let parentString;
+      let parentString = '';
       for (o in obj) {
         let objType = obj[o].split(':')[0].replace('{','').replace('}','');
         let objTemplate = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][subItem][objType];
         let objContent = obj[o].split(':')[1].replace('{','').replace('}','');
         if(objType === 'image'){
-          parentString = objTemplate.replace(`@${subItem}.${objType}`,objContent)
+          parentString = objTemplate.replace(`@${subItem}.${objType}`,objContent);
+        }else if(objType === 'action'){
+          if(parentString.length > 0){
+            parentString = parentString.replace(`@${subItem}.${objType}`,objContent);
+          }
         }else{
           objString += objTemplate.replace(`@${subItem}.${objType}`,objContent);
         }
