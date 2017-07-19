@@ -76,7 +76,7 @@ const Global = {
   appObj:'__faster__',
   appRoot:'body',
   appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
-  appEvents:false, //this will turn on/off the mutation observer for all ftx-render objects
+  appEvents:true, //this will turn on/off the mutation observer for all ftx-render objects
   node:'ft',
   cycleOrder:['ftx','ft','fta'],
   experiment:{
@@ -15443,10 +15443,12 @@ module.exports = function (css) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/**
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/**
  * Created by David Maser on 19/07/2017.
  */
-window.itsDOMLoading = (function() {
+
+/* harmony default export */ __webpack_exports__["a"] = (window.itsDOMLoading = (function() {
 
   let itsDOMLoading = {
     version: "0.3",
@@ -15498,9 +15500,13 @@ window.itsDOMLoading = (function() {
   };
 
   return itsDOMLoading;
-})();
-
-/* harmony default export */ __webpack_exports__["a"] = (itsDOMLoading);
+})());
+if(typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] === 'object'){
+  window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj]['domManager'] = window.itsDOMLoading;
+}else{
+  window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] = {};
+  window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj]['domManager'] = window.itsDOMLoading;
+}
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),

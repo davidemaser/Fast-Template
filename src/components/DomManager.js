@@ -1,7 +1,8 @@
 /**
  * Created by David Maser on 19/07/2017.
  */
-window.itsDOMLoading = (function() {
+import {Global} from '../config/Global';
+export default window.itsDOMLoading = (function() {
 
   let itsDOMLoading = {
     version: "0.3",
@@ -54,5 +55,9 @@ window.itsDOMLoading = (function() {
 
   return itsDOMLoading;
 })();
-
-export default itsDOMLoading;
+if(typeof window[Global.appObj] === 'object'){
+  window[Global.appObj]['domManager'] = window.itsDOMLoading;
+}else{
+  window[Global.appObj] = {};
+  window[Global.appObj]['domManager'] = window.itsDOMLoading;
+}
