@@ -89,6 +89,9 @@ export default function FastProcessor(type, option, expression, element){
     case 'mobile':
       return FastUtilities.ui.mobile(option,expression);
       break;
+    case 'prefetch':
+      return FastUtilities.ux.prefetch(option,expression);
+      break;
     case 'banner':
       return FastBanner(option,expression);
       break;

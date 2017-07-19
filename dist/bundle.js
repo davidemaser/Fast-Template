@@ -10421,6 +10421,9 @@ const Template = {
       source:'<source src="@video.subtitles.url" type="video/@video.subtitles.format">'
     }
   },
+  head:{
+    prefetch:'<link rel="prefetch" href="@prefetch.url" />'
+  },
   nav:{
     link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
     layout:{
@@ -11424,6 +11427,18 @@ const FastUtilities = {
       return `<section class="ftx__mobile size__${option}">${expression}</section>`;
     }
   },
+  ux:{
+    prefetch:function(option,expression){
+      option = option !== null ? option : 'section';
+      let elementArray = expression.trim().split(/\r?\n/);
+      let elementString = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].head.prefetch;
+      if(Array.isArray(elementArray)){
+        elementArray.map(function(a){
+          $('head').append(elementString.replace('@prefetch.url',a.trim()));
+        })
+      }
+    }
+  },
   components:{
     search:function(option,expression){
       let template = {
@@ -12369,6 +12384,9 @@ function FastProcessor(type, option, expression, element){
       break;
     case 'mobile':
       return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ui.mobile(option,expression);
+      break;
+    case 'prefetch':
+      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ux.prefetch(option,expression);
       break;
     case 'banner':
       return __WEBPACK_IMPORTED_MODULE_14__FastBanner__["a" /* default */](option,expression);

@@ -84,6 +84,18 @@ export const FastUtilities = {
       return `<section class="ftx__mobile size__${option}">${expression}</section>`;
     }
   },
+  ux:{
+    prefetch:function(option,expression){
+      option = option !== null ? option : 'section';
+      let elementArray = expression.trim().split(/\r?\n/);
+      let elementString = Template.head.prefetch;
+      if(Array.isArray(elementArray)){
+        elementArray.map(function(a){
+          $('head').append(elementString.replace('@prefetch.url',a.trim()));
+        })
+      }
+    }
+  },
   components:{
     search:function(option,expression){
       let template = {

@@ -24,6 +24,9 @@ export const Template = {
       source:'<source src="@video.subtitles.url" type="video/@video.subtitles.format">'
     }
   },
+  head:{
+    prefetch:'<link rel="prefetch" href="@prefetch.url" />'
+  },
   nav:{
     link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
     layout:{
