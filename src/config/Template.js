@@ -4,15 +4,21 @@
 export const Template = {
   div:'<div data-atrribute="jeer">',
   footer:'<footer>',
+  clone:'<section ftx-render ftx-clone></section>',
   banner:{
-    layout:'<section class="ftx__banner @option">@content</section>',
+    layout:'<section ftx-render class="ftx__banner @option">@content</section>',
     image:'<div id="@ftx.id" class="ftx__banner container" ftx-action="@banner.action" style="background:url(@banner.image);background-size: cover;background-repeat: no-repeat;">@banner.content</div>',
     title:'<h1 class="ftx__banner_title">@banner.title</h1>',
     subtext:'<p class="ftx__banner_subtext">@banner.subtext</p>',
     button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
   },
   video:{
-    layout:'<video @url @options>@video.src@video.track</video>',
+    layout:'<video ftx-render @dimensions @url @options>@video.src@video.track</videoftx-render>',
+    dimensions:{
+      layout:'@dimensions.width @dimensions.height',
+      width:'width="@video.width"',
+      height:'height="@video.height"'
+    },
     options:{
       layout:'@autoplay @controls @poster',
       autoplay:'autoplay',
@@ -25,7 +31,7 @@ export const Template = {
     }
   },
   head:{
-    prefetch:'<link rel="prefetch" href="@prefetch.url" />'
+    prefetch:'<link ftx-render rel="prefetch" href="@prefetch.url" />'
   },
   nav:{
     link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
@@ -40,7 +46,7 @@ export const Template = {
   },
   table:{
     layout:{
-      basic:'<table class="ftx__table">@table.header@table.body@table.footer</table>'
+      basic:'<table ftx-render class="ftx__table">@table.header@table.body@table.footer</tableftx-render>'
     },
     header:{
       layout:'<thead>@table.row</thead>'
@@ -59,7 +65,7 @@ export const Template = {
     }
   },
   accordion:{
-    parent:'<div class="ftx__accordion">@accordion.item</div>',
+    parent:'<div ftx-render class="ftx__accordion">@accordion.item</div>',
     item:'<div class="accordion_item"><div class="item__title">@accordion.item.title</div><div class="item__body">@accordion.item.body</div></div>',
     params:{
       speed:500,
@@ -75,7 +81,7 @@ export const Template = {
   },
   modal:{
     full:{
-      layout:'<div class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
+      layout:'<div ftx-render class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
       prompt:{
         simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button></div>',
         full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button><button ftx-user-refuses>@modal.prompt.refuse</button></div>'
@@ -105,28 +111,6 @@ export const Template = {
   class:' class="@class"',
   id:' id="@id"',
   name:' name="@name"',
-  /*table:{
-    layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
-    class:this.class,
-    id:this.id,
-    style:' style="@style"',
-    elements:{
-      header:{
-        layout:'<thead></thead>'
-      },
-      footer:{
-        layout:'<tfoot></tfoot>'
-      },
-      body:{
-        layout:'<tbody>@body.rows</tbody>',
-        rows:{
-          layout:'<tr>@body.rows.columns</tr>',
-          style:' style="@table.rows.style"',
-          columns:'<td></td>'
-        }
-      }
-    }
-  },*/
   forms:{
     login:{
       layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',

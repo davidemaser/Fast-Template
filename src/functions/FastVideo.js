@@ -9,7 +9,7 @@ export default function (option,expression) {
     buildMultiSource:function(obj){
       if(Array.isArray(obj)){
         obj.map(function(a){
-          sourceString += Template.video.track.source.replace('@video.subtitles.url',a.split(' ')[0]).replace('@video.subtitles.format',a.split(' ')[0])
+          sourceString += Template.video.track.source.replace('@video.subtitles.url',a.split(' ')[0]).replace('@video.subtitles.format',a.split(' ')[1])
         })
       }
     },
@@ -67,8 +67,28 @@ export default function (option,expression) {
       }
       return optionString;
     },
+    buildDimensions:function(){
+      let dimensionString = Template.video.dimensions.layout;
+      let widthString = Template.video.dimensions.width;
+      let heightString = Template.video.dimensions.height;
+      if(expression.indexOf('width:')>-1){
+        let widthValue = expression.split('width:')[1];
+        widthValue = widthValue.indexOf(',') ? widthValue.split(',')[0] : widthValue;
+        dimensionString = dimensionString.replace('@dimensions.width',widthString.replace('@video.width',widthValue))
+      }else{
+        dimensionString = dimensionString.replace('@dimensions.width','')
+      }
+      if(expression.indexOf('height:')>-1){
+        let heightValue = expression.split('height:')[1];
+        heightValue = heightValue.indexOf(',') ? heightValue.split(',')[0] : heightValue;
+        dimensionString = dimensionString.replace('@dimensions.height',heightString.replace('@video.height',heightValue))
+      }else{
+        dimensionString = dimensionString.replace('@dimensions.height','')
+      }
+      return dimensionString;
+    },
     buildString:function(){
-      videoLayout = videoLayout.replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles());
+      videoLayout = videoLayout.replace('@dimensions',util.buildDimensions()).replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles());
       videoLayout = util.extract.source() !== undefined ? videoLayout.replace('@url',`src="${util.extract.source()}"`) : videoLayout.replace('@url','');
       videoLayout = sourceString !== '' && sourceString !== undefined ? videoLayout.replace('@video.src',sourceString) : videoLayout.replace('@video.src','');
       videoLayout = videoLayout.replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles());

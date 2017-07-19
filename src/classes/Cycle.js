@@ -47,7 +47,7 @@ export default class Cycle{
           }
           nodeString = Faster.parse.noLineBreaks(nodeString);
           nodeString += Faster.extract.content(a) !== undefined ? `${Faster.extract.content(a)}</${nodeType}>` : null;
-          let nodeElement = $('body').find(`[fst-id="${b}"]`);
+          let nodeElement = $(Global.appRoot).find(`[fst-id="${b}"]`);
           Architect.build.element(nodeElement,nodeString,Faster.extract.content(a))
         });
         break;

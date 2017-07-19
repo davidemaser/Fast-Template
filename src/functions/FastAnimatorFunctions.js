@@ -10,7 +10,7 @@ export const FastAnimatorFunctions={
    * @param id
    */
   detachElement(id){
-     $('body').prepend(
+     $(Global.appRoot).prepend(
        Global.fastAnimator.container.layout.replace('@container.class',`class=${Global.fastAnimator.container.class}`)
      );
      let guest = $(`#${id}`).detach();

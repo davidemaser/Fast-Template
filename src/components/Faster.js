@@ -279,12 +279,15 @@ export const Architect = {
     }
   },
   render(){
-    $('body').attr('faster','rendered');
+    $(Global.appRoot).attr({
+      'faster':'rendered',
+      'faster-key':Global.appObj
+    });
   }
 };
-if(typeof window['faster'] === 'object'){
-  window['__faster__']['core'] = Faster;
+if(typeof window[Global.appObj] === 'object'){
+  window[Global.appObj]['core'] = Faster;
 }else{
-  window['__faster__'] = {};
-  window['__faster__']['core'] = Faster;
+  window[Global.appObj] = {};
+  window[Global.appObj]['core'] = Faster;
 }

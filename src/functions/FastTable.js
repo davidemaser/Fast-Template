@@ -48,7 +48,7 @@ export default function FastTable(option,expression,element){
       objLayout = tableHeader !== undefined && tableHeader !== '' ? objLayout.replace('@table.header',tableHeader) : objLayout.replace('@table.header','');
       objLayout = tableRows !== undefined && tableRows !== '' ? objLayout.replace('@table.body',tableRows) : objLayout.replace('@table.body','');
       objLayout = tableFooter !== undefined && tableFooter !== '' ? objLayout.replace('@table.footer',tableFooter) : objLayout.replace('@table.footer','');
-      Architect.build.experiment($('body').find(`[fstx-id="${element}"]`),null,objLayout,true);
+      Architect.build.experiment($(Global.appRoot).find(`[fstx-id="${element}"]`),null,objLayout,true);
     },
     rows:function(obj){
       let rowString = '';

@@ -15,7 +15,7 @@ export default function GetAjax(url, props,element) {
     }
     handle !== null ? new RegisterState(handle,a,'appData') : null;
     new RegisterState('jsonLoaded',true,'appData');
-    Architect.build.experiment($('body').find(`[fstxj-id="${b}"]`),Global.ajax.render,a);
+    Architect.build.experiment($(Global.appRoot).find(`[fstxj-id="${b}"]`),Global.ajax.render,a);
   }
   function processProps(data, props) {
     if (typeof props === 'object') {

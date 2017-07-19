@@ -10335,7 +10335,7 @@ return jQuery;
 const Global = {
   appObj:'__faster__',
   appRoot:'body',
-  appStatus:'dev', //change this to dev if you want to see the pre-processed Faster tags
+  appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
   node:'ft',
   cycleOrder:['ftx','ft','fta'],
   experiment:{
@@ -10352,7 +10352,7 @@ const Global = {
   ajax:{
     node:'fta',
     useDefault:true,
-    render:'<span ftx-ajax>@return</span>',
+    render:'<span ftx-render ftx-ajax>@return</spanftx-render>',
     root:{
       node:'data',
       url:'../data'
@@ -10380,7 +10380,7 @@ const Global = {
   },
   fastAnimator:{
     container:{
-      layout:'<div @container.class></div>',
+      layout:'<div ftx-render @container.class></divftx-render>',
       class:'animation-layer',
       position:'absolute'
     }
@@ -10401,15 +10401,21 @@ let Log = [];
 const Template = {
   div:'<div data-atrribute="jeer">',
   footer:'<footer>',
+  clone:'<section ftx-render ftx-clone></section>',
   banner:{
-    layout:'<section class="ftx__banner @option">@content</section>',
+    layout:'<section ftx-render class="ftx__banner @option">@content</section>',
     image:'<div id="@ftx.id" class="ftx__banner container" ftx-action="@banner.action" style="background:url(@banner.image);background-size: cover;background-repeat: no-repeat;">@banner.content</div>',
     title:'<h1 class="ftx__banner_title">@banner.title</h1>',
     subtext:'<p class="ftx__banner_subtext">@banner.subtext</p>',
     button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
   },
   video:{
-    layout:'<video @url @options>@video.src@video.track</video>',
+    layout:'<video ftx-render @dimensions @url @options>@video.src@video.track</videoftx-render>',
+    dimensions:{
+      layout:'@dimensions.width @dimensions.height',
+      width:'width="@video.width"',
+      height:'height="@video.height"'
+    },
     options:{
       layout:'@autoplay @controls @poster',
       autoplay:'autoplay',
@@ -10422,7 +10428,7 @@ const Template = {
     }
   },
   head:{
-    prefetch:'<link rel="prefetch" href="@prefetch.url" />'
+    prefetch:'<link ftx-render rel="prefetch" href="@prefetch.url" />'
   },
   nav:{
     link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
@@ -10437,7 +10443,7 @@ const Template = {
   },
   table:{
     layout:{
-      basic:'<table class="ftx__table">@table.header@table.body@table.footer</table>'
+      basic:'<table ftx-render class="ftx__table">@table.header@table.body@table.footer</tableftx-render>'
     },
     header:{
       layout:'<thead>@table.row</thead>'
@@ -10456,7 +10462,7 @@ const Template = {
     }
   },
   accordion:{
-    parent:'<div class="ftx__accordion">@accordion.item</div>',
+    parent:'<div ftx-render class="ftx__accordion">@accordion.item</div>',
     item:'<div class="accordion_item"><div class="item__title">@accordion.item.title</div><div class="item__body">@accordion.item.body</div></div>',
     params:{
       speed:500,
@@ -10472,7 +10478,7 @@ const Template = {
   },
   modal:{
     full:{
-      layout:'<div class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
+      layout:'<div ftx-render class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
       prompt:{
         simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button></div>',
         full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button><button ftx-user-refuses>@modal.prompt.refuse</button></div>'
@@ -10502,28 +10508,6 @@ const Template = {
   class:' class="@class"',
   id:' id="@id"',
   name:' name="@name"',
-  /*table:{
-    layout:'<table@table.class@table.id@table.style>@table.elements.header@table.elements.body@table.elements.footer</table>',
-    class:this.class,
-    id:this.id,
-    style:' style="@style"',
-    elements:{
-      header:{
-        layout:'<thead></thead>'
-      },
-      footer:{
-        layout:'<tfoot></tfoot>'
-      },
-      body:{
-        layout:'<tbody>@body.rows</tbody>',
-        rows:{
-          layout:'<tr>@body.rows.columns</tr>',
-          style:' style="@table.rows.style"',
-          columns:'<td></td>'
-        }
-      }
-    }
-  },*/
   forms:{
     login:{
       layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
@@ -11321,16 +11305,19 @@ const Architect = {
     }
   },
   render(){
-    $('body').attr('faster','rendered');
+    $(__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appRoot).attr({
+      'faster':'rendered',
+      'faster-key':__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj
+    });
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Architect;
 
-if(typeof window['faster'] === 'object'){
-  window['__faster__']['core'] = Faster;
+if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object'){
+  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['core'] = Faster;
 }else{
-  window['__faster__'] = {};
-  window['__faster__']['core'] = Faster;
+  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
+  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['core'] = Faster;
 }
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
@@ -11341,9 +11328,11 @@ if(typeof window['faster'] === 'object'){
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(1);
 /**
  * Created by David Maser on 13/07/2017.
  */
+
 
 
 const FastUtilities = {
@@ -11375,7 +11364,7 @@ const FastUtilities = {
      * @param {string} expression
      */
     bind:function(option,expression){
-      $('body').prepend('<section ftx-clone></section>');
+      $(__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appRoot).prepend(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].clone);
       expression = expression.indexOf(',') > -1 ? expression.split(',') : expression;
       if(Array.isArray(expression)){
         expression.map(function(a){
@@ -11429,12 +11418,18 @@ const FastUtilities = {
   },
   ux:{
     prefetch:function(option,expression){
-      option = option !== null ? option : 'section';
-      let elementArray = expression.trim().split(/\r?\n/);
-      let elementString = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].head.prefetch;
-      if(Array.isArray(elementArray)){
-        elementArray.map(function(a){
-          $('head').append(elementString.replace('@prefetch.url',a.trim()));
+      try {
+        option = option !== null ? option : 'section';
+        let elementArray = expression.trim().split(/\r?\n/);
+        let elementString = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].head.prefetch;
+        if (Array.isArray(elementArray)) {
+          elementArray.map(function (a) {
+            $('head').append(elementString.replace('@prefetch.url', a.trim()));
+          })
+        }
+      }catch(e){
+        new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+
         })
       }
     }
@@ -11489,9 +11484,10 @@ const FastUtilities = {
   },
   countFtx:function(){
     let countLog = {};
-    $('span[ftx-render]').each((a,b)=>{
+    $('*[ftx-render]').each((a,b)=>{
       countLog[a] = b;
-    })
+    });
+    return countLog;
   },
   genFtxId:function(){
     let d = new Date();
@@ -11512,6 +11508,13 @@ const FastUtilities = {
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastUtilities;
 
+
+if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object'){
+  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['utilities'] = FastUtilities;
+}else{
+  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
+  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['utilities'] = FastUtilities;
+}
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
@@ -12188,7 +12191,7 @@ class Cycle{
           }
           nodeString = __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].parse.noLineBreaks(nodeString);
           nodeString += __WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.content(a) !== undefined ? `${__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.content(a)}</${nodeType}>` : null;
-          let nodeElement = $('body').find(`[fst-id="${b}"]`);
+          let nodeElement = $(__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appRoot).find(`[fst-id="${b}"]`);
           __WEBPACK_IMPORTED_MODULE_0__components_Faster__["a" /* Architect */].build.element(nodeElement,nodeString,__WEBPACK_IMPORTED_MODULE_0__components_Faster__["b" /* Faster */].extract.content(a))
         });
         break;
@@ -12605,7 +12608,7 @@ function GetAjax(url, props,element) {
     }
     handle !== null ? new __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__["a" /* default */](handle,a,'appData') : null;
     new __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__["a" /* default */]('jsonLoaded',true,'appData');
-    __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($('body').find(`[fstxj-id="${b}"]`),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.render,a);
+    __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).find(`[fstxj-id="${b}"]`),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.render,a);
   }
   function processProps(data, props) {
     if (typeof props === 'object') {
@@ -13822,7 +13825,7 @@ function FastModal(option, expression){
       templateString = templateString.replace(`@modal.${o}`,expressionObj[o]);
     }
   }
-  $('body').on('click',__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal.params.trigger,function(){
+  $(__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appRoot).on('click',__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal.params.trigger,function(){
     if(window[__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appObj]['modal']['modalIsOpen'] === false){
       $(this).parent().parent().find(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal.params.target).slideToggle(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].modal.params.speed);
       new __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__["a" /* default */]('modalIsOpen',true,'modal');
@@ -14018,9 +14021,11 @@ const FastHtmlUtilities = {
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlFunctions__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(1);
 /**
  * Created by David Maser on 04/07/2017.
  */
+
 
 
 class FastHtmlEvents{
@@ -14028,7 +14033,7 @@ class FastHtmlEvents{
     this.obj = obj;
     this.origin = origin;
     this.root = window;
-    this.level = 'body';
+    this.level = __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appRoot;
     this.run();
   }
   run(){
@@ -14132,7 +14137,7 @@ const FastAnimatorFunctions={
    * @param id
    */
   detachElement(id){
-     $('body').prepend(
+     $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).prepend(
        __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].fastAnimator.container.layout.replace('@container.class',`class=${__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].fastAnimator.container.class}`)
      );
      let guest = $(`#${id}`).detach();
@@ -14278,7 +14283,7 @@ function FastNav(option,expression,element){
       }
       objForm = parseParents(itemArray);
     }
-    __WEBPACK_IMPORTED_MODULE_2__components_Faster__["a" /* Architect */].build.experiment($('body').find(`[fstx-id="${element}"]`),null,objLayout.replace('@nav.node',objForm),true);
+    __WEBPACK_IMPORTED_MODULE_2__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).find(`[fstx-id="${element}"]`),null,objLayout.replace('@nav.node',objForm),true);
     //return objLayout.replace('@nav.node',objForm);
   }
 
@@ -14334,10 +14339,12 @@ function FastNav(option,expression,element){
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastAccordion;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastUtilities__ = __webpack_require__(7);
 /**
  * Created by David Maser on 12/07/2017.
  */
+
 
 
 /**
@@ -14351,12 +14358,12 @@ const builder = {
     let obj = builder.accordObj;
     let objString = '';
     for(o in obj){
-      objString += __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["a" /* FastUtilities */].stripper(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.item,{
+      objString += __WEBPACK_IMPORTED_MODULE_2__functions_FastUtilities__["a" /* FastUtilities */].stripper(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.item,{
         '@accordion.item.title':o,
         '@accordion.item.body':obj[o]
       });
     }
-    $('body').on('click',__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.params.trigger,function(){
+    $(__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appRoot).on('click',__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.params.trigger,function(){
       $(this).parent().find(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.params.target).slideToggle(__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.params.speed);
     });
     return __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].accordion.parent.replace('@accordion.item',objString);
@@ -14452,7 +14459,7 @@ function FastTable(option,expression,element){
       objLayout = tableHeader !== undefined && tableHeader !== '' ? objLayout.replace('@table.header',tableHeader) : objLayout.replace('@table.header','');
       objLayout = tableRows !== undefined && tableRows !== '' ? objLayout.replace('@table.body',tableRows) : objLayout.replace('@table.body','');
       objLayout = tableFooter !== undefined && tableFooter !== '' ? objLayout.replace('@table.footer',tableFooter) : objLayout.replace('@table.footer','');
-      __WEBPACK_IMPORTED_MODULE_2__components_Faster__["a" /* Architect */].build.experiment($('body').find(`[fstx-id="${element}"]`),null,objLayout,true);
+      __WEBPACK_IMPORTED_MODULE_2__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).find(`[fstx-id="${element}"]`),null,objLayout,true);
     },
     rows:function(obj){
       let rowString = '';
@@ -14534,16 +14541,18 @@ function FastSticky(option,expression) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FastUtilities__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FastUtilities__ = __webpack_require__(7);
 /**
  * Created by David Maser on 18/07/2017.
  */
 
 
+
 /* harmony default export */ __webpack_exports__["a"] = (function (option,expression) {
   const parser = {
     handleAction:function(param){
-      $('body').on('click','.ftx__banner_button',function(){
+      $(__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appRoot).on('click','.ftx__banner_button',function(){
         let ctaAction = $(this).parent().parent().attr('ftx-action');
         console.log(ctaAction);
       })
@@ -14568,7 +14577,7 @@ function FastSticky(option,expression) {
           objString += objTemplate.replace(`@${subItem}.${objType}`,objContent);
         }
       }
-      let uniqueId = __WEBPACK_IMPORTED_MODULE_1__FastUtilities__["a" /* FastUtilities */].genFtxId();
+      let uniqueId = __WEBPACK_IMPORTED_MODULE_2__FastUtilities__["a" /* FastUtilities */].genFtxId();
       this.handleAction(uniqueId);
       return parentString.replace('@ftx.id',uniqueId).replace('@banner.content',objString);
     },
@@ -14610,7 +14619,7 @@ function FastSticky(option,expression) {
     buildMultiSource:function(obj){
       if(Array.isArray(obj)){
         obj.map(function(a){
-          sourceString += __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.track.source.replace('@video.subtitles.url',a.split(' ')[0]).replace('@video.subtitles.format',a.split(' ')[0])
+          sourceString += __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.track.source.replace('@video.subtitles.url',a.split(' ')[0]).replace('@video.subtitles.format',a.split(' ')[1])
         })
       }
     },
@@ -14668,8 +14677,28 @@ function FastSticky(option,expression) {
       }
       return optionString;
     },
+    buildDimensions:function(){
+      let dimensionString = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.dimensions.layout;
+      let widthString = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.dimensions.width;
+      let heightString = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.dimensions.height;
+      if(expression.indexOf('width:')>-1){
+        let widthValue = expression.split('width:')[1];
+        widthValue = widthValue.indexOf(',') ? widthValue.split(',')[0] : widthValue;
+        dimensionString = dimensionString.replace('@dimensions.width',widthString.replace('@video.width',widthValue))
+      }else{
+        dimensionString = dimensionString.replace('@dimensions.width','')
+      }
+      if(expression.indexOf('height:')>-1){
+        let heightValue = expression.split('height:')[1];
+        heightValue = heightValue.indexOf(',') ? heightValue.split(',')[0] : heightValue;
+        dimensionString = dimensionString.replace('@dimensions.height',heightString.replace('@video.height',heightValue))
+      }else{
+        dimensionString = dimensionString.replace('@dimensions.height','')
+      }
+      return dimensionString;
+    },
     buildString:function(){
-      videoLayout = videoLayout.replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles());
+      videoLayout = videoLayout.replace('@dimensions',util.buildDimensions()).replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles());
       videoLayout = util.extract.source() !== undefined ? videoLayout.replace('@url',`src="${util.extract.source()}"`) : videoLayout.replace('@url','');
       videoLayout = sourceString !== '' && sourceString !== undefined ? videoLayout.replace('@video.src',sourceString) : videoLayout.replace('@video.src','');
       videoLayout = videoLayout.replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles());

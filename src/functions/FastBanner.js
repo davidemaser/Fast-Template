@@ -2,11 +2,12 @@
  * Created by David Maser on 18/07/2017.
  */
 import {Template} from '../config/Template';
+import {Global} from '../config/Global';
 import {FastUtilities} from './FastUtilities';
 export default function (option,expression) {
   const parser = {
     handleAction:function(param){
-      $('body').on('click','.ftx__banner_button',function(){
+      $(Global.appRoot).on('click','.ftx__banner_button',function(){
         let ctaAction = $(this).parent().parent().attr('ftx-action');
         console.log(ctaAction);
       })

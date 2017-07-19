@@ -4,7 +4,7 @@
 export const Global = {
   appObj:'__faster__',
   appRoot:'body',
-  appStatus:'dev', //change this to dev if you want to see the pre-processed Faster tags
+  appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
   node:'ft',
   cycleOrder:['ftx','ft','fta'],
   experiment:{
@@ -21,7 +21,7 @@ export const Global = {
   ajax:{
     node:'fta',
     useDefault:true,
-    render:'<span ftx-ajax>@return</span>',
+    render:'<span ftx-render ftx-ajax>@return</spanftx-render>',
     root:{
       node:'data',
       url:'../data'
@@ -49,7 +49,7 @@ export const Global = {
   },
   fastAnimator:{
     container:{
-      layout:'<div @container.class></div>',
+      layout:'<div ftx-render @container.class></divftx-render>',
       class:'animation-layer',
       position:'absolute'
     }

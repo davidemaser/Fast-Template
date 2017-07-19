@@ -2,6 +2,7 @@
  * Created by David Maser on 12/07/2017.
  */
 import {Template} from '../config/Template';
+import {Global} from '../config/Global';
 import {FastUtilities} from '../functions/FastUtilities';
 /**
  *
@@ -19,7 +20,7 @@ const builder = {
         '@accordion.item.body':obj[o]
       });
     }
-    $('body').on('click',Template.accordion.params.trigger,function(){
+    $(Global.appRoot).on('click',Template.accordion.params.trigger,function(){
       $(this).parent().find(Template.accordion.params.target).slideToggle(Template.accordion.params.speed);
     });
     return Template.accordion.parent.replace('@accordion.item',objString);

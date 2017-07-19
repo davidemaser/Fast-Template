@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<script type="text/javascript" src="bundle.js?ab04e28b425a35070671"></script></head>
+<script type="text/javascript" src="bundle.js?d85fb0a340c0ac89b545"></script></head>
 <body faster="template">
 <ft>class:new,render:div,content:{here's my content}</ft>
 <ft>template:div,content:{this is a template}</ft>
@@ -61,11 +61,10 @@
     <div>second entry</div>
     <div>third entry</div>
     {~banner}</ftx>
-<ftx>{video:default}url:link,controls:true,autoplay:true,poster:url,subtitles:[en url,fr url]{~video}</ftx>
-<ftx>{video:default}url:[link mp4,link webm,link ogg],controls:true,autoplay:true,poster:url,subtitles:[en url,fr url]{~video}</ftx>
+<ftx>{video:default}url://www.w3schools.com/html/movie.mp4,width:280,controls:true,autoplay:true,poster:url,subtitles:[en url,fr url]{~video}</ftx>
+<ftx>{video:default}url:[//www.w3schools.com/html/movie.mp4 mp4,https://www.w3schools.com/html/movie.ogg ogg,link webm],width:500,height:280,controls:true,autoplay:true,poster:url,subtitles:[en url,fr url]{~video}</ftx>
 <ftx>{prefetch}
     //via.placeholder.com/350x150
-    //via.placeholder.com/150x150
     {~prefetch}</ftx>
 </body>
 </html>

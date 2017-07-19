@@ -3,6 +3,7 @@
  */
 import Woops from '../classes/Woops';
 import {Template} from '../config/Template';
+import {Global} from '../config/Global';
 export const FastUtilities = {
   ui:{
     /**
@@ -32,7 +33,7 @@ export const FastUtilities = {
      * @param {string} expression
      */
     bind:function(option,expression){
-      $('body').prepend('<section ftx-clone></section>');
+      $(Global.appRoot).prepend(Template.clone);
       expression = expression.indexOf(',') > -1 ? expression.split(',') : expression;
       if(Array.isArray(expression)){
         expression.map(function(a){
@@ -86,12 +87,18 @@ export const FastUtilities = {
   },
   ux:{
     prefetch:function(option,expression){
-      option = option !== null ? option : 'section';
-      let elementArray = expression.trim().split(/\r?\n/);
-      let elementString = Template.head.prefetch;
-      if(Array.isArray(elementArray)){
-        elementArray.map(function(a){
-          $('head').append(elementString.replace('@prefetch.url',a.trim()));
+      try {
+        option = option !== null ? option : 'section';
+        let elementArray = expression.trim().split(/\r?\n/);
+        let elementString = Template.head.prefetch;
+        if (Array.isArray(elementArray)) {
+          elementArray.map(function (a) {
+            $('head').append(elementString.replace('@prefetch.url', a.trim()));
+          })
+        }
+      }catch(e){
+        new Woops({
+
         })
       }
     }
@@ -146,9 +153,10 @@ export const FastUtilities = {
   },
   countFtx:function(){
     let countLog = {};
-    $('span[ftx-render]').each((a,b)=>{
+    $('*[ftx-render]').each((a,b)=>{
       countLog[a] = b;
-    })
+    });
+    return countLog;
   },
   genFtxId:function(){
     let d = new Date();
@@ -167,3 +175,10 @@ export const FastUtilities = {
     }
   }
 };
+
+if(typeof window[Global.appObj] === 'object'){
+  window[Global.appObj]['utilities'] = FastUtilities;
+}else{
+  window[Global.appObj] = {};
+  window[Global.appObj]['utilities'] = FastUtilities;
+}

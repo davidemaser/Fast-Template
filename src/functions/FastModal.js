@@ -26,7 +26,7 @@ export default function FastModal(option, expression){
       templateString = templateString.replace(`@modal.${o}`,expressionObj[o]);
     }
   }
-  $('body').on('click',Template.modal.params.trigger,function(){
+  $(Global.appRoot).on('click',Template.modal.params.trigger,function(){
     if(window[Global.appObj]['modal']['modalIsOpen'] === false){
       $(this).parent().parent().find(Template.modal.params.target).slideToggle(Template.modal.params.speed);
       new RegisterState('modalIsOpen',true,'modal');

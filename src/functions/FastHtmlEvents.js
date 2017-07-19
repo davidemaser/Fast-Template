@@ -3,12 +3,13 @@
  */
 import Woops from '../classes/Woops';
 import {FastHtmlFunctions} from '../functions/FastHtmlFunctions';
+import {Global} from '../config/Global';
 export default class FastHtmlEvents{
   constructor(obj,origin){
     this.obj = obj;
     this.origin = origin;
     this.root = window;
-    this.level = 'body';
+    this.level = Global.appRoot;
     this.run();
   }
   run(){
