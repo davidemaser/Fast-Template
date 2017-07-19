@@ -19,6 +19,13 @@ import FastBanner from './FastBanner';
 import FastVideo from './FastVideo';
 import {FastUtilities} from './FastUtilities';
 /**
+ * The FastProcessor is one of the core functions called by new Cycle(). The
+ * Cycle class passes ftx parameters to the Processor. Depending on what kind
+ * of Fast type object is being processed, specific functions or methods will
+ * be called to evaluate and render the fast template. Async methods require
+ * the element parameter as they do not send a render directive back to the
+ * Faster core but, instead, send directly the object and/or arguments to the
+ * Architect.
  *
  * @param {string} type
  * @param {string} option
@@ -91,6 +98,9 @@ export default function FastProcessor(type, option, expression, element){
       break;
     case 'prefetch':
       return FastUtilities.ux.prefetch(option,expression);
+      break;
+    case 'image':
+      return FastUtilities.ui.image(option,expression,element);
       break;
     case 'banner':
       return FastBanner(option,expression);

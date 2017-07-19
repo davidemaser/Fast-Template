@@ -4,8 +4,44 @@
 import Woops from '../classes/Woops';
 import {Template} from '../config/Template';
 import {Global} from '../config/Global';
+import {Architect} from '../components/Faster';
 export const FastUtilities = {
   ui:{
+    image:function(option,expression,element){
+      let imgUrl = expression.indexOf('url:') > -1 ? expression.split('url:')[1] : null;
+      let imgLoad = $('<img />');
+      imgLoad.attr('src',imgUrl);
+      imgLoad.unbind('load');
+      imgLoad.bind('load', function () {
+        let width,height,numValue,imageString;
+        if(isNaN(option) === true){
+          switch(option){
+            case 'full':
+              width = this.width;
+              height = this.height;
+              break;
+            case 'half':
+              width = Math.round(this.width/2);
+              height = Math.round(this.height/2);
+              break;
+            case 'quarter':
+              width = Math.round(this.width/4);
+              height = Math.round(this.height/4);
+              break;
+            case 'eighth':
+              width = Math.round(this.width/8);
+              height = Math.round(this.height/8);
+              break;
+          }
+        }else{
+          numValue = parseInt(option);
+          width = Math.round(this.width/numValue);
+          height = Math.round(this.height/numValue);
+        }
+        imageString = imgLoad[0].outerHTML.replace('">',`" width="${width}" height="${height}">`);
+        Architect.build.experiment($(Global.appRoot).find(`[fstx-id="${element}"]`),null,imageString,true);
+      });
+    },
     /**
      * Simple function that creates a placeholder object in the
      * page.
