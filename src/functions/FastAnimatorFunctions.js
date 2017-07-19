@@ -2,6 +2,7 @@
  * Created by David Maser on 04/07/2017.
  */
 import {Global} from '../config/Global';
+import {Template} from '../config/Template';
 
 export const FastAnimatorFunctions={
   /**
@@ -11,11 +12,11 @@ export const FastAnimatorFunctions={
    */
   detachElement(id){
      $(Global.appRoot).prepend(
-       Global.fastAnimator.container.layout.replace('@container.class',`class=${Global.fastAnimator.container.class}`)
+       Template.fastAnimator.container.layout.replace('@container.class',`class=${Template.fastAnimator.container.class}`)
      );
      let guest = $(`#${id}`).detach();
-     $(`.${Global.fastAnimator.container.class}`).prepend(guest).css({
-      position:Global.fastAnimator.container.position
+     $(`.${Template.fastAnimator.container.class}`).prepend(guest).css({
+      position:Template.fastAnimator.container.position
      });
   },
   /**

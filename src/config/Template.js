@@ -30,6 +30,13 @@ export const Template = {
       source:'<source src="@video.subtitles.url" type="video/@video.subtitles.format">'
     }
   },
+  fastAnimator:{
+    container:{
+      layout:'<div ftx-render @container.class></divftx-render>',
+      class:'animation-layer',
+      position:'absolute'
+    }
+  },
   head:{
     prefetch:'<link ftx-render rel="prefetch" href="@prefetch.url" />'
   },

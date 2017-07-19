@@ -4,7 +4,8 @@
 export const Global = {
   appObj:'__faster__',
   appRoot:'body',
-  appStatus:'dev', //change this to dev if you want to see the pre-processed Faster tags
+  appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
+  appEvents:false, //this will turn on/off the mutation observer for all ftx-render objects
   node:'ft',
   cycleOrder:['ftx','ft','fta'],
   experiment:{
@@ -46,13 +47,6 @@ export const Global = {
     closes : [
       'div','section','button','nav','p','span','header','footer','strong','i','h1','h2','h3','h4','h5','h6','ul','li','menu','pre','select','u'
     ]
-  },
-  fastAnimator:{
-    container:{
-      layout:'<div ftx-render @container.class></divftx-render>',
-      class:'animation-layer',
-      position:'absolute'
-    }
   }
 };
 export let Log = [];
