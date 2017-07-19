@@ -10409,7 +10409,7 @@ const Template = {
     button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
   },
   video:{
-    layout:'<video src="@video.url" @options>@video.track</video>',
+    layout:'<video @url @options>@video.src@video.track</video>',
     options:{
       layout:'@autoplay @controls @poster',
       autoplay:'autoplay',
@@ -10417,7 +10417,8 @@ const Template = {
       poster:'poster="@video.poster"'
     },
     track:{
-      subtitles:'<track kind="subtitles" src="@video.subtitles.url" srclang="@video.subtitles.lang">'
+      subtitles:'<track kind="subtitles" src="@video.subtitles.url" srclang="@video.subtitles.lang">',
+      source:'<source src="@video.subtitles.url" type="video/@video.subtitles.format">'
     }
   },
   nav:{
@@ -14586,11 +14587,22 @@ function FastSticky(option,expression) {
 
 /* harmony default export */ __webpack_exports__["a"] = (function (option,expression) {
   let videoLayout = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.layout;
+  let sourceString = '';
   const util = {
+    buildMultiSource:function(obj){
+      if(Array.isArray(obj)){
+        obj.map(function(a){
+          sourceString += __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.track.source.replace('@video.subtitles.url',a.split(' ')[0]).replace('@video.subtitles.format',a.split(' ')[0])
+        })
+      }
+    },
     extract:{
       source:function(){
         let urlValue;
-        if(expression.indexOf('url:')>-1){
+        if(expression.indexOf('url:[')>-1){
+          urlValue = expression.split('url:[')[1].split(']')[0];
+          urlValue = urlValue.indexOf(',') ? util.buildMultiSource(urlValue.split(',')) : util.buildMultiSource(urlValue);
+        }else{
           urlValue = expression.split('url:')[1];
           urlValue = urlValue.indexOf(',') ? urlValue.split(',')[0] : urlValue;
         }
@@ -14637,9 +14649,16 @@ function FastSticky(option,expression) {
           optionString = optionString.replace('@poster',posterTemplate.replace('@video.poster',optionPoster));
       }
       return optionString;
+    },
+    buildString:function(){
+      videoLayout = videoLayout.replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles());
+      videoLayout = util.extract.source() !== undefined ? videoLayout.replace('@url',`src="${util.extract.source()}"`) : videoLayout.replace('@url','');
+      videoLayout = sourceString !== '' && sourceString !== undefined ? videoLayout.replace('@video.src',sourceString) : videoLayout.replace('@video.src','');
+      videoLayout = videoLayout.replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles());
+      return videoLayout;
     }
   };
-  return videoLayout.replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles()).replace('@video.url',util.extract.source);
+  return util.buildString();
 });
 
 /***/ }),

@@ -12,7 +12,7 @@ export const Template = {
     button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
   },
   video:{
-    layout:'<video src="@video.url" @options>@video.track</video>',
+    layout:'<video @url @options>@video.src@video.track</video>',
     options:{
       layout:'@autoplay @controls @poster',
       autoplay:'autoplay',
@@ -20,7 +20,8 @@ export const Template = {
       poster:'poster="@video.poster"'
     },
     track:{
-      subtitles:'<track kind="subtitles" src="@video.subtitles.url" srclang="@video.subtitles.lang">'
+      subtitles:'<track kind="subtitles" src="@video.subtitles.url" srclang="@video.subtitles.lang">',
+      source:'<source src="@video.subtitles.url" type="video/@video.subtitles.format">'
     }
   },
   nav:{
