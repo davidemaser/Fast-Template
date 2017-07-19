@@ -14339,7 +14339,6 @@ function FastNav(option,expression,element){
       objForm = parseParents(itemArray);
     }
     __WEBPACK_IMPORTED_MODULE_2__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).find(`[fstx-id="${element}"]`),null,objLayout.replace('@nav.node',objForm),true);
-    //return objLayout.replace('@nav.node',objForm);
   }
 
   /**
@@ -14363,7 +14362,8 @@ function FastNav(option,expression,element){
   }
 
   /**
-   *
+   * Parses and renders the children within a parent object. Also returns the item
+   * to parseParents if the value received is an object.
    * @param {object} obj
    * @returns {string}
    */
@@ -14617,7 +14617,6 @@ function FastSticky(option,expression) {
       let o;
       let objString = '';
       let parentString = '';
-      let ctaAction;
       for (o in obj) {
         let objType = obj[o].split(':')[0].replace('{','').replace('}','');
         let objTemplate = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */][subItem][objType];
@@ -14649,7 +14648,12 @@ function FastSticky(option,expression) {
   let bannerContent = '';
   if(Array.isArray(bannerArray)){
     bannerArray.map(function(a){
-      bannerContent += a.indexOf('{') > -1 ? parser.init(a.trim()) : a.trim();
+      if(a.indexOf('{') > -1){
+        bannerContent += parser.init(a.trim());
+      }else{
+        let isNonObject = $('<div />').html(a.trim()).contents().addClass('ftx__banner').addClass('container');
+        bannerContent += isNonObject[0].outerHTML;
+      }
     })
   }
   bannerTemplate = bannerTemplate.replace('@option',option).replace('@content',bannerContent);

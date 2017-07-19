@@ -17,7 +17,6 @@ export default function (option,expression) {
       let o;
       let objString = '';
       let parentString = '';
-      let ctaAction;
       for (o in obj) {
         let objType = obj[o].split(':')[0].replace('{','').replace('}','');
         let objTemplate = Template[subItem][objType];
@@ -49,7 +48,12 @@ export default function (option,expression) {
   let bannerContent = '';
   if(Array.isArray(bannerArray)){
     bannerArray.map(function(a){
-      bannerContent += a.indexOf('{') > -1 ? parser.init(a.trim()) : a.trim();
+      if(a.indexOf('{') > -1){
+        bannerContent += parser.init(a.trim());
+      }else{
+        let isNonObject = $('<div />').html(a.trim()).contents().addClass('ftx__banner').addClass('container');
+        bannerContent += isNonObject[0].outerHTML;
+      }
     })
   }
   bannerTemplate = bannerTemplate.replace('@option',option).replace('@content',bannerContent);

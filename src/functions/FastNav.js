@@ -84,7 +84,6 @@ export default function FastNav(option,expression,element){
       objForm = parseParents(itemArray);
     }
     Architect.build.experiment($(Global.appRoot).find(`[fstx-id="${element}"]`),null,objLayout.replace('@nav.node',objForm),true);
-    //return objLayout.replace('@nav.node',objForm);
   }
 
   /**
@@ -108,7 +107,8 @@ export default function FastNav(option,expression,element){
   }
 
   /**
-   *
+   * Parses and renders the children within a parent object. Also returns the item
+   * to parseParents if the value received is an object.
    * @param {object} obj
    * @returns {string}
    */
