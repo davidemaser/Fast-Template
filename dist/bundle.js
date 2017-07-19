@@ -12135,7 +12135,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 $(function(){
-  __WEBPACK_IMPORTED_MODULE_3__src_config_Global__["a" /* Global */].appEvents === true ? new __WEBPACK_IMPORTED_MODULE_2__src_classes_FastDom__["a" /* default */]() : null;
+  __WEBPACK_IMPORTED_MODULE_3__src_config_Global__["a" /* Global */].appEvents === true ? new __WEBPACK_IMPORTED_MODULE_2__src_classes_FastDom__["a" /* default */]() : null; //turn on mutation observers for all ftx-render objects
   $.when(new __WEBPACK_IMPORTED_MODULE_1__src_classes_Sniffer__["a" /* default */]()).done(__WEBPACK_IMPORTED_MODULE_0__src_components_Faster__["b" /* Faster */].exec())
 });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
