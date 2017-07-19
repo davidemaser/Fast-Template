@@ -7,6 +7,6 @@ import FastDom from './src/classes/FastDom';
 import {Global} from './src/config/Global';
 import './src/css/scss/Fast.scss';
 $(function(){
-  Global.appEvents === true ? new FastDom() : null; //turn on mutation observers for all ftx-render objects
+  Global.appEvents.enable === true ? new FastDom() : null; //turn on mutation observers for all ftx-render objects
   $.when(new Sniffer()).done(Faster.exec())
 });

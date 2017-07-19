@@ -8,7 +8,7 @@ export default window.itsDOMLoading = (function() {
     version: "0.3",
     triggers: {},
     observer: null,
-    scope: "body",
+    scope: Global.appRoot,
     selector: $ || function(selector, el) {
       return (el || document).querySelectorAll(selector);
     },

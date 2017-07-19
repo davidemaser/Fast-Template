@@ -5,7 +5,10 @@ export const Global = {
   appObj:'__faster__',
   appRoot:'body',
   appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
-  appEvents:true, //this will turn on/off the mutation observer for all ftx-render objects
+  appEvents:{
+    enable:true, //this will turn on/off the mutation observer for all ftx-render objects
+    root:'*[ftx-render]'
+  },
   node:'ft',
   cycleOrder:['ftx','ft','fta'],
   experiment:{

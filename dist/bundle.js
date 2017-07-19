@@ -76,7 +76,10 @@ const Global = {
   appObj:'__faster__',
   appRoot:'body',
   appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
-  appEvents:true, //this will turn on/off the mutation observer for all ftx-render objects
+  appEvents:{
+    enable:true, //this will turn on/off the mutation observer for all ftx-render objects
+    root:'*[ftx-render]'
+  },
   node:'ft',
   cycleOrder:['ftx','ft','fta'],
   experiment:{
@@ -12135,7 +12138,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 $(function(){
-  __WEBPACK_IMPORTED_MODULE_3__src_config_Global__["a" /* Global */].appEvents === true ? new __WEBPACK_IMPORTED_MODULE_2__src_classes_FastDom__["a" /* default */]() : null; //turn on mutation observers for all ftx-render objects
+  __WEBPACK_IMPORTED_MODULE_3__src_config_Global__["a" /* Global */].appEvents.enable === true ? new __WEBPACK_IMPORTED_MODULE_2__src_classes_FastDom__["a" /* default */]() : null; //turn on mutation observers for all ftx-render objects
   $.when(new __WEBPACK_IMPORTED_MODULE_1__src_classes_Sniffer__["a" /* default */]()).done(__WEBPACK_IMPORTED_MODULE_0__src_components_Faster__["b" /* Faster */].exec())
 });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
@@ -15454,7 +15457,7 @@ module.exports = function (css) {
     version: "0.3",
     triggers: {},
     observer: null,
-    scope: "body",
+    scope: __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot,
     selector: $ || function(selector, el) {
       return (el || document).querySelectorAll(selector);
     },
@@ -15515,9 +15518,11 @@ if(typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_DomManager__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
 /**
  * Created by David Maser on 19/07/2017.
  */
+
 
 class FastDom{
   constructor(){
@@ -15525,7 +15530,7 @@ class FastDom{
   }
   run(){
     __WEBPACK_IMPORTED_MODULE_0__components_DomManager__["a" /* default */].listen();
-    __WEBPACK_IMPORTED_MODULE_0__components_DomManager__["a" /* default */].addTrigger("*[ftx-render]", function(node){
+    __WEBPACK_IMPORTED_MODULE_0__components_DomManager__["a" /* default */].addTrigger(__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appEvents.root, function(node){
       console.log(node, 'was added to the page');
     });
   }

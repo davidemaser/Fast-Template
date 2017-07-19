@@ -160,3 +160,11 @@ placeholders. Continue reading below to learn how to extend templates and create
 
 Template objects follow a simple and straightforward schema. The object name is the same as the option passed in the Faster tag. (i.e. ``{form:login}``). This means
 that within the template.js file, you need to have a node with the option name of your tag. 
+
+### Faster Dom Manager
+
+Faster includes a dom manager that allows the app to register and watch for events on the page. It is essentially a mutation observer that can execute sub calls when an event
+occurs in the dom. The Dom Manager is registered to the window (under the core Faster object: see Global.appEvents) so it can be called by other functions. 
+
+By default, the Dom Manager initializes a lister that is bound to all elements that have a ftx-render attribute. This can be modified to fit specific needs. Listeners can also be created
+by other functions or methods.
