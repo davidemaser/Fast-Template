@@ -88,10 +88,10 @@ export const Template = {
   },
   modal:{
     full:{
-      layout:'<div ftx-render class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
+      layout:'<div ftx-render class="ftx__modal__cta"><button ftx-event="user opens modal">@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
       prompt:{
-        simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button></div>',
-        full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button><button ftx-user-refuses>@modal.prompt.refuse</button></div>'
+        simple:'<div class="ftx__modal__prompt"><button ftx-event="user agrees" ftx-user-agrees>@modal.prompt.confirm</button></div>',
+        full:'<div class="ftx__modal__prompt"><button ftx-event="user agrees" ftx-user-agrees>@modal.prompt.confirm</button><button ftx-event="user refuses" ftx-user-refuses>@modal.prompt.refuse</button></div>'
       }
     },
     params:{
@@ -119,6 +119,10 @@ export const Template = {
   id:' id="@id"',
   name:' name="@name"',
   forms:{
+    search:{
+      layout:'<div class="ftx__component search"><input ftx-target="@search.target" name="ftx_search" id="ftx_comp_search" type="text" placeholder="@search.placeholder" />@search.button</div>',
+      button:'<button ftx-event="user executes search">@search.label</button>'
+    },
     login:{
       layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
       class:' class="@class"',

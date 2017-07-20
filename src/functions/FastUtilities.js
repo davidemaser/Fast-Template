@@ -141,15 +141,11 @@ export const FastUtilities = {
   },
   components:{
     search:function(option,expression){
-      let template = {
-        layout:'<div class="ftx__component search"><input ftx-target="@search.target" name="ftx_search" id="ftx_comp_search" type="text" placeholder="@search.placeholder" />@search.button</div>',
-        button:'<button>@search.label</button>'
-      };
       let templateStr;
       let expArray = expression.indexOf(',') > -1 ? expression.split(',') : expression;
       switch(option){
         case 'default':
-          templateStr = template.layout.replace('@search.button',template.button);
+          templateStr = Template.forms.search.layout.replace('@search.button',Template.forms.search.button);
           break;
       }
       if(Array.isArray(expArray)){

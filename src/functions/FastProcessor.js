@@ -17,6 +17,7 @@ import FastTable from './FastTable';
 import FastSticky from './FastSticky';
 import FastBanner from './FastBanner';
 import FastVideo from './FastVideo';
+import FastAnalytics from './FastAnalytics';
 import {FastUtilities} from './FastUtilities';
 /**
  * The FastProcessor is one of the core functions called by new Cycle(). The
@@ -78,6 +79,8 @@ export default function FastProcessor(type, option, expression, element){
     case 'sticky':
       return FastSticky(option,expression);
       break;
+    case 'analytics':
+      return new FastAnalytics(option,expression);
     case 'placeholder':
       return FastUtilities.ui.placeholder(option);
       break;

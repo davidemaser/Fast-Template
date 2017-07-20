@@ -74,6 +74,7 @@
  */
 const Global = {
   appObj:'__faster__',
+  appHead:'head',
   appRoot:'body',
   appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
   appEvents:{
@@ -10482,10 +10483,10 @@ const Template = {
   },
   modal:{
     full:{
-      layout:'<div ftx-render class="ftx__modal__cta"><button>@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
+      layout:'<div ftx-render class="ftx__modal__cta"><button ftx-event="user opens modal">@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
       prompt:{
-        simple:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button></div>',
-        full:'<div class="ftx__modal__prompt"><button ftx-user-agrees>@modal.prompt.confirm</button><button ftx-user-refuses>@modal.prompt.refuse</button></div>'
+        simple:'<div class="ftx__modal__prompt"><button ftx-event="user agrees" ftx-user-agrees>@modal.prompt.confirm</button></div>',
+        full:'<div class="ftx__modal__prompt"><button ftx-event="user agrees" ftx-user-agrees>@modal.prompt.confirm</button><button ftx-event="user refuses" ftx-user-refuses>@modal.prompt.refuse</button></div>'
       }
     },
     params:{
@@ -10513,6 +10514,10 @@ const Template = {
   id:' id="@id"',
   name:' name="@name"',
   forms:{
+    search:{
+      layout:'<div class="ftx__component search"><input ftx-target="@search.target" name="ftx_search" id="ftx_comp_search" type="text" placeholder="@search.placeholder" />@search.button</div>',
+      button:'<button ftx-event="user executes search">@search.label</button>'
+    },
     login:{
       layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
       class:' class="@class"',
@@ -11477,15 +11482,11 @@ const FastUtilities = {
   },
   components:{
     search:function(option,expression){
-      let template = {
-        layout:'<div class="ftx__component search"><input ftx-target="@search.target" name="ftx_search" id="ftx_comp_search" type="text" placeholder="@search.placeholder" />@search.button</div>',
-        button:'<button>@search.label</button>'
-      };
       let templateStr;
       let expArray = expression.indexOf(',') > -1 ? expression.split(',') : expression;
       switch(option){
         case 'default':
-          templateStr = template.layout.replace('@search.button',template.button);
+          templateStr = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].forms.search.layout.replace('@search.button',__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].forms.search.button);
           break;
       }
       if(Array.isArray(expArray)){
@@ -12342,10 +12343,12 @@ class Logger{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__FastSticky__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__FastBanner__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__FastVideo__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__FastUtilities__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__FastAnalytics__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__FastUtilities__ = __webpack_require__(7);
 /**
  * Created by David Maser on 21/06/2017.
  */
+
 
 
 
@@ -12423,29 +12426,31 @@ function FastProcessor(type, option, expression, element){
     case 'sticky':
       return __WEBPACK_IMPORTED_MODULE_13__FastSticky__["a" /* default */](option,expression);
       break;
+    case 'analytics':
+      return new __WEBPACK_IMPORTED_MODULE_16__FastAnalytics__["a" /* default */](option,expression);
     case 'placeholder':
-      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
+      return __WEBPACK_IMPORTED_MODULE_17__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
       break;
     case 'group':
-      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_17__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
       break;
     case 'search':
-      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].components.search(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_17__FastUtilities__["a" /* FastUtilities */].components.search(option,expression);
       break;
     case 'bind':
-      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_17__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
       break;
     case 'random':
-      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ui.random(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_17__FastUtilities__["a" /* FastUtilities */].ui.random(option,expression);
       break;
     case 'mobile':
-      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ui.mobile(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_17__FastUtilities__["a" /* FastUtilities */].ui.mobile(option,expression);
       break;
     case 'prefetch':
-      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ux.prefetch(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_17__FastUtilities__["a" /* FastUtilities */].ux.prefetch(option,expression);
       break;
     case 'image':
-      return __WEBPACK_IMPORTED_MODULE_16__FastUtilities__["a" /* FastUtilities */].ui.image(option,expression,element);
+      return __WEBPACK_IMPORTED_MODULE_17__FastUtilities__["a" /* FastUtilities */].ui.image(option,expression,element);
       break;
     case 'banner':
       return __WEBPACK_IMPORTED_MODULE_14__FastBanner__["a" /* default */](option,expression);
@@ -14900,7 +14905,7 @@ exports = module.exports = __webpack_require__(68)(undefined);
 
 
 // module
-exports.push([module.i, "body[faster=\"template\"]{display:none}body[faster=\"rendered\"]{display:block;margin:0}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}nav.ftx__nav_horizontal{display:block;padding:5px;position:relative}div[ftx-role=\"nav-parent\"]{display:inline-block}div[ftx-role=\"nav-parent\"] .ftx__nav_dropdown{display:none;position:absolute}div[ftx-role=\"nav-parent\"]:hover .ftx__nav_dropdown{display:block}.ftx__accordion{display:block}.ftx__accordion .item__title{background:#ddd;padding:5px;cursor:pointer}.ftx__accordion .item__body{padding:10px 5px}.accordion_item{display:block;border-left:solid 1px #000;border-right:solid 1px #000;border-top:solid 1px #000}.accordion_item:last-child{border-bottom:1px solid #000}.accordion_item:not(:first-child) .item__body{display:none}header{position:relative;width:100%;height:60px}header.clone{position:fixed;top:-65px;left:0;right:0;z-index:999;transition:0.2s top cubic-bezier(0.3, 0.73, 0.3, 0.74)}body.down header.clone{top:0}.ftx__placeholder{display:block;width:100%;clear:both}.ftx__placeholder.small{height:10px}.ftx__placeholder.large{height:100px}.ftx__placeholder.medium{height:50px}.ftx__banner{overflow:hidden;position:relative}.ftx__banner h1{text-transform:uppercase}.ftx__banner h1,.ftx__banner p{width:100%;text-align:center}.ftx__banner.full{width:100%;height:500px}.ftx__banner.full>div{width:100%;height:100%}.ftx__banner.container{padding:5px 0}.ftx__banner.container>*{margin:5px 10px}.ftx__banner_row{text-align:center}\n", ""]);
+exports.push([module.i, "body[faster=\"template\"]{display:none}body[faster=\"rendered\"]{display:block;margin:0}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff;z-index:999}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}nav.ftx__nav_horizontal{display:block;padding:5px;position:relative}div[ftx-role=\"nav-parent\"]{display:inline-block}div[ftx-role=\"nav-parent\"] .ftx__nav_dropdown{display:none;position:absolute}div[ftx-role=\"nav-parent\"]:hover .ftx__nav_dropdown{display:block}.ftx__accordion{display:block}.ftx__accordion .item__title{background:#ddd;padding:5px;cursor:pointer}.ftx__accordion .item__body{padding:10px 5px}.accordion_item{display:block;border-left:solid 1px #000;border-right:solid 1px #000;border-top:solid 1px #000}.accordion_item:last-child{border-bottom:1px solid #000}.accordion_item:not(:first-child) .item__body{display:none}header{position:relative;width:100%;height:60px}header.clone{position:fixed;top:-65px;left:0;right:0;z-index:999;transition:0.2s top cubic-bezier(0.3, 0.73, 0.3, 0.74)}body.down header.clone{top:0}.ftx__placeholder{display:block;width:100%;clear:both}.ftx__placeholder.small{height:10px}.ftx__placeholder.large{height:100px}.ftx__placeholder.medium{height:50px}.ftx__banner{overflow:hidden;position:relative}.ftx__banner h1{text-transform:uppercase}.ftx__banner h1,.ftx__banner p{width:100%;text-align:center}.ftx__banner.full{width:100%;height:500px}.ftx__banner.full>div{width:100%;height:100%}.ftx__banner.container{padding:5px 0}.ftx__banner.container>*{margin:5px 10px}.ftx__banner_row{text-align:center}\n", ""]);
 
 // exports
 
@@ -15537,6 +15542,97 @@ class FastDom{
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastDom;
 
+
+/***/ }),
+/* 73 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/**
+ * Created by David Maser on 20/07/2017.
+ */
+
+const gtmCode = "<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});" +
+  "var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })" +
+  "(window,document,'script','dataLayer','@user.id');</script>";
+const gtmDataLayer = "<script>dataLayer = [{'pageCategory': 'signup','visitorType': 'high-value'}];</script>";
+
+class FastAnalytics {
+  constructor(option, expression) {
+    this.option = option;
+    this.expression = expression;
+    this.build();
+  }
+
+  build() {
+    switch (this.option) {
+      case 'gtm':
+        let userID = this.expression.indexOf('id:') > -1 ? this.expression.split('id:')[1] : '';
+        userID = userID.indexOf(',') > -1 ? userID.split(',')[0] : userID;
+        $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appHead).append(gtmCode.replace('@user.id', userID)).prepend(gtmDataLayer);
+        this.register({
+          'entries': [
+            {'click': 'button'},
+            {'click': 'input'}
+          ]
+        });
+        break;
+    }
+  }
+
+  /**
+   * This function register events to allow for transmission of event data
+   * to the GTM dataLayer
+   * The elem parameter can be a string, an array of strings or an object
+   * When formatting as an object, the object key is the type of event and
+   * the key value is the element
+   * @param {string|object|object[]} elem Elem parameter can be a string, an array of strings or an object. When formatting as an object, the object key is the type of event and the key value is the element
+   */
+  register(elem) {
+
+    if (Array.isArray(elem)) {
+      elem.map(function (a) {
+        $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).on('click', a, function () {
+          let eventName = $(this).attr('ftx-event') !== undefined ? $(this).attr('ftx-event') : 'no event';
+          dataLayer.push({'event': eventName});
+          console.log(eventName)
+          //
+        })
+      });
+    } else if (typeof elem === 'object' && !Array.isArray(elem)) {
+      elem = elem.entries;
+      if(Array.isArray(elem)){
+        elem.map(function (obj) {
+          let o;
+          for (o in obj) {
+            $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).on(o, obj[o], function () {
+              let eventName = $(this).attr('ftx-event') !== undefined ? $(this).attr('ftx-event') : 'no event';
+              dataLayer.push({'event': eventName});
+            });
+          }
+        })
+      }else{
+        let e;
+        for (e in elem) {
+          $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).on(e, elem[e], function () {
+            let eventName = $(this).attr('ftx-event') !== undefined ? $(this).attr('ftx-event') : 'no event';
+            dataLayer.push({'event': eventName});
+          });
+        }
+      }
+    } else {
+      $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).on('click', elem, function () {
+        let eventName = $(this).attr('ftx-event') !== undefined ? $(this).attr('ftx-event') : 'no event';
+        dataLayer.push({'event': eventName});
+        console.log(eventName)
+      })
+    }
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastAnalytics;
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ })
 /******/ ]);

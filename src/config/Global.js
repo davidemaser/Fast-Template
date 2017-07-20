@@ -3,6 +3,7 @@
  */
 export const Global = {
   appObj:'__faster__',
+  appHead:'head',
   appRoot:'body',
   appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
   appEvents:{
