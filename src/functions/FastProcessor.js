@@ -80,7 +80,8 @@ export default function FastProcessor(type, option, expression, element){
       return FastSticky(option,expression);
       break;
     case 'analytics':
-      return new FastAnalytics(option,expression);
+      new FastAnalytics(option,expression);
+      break;
     case 'placeholder':
       return FastUtilities.ui.placeholder(option);
       break;
