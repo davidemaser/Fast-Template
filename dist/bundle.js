@@ -12478,7 +12478,7 @@ function FastProcessor(type, option, expression, element){
       return __WEBPACK_IMPORTED_MODULE_15__FastVideo__["a" /* default */](option,expression);
       break;
     case 'instruct':
-      return __WEBPACK_IMPORTED_MODULE_17__FastInstructions__["a" /* default */](option,expression);
+      return __WEBPACK_IMPORTED_MODULE_17__FastInstructions__["a" /* default */](option,expression,element);
       break;
 
   }
@@ -14904,45 +14904,34 @@ class FastAnalytics {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FastInstructionsUtilities__ = __webpack_require__(75);
 /**
  * Created by David Maser on 24/07/2017.
  */
 
-/* harmony default export */ __webpack_exports__["a"] = (function(option,expression) {
-  let builder = {
-    make:function(arg){
-      let argsArray = arg.split(' ');
-      let containerString = '<@cont></@cont>';
-      let styleString = ' style="@element:@value"';
-      argsArray.map(function(a){
-        let containerIndex = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].instruct.containers.indexOf(a);
-        let keyIndex = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].instruct.keys.indexOf(a);
-        if(containerIndex>-1){
-          containerString = containerString.replace(/@cont/g,a);
-          argsArray.splice(containerIndex,1);
-        }
-        if(keyIndex>-1){
-          styleString = styleString.replace('@element',a);
-          argsArray.splice(keyIndex,1);
-        }
-       });
-      argsArray = argsArray.filter(function(n){ return n !== undefined });
-      console.log(argsArray,containerString,styleString);
-    }
-  };
+
+/* harmony default export */ __webpack_exports__["a"] = (function (option, expression,element) {
+  let expressionLength = expression.split(/\r?\n/).length;
+  let content = expression.split(/\r?\n/).splice(1,expressionLength).join(' ').replace(/\s\s+/g,' ');
+  if(expression.split(/\r?\n/).length > 1){
+    expression = expression.split(/\r?\n/)[0];
+  }
+  expression = expression.split(/\r?\n/).length > 1 ? expression.split(/\r?\n/)[0] : expression;
   let stepArray = expression.split(' ');
-  let buildOption;
+  let buildOption = null;
   let optionString = '';
-  stepArray.map(function(a){
+  stepArray.map(function (a) {
     let eventIndex = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].instruct.events.indexOf(a);
-    if(eventIndex>-1){
+    if (eventIndex > -1) {
       buildOption = a;
-    }else{
+    } else {
       optionString += `${a} `;
     }
   });
-  if(typeof builder[buildOption] === 'function') {
-    builder[buildOption](optionString);
+  let obj = typeof __WEBPACK_IMPORTED_MODULE_1__FastInstructionsUtilities__["a" /* InstructionUtilities */][buildOption] === 'function' ? __WEBPACK_IMPORTED_MODULE_1__FastInstructionsUtilities__["a" /* InstructionUtilities */][buildOption](optionString,content) : null;
+  let o;
+  for(o in obj){
+    __WEBPACK_IMPORTED_MODULE_1__FastInstructionsUtilities__["a" /* InstructionUtilities */].build(o,obj[o].styles,element);
   }
 });
 
@@ -15713,6 +15702,67 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 75 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Faster__ = __webpack_require__(6);
+/**
+ * Created by David Maser on 24/07/2017.
+ */
+
+
+const InstructionUtilities = {
+  argsObj: {},
+  default: 'styles',
+  build:function(obj,params,element){
+    let htmlContent = this.argsObj[obj]['content'].trim();
+    let htmlString = `<${obj} style="@style">@content</${obj}>`;
+    let styleString = '';
+    if(typeof params === 'object'){
+      let p;
+      for(p in params){
+
+        styleString+=`${p}:${params[p]};`;
+      }
+    }
+    __WEBPACK_IMPORTED_MODULE_1__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).find(`[fstx-id="${element}"]`),null,htmlString.replace('@style',styleString).replace('@content',htmlContent),true);
+  },
+  make: function (arg,content) {
+    let argsArray = arg.split(' ');
+    this.argsObj[argsArray[0]] = {};
+    this.argsObj[argsArray[0]]['content'] = content;
+    this.argsObj[argsArray[0]][this.default] = {};
+    let tempObj = argsArray[0];
+    argsArray = argsArray.splice(1);
+    let a;
+    let altString = [];
+    let bltString = [];
+    for (a in argsArray) {
+      if ((a % 2 === 0)) {
+        argsArray[a] !== '' ? altString.push(argsArray[a]) : null;
+      } else {
+        argsArray[a] !== '' ? bltString.push(argsArray[a]) : null;
+      }
+    }
+    return this.objectify(tempObj, altString, bltString)
+  },
+  objectify: function (obj, a, b) {
+    if (a.length === b.length) {
+      let i;
+      for (i in a) {
+        this.argsObj[obj]['styles'][a[i]] = b[i];
+      }
+    }
+    return this.argsObj;
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = InstructionUtilities;
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ })
 /******/ ]);

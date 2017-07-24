@@ -114,7 +114,7 @@ export default function FastProcessor(type, option, expression, element){
       return FastVideo(option,expression);
       break;
     case 'instruct':
-      return FastInstructions(option,expression);
+      return FastInstructions(option,expression,element);
       break;
 
   }
