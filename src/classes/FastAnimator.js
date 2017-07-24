@@ -1,7 +1,7 @@
 /**
  * Created by David Maser on 04/07/2017.
  */
-import {FastAnimatorFunctions} from './FastAnimatorFunctions';
+import {FastAnimatorFunctions} from '../functions/FastAnimatorFunctions';
 export default class FastAnimator{
   constructor(option,expression){
     this.option = option;

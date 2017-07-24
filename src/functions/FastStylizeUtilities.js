@@ -3,7 +3,7 @@
  */
 import {Global} from '../config/Global';
 import {Architect} from '../components/Faster';
-export const InstructionUtilities = {
+export const StylizeUtilities = {
   argsObj: {},
   default: 'styles',
   build:function(obj,params,element){

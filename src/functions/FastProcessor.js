@@ -10,15 +10,15 @@ import FastGutter from './FastGutter';
 import FastPanel from './FastPanel';
 import FastModal from './FastModal';
 import FastHtml from './FastHtml';
-import FastAnimator from './FastAnimator';
+import FastAnimator from '../classes/FastAnimator';
 import FastNav from './FastNav';
 import FastAccordion from './FastAccordion';
 import FastTable from './FastTable';
 import FastSticky from './FastSticky';
 import FastBanner from './FastBanner';
 import FastVideo from './FastVideo';
-import FastAnalytics from './FastAnalytics';
-import FastInstructions from './FastInstructions';
+import FastAnalytics from '../classes/FastAnalytics';
+import FastStylize from '../classes/FastStylize';
 import {FastUtilities} from './FastUtilities';
 /**
  * The FastProcessor is one of the core functions called by new Cycle(). The
@@ -113,8 +113,8 @@ export default function FastProcessor(type, option, expression, element){
     case 'video':
       return FastVideo(option,expression);
       break;
-    case 'instruct':
-      return FastInstructions(option,expression,element);
+    case 'stylize':
+      new FastStylize(option,expression,element);
       break;
 
   }
