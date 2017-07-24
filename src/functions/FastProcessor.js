@@ -18,6 +18,7 @@ import FastSticky from './FastSticky';
 import FastBanner from './FastBanner';
 import FastVideo from './FastVideo';
 import FastAnalytics from './FastAnalytics';
+import FastInstructions from './FastInstructions';
 import {FastUtilities} from './FastUtilities';
 /**
  * The FastProcessor is one of the core functions called by new Cycle(). The
@@ -111,6 +112,9 @@ export default function FastProcessor(type, option, expression, element){
       break;
     case 'video':
       return FastVideo(option,expression);
+      break;
+    case 'instruct':
+      return FastInstructions(option,expression);
       break;
 
   }

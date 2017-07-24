@@ -3,8 +3,16 @@
  */
 import {Global} from '../config/Global';
 import {Template} from '../config/Template';
-
+/**
+ * Creates a new Analytics object.
+ * @class
+ */
 export default class FastAnalytics {
+  /**
+   *
+   * @param {string} option
+   * @param {string} expression
+   */
   constructor(option, expression) {
     this.option = option;
     this.expression = expression;

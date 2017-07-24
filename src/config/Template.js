@@ -246,5 +246,11 @@ export const Template = {
       gtmDataLayer: "<script>dataLayer = [{'pageCategory': 'signup','visitorType': 'high-value'}];</script>"
 
     }
+  },
+  instruct:{
+    events:['make'],
+    keys:['with','except','and','only'],
+    containers:['div','section','paragraph','span'],
+    attributes:['background']
   }
 };
