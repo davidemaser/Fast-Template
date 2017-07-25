@@ -3,6 +3,7 @@
  */
 import {Template} from '../config/Template';
 import {StylizeUtilities} from '../functions/FastUtilities';
+const acceptedElements = ['div','section','p','paragraph','header','span'];
 export default class FastStylize{
   constructor(option, expression,element){
     this.option = option;
@@ -11,6 +12,7 @@ export default class FastStylize{
     this.run();
   }
   run(){
+    let obj = {};
     let expressionLength = this.expression.split(/\r?\n/).length;
     let content = this.expression.split(/\r?\n/).splice(1,expressionLength).join(' ').replace(/\s\s+/g,' ');
     if(this.expression.split(/\r?\n/).length > 1){
@@ -28,10 +30,13 @@ export default class FastStylize{
         optionString += `${a} `;
       }
     });
-    let obj = typeof StylizeUtilities[buildOption] === 'function' ? StylizeUtilities[buildOption](optionString,content) : null;
+    obj = typeof StylizeUtilities[buildOption] === 'function' ? StylizeUtilities[buildOption](optionString,content) : null;
     let o;
+    console.log(obj);
     for(o in obj){
-      StylizeUtilities.build(o,obj[o].styles,this.element);
+      if(acceptedElements.indexOf(o)>-1) {
+        StylizeUtilities.build(o, obj[o].styles, this.element);
+      }
     }
   }
 }

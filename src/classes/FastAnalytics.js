@@ -3,6 +3,7 @@
  */
 import {Global} from '../config/Global';
 import {Template} from '../config/Template';
+import Woops from '../classes/Woops';
 /**
  * Creates a new Analytics object.
  * @class
@@ -20,23 +21,27 @@ export default class FastAnalytics {
   }
 
   build() {
-    switch (this.option) {
-      case 'gtm':
-        let userID = this.expression.indexOf('id:') > -1 ? this.expression.split('id:')[1] : '';
-        userID = userID.indexOf(',') > -1 ? userID.split(',')[0] : userID;
-        $(Global.appHead).append(Template.analytics.google.gtmCode.replace('@user.id', userID)).prepend(Template.analytics.google.gtmDataLayer);
-        this.register({
-          'entries': [
-            {'click': 'button'},
-            {'click': 'input'}
-          ]
-        });
-        break;
-      case 'basic':
-        userID = this.expression.indexOf('id:') > -1 ? this.expression.split('id:')[1] : '';
-        userID = userID.indexOf(',') > -1 ? userID.split(',')[0] : userID;
-        $(Global.appHead).append(Template.analytics.google.gtAnalytics.replace('@user.id', userID));
-        break;
+    try {
+      switch (this.option) {
+        case 'gtm':
+          let userID = this.expression.indexOf('id:') > -1 ? this.expression.split('id:')[1] : '';
+          userID = userID.indexOf(',') > -1 ? userID.split(',')[0] : userID;
+          $(Global.appHead).append(Template.analytics.google.gtmCode.replace('@user.id', userID)).prepend(Template.analytics.google.gtmDataLayer);
+          this.register({
+            'entries': [
+              {'click': 'button'},
+              {'click': 'input'}
+            ]
+          });
+          break;
+        case 'basic':
+          userID = this.expression.indexOf('id:') > -1 ? this.expression.split('id:')[1] : '';
+          userID = userID.indexOf(',') > -1 ? userID.split(',')[0] : userID;
+          $(Global.appHead).append(Template.analytics.google.gtAnalytics.replace('@user.id', userID));
+          break;
+      }
+    }catch(e){
+      new Woops({})
     }
   }
 

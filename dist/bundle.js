@@ -10396,6 +10396,11 @@ return jQuery;
 /**
  * Created by David Maser on 22/06/2017.
  */
+/**
+ * Defines all tamplate objects used by Faster.
+ * Template params are stated as @value or @parent.value
+ * @type {{div: {basic: string, styled: string}, footer: string, clone: string, banner: {layout: string, image: string, title: string, subtext: string, button: string}, video: {layout: string, dimensions: {layout: string, width: string, height: string}, options: {layout: string, autoplay: string, control: string, poster: string}, track: {subtitles: string, source: string}}, fastAnimator: {container: {layout: string, class: string, position: string}}, head: {prefetch: string}, nav: {link: string, layout: {horizontal: string, vertical: string}, node: {layout: string, entry: string}}, table: {layout: {basic: string}, header: {layout: string}, footer: {layout: string}, body: {layout: string}, row: {layout: string}, column: {layout: string}}, accordion: {parent: string, item: string, params: {speed: number, trigger: string, target: string}}, gutter: {layout: string}, panel: {layout: string}, modal: {full: {layout: string, prompt: {simple: string, full: string}}, params: {speed: number, trigger: string, target: string, prompts: {yes: {speed: number, trigger: string, target: string}, no: {speed: number, trigger: string, target: string}}}}, random: {layout: string}, class: string, id: string, name: string, forms: {search: {layout: string, button: string}, login: {layout: string, class: string, id: string, style: string, action: string, elements: [*]}, account: {layout: string, elements: [*]}}, analytics: {google: {gtmCode: string, gtAnalytics: string, gtmDataLayer: string}}, instruct: {events: [*], keys: [*], containers: [*], attributes: [*]}}}
+ */
 const Template = {
   div:{
     basic:'<div data-atrribute="jeer">',
@@ -11422,6 +11427,29 @@ const FastUtilities = {
       option = option !== null ? option : 'section';
       return `<${option} class="ftx__group ${option}" role="group">${expression}</${option}>`;
     },
+    trim:function(option,expression){
+      let trimFrom = null;
+      if(option.indexOf(',')>-1){
+        trimFrom = option.split(',')[1];
+      }
+      let ellipsis;
+      if(expression.indexOf('{ellipsis}') > -1){
+        ellipsis = '...';
+        expression = expression.replace('{ellipsis}','');
+      }else{
+        ellipsis = '';
+      }
+      if(trimFrom === null || trimFrom === undefined){
+        expression = option !== '' && option !== undefined ? expression.slice(0, - option).trim() : expression;
+        expression+= ellipsis;
+      }else{
+        if(trimFrom === 'start'){
+          expression = expression.substring(option.split(',')[0]);
+          expression = ellipsis+expression;
+        }
+      }
+      return expression;
+    },
     /**
      * This function takes an existing element and unbinds it from the dom and
      * appends it into a new clone host
@@ -11482,6 +11510,12 @@ const FastUtilities = {
     }
   },
   ux:{
+    /**
+     * Function that adds a prefetch meta element to the page head
+     * when the page initially loads.
+     * @param {string} option
+     * @param {string} expression
+     */
     prefetch:function(option,expression){
       try {
         option = option !== null ? option : 'section';
@@ -11500,6 +11534,12 @@ const FastUtilities = {
     }
   },
   components:{
+    /**
+     * Function that builds a search box component
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
     search:function(option,expression){
       let templateStr;
       let expArray = expression.indexOf(',') > -1 ? expression.split(',') : expression;
@@ -11519,6 +11559,15 @@ const FastUtilities = {
 
     }
   },
+  /**
+   * Function that operates a multi replace on a string and
+   * returns the string with replacements
+   * @param {string} src
+   * @param {string} obj
+   * @returns {string}
+   * @example
+   * .stripper('this is a string',{'this:'that','those':'these'})
+   */
   stripper:function(src,obj){
     if(typeof obj === 'object'){
       let o;
@@ -11543,13 +11592,23 @@ const FastUtilities = {
       })
     });
   },
-    countFtx:function(){
+  /**
+   * simple function that counts the number of ftx nodes on a
+   * specific page and returns an object mapping all of them
+   * @returns {{}}
+   */
+  countFtx:function(){
     let countLog = {};
     $('*[ftx-render]').each((a,b)=>{
       countLog[a] = b;
     });
     return countLog;
   },
+  /**
+   * Simple function that creates and returns a unique string
+   * tha is used as an id for other objects and elements
+   * @returns {string}
+   */
   genFtxId:function(){
     let d = new Date();
     let uniqueArray = FastUtilities.ui.shuffleArray(['f','as','t','e','r']).join('');
@@ -11573,13 +11632,13 @@ const StylizeUtilities = {
   argsObj: {},
   default: 'styles',
   build:function(obj,params,element){
+    obj = obj === 'paragraph' ? 'p' : obj;
     let htmlContent = this.argsObj[obj]['content'].trim();
     let htmlString = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].div.styled.replace(/@elem/g,obj).replace('@id',__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].id.replace('@id',FastUtilities.genFtxId()));
     let styleString = '';
     if(typeof params === 'object'){
       let p;
       for(p in params){
-
         styleString+=`${p}:${params[p]};`;
       }
     }
@@ -11588,7 +11647,9 @@ const StylizeUtilities = {
     __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appRoot).find(`[fstx-id="${element}"]`),__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].experiment.render,buildString,true);
   },
   make: function (arg,content) {
+    this.argsObj = {};
     let argsArray = arg.split(' ');
+    argsArray[0] = argsArray[0] === 'paragraph' ? 'p' : argsArray[0];
     this.argsObj[argsArray[0]] = {};
     this.argsObj[argsArray[0]]['content'] = content;
     this.argsObj[argsArray[0]][this.default] = {};
@@ -12531,6 +12592,9 @@ function FastProcessor(type, option, expression, element){
       break;
     case 'stylize':
       new __WEBPACK_IMPORTED_MODULE_17__classes_FastStylize__["a" /* default */](option,expression,element);
+      break;
+    case 'trim':
+      return __WEBPACK_IMPORTED_MODULE_18__FastUtilities__["a" /* FastUtilities */].ui.trim(option,expression);
       break;
 
   }
@@ -14858,9 +14922,11 @@ function FastSticky(option,expression) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_Woops__ = __webpack_require__(4);
 /**
  * Created by David Maser on 20/07/2017.
  */
+
 
 
 /**
@@ -14880,23 +14946,27 @@ class FastAnalytics {
   }
 
   build() {
-    switch (this.option) {
-      case 'gtm':
-        let userID = this.expression.indexOf('id:') > -1 ? this.expression.split('id:')[1] : '';
-        userID = userID.indexOf(',') > -1 ? userID.split(',')[0] : userID;
-        $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appHead).append(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].analytics.google.gtmCode.replace('@user.id', userID)).prepend(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].analytics.google.gtmDataLayer);
-        this.register({
-          'entries': [
-            {'click': 'button'},
-            {'click': 'input'}
-          ]
-        });
-        break;
-      case 'basic':
-        userID = this.expression.indexOf('id:') > -1 ? this.expression.split('id:')[1] : '';
-        userID = userID.indexOf(',') > -1 ? userID.split(',')[0] : userID;
-        $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appHead).append(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].analytics.google.gtAnalytics.replace('@user.id', userID));
-        break;
+    try {
+      switch (this.option) {
+        case 'gtm':
+          let userID = this.expression.indexOf('id:') > -1 ? this.expression.split('id:')[1] : '';
+          userID = userID.indexOf(',') > -1 ? userID.split(',')[0] : userID;
+          $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appHead).append(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].analytics.google.gtmCode.replace('@user.id', userID)).prepend(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].analytics.google.gtmDataLayer);
+          this.register({
+            'entries': [
+              {'click': 'button'},
+              {'click': 'input'}
+            ]
+          });
+          break;
+        case 'basic':
+          userID = this.expression.indexOf('id:') > -1 ? this.expression.split('id:')[1] : '';
+          userID = userID.indexOf(',') > -1 ? userID.split(',')[0] : userID;
+          $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appHead).append(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].analytics.google.gtAnalytics.replace('@user.id', userID));
+          break;
+      }
+    }catch(e){
+      new __WEBPACK_IMPORTED_MODULE_2__classes_Woops__["a" /* default */]({})
     }
   }
 
@@ -14964,6 +15034,7 @@ class FastAnalytics {
  */
 
 
+const acceptedElements = ['div','section','p','paragraph','header','span'];
 class FastStylize{
   constructor(option, expression,element){
     this.option = option;
@@ -14972,6 +15043,7 @@ class FastStylize{
     this.run();
   }
   run(){
+    let obj = {};
     let expressionLength = this.expression.split(/\r?\n/).length;
     let content = this.expression.split(/\r?\n/).splice(1,expressionLength).join(' ').replace(/\s\s+/g,' ');
     if(this.expression.split(/\r?\n/).length > 1){
@@ -14989,10 +15061,13 @@ class FastStylize{
         optionString += `${a} `;
       }
     });
-    let obj = typeof __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["b" /* StylizeUtilities */][buildOption] === 'function' ? __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["b" /* StylizeUtilities */][buildOption](optionString,content) : null;
+    obj = typeof __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["b" /* StylizeUtilities */][buildOption] === 'function' ? __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["b" /* StylizeUtilities */][buildOption](optionString,content) : null;
     let o;
+    console.log(obj);
     for(o in obj){
-      __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["b" /* StylizeUtilities */].build(o,obj[o].styles,this.element);
+      if(acceptedElements.indexOf(o)>-1) {
+        __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["b" /* StylizeUtilities */].build(o, obj[o].styles, this.element);
+      }
     }
   }
 }
@@ -15107,10 +15182,12 @@ class FastDom{
     this.run();
   }
   run(){
-    __WEBPACK_IMPORTED_MODULE_0__components_DomManager__["a" /* default */].listen();
-    __WEBPACK_IMPORTED_MODULE_0__components_DomManager__["a" /* default */].addTrigger(__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appEvents.root, function(node){
-      console.log(node, 'was added to the page');
-    });
+    window.setInterval(function(){
+      __WEBPACK_IMPORTED_MODULE_0__components_DomManager__["a" /* default */].addTrigger(__WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].appEvents.root, function(node){
+        console.log(node, 'added to the page');
+      });
+      __WEBPACK_IMPORTED_MODULE_0__components_DomManager__["a" /* default */].listen();
+    },5000);
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastDom;

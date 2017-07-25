@@ -62,6 +62,29 @@ export const FastUtilities = {
       option = option !== null ? option : 'section';
       return `<${option} class="ftx__group ${option}" role="group">${expression}</${option}>`;
     },
+    trim:function(option,expression){
+      let trimFrom = null;
+      if(option.indexOf(',')>-1){
+        trimFrom = option.split(',')[1];
+      }
+      let ellipsis;
+      if(expression.indexOf('{ellipsis}') > -1){
+        ellipsis = '...';
+        expression = expression.replace('{ellipsis}','');
+      }else{
+        ellipsis = '';
+      }
+      if(trimFrom === null || trimFrom === undefined){
+        expression = option !== '' && option !== undefined ? expression.slice(0, - option).trim() : expression;
+        expression+= ellipsis;
+      }else{
+        if(trimFrom === 'start'){
+          expression = expression.substring(option.split(',')[0]);
+          expression = ellipsis+expression;
+        }
+      }
+      return expression;
+    },
     /**
      * This function takes an existing element and unbinds it from the dom and
      * appends it into a new clone host
@@ -242,13 +265,13 @@ export const StylizeUtilities = {
   argsObj: {},
   default: 'styles',
   build:function(obj,params,element){
+    obj = obj === 'paragraph' ? 'p' : obj;
     let htmlContent = this.argsObj[obj]['content'].trim();
     let htmlString = Template.div.styled.replace(/@elem/g,obj).replace('@id',Template.id.replace('@id',FastUtilities.genFtxId()));
     let styleString = '';
     if(typeof params === 'object'){
       let p;
       for(p in params){
-
         styleString+=`${p}:${params[p]};`;
       }
     }
@@ -257,7 +280,9 @@ export const StylizeUtilities = {
     Architect.build.experiment($(Global.appRoot).find(`[fstx-id="${element}"]`),Global.experiment.render,buildString,true);
   },
   make: function (arg,content) {
+    this.argsObj = {};
     let argsArray = arg.split(' ');
+    argsArray[0] = argsArray[0] === 'paragraph' ? 'p' : argsArray[0];
     this.argsObj[argsArray[0]] = {};
     this.argsObj[argsArray[0]]['content'] = content;
     this.argsObj[argsArray[0]][this.default] = {};

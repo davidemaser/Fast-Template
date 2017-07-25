@@ -116,6 +116,9 @@ export default function FastProcessor(type, option, expression, element){
     case 'stylize':
       new FastStylize(option,expression,element);
       break;
+    case 'trim':
+      return FastUtilities.ui.trim(option,expression);
+      break;
 
   }
 }

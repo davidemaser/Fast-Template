@@ -8,9 +8,11 @@ export default class FastDom{
     this.run();
   }
   run(){
-    itsDOMLoading.listen();
-    itsDOMLoading.addTrigger(Global.appEvents.root, function(node){
-      console.log(node, 'was added to the page');
-    });
+    window.setInterval(function(){
+      itsDOMLoading.addTrigger(Global.appEvents.root, function(node){
+        console.log(node, 'added to the page');
+      });
+      itsDOMLoading.listen();
+    },5000);
   }
 }
