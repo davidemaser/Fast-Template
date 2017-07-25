@@ -15096,7 +15096,6 @@ class FastStylize{
     });
     obj = typeof __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["b" /* StylizeUtilities */][buildOption] === 'function' ? __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["b" /* StylizeUtilities */][buildOption](optionString,content) : null;
     let o;
-    console.log(obj);
     for(o in obj){
       if(acceptedElements.indexOf(o)>-1) {
         __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["b" /* StylizeUtilities */].build(o, obj[o].styles, this.element);

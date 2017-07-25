@@ -32,7 +32,6 @@ export default class FastStylize{
     });
     obj = typeof StylizeUtilities[buildOption] === 'function' ? StylizeUtilities[buildOption](optionString,content) : null;
     let o;
-    console.log(obj);
     for(o in obj){
       if(acceptedElements.indexOf(o)>-1) {
         StylizeUtilities.build(o, obj[o].styles, this.element);
