@@ -122,6 +122,12 @@ export const FastUtilities = {
     }
   },
   ux:{
+    /**
+     * Function that adds a prefetch meta element to the page head
+     * when the page initially loads.
+     * @param {string} option
+     * @param {string} expression
+     */
     prefetch:function(option,expression){
       try {
         option = option !== null ? option : 'section';
@@ -140,6 +146,12 @@ export const FastUtilities = {
     }
   },
   components:{
+    /**
+     * Function that builds a search box component
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
     search:function(option,expression){
       let templateStr;
       let expArray = expression.indexOf(',') > -1 ? expression.split(',') : expression;
@@ -159,6 +171,15 @@ export const FastUtilities = {
 
     }
   },
+  /**
+   * Function that operates a multi replace on a string and
+   * returns the string with replacements
+   * @param {string} src
+   * @param {string} obj
+   * @returns {string}
+   * @example
+   * .stripper('this is a string',{'this:'that','those':'these'})
+   */
   stripper:function(src,obj){
     if(typeof obj === 'object'){
       let o;
@@ -183,13 +204,23 @@ export const FastUtilities = {
       })
     });
   },
-    countFtx:function(){
+  /**
+   * simple function that counts the number of ftx nodes on a
+   * specific page and returns an object mapping all of them
+   * @returns {{}}
+   */
+  countFtx:function(){
     let countLog = {};
     $('*[ftx-render]').each((a,b)=>{
       countLog[a] = b;
     });
     return countLog;
   },
+  /**
+   * Simple function that creates and returns a unique string
+   * tha is used as an id for other objects and elements
+   * @returns {string}
+   */
   genFtxId:function(){
     let d = new Date();
     let uniqueArray = FastUtilities.ui.shuffleArray(['f','as','t','e','r']).join('');
