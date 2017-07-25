@@ -2,7 +2,10 @@
  * Created by David Maser on 22/06/2017.
  */
 export const Template = {
-  div:'<div data-atrribute="jeer">',
+  div:{
+    basic:'<div data-atrribute="jeer">',
+    styled:'<@elem @id style="@style">@content</@elem>'
+  },
   footer:'<footer>',
   clone:'<section ftx-render ftx-clone></section>',
   banner:{
@@ -13,7 +16,7 @@ export const Template = {
     button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
   },
   video:{
-    layout:'<video ftx-render @dimensions @url @options>@video.src@video.track</videoftx-render>',
+    layout:'<video @id ftx-render @dimensions @url @options>@video.src@video.track</videoftx-render>',
     dimensions:{
       layout:'@dimensions.width @dimensions.height',
       width:'width="@video.width"',

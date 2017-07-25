@@ -2,7 +2,7 @@
  * Created by David Maser on 24/07/2017.
  */
 import {Template} from '../config/Template';
-import {StylizeUtilities} from '../functions/FastStylizeUtilities';
+import {StylizeUtilities} from '../functions/FastUtilities';
 export default class FastStylize{
   constructor(option, expression,element){
     this.option = option;

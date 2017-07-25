@@ -10397,7 +10397,10 @@ return jQuery;
  * Created by David Maser on 22/06/2017.
  */
 const Template = {
-  div:'<div data-atrribute="jeer">',
+  div:{
+    basic:'<div data-atrribute="jeer">',
+    styled:'<@elem @id style="@style">@content</@elem>'
+  },
   footer:'<footer>',
   clone:'<section ftx-render ftx-clone></section>',
   banner:{
@@ -10408,7 +10411,7 @@ const Template = {
     button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
   },
   video:{
-    layout:'<video ftx-render @dimensions @url @options>@video.src@video.track</videoftx-render>',
+    layout:'<video @id ftx-render @dimensions @url @options>@video.src@video.track</videoftx-render>',
     dimensions:{
       layout:'@dimensions.width @dimensions.height',
       width:'width="@video.width"',
@@ -10968,7 +10971,7 @@ module.exports = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Logger__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_RegisterState__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_RegisterState__ = __webpack_require__(6);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -11001,52 +11004,10 @@ class Woops{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/**
- * Created by David Maser on 29/06/2017.
- */
-
-class RegisterState{
-  /**
-   * This class registers states and state changes and a global object
-   * Type __faster__ (or the name of the app defined in config/Global)
-   * in console to view the object and it's properties
-   * @param {string} obj
-   * @param {(boolean|object)} val
-   * @param {(string|null)} parent
-   */
-  constructor(obj,val,parent){
-    this.obj = obj;
-    this.val = val;
-    this.parent = parent;
-    this.run();
-  }
-  run(){
-    typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] !== 'object' ? window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] = {} : null;
-    if(this.parent !== '' && this.parent !== undefined){
-      if(typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent] === 'object'){
-        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent][this.obj] = this.val;
-      }else{
-        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent] = {};
-        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent][this.obj] = this.val;
-      }
-    }else{
-      window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.obj] = this.val;
-    }
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = RegisterState;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_RegisterState__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_RegisterState__ = __webpack_require__(6);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -11347,6 +11308,48 @@ if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/**
+ * Created by David Maser on 29/06/2017.
+ */
+
+class RegisterState{
+  /**
+   * This class registers states and state changes and a global object
+   * Type __faster__ (or the name of the app defined in config/Global)
+   * in console to view the object and it's properties
+   * @param {string} obj
+   * @param {(boolean|object)} val
+   * @param {(string|null)} parent
+   */
+  constructor(obj,val,parent){
+    this.obj = obj;
+    this.val = val;
+    this.parent = parent;
+    this.run();
+  }
+  run(){
+    typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] !== 'object' ? window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] = {} : null;
+    if(this.parent !== '' && this.parent !== undefined){
+      if(typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent] === 'object'){
+        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent][this.obj] = this.val;
+      }else{
+        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent] = {};
+        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent][this.obj] = this.val;
+      }
+    }else{
+      window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.obj] = this.val;
+    }
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = RegisterState;
+
+
+/***/ }),
 /* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -11354,7 +11357,7 @@ if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(5);
 /**
  * Created by David Maser on 13/07/2017.
  */
@@ -11540,7 +11543,7 @@ const FastUtilities = {
       })
     });
   },
-  countFtx:function(){
+    countFtx:function(){
     let countLog = {};
     $('*[ftx-render]').each((a,b)=>{
       countLog[a] = b;
@@ -11565,6 +11568,55 @@ const FastUtilities = {
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastUtilities;
+
+const StylizeUtilities = {
+  argsObj: {},
+  default: 'styles',
+  build:function(obj,params,element){
+    let htmlContent = this.argsObj[obj]['content'].trim();
+    let htmlString = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].div.styled.replace(/@elem/g,obj).replace('@id',__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].id.replace('@id',FastUtilities.genFtxId()));
+    let styleString = '';
+    if(typeof params === 'object'){
+      let p;
+      for(p in params){
+
+        styleString+=`${p}:${params[p]};`;
+      }
+    }
+    let buildString = styleString !== '' ? htmlString.replace('@style',styleString) : htmlString.replace(' style="@style"','');
+    buildString = buildString.replace('@content',htmlContent);
+    __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appRoot).find(`[fstx-id="${element}"]`),__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].experiment.render,buildString,true);
+  },
+  make: function (arg,content) {
+    let argsArray = arg.split(' ');
+    this.argsObj[argsArray[0]] = {};
+    this.argsObj[argsArray[0]]['content'] = content;
+    this.argsObj[argsArray[0]][this.default] = {};
+    let tempObj = argsArray[0];
+    argsArray = argsArray.splice(1);
+    let a;
+    let altString = [];
+    let bltString = [];
+    for (a in argsArray) {
+      if ((a % 2 === 0)) {
+        argsArray[a] !== '' ? altString.push(argsArray[a]) : null;
+      } else {
+        argsArray[a] !== '' ? bltString.push(argsArray[a]) : null;
+      }
+    }
+    return this.objectify(tempObj, altString, bltString)
+  },
+  objectify: function (obj, a, b) {
+    if (a.length === b.length) {
+      let i;
+      for (i in a) {
+        this.argsObj[obj]['styles'][a[i]] = b[i];
+      }
+    }
+    return this.argsObj;
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["b"] = StylizeUtilities;
 
 
 if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object'){
@@ -12140,11 +12192,11 @@ module.exports = Cancel;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_components_Faster__ = __webpack_require__(6);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_components_Faster__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_classes_Sniffer__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_classes_FastDom__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_classes_FastDom__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__src_config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_css_scss_Fast_scss__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_css_scss_Fast_scss__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_css_scss_Fast_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__src_css_scss_Fast_scss__);
 /**
  * Created by David Maser on 19/06/2017.
@@ -12193,7 +12245,7 @@ class Logger{
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cycle__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(67);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -12226,11 +12278,11 @@ class Sniffer{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Faster__ = __webpack_require__(6);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Faster__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Woops__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RegisterState__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RegisterState__ = __webpack_require__(6);
 /**
  * Created by David Maser on 21/06/2017.
  */
@@ -12352,15 +12404,15 @@ class Cycle{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__FastPanel__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__FastModal__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__FastHtml__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__classes_FastAnimator__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__classes_FastAnimator__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__FastNav__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__FastAccordion__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__FastTable__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__FastSticky__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__FastBanner__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__FastVideo__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__classes_FastAnalytics__ = __webpack_require__(80);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__classes_FastStylize__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__classes_FastAnalytics__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__classes_FastStylize__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__FastUtilities__ = __webpack_require__(7);
 /**
  * Created by David Maser on 21/06/2017.
@@ -12629,7 +12681,7 @@ function FastCondition(option, expression){
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GetAjax__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RegisterState__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RegisterState__ = __webpack_require__(6);
 /**
  * Created by David Maser on 22/06/2017.
  */
@@ -12671,9 +12723,9 @@ class FastAjax{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__functions_FastTemplate__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__ = __webpack_require__(6);
 /**
  * Created by David Maser on 20/06/2017.
  */
@@ -13879,7 +13931,7 @@ function FastPanel(option, expression){
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastModal;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(6);
 /**
  * Created by David Maser on 29/06/2017.
  */
@@ -14164,7 +14216,45 @@ const FastHtmlFunctions = {
 
 
 /***/ }),
-/* 56 */,
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_FastAnimatorFunctions__ = __webpack_require__(57);
+/**
+ * Created by David Maser on 04/07/2017.
+ */
+
+class FastAnimator{
+  constructor(option,expression){
+    this.option = option;
+    this.expression = expression;
+    this.run();
+  }
+  run(){
+      if(this.option !== null) {
+      switch (this.option) {
+        case 'points':
+          let target = this.expression.indexOf('object') > -1 ? this.expression.split('object:')[1].split(',')[0] : null;
+          let points = this.expression.indexOf('points') > -1 ? this.expression.split('points:[')[1].split(']')[0] : null;
+          let pointsArray;
+          pointsArray = points.indexOf(',') > -1 ? points.split(',') : points;
+          __WEBPACK_IMPORTED_MODULE_0__functions_FastAnimatorFunctions__["a" /* FastAnimatorFunctions */].buildAnimationMap(target, pointsArray);
+          break;
+        case 'attributes':
+          break;
+        case 'size':
+          break;
+        case 'alpha':
+          break;
+      }
+    }
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastAnimator;
+
+
+/***/ }),
 /* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -14242,7 +14332,7 @@ const FastAnimatorFunctions={
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastNav;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions_FastUtilities__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__classes_Woops__ = __webpack_require__(4);
 /**
@@ -14455,7 +14545,7 @@ function FastAccordion(option,expression){
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastTable;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(5);
 /**
  * Created by David Maser on 13/07/2017.
  */
@@ -14659,9 +14749,11 @@ function FastSticky(option,expression) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__ = __webpack_require__(7);
 /**
  * Created by David Maser on 18/07/2017.
  */
+
 
 /* harmony default export */ __webpack_exports__["a"] = (function (option,expression) {
   let videoLayout = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].video.layout;
@@ -14752,7 +14844,7 @@ function FastSticky(option,expression) {
       videoLayout = videoLayout.replace('@dimensions',util.buildDimensions()).replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles());
       videoLayout = util.extract.source() !== undefined ? videoLayout.replace('@url',`src="${util.extract.source()}"`) : videoLayout.replace('@url','');
       videoLayout = sourceString !== '' && sourceString !== undefined ? videoLayout.replace('@video.src',sourceString) : videoLayout.replace('@video.src','');
-      videoLayout = videoLayout.replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles());
+      videoLayout = videoLayout.replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles()).replace('@id',__WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].id.replace('@id',__WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["a" /* FastUtilities */].genFtxId()));
       return videoLayout;
     }
   };
@@ -14760,15 +14852,162 @@ function FastSticky(option,expression) {
 });
 
 /***/ }),
-/* 64 */,
-/* 65 */,
-/* 66 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Config__ = __webpack_require__(67);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
+/**
+ * Created by David Maser on 20/07/2017.
+ */
+
+
+/**
+ * Creates a new Analytics object.
+ * @class
+ */
+class FastAnalytics {
+  /**
+   *
+   * @param {string} option
+   * @param {string} expression
+   */
+  constructor(option, expression) {
+    this.option = option;
+    this.expression = expression;
+    this.build();
+  }
+
+  build() {
+    switch (this.option) {
+      case 'gtm':
+        let userID = this.expression.indexOf('id:') > -1 ? this.expression.split('id:')[1] : '';
+        userID = userID.indexOf(',') > -1 ? userID.split(',')[0] : userID;
+        $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appHead).append(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].analytics.google.gtmCode.replace('@user.id', userID)).prepend(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].analytics.google.gtmDataLayer);
+        this.register({
+          'entries': [
+            {'click': 'button'},
+            {'click': 'input'}
+          ]
+        });
+        break;
+      case 'basic':
+        userID = this.expression.indexOf('id:') > -1 ? this.expression.split('id:')[1] : '';
+        userID = userID.indexOf(',') > -1 ? userID.split(',')[0] : userID;
+        $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appHead).append(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].analytics.google.gtAnalytics.replace('@user.id', userID));
+        break;
+    }
+  }
+
+  /**
+   * This function register events to allow for transmission of event data
+   * to the GTM dataLayer
+   * The elem parameter can be a string, an array of strings or an object
+   * When formatting as an object, the object key is the type of event and
+   * the key value is the element
+   * @param {string|object|object[]} elem Elem parameter can be a string, an array of strings or an object. When formatting as an object, the object key is the type of event and the key value is the element
+   */
+  register(elem) {
+    if (Array.isArray(elem)) {
+      elem.map(function (a) {
+        $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).on('click', a, function () {
+          let eventName = $(this).attr('ftx-event') !== undefined ? $(this).attr('ftx-event') : 'no event';
+          dataLayer.push({'event': eventName});
+          console.log(eventName)
+          //
+        })
+      });
+    } else if (typeof elem === 'object' && !Array.isArray(elem)) {
+      elem = elem.entries;
+      if(Array.isArray(elem)){
+        elem.map(function (obj) {
+          let o;
+          for (o in obj) {
+            $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).on(o, obj[o], function () {
+              let eventName = $(this).attr('ftx-event') !== undefined ? $(this).attr('ftx-event') : 'no event';
+              dataLayer.push({'event': eventName});
+            });
+          }
+        })
+      }else{
+        let e;
+        for (e in elem) {
+          $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).on(e, elem[e], function () {
+            let eventName = $(this).attr('ftx-event') !== undefined ? $(this).attr('ftx-event') : 'no event';
+            dataLayer.push({'event': eventName});
+          });
+        }
+      }
+    } else {
+      $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).on('click', elem, function () {
+        let eventName = $(this).attr('ftx-event') !== undefined ? $(this).attr('ftx-event') : 'no event';
+        dataLayer.push({'event': eventName});
+        console.log(eventName)
+      })
+    }
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastAnalytics;
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+
+/***/ }),
+/* 65 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__ = __webpack_require__(7);
+/**
+ * Created by David Maser on 24/07/2017.
+ */
+
+
+class FastStylize{
+  constructor(option, expression,element){
+    this.option = option;
+    this.expression = expression;
+    this.element = element;
+    this.run();
+  }
+  run(){
+    let expressionLength = this.expression.split(/\r?\n/).length;
+    let content = this.expression.split(/\r?\n/).splice(1,expressionLength).join(' ').replace(/\s\s+/g,' ');
+    if(this.expression.split(/\r?\n/).length > 1){
+      this.expression = this.expression.split(/\r?\n/)[0];
+    }
+    this.expression = this.expression.split(/\r?\n/).length > 1 ? this.expression.split(/\r?\n/)[0] : this.expression;
+    let stepArray = this.expression.split(' ');
+    let buildOption = null;
+    let optionString = '';
+    stepArray.map(function (a) {
+      let eventIndex = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].instruct.events.indexOf(a);
+      if (eventIndex > -1) {
+        buildOption = a;
+      } else {
+        optionString += `${a} `;
+      }
+    });
+    let obj = typeof __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["b" /* StylizeUtilities */][buildOption] === 'function' ? __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["b" /* StylizeUtilities */][buildOption](optionString,content) : null;
+    let o;
+    for(o in obj){
+      __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__["b" /* StylizeUtilities */].build(o,obj[o].styles,this.element);
+    }
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastStylize;
+
+
+/***/ }),
+/* 66 */,
+/* 67 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Config__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Woops__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(6);
 /**
  * Created by David Maser on 29/06/2017.
  */
@@ -14811,7 +15050,7 @@ class FastPlugin{
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14852,11 +15091,11 @@ const PluginAbstractor = {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_DomManager__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_DomManager__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
 /**
  * Created by David Maser on 19/07/2017.
@@ -14878,7 +15117,7 @@ class FastDom{
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14949,13 +15188,13 @@ if(typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(71);
+var content = __webpack_require__(72);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -14963,7 +15202,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(73)(content, options);
+var update = __webpack_require__(74)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -14980,10 +15219,10 @@ if(false) {
 }
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(72)(undefined);
+exports = module.exports = __webpack_require__(73)(undefined);
 // imports
 
 
@@ -14994,7 +15233,7 @@ exports.push([module.i, "body[faster=\"template\"]{display:none}body[faster=\"re
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports) {
 
 /*
@@ -15076,7 +15315,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -15122,7 +15361,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(74);
+var	fixUrls = __webpack_require__(75);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -15435,7 +15674,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports) {
 
 
@@ -15528,256 +15767,6 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
-
-/***/ }),
-/* 75 */,
-/* 76 */,
-/* 77 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Faster__ = __webpack_require__(6);
-/**
- * Created by David Maser on 24/07/2017.
- */
-
-
-const StylizeUtilities = {
-  argsObj: {},
-  default: 'styles',
-  build:function(obj,params,element){
-    let htmlContent = this.argsObj[obj]['content'].trim();
-    let htmlString = `<${obj} style="@style">@content</${obj}>`;
-    let styleString = '';
-    if(typeof params === 'object'){
-      let p;
-      for(p in params){
-
-        styleString+=`${p}:${params[p]};`;
-      }
-    }
-    __WEBPACK_IMPORTED_MODULE_1__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).find(`[fstx-id="${element}"]`),null,htmlString.replace('@style',styleString).replace('@content',htmlContent),true);
-  },
-  make: function (arg,content) {
-    let argsArray = arg.split(' ');
-    this.argsObj[argsArray[0]] = {};
-    this.argsObj[argsArray[0]]['content'] = content;
-    this.argsObj[argsArray[0]][this.default] = {};
-    let tempObj = argsArray[0];
-    argsArray = argsArray.splice(1);
-    let a;
-    let altString = [];
-    let bltString = [];
-    for (a in argsArray) {
-      if ((a % 2 === 0)) {
-        argsArray[a] !== '' ? altString.push(argsArray[a]) : null;
-      } else {
-        argsArray[a] !== '' ? bltString.push(argsArray[a]) : null;
-      }
-    }
-    return this.objectify(tempObj, altString, bltString)
-  },
-  objectify: function (obj, a, b) {
-    if (a.length === b.length) {
-      let i;
-      for (i in a) {
-        this.argsObj[obj]['styles'][a[i]] = b[i];
-      }
-    }
-    return this.argsObj;
-  }
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = StylizeUtilities;
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
-
-/***/ }),
-/* 78 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastStylizeUtilities__ = __webpack_require__(77);
-/**
- * Created by David Maser on 24/07/2017.
- */
-
-
-class FastStylize{
-  constructor(option, expression,element){
-    this.option = option;
-    this.expression = expression;
-    this.element = element;
-    this.run();
-  }
-  run(){
-    let expressionLength = this.expression.split(/\r?\n/).length;
-    let content = this.expression.split(/\r?\n/).splice(1,expressionLength).join(' ').replace(/\s\s+/g,' ');
-    if(this.expression.split(/\r?\n/).length > 1){
-      this.expression = this.expression.split(/\r?\n/)[0];
-    }
-    this.expression = this.expression.split(/\r?\n/).length > 1 ? this.expression.split(/\r?\n/)[0] : this.expression;
-    let stepArray = this.expression.split(' ');
-    let buildOption = null;
-    let optionString = '';
-    stepArray.map(function (a) {
-      let eventIndex = __WEBPACK_IMPORTED_MODULE_0__config_Template__["a" /* Template */].instruct.events.indexOf(a);
-      if (eventIndex > -1) {
-        buildOption = a;
-      } else {
-        optionString += `${a} `;
-      }
-    });
-    let obj = typeof __WEBPACK_IMPORTED_MODULE_1__functions_FastStylizeUtilities__["a" /* StylizeUtilities */][buildOption] === 'function' ? __WEBPACK_IMPORTED_MODULE_1__functions_FastStylizeUtilities__["a" /* StylizeUtilities */][buildOption](optionString,content) : null;
-    let o;
-    for(o in obj){
-      __WEBPACK_IMPORTED_MODULE_1__functions_FastStylizeUtilities__["a" /* StylizeUtilities */].build(o,obj[o].styles,this.element);
-    }
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastStylize;
-
-
-/***/ }),
-/* 79 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_FastAnimatorFunctions__ = __webpack_require__(57);
-/**
- * Created by David Maser on 04/07/2017.
- */
-
-class FastAnimator{
-  constructor(option,expression){
-    this.option = option;
-    this.expression = expression;
-    this.run();
-  }
-  run(){
-      if(this.option !== null) {
-      switch (this.option) {
-        case 'points':
-          let target = this.expression.indexOf('object') > -1 ? this.expression.split('object:')[1].split(',')[0] : null;
-          let points = this.expression.indexOf('points') > -1 ? this.expression.split('points:[')[1].split(']')[0] : null;
-          let pointsArray;
-          pointsArray = points.indexOf(',') > -1 ? points.split(',') : points;
-          __WEBPACK_IMPORTED_MODULE_0__functions_FastAnimatorFunctions__["a" /* FastAnimatorFunctions */].buildAnimationMap(target, pointsArray);
-          break;
-        case 'attributes':
-          break;
-        case 'size':
-          break;
-        case 'alpha':
-          break;
-      }
-    }
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastAnimator;
-
-
-/***/ }),
-/* 80 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
-/**
- * Created by David Maser on 20/07/2017.
- */
-
-
-/**
- * Creates a new Analytics object.
- * @class
- */
-class FastAnalytics {
-  /**
-   *
-   * @param {string} option
-   * @param {string} expression
-   */
-  constructor(option, expression) {
-    this.option = option;
-    this.expression = expression;
-    this.build();
-  }
-
-  build() {
-    switch (this.option) {
-      case 'gtm':
-        let userID = this.expression.indexOf('id:') > -1 ? this.expression.split('id:')[1] : '';
-        userID = userID.indexOf(',') > -1 ? userID.split(',')[0] : userID;
-        $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appHead).append(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].analytics.google.gtmCode.replace('@user.id', userID)).prepend(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].analytics.google.gtmDataLayer);
-        this.register({
-          'entries': [
-            {'click': 'button'},
-            {'click': 'input'}
-          ]
-        });
-        break;
-      case 'basic':
-        userID = this.expression.indexOf('id:') > -1 ? this.expression.split('id:')[1] : '';
-        userID = userID.indexOf(',') > -1 ? userID.split(',')[0] : userID;
-        $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appHead).append(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].analytics.google.gtAnalytics.replace('@user.id', userID));
-        break;
-    }
-  }
-
-  /**
-   * This function register events to allow for transmission of event data
-   * to the GTM dataLayer
-   * The elem parameter can be a string, an array of strings or an object
-   * When formatting as an object, the object key is the type of event and
-   * the key value is the element
-   * @param {string|object|object[]} elem Elem parameter can be a string, an array of strings or an object. When formatting as an object, the object key is the type of event and the key value is the element
-   */
-  register(elem) {
-    if (Array.isArray(elem)) {
-      elem.map(function (a) {
-        $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).on('click', a, function () {
-          let eventName = $(this).attr('ftx-event') !== undefined ? $(this).attr('ftx-event') : 'no event';
-          dataLayer.push({'event': eventName});
-          console.log(eventName)
-          //
-        })
-      });
-    } else if (typeof elem === 'object' && !Array.isArray(elem)) {
-      elem = elem.entries;
-      if(Array.isArray(elem)){
-        elem.map(function (obj) {
-          let o;
-          for (o in obj) {
-            $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).on(o, obj[o], function () {
-              let eventName = $(this).attr('ftx-event') !== undefined ? $(this).attr('ftx-event') : 'no event';
-              dataLayer.push({'event': eventName});
-            });
-          }
-        })
-      }else{
-        let e;
-        for (e in elem) {
-          $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).on(e, elem[e], function () {
-            let eventName = $(this).attr('ftx-event') !== undefined ? $(this).attr('ftx-event') : 'no event';
-            dataLayer.push({'event': eventName});
-          });
-        }
-      }
-    } else {
-      $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).on('click', elem, function () {
-        let eventName = $(this).attr('ftx-event') !== undefined ? $(this).attr('ftx-event') : 'no event';
-        dataLayer.push({'event': eventName});
-        console.log(eventName)
-      })
-    }
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastAnalytics;
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ })
 /******/ ]);

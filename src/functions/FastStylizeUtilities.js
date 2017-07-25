@@ -2,13 +2,14 @@
  * Created by David Maser on 24/07/2017.
  */
 import {Global} from '../config/Global';
+import {Template} from '../config/Template';
 import {Architect} from '../components/Faster';
 export const StylizeUtilities = {
   argsObj: {},
   default: 'styles',
   build:function(obj,params,element){
     let htmlContent = this.argsObj[obj]['content'].trim();
-    let htmlString = `<${obj} style="@style">@content</${obj}>`;
+    let htmlString = Template.div.styled.replace(/@elem/g,obj);
     let styleString = '';
     if(typeof params === 'object'){
       let p;
@@ -17,7 +18,9 @@ export const StylizeUtilities = {
         styleString+=`${p}:${params[p]};`;
       }
     }
-    Architect.build.experiment($(Global.appRoot).find(`[fstx-id="${element}"]`),null,htmlString.replace('@style',styleString).replace('@content',htmlContent),true);
+    let buildString = styleString !== '' ? htmlString.replace('@style',styleString) : htmlString.replace(' style="@style"','');
+    buildString = buildString.replace('@content',htmlContent);
+    Architect.build.experiment($(Global.appRoot).find(`[fstx-id="${element}"]`),Global.experiment.render,buildString,true);
   },
   make: function (arg,content) {
     let argsArray = arg.split(' ');

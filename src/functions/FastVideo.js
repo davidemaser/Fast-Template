@@ -2,6 +2,7 @@
  * Created by David Maser on 18/07/2017.
  */
 import {Template} from '../config/Template';
+import {FastUtilities} from '../functions/FastUtilities';
 export default function (option,expression) {
   let videoLayout = Template.video.layout;
   let sourceString = '';
@@ -91,7 +92,7 @@ export default function (option,expression) {
       videoLayout = videoLayout.replace('@dimensions',util.buildDimensions()).replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles());
       videoLayout = util.extract.source() !== undefined ? videoLayout.replace('@url',`src="${util.extract.source()}"`) : videoLayout.replace('@url','');
       videoLayout = sourceString !== '' && sourceString !== undefined ? videoLayout.replace('@video.src',sourceString) : videoLayout.replace('@video.src','');
-      videoLayout = videoLayout.replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles());
+      videoLayout = videoLayout.replace('@options',util.buildOptions()).replace('@video.track',util.buildSubTitles()).replace('@id',Template.id.replace('@id',FastUtilities.genFtxId()));
       return videoLayout;
     }
   };
