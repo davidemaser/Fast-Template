@@ -11437,6 +11437,14 @@ const FastUtilities = {
       option = option !== null ? option : 'section';
       return `<${option} class="ftx__group ${option}" role="group">${expression}</${option}>`;
     },
+    /**
+     * Function takes a string and based on the option that is used,
+     * retains x number of characters and, optionally, adds an
+     * ellipsis to the beginning or the end of the returned string
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
     trim:function(option,expression){
       let trimFrom = null;
       if(option.indexOf(',')>-1){
@@ -11570,16 +11578,50 @@ const FastUtilities = {
     }
   },
   array:{
+    /**
+     * Function removes all trailing white space from an array and
+     * returns an clean array. Currently, the functions bounces to
+     * the removeEmpty function to deep clean and remove all empty
+     * entries
+     * @param {object[]} arr
+     * @returns {*|Object[]}
+     */
     clean:function(arr){
       let clearArr = arr.map((a) =>{
         return a.length !== 0 ? a.trim() : '';
       });
       return this.removeEmpty(clearArr);
     },
+    /**
+     * Function removes empty entries from an array and returns an
+     * array that contains no undefined or null entries
+     * @param {object[]} arr
+     * @returns {object[]}
+     */
     removeEmpty:function(arr){
       let i = 0;
       arr.map(function(a){
         if(a.length === 0){
+          arr.splice(i,1);
+        }
+        i++;
+      });
+      return arr;
+    },
+    /**
+     * This function removes items from an array if they are present in another
+     * array. This allows you to remove multiple entries from an array all at
+     * once
+     * @param {object[]} arr
+     * @param {object[]} list
+     * @returns {object[]}
+     * @example
+     * .removeEntries(['one','two','three','four'],['one','four'])
+     */
+    removeEntries(arr,list){
+      let i = 0;
+      list.map((a)=>{
+        if(arr.indexOf(a)>-1){
           arr.splice(i,1);
         }
         i++;
