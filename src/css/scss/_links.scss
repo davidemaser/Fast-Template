@@ -1,0 +1,12 @@
+div[ftx-sub-group]{
+  div[ftx-sub-item]{
+    display: inline-block;
+    cursor: pointer;
+    &:not(:first-child){
+      &:before {
+        content:">";
+        padding: 0 5px;
+      }
+    }
+  }
+}

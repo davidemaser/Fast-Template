@@ -38,6 +38,16 @@ export const Template = {
       source:'<source src="@video.subtitles.url" type="video/@video.subtitles.format">'
     }
   },
+  linkMap:{
+    layout:'<div @id ftx-render ftx-map>@links</div>',
+    subLinks:{
+      holder:'<div ftx-sub-group>@links</div>',
+      layout:'<div ftx-sub-item ftx-action="@action">@link</div>'
+    },
+    links:{
+      layout:'<div ftx-item ftx-action="@action">@link</div>'
+    }
+  },
   fastAnimator:{
     container:{
       layout:'<div ftx-render @container.class></divftx-render>',

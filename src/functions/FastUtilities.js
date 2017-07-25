@@ -194,6 +194,24 @@ export const FastUtilities = {
 
     }
   },
+  array:{
+    clean:function(arr){
+      let clearArr = arr.map((a) =>{
+        return a.length !== 0 ? a.trim() : '';
+      });
+      return this.removeEmpty(clearArr);
+    },
+    removeEmpty:function(arr){
+      let i = 0;
+      arr.map(function(a){
+        if(a.length === 0){
+          arr.splice(i,1);
+        }
+        i++;
+      });
+      return arr;
+    }
+  },
   /**
    * Function that operates a multi replace on a string and
    * returns the string with replacements

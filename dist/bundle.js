@@ -10433,6 +10433,16 @@ const Template = {
       source:'<source src="@video.subtitles.url" type="video/@video.subtitles.format">'
     }
   },
+  linkMap:{
+    layout:'<div @id ftx-render ftx-map>@links</div>',
+    subLinks:{
+      holder:'<div ftx-sub-group>@links</div>',
+      layout:'<div ftx-sub-item ftx-action="@action">@link</div>'
+    },
+    links:{
+      layout:'<div ftx-item ftx-action="@action">@link</div>'
+    }
+  },
   fastAnimator:{
     container:{
       layout:'<div ftx-render @container.class></divftx-render>',
@@ -11559,6 +11569,24 @@ const FastUtilities = {
 
     }
   },
+  array:{
+    clean:function(arr){
+      let clearArr = arr.map((a) =>{
+        return a.length !== 0 ? a.trim() : '';
+      });
+      return this.removeEmpty(clearArr);
+    },
+    removeEmpty:function(arr){
+      let i = 0;
+      arr.map(function(a){
+        if(a.length === 0){
+          arr.splice(i,1);
+        }
+        i++;
+      });
+      return arr;
+    }
+  },
   /**
    * Function that operates a multi replace on a string and
    * returns the string with replacements
@@ -12474,10 +12502,12 @@ class Cycle{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__FastVideo__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__classes_FastAnalytics__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__classes_FastStylize__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__FastUtilities__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__functions_FastMap__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__FastUtilities__ = __webpack_require__(7);
 /**
  * Created by David Maser on 21/06/2017.
  */
+
 
 
 
@@ -12561,28 +12591,28 @@ function FastProcessor(type, option, expression, element){
       new __WEBPACK_IMPORTED_MODULE_16__classes_FastAnalytics__["a" /* default */](option,expression);
       break;
     case 'placeholder':
-      return __WEBPACK_IMPORTED_MODULE_18__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
+      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
       break;
     case 'group':
-      return __WEBPACK_IMPORTED_MODULE_18__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
       break;
     case 'search':
-      return __WEBPACK_IMPORTED_MODULE_18__FastUtilities__["a" /* FastUtilities */].components.search(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].components.search(option,expression);
       break;
     case 'bind':
-      return __WEBPACK_IMPORTED_MODULE_18__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
       break;
     case 'random':
-      return __WEBPACK_IMPORTED_MODULE_18__FastUtilities__["a" /* FastUtilities */].ui.random(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.random(option,expression);
       break;
     case 'mobile':
-      return __WEBPACK_IMPORTED_MODULE_18__FastUtilities__["a" /* FastUtilities */].ui.mobile(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.mobile(option,expression);
       break;
     case 'prefetch':
-      return __WEBPACK_IMPORTED_MODULE_18__FastUtilities__["a" /* FastUtilities */].ux.prefetch(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ux.prefetch(option,expression);
       break;
     case 'image':
-      return __WEBPACK_IMPORTED_MODULE_18__FastUtilities__["a" /* FastUtilities */].ui.image(option,expression,element);
+      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.image(option,expression,element);
       break;
     case 'banner':
       return __WEBPACK_IMPORTED_MODULE_14__FastBanner__["a" /* default */](option,expression);
@@ -12590,11 +12620,14 @@ function FastProcessor(type, option, expression, element){
     case 'video':
       return __WEBPACK_IMPORTED_MODULE_15__FastVideo__["a" /* default */](option,expression);
       break;
+    case 'map':
+      return __WEBPACK_IMPORTED_MODULE_18__functions_FastMap__["a" /* default */](option,expression);
+      break;
     case 'stylize':
       new __WEBPACK_IMPORTED_MODULE_17__classes_FastStylize__["a" /* default */](option,expression,element);
       break;
     case 'trim':
-      return __WEBPACK_IMPORTED_MODULE_18__FastUtilities__["a" /* FastUtilities */].ui.trim(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.trim(option,expression);
       break;
 
   }
@@ -15304,7 +15337,7 @@ exports = module.exports = __webpack_require__(73)(undefined);
 
 
 // module
-exports.push([module.i, "body[faster=\"template\"]{display:none}body[faster=\"rendered\"]{display:block;margin:0}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff;z-index:999}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}nav.ftx__nav_horizontal{display:block;padding:5px;position:relative}div[ftx-role=\"nav-parent\"]{display:inline-block}div[ftx-role=\"nav-parent\"] .ftx__nav_dropdown{display:none;position:absolute}div[ftx-role=\"nav-parent\"]:hover .ftx__nav_dropdown{display:block}.ftx__accordion{display:block}.ftx__accordion .item__title{background:#ddd;padding:5px;cursor:pointer}.ftx__accordion .item__body{padding:10px 5px}.accordion_item{display:block;border-left:solid 1px #000;border-right:solid 1px #000;border-top:solid 1px #000}.accordion_item:last-child{border-bottom:1px solid #000}.accordion_item:not(:first-child) .item__body{display:none}header{position:relative;width:100%;height:60px}header.clone{position:fixed;top:-65px;left:0;right:0;z-index:999;transition:0.2s top cubic-bezier(0.3, 0.73, 0.3, 0.74)}body.down header.clone{top:0}.ftx__placeholder{display:block;width:100%;clear:both}.ftx__placeholder.small{height:10px}.ftx__placeholder.large{height:100px}.ftx__placeholder.medium{height:50px}.ftx__banner{overflow:hidden;position:relative}.ftx__banner h1{text-transform:uppercase}.ftx__banner h1,.ftx__banner p{width:100%;text-align:center}.ftx__banner.full{width:100%;height:500px}.ftx__banner.full>div{width:100%;height:100%}.ftx__banner.container{padding:5px 0}.ftx__banner.container>*{margin:5px 10px}.ftx__banner_row{text-align:center}\n", ""]);
+exports.push([module.i, "body[faster=\"template\"]{display:none}body[faster=\"rendered\"]{display:block;margin:0}ftx{display:none}fta{display:none}.ftx__modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%}.ftx__modal__overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);top:0;left:0}.ftx__modal__inlay{position:absolute;width:50%;left:25%;right:25%;top:25%;bottom:25%;background:#fff;z-index:999}.ftx__modal__title,.ftx__modal__message,.ftx__modal__prompt{padding:20px}.ftx__modal__prompt{position:absolute;bottom:0;right:0}nav.ftx__nav_horizontal{display:block;padding:5px;position:relative}div[ftx-role=\"nav-parent\"]{display:inline-block}div[ftx-role=\"nav-parent\"] .ftx__nav_dropdown{display:none;position:absolute}div[ftx-role=\"nav-parent\"]:hover .ftx__nav_dropdown{display:block}.ftx__accordion{display:block}.ftx__accordion .item__title{background:#ddd;padding:5px;cursor:pointer}.ftx__accordion .item__body{padding:10px 5px}.accordion_item{display:block;border-left:solid 1px #000;border-right:solid 1px #000;border-top:solid 1px #000}.accordion_item:last-child{border-bottom:1px solid #000}.accordion_item:not(:first-child) .item__body{display:none}header{position:relative;width:100%;height:60px}header.clone{position:fixed;top:-65px;left:0;right:0;z-index:999;transition:0.2s top cubic-bezier(0.3, 0.73, 0.3, 0.74)}body.down header.clone{top:0}.ftx__placeholder{display:block;width:100%;clear:both}.ftx__placeholder.small{height:10px}.ftx__placeholder.large{height:100px}.ftx__placeholder.medium{height:50px}.ftx__banner{overflow:hidden;position:relative}.ftx__banner h1{text-transform:uppercase}.ftx__banner h1,.ftx__banner p{width:100%;text-align:center}.ftx__banner.full{width:100%;height:500px}.ftx__banner.full>div{width:100%;height:100%}.ftx__banner.container{padding:5px 0}.ftx__banner.container>*{margin:5px 10px}.ftx__banner_row{text-align:center}div[ftx-sub-group] div[ftx-sub-item]{display:inline-block;cursor:pointer}div[ftx-sub-group] div[ftx-sub-item]:not(:first-child):before{content:\">\";padding:0 5px}\n", ""]);
 
 // exports
 
@@ -15844,6 +15877,41 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 76 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_FastUtilities__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
+/**
+ * Created by David Maser on 25/07/2017.
+ */
+
+
+/* harmony default export */ __webpack_exports__["a"] = (function(option,expression){
+  function processSubLinks(arr){
+    let subLinkArr = arr.split('&gt;');
+    let subLinkString = '';
+    subLinkArr.map(function(a){
+      subLinkString += subLinkItem.replace('@action',a.split(',')[1].trim()).replace('@link',a.split(',')[0].trim())
+    });
+    return subLinkHolder.replace('@links',subLinkString);
+  }
+
+  let expArray = expression.split(/\r?\n/);
+  expArray = __WEBPACK_IMPORTED_MODULE_0__functions_FastUtilities__["a" /* FastUtilities */].array.clean(expArray);
+  let linkTemplate = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].linkMap.layout;
+  let linkItem = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].linkMap.links.layout;
+  let subLinkItem = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].linkMap.subLinks.layout;
+  let subLinkHolder = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].linkMap.subLinks.holder;
+  let linkString = '';
+  expArray.map((a)=>{
+    linkString += a.indexOf('&gt;')>-1 ? processSubLinks(a) : linkItem.replace('@action',a.split(',')[1]).replace('@link',a.split(',')[0]);
+  });
+  return linkTemplate.replace('@links',linkString).replace('@id',__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].id.replace('@id',__WEBPACK_IMPORTED_MODULE_0__functions_FastUtilities__["a" /* FastUtilities */].genFtxId()));
+});
 
 /***/ })
 /******/ ]);

@@ -19,6 +19,7 @@ import FastBanner from './FastBanner';
 import FastVideo from './FastVideo';
 import FastAnalytics from '../classes/FastAnalytics';
 import FastStylize from '../classes/FastStylize';
+import FastMap from '../functions/FastMap';
 import {FastUtilities} from './FastUtilities';
 /**
  * The FastProcessor is one of the core functions called by new Cycle(). The
@@ -112,6 +113,9 @@ export default function FastProcessor(type, option, expression, element){
       break;
     case 'video':
       return FastVideo(option,expression);
+      break;
+    case 'map':
+      return FastMap(option,expression);
       break;
     case 'stylize':
       new FastStylize(option,expression,element);
