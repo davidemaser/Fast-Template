@@ -18,9 +18,34 @@ export default function(option,expression){
         return expression;
         break;
       case 'code':
-        let container = document.createElement('div');
-        container.innerHTML = expression;
-        return container.textContent || container.innerText || '';
+        /**
+         * Removes all code blocks from a string based on rules passed in
+         * the filter object.
+         */
+        if(expression.indexOf('{rules:')>-1){
+          let ruleArray = expression.split('{rules:')[1].split('}')[0].split(',');
+          expression = expression.split('{rules:')[1].split('}')[1]; //remove the rules object
+          if(Array.isArray(ruleArray)){
+            ruleArray.map((a)=>{
+              if(a === 'br' || a === 'hr'){
+                expression = expression.replace(new RegExp(`<${a} />`,'g'),'').replace(new RegExp(`<${a}>`,'g'),'');
+              }else{
+                let tagOpen = `<${a}>`;
+                let tagClose = `</${a}>`;
+                expression = expression.replace(new RegExp(tagOpen,'g'),'').replace(new RegExp(tagClose,'g'),'');
+              }
+            })
+          }
+          return expression;
+        }else{
+          /**
+           * removes all html code blocks from a string
+           * @type {Element}
+           */
+          let container = document.createElement('div');
+          container.innerHTML = expression;
+          return container.textContent || container.innerText || '';
+        }
         break;
     }
   }else{
