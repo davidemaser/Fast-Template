@@ -41,6 +41,7 @@ export default function(option,expression){
           /**
            * removes all html code blocks from a string
            * @type {Element}
+           * @return {string}
            */
           let container = document.createElement('div');
           container.innerHTML = expression;
@@ -50,7 +51,10 @@ export default function(option,expression){
     }
   }else{
     new Woops({
-
+      origin:'FastFilter',
+      type:'Option Parameter Error',
+      message:'Option parameter does not match any accepted options',
+      log:false
     })
   }
 }

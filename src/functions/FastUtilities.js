@@ -177,7 +177,10 @@ export const FastUtilities = {
         }
       }catch(e){
         new Woops({
-
+          origin:'FastUtilities.ux.prefetch',
+          type:'Prefetch Command Failed',
+          message:'Unable to complete the prefetch request',
+          log:false
         })
       }
     }

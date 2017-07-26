@@ -41,7 +41,12 @@ export default class FastAnalytics {
           break;
       }
     }catch(e){
-      new Woops({})
+      new Woops({
+        origin:'FastAnalytics.build',
+        type:'Unable To Execute Class',
+        message:'An unknown error occured. FastAnalytics can not execute',
+        log:false
+      })
     }
   }
 
