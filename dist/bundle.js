@@ -16007,6 +16007,11 @@ module.exports = function (css) {
         }
         return expression;
         break;
+      case 'code':
+        let container = document.createElement("div");
+        container.innerHTML = expression;
+        return container.textContent || container.innerText || "";
+        break;
     }
   }else{
     new __WEBPACK_IMPORTED_MODULE_1__classes_Woops__["a" /* default */]({

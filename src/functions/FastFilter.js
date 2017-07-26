@@ -17,6 +17,11 @@ export default function(option,expression){
         }
         return expression;
         break;
+      case 'code':
+        let container = document.createElement("div");
+        container.innerHTML = expression;
+        return container.textContent || container.innerText || "";
+        break;
     }
   }else{
     new Woops({
