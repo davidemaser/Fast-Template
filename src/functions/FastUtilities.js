@@ -217,7 +217,7 @@ export const FastUtilities = {
      * @param {object[]} arr
      * @returns {*|Object[]}
      */
-    clean:function(arr){
+    clean(arr){
       let clearArr = arr.map((a) =>{
         return a.length !== 0 ? a.trim() : '';
       });
@@ -229,7 +229,7 @@ export const FastUtilities = {
      * @param {object[]} arr
      * @returns {object[]}
      */
-    removeEmpty:function(arr){
+    removeEmpty(arr){
       let i = 0;
       arr.map(function(a){
         if(a.length === 0){
@@ -258,6 +258,27 @@ export const FastUtilities = {
         i++;
       });
       return arr;
+    },
+    concatenate(arr1,arr2){
+      return arr1.concat(arr2);
+    }
+  },
+  objects:{
+    copy(obj){
+      let copy = null;
+      if(typeof obj === 'object'){
+        copy = Object.assign({},obj);
+      }
+      return copy;
+    },
+    bindToWindow(obj){
+      let copy = this.copy(obj);
+      if(typeof window[Global.appObj] === 'object'){
+        window[Global.appObj]['DataDumps'] = copy;
+      }else{
+        window[Global.appObj] = {};
+        window[Global.appObj]['DataDumps'] = copy;
+      }
     }
   },
   /**

@@ -11598,7 +11598,7 @@ const FastUtilities = {
      * @param {object[]} arr
      * @returns {*|Object[]}
      */
-    clean:function(arr){
+    clean(arr){
       let clearArr = arr.map((a) =>{
         return a.length !== 0 ? a.trim() : '';
       });
@@ -11610,7 +11610,7 @@ const FastUtilities = {
      * @param {object[]} arr
      * @returns {object[]}
      */
-    removeEmpty:function(arr){
+    removeEmpty(arr){
       let i = 0;
       arr.map(function(a){
         if(a.length === 0){
@@ -11639,6 +11639,27 @@ const FastUtilities = {
         i++;
       });
       return arr;
+    },
+    concatenate(arr1,arr2){
+      return arr1.concat(arr2);
+    }
+  },
+  objects:{
+    copy(obj){
+      let copy = null;
+      if(typeof obj === 'object'){
+        copy = Object.assign({},obj);
+      }
+      return copy;
+    },
+    bindToWindow(obj){
+      let copy = this.copy(obj);
+      if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object'){
+        window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['DataDumps'] = copy;
+      }else{
+        window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
+        window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['DataDumps'] = copy;
+      }
     }
   },
   /**
