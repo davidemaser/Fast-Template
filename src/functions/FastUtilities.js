@@ -131,6 +131,12 @@ export const FastUtilities = {
       let elementArray = expression.trim().split(/\r?\n/);
       return Template.random.layout.replace(/@option/g,option).replace('@content',this.shuffleArray(elementArray).join(''));
     },
+    /**
+     * THis function takes an array and reorders it's contents to create a
+     * random order for the returned array
+     * @param {object|array} array
+     * @returns {object|array}
+     */
     shuffleArray: function (array) {
       for (let i = array.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));

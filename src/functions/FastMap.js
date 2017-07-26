@@ -3,7 +3,20 @@
  */
 import {FastUtilities} from '../functions/FastUtilities';
 import {Template} from '../config/Template';
+/**
+ * The map object creates a link map view. Link maps can be a group of
+ * links beneath a same parent or simple links
+ * @param {string} option
+ * @param {string} expression
+ * @returns {string|object}
+ */
 export default function(option,expression){
+  /**
+   * Function processes sublinks and places them all in a unique
+   * parent container
+   * @param {object|array} arr
+   * @returns {string}
+   */
   function processSubLinks(arr){
     let subLinkArr = arr.split('&gt;');
     let subLinkString = '';

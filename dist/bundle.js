@@ -122,6 +122,9 @@ const Global = {
     closes : [
       'div','section','button','nav','p','span','header','footer','strong','i','h1','h2','h3','h4','h5','h6','ul','li','menu','pre','select','u'
     ]
+  },
+  rules:{
+    language:['crap','poo','caca']
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Global;
@@ -11506,6 +11509,12 @@ const FastUtilities = {
       let elementArray = expression.trim().split(/\r?\n/);
       return __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].random.layout.replace(/@option/g,option).replace('@content',this.shuffleArray(elementArray).join(''));
     },
+    /**
+     * THis function takes an array and reorders it's contents to create a
+     * random order for the returned array
+     * @param {object|array} array
+     * @returns {object|array}
+     */
     shuffleArray: function (array) {
       for (let i = array.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -12545,10 +12554,12 @@ class Cycle{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__classes_FastAnalytics__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__classes_FastStylize__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__functions_FastMap__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__FastUtilities__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__FastFilter__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__FastUtilities__ = __webpack_require__(7);
 /**
  * Created by David Maser on 21/06/2017.
  */
+
 
 
 
@@ -12633,28 +12644,28 @@ function FastProcessor(type, option, expression, element){
       new __WEBPACK_IMPORTED_MODULE_16__classes_FastAnalytics__["a" /* default */](option,expression);
       break;
     case 'placeholder':
-      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
       break;
     case 'group':
-      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
       break;
     case 'search':
-      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].components.search(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].components.search(option,expression);
       break;
     case 'bind':
-      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
       break;
     case 'random':
-      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.random(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.random(option,expression);
       break;
     case 'mobile':
-      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.mobile(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.mobile(option,expression);
       break;
     case 'prefetch':
-      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ux.prefetch(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ux.prefetch(option,expression);
       break;
     case 'image':
-      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.image(option,expression,element);
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.image(option,expression,element);
       break;
     case 'banner':
       return __WEBPACK_IMPORTED_MODULE_14__FastBanner__["a" /* default */](option,expression);
@@ -12665,11 +12676,14 @@ function FastProcessor(type, option, expression, element){
     case 'map':
       return __WEBPACK_IMPORTED_MODULE_18__functions_FastMap__["a" /* default */](option,expression);
       break;
+    case 'filter':
+      return __WEBPACK_IMPORTED_MODULE_19__FastFilter__["a" /* default */](option,expression);
+      break;
     case 'stylize':
       new __WEBPACK_IMPORTED_MODULE_17__classes_FastStylize__["a" /* default */](option,expression,element);
       break;
     case 'trim':
-      return __WEBPACK_IMPORTED_MODULE_19__FastUtilities__["a" /* FastUtilities */].ui.trim(option,expression);
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.trim(option,expression);
       break;
 
   }
@@ -15931,7 +15945,20 @@ module.exports = function (css) {
  */
 
 
+/**
+ * The map object creates a link map view. Link maps can be a group of
+ * links beneath a same parent or simple links
+ * @param {string} option
+ * @param {string} expression
+ * @returns {string|object}
+ */
 /* harmony default export */ __webpack_exports__["a"] = (function(option,expression){
+  /**
+   * Function processes sublinks and places them all in a unique
+   * parent container
+   * @param {object|array} arr
+   * @returns {string}
+   */
   function processSubLinks(arr){
     let subLinkArr = arr.split('&gt;');
     let subLinkString = '';
@@ -15952,6 +15979,40 @@ module.exports = function (css) {
     linkString += a.indexOf('&gt;')>-1 ? processSubLinks(a) : linkItem.replace('@action',a.split(',')[1]).replace('@link',a.split(',')[0]);
   });
   return linkTemplate.replace('@links',linkString).replace('@id',__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].id.replace('@id',__WEBPACK_IMPORTED_MODULE_0__functions_FastUtilities__["a" /* FastUtilities */].genFtxId()));
+});
+
+/***/ }),
+/* 77 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Woops__ = __webpack_require__(4);
+/**
+ * Created by David Maser on 26/07/2017.
+ */
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = (function(option,expression){
+  let acceptedOptions = ['language','code','custom'];
+  if(acceptedOptions.indexOf(option)>-1){
+    switch(option){
+      case 'language':
+        let languageStore = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].rules.language;
+        if(Array.isArray(languageStore)){
+          languageStore.map(function(a){
+            expression = expression.replace(new RegExp(a,'g'),'***');
+          })
+        }
+        return expression;
+        break;
+    }
+  }else{
+    new __WEBPACK_IMPORTED_MODULE_1__classes_Woops__["a" /* default */]({
+
+    })
+  }
 });
 
 /***/ })
