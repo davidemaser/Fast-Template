@@ -127,6 +127,9 @@ export default function FastProcessor(type, option, expression, element){
     case 'trim':
       return FastUtilities.ui.trim(option,expression);
       break;
+    case 'array':
+      return FastUtilities.array.generate(option,expression);
+      break;
 
   }
 }

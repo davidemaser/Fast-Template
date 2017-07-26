@@ -136,6 +136,287 @@ let Log = [];
 
 /***/ }),
 /* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * Created by David Maser on 22/06/2017.
+ */
+/**
+ * Defines all tamplate objects used by Faster.
+ * Template params are stated as @value or @parent.value
+ */
+const Template = {
+  div:{
+    basic:'<div data-atrribute="jeer">',
+    styled:'<@elem @id style="@style">@content</@elem>'
+  },
+  footer:'<footer>',
+  clone:'<section ftx-render ftx-clone></section>',
+  banner:{
+    layout:'<section ftx-render class="ftx__banner @option">@content</section>',
+    image:'<div id="@ftx.id" class="ftx__banner container" ftx-action="@banner.action" style="background:url(@banner.image);background-size: cover;background-repeat: no-repeat;">@banner.content</div>',
+    title:'<h1 class="ftx__banner_title">@banner.title</h1>',
+    subtext:'<p class="ftx__banner_subtext">@banner.subtext</p>',
+    button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
+  },
+  video:{
+    layout:'<video @id ftx-render @dimensions @url @options>@video.src@video.track</videoftx-render>',
+    dimensions:{
+      layout:'@dimensions.width @dimensions.height',
+      width:'width="@video.width"',
+      height:'height="@video.height"'
+    },
+    options:{
+      layout:'@autoplay @controls @poster',
+      autoplay:'autoplay',
+      control:'controls',
+      poster:'poster="@video.poster"'
+    },
+    track:{
+      subtitles:'<track kind="subtitles" src="@video.subtitles.url" srclang="@video.subtitles.lang">',
+      source:'<source src="@video.subtitles.url" type="video/@video.subtitles.format">'
+    }
+  },
+  linkMap:{
+    layout:'<div @id ftx-render ftx-map>@links</div>',
+    subLinks:{
+      holder:'<div ftx-sub-group>@links</div>',
+      layout:'<div ftx-sub-item ftx-action="@action">@link</div>'
+    },
+    links:{
+      layout:'<div ftx-item ftx-action="@action">@link</div>'
+    }
+  },
+  fastAnimator:{
+    container:{
+      layout:'<div ftx-render @container.class></divftx-render>',
+      class:'animation-layer',
+      position:'absolute'
+    }
+  },
+  head:{
+    prefetch:'<link ftx-render rel="prefetch" href="@prefetch.url" />'
+  },
+  nav:{
+    link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
+    layout:{
+      horizontal:'<nav ftx-render class="ftx__nav_horizontal">@nav.node</nav>',
+      vertical:'<nav ftx-render class="ftx__nav_vertical">@nav.node</nav>'
+    },
+    node:{
+      layout:'<div class="ftx__nav_dropdown">@node</div>',
+      entry:'<div class="ftx__nav_node" ftx-link="@node.link">@node.entry</div>'
+    }
+  },
+  table:{
+    layout:{
+      basic:'<table ftx-render class="ftx__table">@table.header@table.body@table.footer</tableftx-render>'
+    },
+    header:{
+      layout:'<thead>@table.row</thead>'
+    },
+    footer:{
+      layout:'<tfoot>@table.row</tfoot>'
+    },
+    body:{
+      layout:'<tbody>@table.row</tbody>'
+    },
+    row:{
+      layout:'<tr>@table.column</tr>'
+    },
+    column:{
+      layout:'<td>@content</td>'
+    }
+  },
+  accordion:{
+    parent:'<div ftx-render class="ftx__accordion">@accordion.item</div>',
+    item:'<div class="accordion_item"><div class="item__title">@accordion.item.title</div><div class="item__body">@accordion.item.body</div></div>',
+    params:{
+      speed:500,
+      trigger:'.ftx__accordion .accordion_item .item__title',
+      target:'.item__body'
+    }
+  },
+  gutter:{
+    layout:'<section ftx-render class="ftx__gutter">@render</section>'
+  },
+  panel:{
+    layout:'<section ftx-render class="ftx__panel">@render</section>'
+  },
+  modal:{
+    full:{
+      layout:'<div ftx-render class="ftx__modal__cta"><button ftx-event="user opens modal">@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
+      prompt:{
+        simple:'<div class="ftx__modal__prompt"><button ftx-event="user agrees" ftx-user-agrees>@modal.prompt.confirm</button></div>',
+        full:'<div class="ftx__modal__prompt"><button ftx-event="user agrees" ftx-user-agrees>@modal.prompt.confirm</button><button ftx-event="user refuses" ftx-user-refuses>@modal.prompt.refuse</button></div>'
+      }
+    },
+    params:{
+      speed:100,
+      trigger:'.ftx__modal__cta button,.ftx__modal__prompt button',
+      target:'.ftx__modal',
+      prompts:{
+        yes:{
+          speed:100,
+          trigger:'.ftx__modal__prompt button[ftx-user-agrees]',
+          target:'.ftx__modal'
+        },
+        no:{
+          speed:100,
+          trigger:'.ftx__modal__prompt button[ftx-user-refuses]',
+          target:'.ftx__modal'
+        }
+      }
+    }
+  },
+  random:{
+    layout:'<@option ftx-render class="ftx__random">@content</@option>'
+  },
+  class:' class="@class"',
+  id:' id="@id"',
+  name:' name="@name"',
+  forms:{
+    search:{
+      layout:'<div class="ftx__component search"><input ftx-target="@search.target" name="ftx_search" id="ftx_comp_search" type="text" placeholder="@search.placeholder" />@search.button</div>',
+      button:'<button ftx-event="user executes search">@search.label</button>'
+    },
+    login:{
+      layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
+      class:' class="@class"',
+      id:' id="@id"',
+      style:' style="@style"',
+      action:' action="@action"',
+      elements:[
+        {
+          element:'input',
+          type:'text',
+          name:'userName',
+          placeholder:'USER NAME',
+          class:'',
+          id:''
+        },
+        {
+          element:'input',
+          type:'password',
+          name:'passWord',
+          placeholder:'PASSWORD',
+          class:'',
+          id:''
+        },
+        {
+          element:'input',
+          type:'checkbox',
+          name:'myCheck',
+          class:'',
+          id:'',
+          checked:true
+        },
+        {
+          element:'input',
+          type:'radio',
+          name:'myRadio',
+          class:'',
+          id:''
+        },
+        {
+          element:'radiogroup',
+          type:'radio',
+          name:'myRadio',
+          class:'',
+          id:'',
+          options:[
+            {
+              label:'hi',
+              value:'hi'
+            },
+            {
+              label:'bye',
+              value:'bye'
+            },
+            {
+              label:'what',
+              value:'what',
+              selected:true
+            }
+          ]
+        },
+        {
+          element:'textarea',
+          placeholder:'',
+          name:'TEXT',
+          rows:10,
+          cols:10,
+          class:'',
+          id:''
+        },
+        {
+          element:'select',
+          name:'TEXT',
+          class:'',
+          id:'',
+          options:[
+            {
+              label:'hi',
+              value:'hi'
+            },
+            {
+              label:'bye',
+              value:'bye'
+            },
+            {
+              label:'what',
+              value:'what',
+              selected:true
+            }
+          ]
+        },
+        {
+          element:'input',
+          type:'submit',
+          name:'myButton',
+          placeholder:'CLICK',
+          class:'',
+          id:''
+        },
+      ]
+    },
+    account:{
+      layout:'<form@account.class@account.id@account.style@account.action>@account.elements</form>',
+      elements:[
+        {
+          element:'input',
+          type:'text',
+          name:'userName',
+          placeholder:'USER NAME',
+          class:'',
+          id:''
+        }
+      ]
+    }
+  },
+  analytics: {
+    google: {
+      gtmCode: "<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});" +
+      "var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })" +
+      "(window,document,'script','dataLayer','@user.id');</script>",
+      gtAnalytics: "<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga'); ga('create', '@user.id', 'auto'); ga('send', 'pageview'); </script>",
+      gtmDataLayer: "<script>dataLayer = [{'pageCategory': 'signup','visitorType': 'high-value'}];</script>"
+
+    }
+  },
+  instruct:{
+    events:['make'],
+    keys:['with','except','and','only'],
+    containers:['div','section','paragraph','span'],
+    attributes:['background']
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = Template;
+
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10395,288 +10676,6 @@ return jQuery;
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/**
- * Created by David Maser on 22/06/2017.
- */
-/**
- * Defines all tamplate objects used by Faster.
- * Template params are stated as @value or @parent.value
- * @type {{div: {basic: string, styled: string}, footer: string, clone: string, banner: {layout: string, image: string, title: string, subtext: string, button: string}, video: {layout: string, dimensions: {layout: string, width: string, height: string}, options: {layout: string, autoplay: string, control: string, poster: string}, track: {subtitles: string, source: string}}, fastAnimator: {container: {layout: string, class: string, position: string}}, head: {prefetch: string}, nav: {link: string, layout: {horizontal: string, vertical: string}, node: {layout: string, entry: string}}, table: {layout: {basic: string}, header: {layout: string}, footer: {layout: string}, body: {layout: string}, row: {layout: string}, column: {layout: string}}, accordion: {parent: string, item: string, params: {speed: number, trigger: string, target: string}}, gutter: {layout: string}, panel: {layout: string}, modal: {full: {layout: string, prompt: {simple: string, full: string}}, params: {speed: number, trigger: string, target: string, prompts: {yes: {speed: number, trigger: string, target: string}, no: {speed: number, trigger: string, target: string}}}}, random: {layout: string}, class: string, id: string, name: string, forms: {search: {layout: string, button: string}, login: {layout: string, class: string, id: string, style: string, action: string, elements: [*]}, account: {layout: string, elements: [*]}}, analytics: {google: {gtmCode: string, gtAnalytics: string, gtmDataLayer: string}}, instruct: {events: [*], keys: [*], containers: [*], attributes: [*]}}}
- */
-const Template = {
-  div:{
-    basic:'<div data-atrribute="jeer">',
-    styled:'<@elem @id style="@style">@content</@elem>'
-  },
-  footer:'<footer>',
-  clone:'<section ftx-render ftx-clone></section>',
-  banner:{
-    layout:'<section ftx-render class="ftx__banner @option">@content</section>',
-    image:'<div id="@ftx.id" class="ftx__banner container" ftx-action="@banner.action" style="background:url(@banner.image);background-size: cover;background-repeat: no-repeat;">@banner.content</div>',
-    title:'<h1 class="ftx__banner_title">@banner.title</h1>',
-    subtext:'<p class="ftx__banner_subtext">@banner.subtext</p>',
-    button:'<div class="ftx__banner_row"><button class="ftx__banner_button">@banner.button</button></div>'
-  },
-  video:{
-    layout:'<video @id ftx-render @dimensions @url @options>@video.src@video.track</videoftx-render>',
-    dimensions:{
-      layout:'@dimensions.width @dimensions.height',
-      width:'width="@video.width"',
-      height:'height="@video.height"'
-    },
-    options:{
-      layout:'@autoplay @controls @poster',
-      autoplay:'autoplay',
-      control:'controls',
-      poster:'poster="@video.poster"'
-    },
-    track:{
-      subtitles:'<track kind="subtitles" src="@video.subtitles.url" srclang="@video.subtitles.lang">',
-      source:'<source src="@video.subtitles.url" type="video/@video.subtitles.format">'
-    }
-  },
-  linkMap:{
-    layout:'<div @id ftx-render ftx-map>@links</div>',
-    subLinks:{
-      holder:'<div ftx-sub-group>@links</div>',
-      layout:'<div ftx-sub-item ftx-action="@action">@link</div>'
-    },
-    links:{
-      layout:'<div ftx-item ftx-action="@action">@link</div>'
-    }
-  },
-  fastAnimator:{
-    container:{
-      layout:'<div ftx-render @container.class></divftx-render>',
-      class:'animation-layer',
-      position:'absolute'
-    }
-  },
-  head:{
-    prefetch:'<link ftx-render rel="prefetch" href="@prefetch.url" />'
-  },
-  nav:{
-    link:'<div ftx-role="nav-parent" ftx-link="@link">@label@nav</div>',
-    layout:{
-      horizontal:'<nav ftx-render class="ftx__nav_horizontal">@nav.node</nav>',
-      vertical:'<nav ftx-render class="ftx__nav_vertical">@nav.node</nav>'
-    },
-    node:{
-      layout:'<div class="ftx__nav_dropdown">@node</div>',
-      entry:'<div class="ftx__nav_node" ftx-link="@node.link">@node.entry</div>'
-    }
-  },
-  table:{
-    layout:{
-      basic:'<table ftx-render class="ftx__table">@table.header@table.body@table.footer</tableftx-render>'
-    },
-    header:{
-      layout:'<thead>@table.row</thead>'
-    },
-    footer:{
-      layout:'<tfoot>@table.row</tfoot>'
-    },
-    body:{
-      layout:'<tbody>@table.row</tbody>'
-    },
-    row:{
-      layout:'<tr>@table.column</tr>'
-    },
-    column:{
-      layout:'<td>@content</td>'
-    }
-  },
-  accordion:{
-    parent:'<div ftx-render class="ftx__accordion">@accordion.item</div>',
-    item:'<div class="accordion_item"><div class="item__title">@accordion.item.title</div><div class="item__body">@accordion.item.body</div></div>',
-    params:{
-      speed:500,
-      trigger:'.ftx__accordion .accordion_item .item__title',
-      target:'.item__body'
-    }
-  },
-  gutter:{
-    layout:'<section ftx-render class="ftx__gutter">@render</section>'
-  },
-  panel:{
-    layout:'<section ftx-render class="ftx__panel">@render</section>'
-  },
-  modal:{
-    full:{
-      layout:'<div ftx-render class="ftx__modal__cta"><button ftx-event="user opens modal">@modal.cta</button></div><div class="ftx__modal"><div class="ftx__modal__overlay"></div><div class="ftx__modal__inlay"><div class="ftx__modal__title">@modal.title</div><div class="ftx__modal__message">@modal.message</div>@inject.prompt</div></div>',
-      prompt:{
-        simple:'<div class="ftx__modal__prompt"><button ftx-event="user agrees" ftx-user-agrees>@modal.prompt.confirm</button></div>',
-        full:'<div class="ftx__modal__prompt"><button ftx-event="user agrees" ftx-user-agrees>@modal.prompt.confirm</button><button ftx-event="user refuses" ftx-user-refuses>@modal.prompt.refuse</button></div>'
-      }
-    },
-    params:{
-      speed:100,
-      trigger:'.ftx__modal__cta button,.ftx__modal__prompt button',
-      target:'.ftx__modal',
-      prompts:{
-        yes:{
-          speed:100,
-          trigger:'.ftx__modal__prompt button[ftx-user-agrees]',
-          target:'.ftx__modal'
-        },
-        no:{
-          speed:100,
-          trigger:'.ftx__modal__prompt button[ftx-user-refuses]',
-          target:'.ftx__modal'
-        }
-      }
-    }
-  },
-  random:{
-    layout:'<@option ftx-render class="ftx__random">@content</@option>'
-  },
-  class:' class="@class"',
-  id:' id="@id"',
-  name:' name="@name"',
-  forms:{
-    search:{
-      layout:'<div class="ftx__component search"><input ftx-target="@search.target" name="ftx_search" id="ftx_comp_search" type="text" placeholder="@search.placeholder" />@search.button</div>',
-      button:'<button ftx-event="user executes search">@search.label</button>'
-    },
-    login:{
-      layout:'<form@login.class@login.id@login.style@login.action>@login.elements</form>',
-      class:' class="@class"',
-      id:' id="@id"',
-      style:' style="@style"',
-      action:' action="@action"',
-      elements:[
-        {
-          element:'input',
-          type:'text',
-          name:'userName',
-          placeholder:'USER NAME',
-          class:'',
-          id:''
-        },
-        {
-          element:'input',
-          type:'password',
-          name:'passWord',
-          placeholder:'PASSWORD',
-          class:'',
-          id:''
-        },
-        {
-          element:'input',
-          type:'checkbox',
-          name:'myCheck',
-          class:'',
-          id:'',
-          checked:true
-        },
-        {
-          element:'input',
-          type:'radio',
-          name:'myRadio',
-          class:'',
-          id:''
-        },
-        {
-          element:'radiogroup',
-          type:'radio',
-          name:'myRadio',
-          class:'',
-          id:'',
-          options:[
-            {
-              label:'hi',
-              value:'hi'
-            },
-            {
-              label:'bye',
-              value:'bye'
-            },
-            {
-              label:'what',
-              value:'what',
-              selected:true
-            }
-          ]
-        },
-        {
-          element:'textarea',
-          placeholder:'',
-          name:'TEXT',
-          rows:10,
-          cols:10,
-          class:'',
-          id:''
-        },
-        {
-          element:'select',
-          name:'TEXT',
-          class:'',
-          id:'',
-          options:[
-            {
-              label:'hi',
-              value:'hi'
-            },
-            {
-              label:'bye',
-              value:'bye'
-            },
-            {
-              label:'what',
-              value:'what',
-              selected:true
-            }
-          ]
-        },
-        {
-          element:'input',
-          type:'submit',
-          name:'myButton',
-          placeholder:'CLICK',
-          class:'',
-          id:''
-        },
-      ]
-    },
-    account:{
-      layout:'<form@account.class@account.id@account.style@account.action>@account.elements</form>',
-      elements:[
-        {
-          element:'input',
-          type:'text',
-          name:'userName',
-          placeholder:'USER NAME',
-          class:'',
-          id:''
-        }
-      ]
-    }
-  },
-  analytics: {
-    google: {
-      gtmCode: "<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});" +
-      "var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })" +
-      "(window,document,'script','dataLayer','@user.id');</script>",
-      gtAnalytics: "<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga'); ga('create', '@user.id', 'auto'); ga('send', 'pageview'); </script>",
-      gtmDataLayer: "<script>dataLayer = [{'pageCategory': 'signup','visitorType': 'high-value'}];</script>"
-
-    }
-  },
-  instruct:{
-    events:['make'],
-    keys:['with','except','and','only'],
-    containers:['div','section','paragraph','span'],
-    attributes:['background']
-  }
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = Template;
-
-
-/***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10992,7 +10991,7 @@ module.exports = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Logger__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_RegisterState__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_RegisterState__ = __webpack_require__(5);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -11025,10 +11024,512 @@ class Woops{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/**
+ * Created by David Maser on 29/06/2017.
+ */
+
+class RegisterState{
+  /**
+   * This class registers states and state changes and a global object
+   * Type __faster__ (or the name of the app defined in config/Global)
+   * in console to view the object and it's properties
+   * @param {string} obj
+   * @param {(boolean|object)} val
+   * @param {(string|null)} parent
+   */
+  constructor(obj,val,parent){
+    this.obj = obj;
+    this.val = val;
+    this.parent = parent;
+    this.run();
+  }
+  run(){
+    typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] !== 'object' ? window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] = {} : null;
+    if(this.parent !== '' && this.parent !== undefined){
+      if(typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent] === 'object'){
+        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent][this.obj] = this.val;
+      }else{
+        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent] = {};
+        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent][this.obj] = this.val;
+      }
+    }else{
+      window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.obj] = this.val;
+    }
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = RegisterState;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_RegisterState__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(7);
+/**
+ * Created by David Maser on 13/07/2017.
+ */
+
+
+
+
+const FastUtilities = {
+  ui:{
+    image:function(option,expression,element){
+      let imgUrl = expression.indexOf('url:') > -1 ? expression.split('url:')[1] : null;
+      let imgLoad = $('<img />');
+      imgLoad.attr('src',imgUrl);
+      imgLoad.unbind('load');
+      imgLoad.bind('load', function () {
+        let width,height,numValue,imageString;
+        if(isNaN(option) === true){
+          switch(option){
+            case 'full':
+              width = this.width;
+              height = this.height;
+              break;
+            case 'half':
+              width = Math.round(this.width/2);
+              height = Math.round(this.height/2);
+              break;
+            case 'quarter':
+              width = Math.round(this.width/4);
+              height = Math.round(this.height/4);
+              break;
+            case 'eighth':
+              width = Math.round(this.width/8);
+              height = Math.round(this.height/8);
+              break;
+          }
+        }else{
+          numValue = parseInt(option);
+          width = Math.round(this.width/numValue);
+          height = Math.round(this.height/numValue);
+        }
+        imageString = imgLoad[0].outerHTML.replace('">',`" width="${width}" height="${height}">`);
+        __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appRoot).find(`[fstx-id="${element}"]`),null,imageString,true);
+      });
+    },
+    /**
+     * Simple function that creates a placeholder object in the
+     * page.
+     * @param {string} type
+     * @returns {string}
+     */
+    placeholder:function(type){
+      return `<div class="ftx__placeholder ${type}"></div>`
+    },
+    /**
+     * This function unbinds existing elements from the dom and
+     * groups them all together in a single parent. This is useful
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
+    group:function(option,expression){
+      option = option !== null ? option : 'section';
+      return `<${option} class="ftx__group ${option}" role="group">${expression}</${option}>`;
+    },
+    /**
+     * Function takes a string and based on the option that is used,
+     * retains x number of characters and, optionally, adds an
+     * ellipsis to the beginning or the end of the returned string
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
+    trim:function(option,expression){
+      let trimFrom = null;
+      if(option.indexOf(',')>-1){
+        trimFrom = option.split(',')[1];
+      }
+      let ellipsis;
+      if(expression.indexOf('{ellipsis}') > -1){
+        ellipsis = '...';
+        expression = expression.replace('{ellipsis}','');
+      }else{
+        ellipsis = '';
+      }
+      if(trimFrom === null || trimFrom === undefined){
+        expression = option !== '' && option !== undefined ? expression.slice(0, - option).trim() : expression;
+        expression+= ellipsis;
+      }else{
+        if(trimFrom === 'start'){
+          expression = expression.substring(option.split(',')[0]);
+          expression = ellipsis+expression;
+        }
+      }
+      return expression;
+    },
+    /**
+     * This function takes an existing element and unbinds it from the dom and
+     * appends it into a new clone host
+     * @param {string} option
+     * @param {string} expression
+     */
+    bind:function(option,expression){
+      $(__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appRoot).prepend(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].clone);
+      expression = expression.indexOf(',') > -1 ? expression.split(',') : expression;
+      if(Array.isArray(expression)){
+        expression.map(function(a){
+          /*
+          set a timeout so that all other dynamic elements
+          can render before unbinding them and appending
+          them to their new host
+          */
+          window.setTimeout(function(){
+            $(`#${a}`).attr('ftx-cloned','true').appendTo('section[ftx-clone]');
+          },100);
+        })
+      }else{
+        window.setTimeout(function(){
+          $(`#${expression}`).attr('ftx-cloned','true').appendTo('section[ftx-clone]');
+        },100);
+      }
+    },
+    /**
+     * This function takes an array of html elements and randomizes their position
+     * on the page, within a parent container
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
+    random:function(option,expression){
+      option = option !== null ? option : 'section';
+      let elementArray = expression.trim().split(/\r?\n/);
+      return __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].random.layout.replace(/@option/g,option).replace('@content',this.shuffleArray(elementArray).join(''));
+    },
+    /**
+     * THis function takes an array and reorders it's contents to create a
+     * random order for the returned array
+     * @param {object|array} array
+     * @returns {object|array}
+     */
+    shuffleArray: function (array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        let temp = array[i].trim();
+        array[i] = array[j].trim();
+        array[j] = temp;
+      }
+      return array;
+    },
+    /**
+     * Simple function that wraps elements in a mobile container. Option can be set to default
+     * or 1 of the accepted breakpoint values
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
+    mobile:function(option,expression){
+      option = option !== null ? option : 'default';
+      return `<section class="ftx__mobile size__${option}">${expression}</section>`;
+    }
+  },
+  ux:{
+    /**
+     * Function that adds a prefetch meta element to the page head
+     * when the page initially loads.
+     * @param {string} option
+     * @param {string} expression
+     */
+    prefetch:function(option,expression){
+      try {
+        option = option !== null ? option : 'section';
+        let elementArray = expression.trim().split(/\r?\n/);
+        let elementString = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].head.prefetch;
+        if (Array.isArray(elementArray)) {
+          elementArray.map(function (a) {
+            $('head').append(elementString.replace('@prefetch.url', a.trim()));
+          })
+        }
+      }catch(e){
+        new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+          origin:'FastUtilities.ux.prefetch',
+          type:'Prefetch Command Failed',
+          message:'Unable to complete the prefetch request',
+          log:false
+        })
+      }
+    }
+  },
+  components:{
+    /**
+     * Function that builds a search box component
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
+    search:function(option,expression){
+      let templateStr;
+      let expArray = expression.indexOf(',') > -1 ? expression.split(',') : expression;
+      switch(option){
+        case 'default':
+          templateStr = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].forms.search.layout.replace('@search.button',__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].forms.search.button);
+          break;
+      }
+      if(Array.isArray(expArray)){
+        expArray.map(function(a){
+          templateStr = templateStr.replace(`@search.${a.split(':')[0]}`,a.split(':')[1]);
+        })
+      }
+      return templateStr;
+    },
+    card:function(option,expression){
+
+    }
+  },
+  array:{
+    /**
+     * Function removes all trailing white space from an array and
+     * returns an clean array. Currently, the functions bounces to
+     * the removeEmpty function to deep clean and remove all empty
+     * entries
+     * @param {object[]} arr
+     * @returns {*|Object[]}
+     */
+    clean(arr){
+      let clearArr = arr.map((a) =>{
+        return a.length !== 0 ? a.trim() : '';
+      });
+      return this.removeEmpty(clearArr);
+    },
+    /**
+     * Function removes empty entries from an array and returns an
+     * array that contains no undefined or null entries
+     * @param {object[]} arr
+     * @returns {object[]}
+     */
+    removeEmpty(arr){
+      let i = 0;
+      arr.map(function(a){
+        if(a.length === 0){
+          arr.splice(i,1);
+        }
+        i++;
+      });
+      return arr;
+    },
+    /**
+     * This function removes items from an array if they are present in another
+     * array. This allows you to remove multiple entries from an array all at
+     * once
+     * @param {object[]} arr
+     * @param {object[]} list
+     * @returns {object[]}
+     * @example
+     * .removeEntries(['one','two','three','four'],['one','four'])
+     */
+    removeEntries(arr,list){
+      let i = 0;
+      list.map((a)=>{
+        if(arr.indexOf(a)>-1){
+          arr.splice(i,1);
+        }
+        i++;
+      });
+      return arr;
+    },
+    concatenate(arr1,arr2){
+      return arr1.concat(arr2);
+    },
+    generate(option,expression){
+      try{
+      let expArray;
+      expression.indexOf(',') > -1 ? splitOnCommas() : splitOnSpaces();
+      function splitOnCommas(){
+        expArray = expression.split(',');
+        bindToWindow()
+      }
+      function splitOnSpaces(){
+        expArray = expression.split(' ');
+        bindToWindow();
+      }
+      function bindToWindow(){
+        if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object'){
+          if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['appObjects'] === 'object'){
+            if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['appObjects']['arrays'] === 'object'){
+              window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['appObjects']['arrays'][option] = expArray;
+            }else{
+              window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['appObjects']['arrays'] = {};
+              bindToWindow();
+            }
+          }else{
+            window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['appObjects'] = {};
+            bindToWindow();
+          }
+        }else{
+          window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
+          bindToWindow();
+        }
+      }
+      }catch(e){
+        new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+
+        })
+      }
+    }
+  },
+  objects:{
+    copy(obj){
+      let copy = null;
+      if(typeof obj === 'object'){
+        copy = Object.assign({},obj);
+      }
+      return copy;
+    },
+    bindToWindow(obj){
+      let copy = this.copy(obj);
+      if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object'){
+        window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['DataDumps'] = copy;
+      }else{
+        window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
+        window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['DataDumps'] = copy;
+      }
+    }
+  },
+  /**
+   * Function that operates a multi replace on a string and
+   * returns the string with replacements
+   * @param {string} src
+   * @param {string} obj
+   * @returns {string}
+   * @example
+   * .stripper('this is a string',{'this:'that','those':'these'})
+   */
+  stripper:function(src,obj){
+    if(typeof obj === 'object'){
+      let o;
+      for(o in obj){
+        src = src.replace(o,obj[o]);
+      }
+      return src;
+    }
+  },
+  load:function (url, target){
+    $(target).load(url);
+  },
+  getScript:function (url, fn){
+    $.getScript(url).done((script, textStatus) => {
+      fn();
+    }).fail(function (jqxhr, settings, exception) {
+      new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+        origin:'FastUtilities.getScript',
+        type:'AJAX Error',
+        message:`Unable to load the remote script ${exception}`,
+        log:false
+      })
+    });
+  },
+  /**
+   * simple function that counts the number of ftx nodes on a
+   * specific page and returns an object mapping all of them
+   * @returns {{}}
+   */
+  countFtx:function(){
+    let countLog = {};
+    $('*[ftx-render]').each((a,b)=>{
+      countLog[a] = b;
+    });
+    return countLog;
+  },
+  /**
+   * Simple function that creates and returns a unique string
+   * tha is used as an id for other objects and elements
+   * @returns {string}
+   */
+  genFtxId:function(){
+    let d = new Date();
+    let uniqueArray = FastUtilities.ui.shuffleArray(['f','as','t','e','r']).join('');
+    return `${uniqueArray}${d.getHours()}-${d.getMilliseconds()}`;
+  },
+  poll:{
+    server:function(){
+
+    },
+    ip:function(){
+
+    },
+    database:function(qs){
+
+    }
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastUtilities;
+
+const StylizeUtilities = {
+  argsObj: {},
+  default: 'styles',
+  build:function(obj,params,element){
+    obj = obj === 'paragraph' ? 'p' : obj;
+    let htmlContent = this.argsObj[obj]['content'].trim();
+    let htmlString = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].div.styled.replace(/@elem/g,obj).replace('@id',__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].id.replace('@id',FastUtilities.genFtxId()));
+    let styleString = '';
+    if(typeof params === 'object'){
+      let p;
+      for(p in params){
+        styleString+=`${p}:${params[p]};`;
+      }
+    }
+    let buildString = styleString !== '' ? htmlString.replace('@style',styleString) : htmlString.replace(' style="@style"','');
+    buildString = buildString.replace('@content',htmlContent);
+    __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appRoot).find(`[fstx-id="${element}"]`),__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].experiment.render,buildString,true);
+  },
+  make: function (arg,content) {
+    this.argsObj = {};
+    let argsArray = arg.split(' ');
+    argsArray[0] = argsArray[0] === 'paragraph' ? 'p' : argsArray[0];
+    this.argsObj[argsArray[0]] = {};
+    this.argsObj[argsArray[0]]['content'] = content;
+    this.argsObj[argsArray[0]][this.default] = {};
+    let tempObj = argsArray[0];
+    argsArray = argsArray.splice(1);
+    let a;
+    let altString = [];
+    let bltString = [];
+    for (a in argsArray) {
+      if ((a % 2 === 0)) {
+        argsArray[a] !== '' ? altString.push(argsArray[a]) : null;
+      } else {
+        argsArray[a] !== '' ? bltString.push(argsArray[a]) : null;
+      }
+    }
+    return this.objectify(tempObj, altString, bltString)
+  },
+  objectify: function (obj, a, b) {
+    if (a.length === b.length) {
+      let i;
+      for (i in a) {
+        this.argsObj[obj]['styles'][a[i]] = b[i];
+      }
+    }
+    return this.argsObj;
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["b"] = StylizeUtilities;
+
+
+if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object'){
+  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['utilities'] = FastUtilities;
+}else{
+  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
+  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['utilities'] = FastUtilities;
+}
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_RegisterState__ = __webpack_require__(5);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -11326,470 +11827,7 @@ if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].
   window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
   window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['core'] = Faster;
 }
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/**
- * Created by David Maser on 29/06/2017.
- */
-
-class RegisterState{
-  /**
-   * This class registers states and state changes and a global object
-   * Type __faster__ (or the name of the app defined in config/Global)
-   * in console to view the object and it's properties
-   * @param {string} obj
-   * @param {(boolean|object)} val
-   * @param {(string|null)} parent
-   */
-  constructor(obj,val,parent){
-    this.obj = obj;
-    this.val = val;
-    this.parent = parent;
-    this.run();
-  }
-  run(){
-    typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] !== 'object' ? window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] = {} : null;
-    if(this.parent !== '' && this.parent !== undefined){
-      if(typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent] === 'object'){
-        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent][this.obj] = this.val;
-      }else{
-        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent] = {};
-        window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.parent][this.obj] = this.val;
-      }
-    }else{
-      window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj][this.obj] = this.val;
-    }
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = RegisterState;
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(5);
-/**
- * Created by David Maser on 13/07/2017.
- */
-
-
-
-
-const FastUtilities = {
-  ui:{
-    image:function(option,expression,element){
-      let imgUrl = expression.indexOf('url:') > -1 ? expression.split('url:')[1] : null;
-      let imgLoad = $('<img />');
-      imgLoad.attr('src',imgUrl);
-      imgLoad.unbind('load');
-      imgLoad.bind('load', function () {
-        let width,height,numValue,imageString;
-        if(isNaN(option) === true){
-          switch(option){
-            case 'full':
-              width = this.width;
-              height = this.height;
-              break;
-            case 'half':
-              width = Math.round(this.width/2);
-              height = Math.round(this.height/2);
-              break;
-            case 'quarter':
-              width = Math.round(this.width/4);
-              height = Math.round(this.height/4);
-              break;
-            case 'eighth':
-              width = Math.round(this.width/8);
-              height = Math.round(this.height/8);
-              break;
-          }
-        }else{
-          numValue = parseInt(option);
-          width = Math.round(this.width/numValue);
-          height = Math.round(this.height/numValue);
-        }
-        imageString = imgLoad[0].outerHTML.replace('">',`" width="${width}" height="${height}">`);
-        __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appRoot).find(`[fstx-id="${element}"]`),null,imageString,true);
-      });
-    },
-    /**
-     * Simple function that creates a placeholder object in the
-     * page.
-     * @param {string} type
-     * @returns {string}
-     */
-    placeholder:function(type){
-      return `<div class="ftx__placeholder ${type}"></div>`
-    },
-    /**
-     * This function unbinds existing elements from the dom and
-     * groups them all together in a single parent. This is useful
-     * @param {string} option
-     * @param {string} expression
-     * @returns {string}
-     */
-    group:function(option,expression){
-      option = option !== null ? option : 'section';
-      return `<${option} class="ftx__group ${option}" role="group">${expression}</${option}>`;
-    },
-    /**
-     * Function takes a string and based on the option that is used,
-     * retains x number of characters and, optionally, adds an
-     * ellipsis to the beginning or the end of the returned string
-     * @param {string} option
-     * @param {string} expression
-     * @returns {string}
-     */
-    trim:function(option,expression){
-      let trimFrom = null;
-      if(option.indexOf(',')>-1){
-        trimFrom = option.split(',')[1];
-      }
-      let ellipsis;
-      if(expression.indexOf('{ellipsis}') > -1){
-        ellipsis = '...';
-        expression = expression.replace('{ellipsis}','');
-      }else{
-        ellipsis = '';
-      }
-      if(trimFrom === null || trimFrom === undefined){
-        expression = option !== '' && option !== undefined ? expression.slice(0, - option).trim() : expression;
-        expression+= ellipsis;
-      }else{
-        if(trimFrom === 'start'){
-          expression = expression.substring(option.split(',')[0]);
-          expression = ellipsis+expression;
-        }
-      }
-      return expression;
-    },
-    /**
-     * This function takes an existing element and unbinds it from the dom and
-     * appends it into a new clone host
-     * @param {string} option
-     * @param {string} expression
-     */
-    bind:function(option,expression){
-      $(__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appRoot).prepend(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].clone);
-      expression = expression.indexOf(',') > -1 ? expression.split(',') : expression;
-      if(Array.isArray(expression)){
-        expression.map(function(a){
-          /*
-          set a timeout so that all other dynamic elements
-          can render before unbinding them and appending
-          them to their new host
-          */
-          window.setTimeout(function(){
-            $(`#${a}`).attr('ftx-cloned','true').appendTo('section[ftx-clone]');
-          },100);
-        })
-      }else{
-        window.setTimeout(function(){
-          $(`#${expression}`).attr('ftx-cloned','true').appendTo('section[ftx-clone]');
-        },100);
-      }
-    },
-    /**
-     * This function takes an array of html elements and randomizes their position
-     * on the page, within a parent container
-     * @param {string} option
-     * @param {string} expression
-     * @returns {string}
-     */
-    random:function(option,expression){
-      option = option !== null ? option : 'section';
-      let elementArray = expression.trim().split(/\r?\n/);
-      return __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].random.layout.replace(/@option/g,option).replace('@content',this.shuffleArray(elementArray).join(''));
-    },
-    /**
-     * THis function takes an array and reorders it's contents to create a
-     * random order for the returned array
-     * @param {object|array} array
-     * @returns {object|array}
-     */
-    shuffleArray: function (array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        let temp = array[i].trim();
-        array[i] = array[j].trim();
-        array[j] = temp;
-      }
-      return array;
-    },
-    /**
-     * Simple function that wraps elements in a mobile container. Option can be set to default
-     * or 1 of the accepted breakpoint values
-     * @param {string} option
-     * @param {string} expression
-     * @returns {string}
-     */
-    mobile:function(option,expression){
-      option = option !== null ? option : 'default';
-      return `<section class="ftx__mobile size__${option}">${expression}</section>`;
-    }
-  },
-  ux:{
-    /**
-     * Function that adds a prefetch meta element to the page head
-     * when the page initially loads.
-     * @param {string} option
-     * @param {string} expression
-     */
-    prefetch:function(option,expression){
-      try {
-        option = option !== null ? option : 'section';
-        let elementArray = expression.trim().split(/\r?\n/);
-        let elementString = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].head.prefetch;
-        if (Array.isArray(elementArray)) {
-          elementArray.map(function (a) {
-            $('head').append(elementString.replace('@prefetch.url', a.trim()));
-          })
-        }
-      }catch(e){
-        new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
-
-        })
-      }
-    }
-  },
-  components:{
-    /**
-     * Function that builds a search box component
-     * @param {string} option
-     * @param {string} expression
-     * @returns {string}
-     */
-    search:function(option,expression){
-      let templateStr;
-      let expArray = expression.indexOf(',') > -1 ? expression.split(',') : expression;
-      switch(option){
-        case 'default':
-          templateStr = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].forms.search.layout.replace('@search.button',__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].forms.search.button);
-          break;
-      }
-      if(Array.isArray(expArray)){
-        expArray.map(function(a){
-          templateStr = templateStr.replace(`@search.${a.split(':')[0]}`,a.split(':')[1]);
-        })
-      }
-      return templateStr;
-    },
-    card:function(option,expression){
-
-    }
-  },
-  array:{
-    /**
-     * Function removes all trailing white space from an array and
-     * returns an clean array. Currently, the functions bounces to
-     * the removeEmpty function to deep clean and remove all empty
-     * entries
-     * @param {object[]} arr
-     * @returns {*|Object[]}
-     */
-    clean(arr){
-      let clearArr = arr.map((a) =>{
-        return a.length !== 0 ? a.trim() : '';
-      });
-      return this.removeEmpty(clearArr);
-    },
-    /**
-     * Function removes empty entries from an array and returns an
-     * array that contains no undefined or null entries
-     * @param {object[]} arr
-     * @returns {object[]}
-     */
-    removeEmpty(arr){
-      let i = 0;
-      arr.map(function(a){
-        if(a.length === 0){
-          arr.splice(i,1);
-        }
-        i++;
-      });
-      return arr;
-    },
-    /**
-     * This function removes items from an array if they are present in another
-     * array. This allows you to remove multiple entries from an array all at
-     * once
-     * @param {object[]} arr
-     * @param {object[]} list
-     * @returns {object[]}
-     * @example
-     * .removeEntries(['one','two','three','four'],['one','four'])
-     */
-    removeEntries(arr,list){
-      let i = 0;
-      list.map((a)=>{
-        if(arr.indexOf(a)>-1){
-          arr.splice(i,1);
-        }
-        i++;
-      });
-      return arr;
-    },
-    concatenate(arr1,arr2){
-      return arr1.concat(arr2);
-    }
-  },
-  objects:{
-    copy(obj){
-      let copy = null;
-      if(typeof obj === 'object'){
-        copy = Object.assign({},obj);
-      }
-      return copy;
-    },
-    bindToWindow(obj){
-      let copy = this.copy(obj);
-      if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object'){
-        window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['DataDumps'] = copy;
-      }else{
-        window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
-        window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['DataDumps'] = copy;
-      }
-    }
-  },
-  /**
-   * Function that operates a multi replace on a string and
-   * returns the string with replacements
-   * @param {string} src
-   * @param {string} obj
-   * @returns {string}
-   * @example
-   * .stripper('this is a string',{'this:'that','those':'these'})
-   */
-  stripper:function(src,obj){
-    if(typeof obj === 'object'){
-      let o;
-      for(o in obj){
-        src = src.replace(o,obj[o]);
-      }
-      return src;
-    }
-  },
-  load:function (url, target){
-    $(target).load(url);
-  },
-  getScript:function (url, fn){
-    $.getScript(url).done((script, textStatus) => {
-      fn();
-    }).fail(function (jqxhr, settings, exception) {
-      new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
-        origin:'FastUtilities.getScript',
-        type:'AJAX Error',
-        message:`Unable to load the remote script ${exception}`,
-        log:false
-      })
-    });
-  },
-  /**
-   * simple function that counts the number of ftx nodes on a
-   * specific page and returns an object mapping all of them
-   * @returns {{}}
-   */
-  countFtx:function(){
-    let countLog = {};
-    $('*[ftx-render]').each((a,b)=>{
-      countLog[a] = b;
-    });
-    return countLog;
-  },
-  /**
-   * Simple function that creates and returns a unique string
-   * tha is used as an id for other objects and elements
-   * @returns {string}
-   */
-  genFtxId:function(){
-    let d = new Date();
-    let uniqueArray = FastUtilities.ui.shuffleArray(['f','as','t','e','r']).join('');
-    return `${uniqueArray}${d.getHours()}-${d.getMilliseconds()}`;
-  },
-  poll:{
-    server:function(){
-
-    },
-    ip:function(){
-
-    },
-    database:function(qs){
-
-    }
-  }
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastUtilities;
-
-const StylizeUtilities = {
-  argsObj: {},
-  default: 'styles',
-  build:function(obj,params,element){
-    obj = obj === 'paragraph' ? 'p' : obj;
-    let htmlContent = this.argsObj[obj]['content'].trim();
-    let htmlString = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].div.styled.replace(/@elem/g,obj).replace('@id',__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].id.replace('@id',FastUtilities.genFtxId()));
-    let styleString = '';
-    if(typeof params === 'object'){
-      let p;
-      for(p in params){
-        styleString+=`${p}:${params[p]};`;
-      }
-    }
-    let buildString = styleString !== '' ? htmlString.replace('@style',styleString) : htmlString.replace(' style="@style"','');
-    buildString = buildString.replace('@content',htmlContent);
-    __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appRoot).find(`[fstx-id="${element}"]`),__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].experiment.render,buildString,true);
-  },
-  make: function (arg,content) {
-    this.argsObj = {};
-    let argsArray = arg.split(' ');
-    argsArray[0] = argsArray[0] === 'paragraph' ? 'p' : argsArray[0];
-    this.argsObj[argsArray[0]] = {};
-    this.argsObj[argsArray[0]]['content'] = content;
-    this.argsObj[argsArray[0]][this.default] = {};
-    let tempObj = argsArray[0];
-    argsArray = argsArray.splice(1);
-    let a;
-    let altString = [];
-    let bltString = [];
-    for (a in argsArray) {
-      if ((a % 2 === 0)) {
-        argsArray[a] !== '' ? altString.push(argsArray[a]) : null;
-      } else {
-        argsArray[a] !== '' ? bltString.push(argsArray[a]) : null;
-      }
-    }
-    return this.objectify(tempObj, altString, bltString)
-  },
-  objectify: function (obj, a, b) {
-    if (a.length === b.length) {
-      let i;
-      for (i in a) {
-        this.argsObj[obj]['styles'][a[i]] = b[i];
-      }
-    }
-    return this.argsObj;
-  }
-};
-/* harmony export (immutable) */ __webpack_exports__["b"] = StylizeUtilities;
-
-
-if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object'){
-  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['utilities'] = FastUtilities;
-}else{
-  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
-  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['utilities'] = FastUtilities;
-}
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 8 */
@@ -12356,11 +12394,11 @@ module.exports = Cancel;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_components_Faster__ = __webpack_require__(5);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_components_Faster__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_classes_Sniffer__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_classes_FastDom__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_classes_FastDom__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__src_config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_css_scss_Fast_scss__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_css_scss_Fast_scss__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_css_scss_Fast_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__src_css_scss_Fast_scss__);
 /**
  * Created by David Maser on 19/06/2017.
@@ -12374,7 +12412,7 @@ $(function(){
   __WEBPACK_IMPORTED_MODULE_3__src_config_Global__["a" /* Global */].appEvents.enable === true ? new __WEBPACK_IMPORTED_MODULE_2__src_classes_FastDom__["a" /* default */]() : null; //turn on mutation observers for all ftx-render objects
   $.when(new __WEBPACK_IMPORTED_MODULE_1__src_classes_Sniffer__["a" /* default */]()).done(__WEBPACK_IMPORTED_MODULE_0__src_components_Faster__["b" /* Faster */].exec())
 });
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 16 */
@@ -12409,7 +12447,7 @@ class Logger{
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cycle__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(68);
 /**
  * Created by David Maser on 19/06/2017.
  */
@@ -12442,11 +12480,11 @@ class Sniffer{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Faster__ = __webpack_require__(5);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Faster__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Woops__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RegisterState__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RegisterState__ = __webpack_require__(5);
 /**
  * Created by David Maser on 21/06/2017.
  */
@@ -12551,7 +12589,7 @@ class Cycle{
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Cycle;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 19 */
@@ -12577,9 +12615,9 @@ class Cycle{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__FastVideo__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__classes_FastAnalytics__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__classes_FastStylize__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__functions_FastMap__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__FastFilter__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__FastUtilities__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__functions_FastMap__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__FastFilter__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__FastUtilities__ = __webpack_require__(6);
 /**
  * Created by David Maser on 21/06/2017.
  */
@@ -12708,6 +12746,9 @@ function FastProcessor(type, option, expression, element){
       break;
     case 'trim':
       return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.trim(option,expression);
+      break;
+    case 'array':
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].array.generate(option,expression);
       break;
 
   }
@@ -12858,7 +12899,7 @@ function FastCondition(option, expression){
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GetAjax__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RegisterState__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RegisterState__ = __webpack_require__(5);
 /**
  * Created by David Maser on 22/06/2017.
  */
@@ -12900,9 +12941,9 @@ class FastAjax{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__functions_FastTemplate__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__ = __webpack_require__(5);
 /**
  * Created by David Maser on 20/06/2017.
  */
@@ -12968,7 +13009,7 @@ function GetAjax(url, props,element) {
     });
 }
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 25 */
@@ -13850,7 +13891,7 @@ module.exports = function spread(callback) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastTemplate;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_TemplateUtilities__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_TemplateTableUtilities__ = __webpack_require__(46);
 /**
@@ -13904,7 +13945,7 @@ const TemplateUtilities = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /**
  * Created by David Maser on 22/06/2017.
  */
@@ -13942,7 +13983,7 @@ const TemplateTableUtilities = {
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = TemplateTableUtilities;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 47 */
@@ -13950,7 +13991,7 @@ const TemplateTableUtilities = {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastForm;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FormElements__ = __webpack_require__(48);
 /**
  * Created by David Maser on 26/06/2017.
@@ -14070,7 +14111,7 @@ function FormElements(obj){
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastGutter;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /**
  * Created by David Maser on 27/06/2017.
  */
@@ -14088,7 +14129,7 @@ function FastGutter(option, expression){
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastPanel;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /**
  * Created by David Maser on 27/06/2017.
  */
@@ -14106,9 +14147,9 @@ function FastPanel(option, expression){
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastModal;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(5);
 /**
  * Created by David Maser on 29/06/2017.
  */
@@ -14157,7 +14198,7 @@ function FastModal(option, expression){
   });
   return templateString;
 }
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 52 */
@@ -14267,7 +14308,7 @@ function FastHtml(option, expression){
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastHtmlEvents__ = __webpack_require__(54);
 /**
  * Created by David Maser on 29/06/2017.
@@ -14373,7 +14414,7 @@ class FastHtmlEvents{
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastHtmlEvents;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 55 */
@@ -14437,7 +14478,7 @@ class FastAnimator{
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
 /**
  * Created by David Maser on 04/07/2017.
  */
@@ -14499,7 +14540,7 @@ const FastAnimatorFunctions={
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastAnimatorFunctions;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 58 */
@@ -14508,9 +14549,9 @@ const FastAnimatorFunctions={
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastNav;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions_FastUtilities__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions_FastUtilities__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__classes_Woops__ = __webpack_require__(4);
 /**
  * Created by David Maser on 10/07/2017.
@@ -14644,7 +14685,7 @@ function FastNav(option,expression,element){
     }
   }
 }
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 59 */
@@ -14652,9 +14693,9 @@ function FastNav(option,expression,element){
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastAccordion;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastUtilities__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastUtilities__ = __webpack_require__(6);
 /**
  * Created by David Maser on 12/07/2017.
  */
@@ -14712,7 +14753,7 @@ function FastAccordion(option,expression){
   let trimObj = expression.trim().split(/\r?\n/);
   return builder.init(option,trimObj);
 }
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 60 */
@@ -14721,8 +14762,8 @@ function FastAccordion(option,expression){
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastTable;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(7);
 /**
  * Created by David Maser on 13/07/2017.
  */
@@ -14815,7 +14856,7 @@ function FastTable(option,expression,element){
     }
   }
 }
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 61 */
@@ -14847,16 +14888,16 @@ function FastSticky(option,expression) {
   });
 }
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FastUtilities__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FastUtilities__ = __webpack_require__(6);
 /**
  * Created by David Maser on 18/07/2017.
  */
@@ -14918,15 +14959,15 @@ function FastSticky(option,expression) {
   bannerTemplate = bannerTemplate.replace('@option',option).replace('@content',bannerContent);
   return bannerTemplate;
 });
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__ = __webpack_require__(6);
 /**
  * Created by David Maser on 18/07/2017.
  */
@@ -15034,7 +15075,7 @@ function FastSticky(option,expression) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_Woops__ = __webpack_require__(4);
 /**
  * Created by David Maser on 20/07/2017.
@@ -15079,7 +15120,12 @@ class FastAnalytics {
           break;
       }
     }catch(e){
-      new __WEBPACK_IMPORTED_MODULE_2__classes_Woops__["a" /* default */]({})
+      new __WEBPACK_IMPORTED_MODULE_2__classes_Woops__["a" /* default */]({
+        origin:'FastAnalytics.build',
+        type:'Unable To Execute Class',
+        message:'An unknown error occured. FastAnalytics can not execute',
+        log:false
+      })
     }
   }
 
@@ -15133,15 +15179,15 @@ class FastAnalytics {
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastAnalytics;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 65 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__ = __webpack_require__(6);
 /**
  * Created by David Maser on 24/07/2017.
  */
@@ -15187,14 +15233,129 @@ class FastStylize{
 
 
 /***/ }),
-/* 66 */,
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_FastUtilities__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
+/**
+ * Created by David Maser on 25/07/2017.
+ */
+
+
+/**
+ * The map object creates a link map view. Link maps can be a group of
+ * links beneath a same parent or simple links
+ * @param {string} option
+ * @param {string} expression
+ * @returns {string|object}
+ */
+/* harmony default export */ __webpack_exports__["a"] = (function(option,expression){
+  /**
+   * Function processes sublinks and places them all in a unique
+   * parent container
+   * @param {object|array} arr
+   * @returns {string}
+   */
+  function processSubLinks(arr){
+    let subLinkArr = arr.split('&gt;');
+    let subLinkString = '';
+    subLinkArr.map(function(a){
+      subLinkString += subLinkItem.replace('@action',a.split(',')[1].trim()).replace('@link',a.split(',')[0].trim())
+    });
+    return subLinkHolder.replace('@links',subLinkString);
+  }
+
+  let expArray = expression.split(/\r?\n/);
+  expArray = __WEBPACK_IMPORTED_MODULE_0__functions_FastUtilities__["a" /* FastUtilities */].array.clean(expArray);
+  let linkTemplate = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].linkMap.layout;
+  let linkItem = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].linkMap.links.layout;
+  let subLinkItem = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].linkMap.subLinks.layout;
+  let subLinkHolder = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].linkMap.subLinks.holder;
+  let linkString = '';
+  expArray.map((a)=>{
+    linkString += a.indexOf('&gt;')>-1 ? processSubLinks(a) : linkItem.replace('@action',a.split(',')[1]).replace('@link',a.split(',')[0]);
+  });
+  return linkTemplate.replace('@links',linkString).replace('@id',__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].id.replace('@id',__WEBPACK_IMPORTED_MODULE_0__functions_FastUtilities__["a" /* FastUtilities */].genFtxId()));
+});
+
+/***/ }),
 /* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Config__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Woops__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(6);
+/**
+ * Created by David Maser on 26/07/2017.
+ */
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = (function(option,expression){
+  let acceptedOptions = ['language','code','custom'];
+  if(acceptedOptions.indexOf(option)>-1){
+    switch(option){
+      case 'language':
+        let languageStore = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].rules.language.restricted;
+        if(Array.isArray(languageStore)){
+          languageStore.map(function(a){
+            expression = expression.replace(new RegExp(a,'g'),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].rules.language.replacement);
+          })
+        }
+        return expression;
+        break;
+      case 'code':
+        /**
+         * Removes all code blocks from a string based on rules passed in
+         * the filter object.
+         */
+        if(expression.indexOf('{rules:')>-1){
+          let ruleArray = expression.split('{rules:')[1].split('}')[0].split(',');
+          expression = expression.split('{rules:')[1].split('}')[1]; //remove the rules object
+          if(Array.isArray(ruleArray)){
+            ruleArray.map((a)=>{
+              if(a === 'br' || a === 'hr'){
+                expression = expression.replace(new RegExp(`<${a} />`,'g'),'').replace(new RegExp(`<${a}>`,'g'),'');
+              }else{
+                let tagOpen = `<${a}>`;
+                let tagClose = `</${a}>`;
+                expression = expression.replace(new RegExp(tagOpen,'g'),'').replace(new RegExp(tagClose,'g'),'');
+              }
+            })
+          }
+          return expression;
+        }else{
+          /**
+           * removes all html code blocks from a string
+           * @type {Element}
+           * @return {string}
+           */
+          let container = document.createElement('div');
+          container.innerHTML = expression;
+          return container.textContent || container.innerText || '';
+        }
+        break;
+    }
+  }else{
+    new __WEBPACK_IMPORTED_MODULE_1__classes_Woops__["a" /* default */]({
+      origin:'FastFilter',
+      type:'Option Parameter Error',
+      message:'Option parameter does not match any accepted options',
+      log:false
+    })
+  }
+});
+
+/***/ }),
+/* 68 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Config__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Woops__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(5);
 /**
  * Created by David Maser on 29/06/2017.
  */
@@ -15237,7 +15398,7 @@ class FastPlugin{
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15278,11 +15439,11 @@ const PluginAbstractor = {
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_DomManager__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_DomManager__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
 /**
  * Created by David Maser on 19/07/2017.
@@ -15306,7 +15467,7 @@ class FastDom{
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15374,16 +15535,16 @@ if(typeof window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].
   window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj] = {};
   window[__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appObj]['domManager'] = window.itsDOMLoading;
 }
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(72);
+var content = __webpack_require__(73);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -15391,7 +15552,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(74)(content, options);
+var update = __webpack_require__(75)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -15408,10 +15569,10 @@ if(false) {
 }
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(73)(undefined);
+exports = module.exports = __webpack_require__(74)(undefined);
 // imports
 
 
@@ -15422,7 +15583,7 @@ exports.push([module.i, "body[faster=\"template\"]{display:none}body[faster=\"re
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports) {
 
 /*
@@ -15504,7 +15665,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -15550,7 +15711,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(75);
+var	fixUrls = __webpack_require__(76);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -15863,7 +16024,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports) {
 
 
@@ -15956,118 +16117,6 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
-
-/***/ }),
-/* 76 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_FastUtilities__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(2);
-/**
- * Created by David Maser on 25/07/2017.
- */
-
-
-/**
- * The map object creates a link map view. Link maps can be a group of
- * links beneath a same parent or simple links
- * @param {string} option
- * @param {string} expression
- * @returns {string|object}
- */
-/* harmony default export */ __webpack_exports__["a"] = (function(option,expression){
-  /**
-   * Function processes sublinks and places them all in a unique
-   * parent container
-   * @param {object|array} arr
-   * @returns {string}
-   */
-  function processSubLinks(arr){
-    let subLinkArr = arr.split('&gt;');
-    let subLinkString = '';
-    subLinkArr.map(function(a){
-      subLinkString += subLinkItem.replace('@action',a.split(',')[1].trim()).replace('@link',a.split(',')[0].trim())
-    });
-    return subLinkHolder.replace('@links',subLinkString);
-  }
-
-  let expArray = expression.split(/\r?\n/);
-  expArray = __WEBPACK_IMPORTED_MODULE_0__functions_FastUtilities__["a" /* FastUtilities */].array.clean(expArray);
-  let linkTemplate = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].linkMap.layout;
-  let linkItem = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].linkMap.links.layout;
-  let subLinkItem = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].linkMap.subLinks.layout;
-  let subLinkHolder = __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].linkMap.subLinks.holder;
-  let linkString = '';
-  expArray.map((a)=>{
-    linkString += a.indexOf('&gt;')>-1 ? processSubLinks(a) : linkItem.replace('@action',a.split(',')[1]).replace('@link',a.split(',')[0]);
-  });
-  return linkTemplate.replace('@links',linkString).replace('@id',__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].id.replace('@id',__WEBPACK_IMPORTED_MODULE_0__functions_FastUtilities__["a" /* FastUtilities */].genFtxId()));
-});
-
-/***/ }),
-/* 77 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Woops__ = __webpack_require__(4);
-/**
- * Created by David Maser on 26/07/2017.
- */
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = (function(option,expression){
-  let acceptedOptions = ['language','code','custom'];
-  if(acceptedOptions.indexOf(option)>-1){
-    switch(option){
-      case 'language':
-        let languageStore = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].rules.language.restricted;
-        if(Array.isArray(languageStore)){
-          languageStore.map(function(a){
-            expression = expression.replace(new RegExp(a,'g'),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].rules.language.replacement);
-          })
-        }
-        return expression;
-        break;
-      case 'code':
-        /**
-         * Removes all code blocks from a string based on rules passed in
-         * the filter object.
-         */
-        if(expression.indexOf('{rules:')>-1){
-          let ruleArray = expression.split('{rules:')[1].split('}')[0].split(',');
-          expression = expression.split('{rules:')[1].split('}')[1]; //remove the rules object
-          if(Array.isArray(ruleArray)){
-            ruleArray.map((a)=>{
-              if(a === 'br' || a === 'hr'){
-                expression = expression.replace(new RegExp(`<${a} />`,'g'),'').replace(new RegExp(`<${a}>`,'g'),'');
-              }else{
-                let tagOpen = `<${a}>`;
-                let tagClose = `</${a}>`;
-                expression = expression.replace(new RegExp(tagOpen,'g'),'').replace(new RegExp(tagClose,'g'),'');
-              }
-            })
-          }
-          return expression;
-        }else{
-          /**
-           * removes all html code blocks from a string
-           * @type {Element}
-           */
-          let container = document.createElement('div');
-          container.innerHTML = expression;
-          return container.textContent || container.innerText || '';
-        }
-        break;
-    }
-  }else{
-    new __WEBPACK_IMPORTED_MODULE_1__classes_Woops__["a" /* default */]({
-
-    })
-  }
-});
 
 /***/ })
 /******/ ]);

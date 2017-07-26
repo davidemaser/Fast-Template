@@ -264,6 +264,42 @@ export const FastUtilities = {
     },
     concatenate(arr1,arr2){
       return arr1.concat(arr2);
+    },
+    generate(option,expression){
+      try{
+      let expArray;
+      expression.indexOf(',') > -1 ? splitOnCommas() : splitOnSpaces();
+      function splitOnCommas(){
+        expArray = expression.split(',');
+        bindToWindow()
+      }
+      function splitOnSpaces(){
+        expArray = expression.split(' ');
+        bindToWindow();
+      }
+      function bindToWindow(){
+        if(typeof window[Global.appObj] === 'object'){
+          if(typeof window[Global.appObj]['appObjects'] === 'object'){
+            if(typeof window[Global.appObj]['appObjects']['arrays'] === 'object'){
+              window[Global.appObj]['appObjects']['arrays'][option] = expArray;
+            }else{
+              window[Global.appObj]['appObjects']['arrays'] = {};
+              bindToWindow();
+            }
+          }else{
+            window[Global.appObj]['appObjects'] = {};
+            bindToWindow();
+          }
+        }else{
+          window[Global.appObj] = {};
+          bindToWindow();
+        }
+      }
+      }catch(e){
+        new Woops({
+
+        })
+      }
     }
   },
   objects:{
