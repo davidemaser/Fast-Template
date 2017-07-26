@@ -9,18 +9,18 @@ export default function(option,expression){
   if(acceptedOptions.indexOf(option)>-1){
     switch(option){
       case 'language':
-        let languageStore = Global.rules.language;
+        let languageStore = Global.rules.language.restricted;
         if(Array.isArray(languageStore)){
           languageStore.map(function(a){
-            expression = expression.replace(new RegExp(a,'g'),'***');
+            expression = expression.replace(new RegExp(a,'g'),Global.rules.language.replacement);
           })
         }
         return expression;
         break;
       case 'code':
-        let container = document.createElement("div");
+        let container = document.createElement('div');
         container.innerHTML = expression;
-        return container.textContent || container.innerText || "";
+        return container.textContent || container.innerText || '';
         break;
     }
   }else{

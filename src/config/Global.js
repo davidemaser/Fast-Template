@@ -53,7 +53,10 @@ export const Global = {
     ]
   },
   rules:{
-    language:['crap','poo','caca']
+    language:{
+      restricted:['crap','poo','caca'],
+      replacement:'***'
+    }
   }
 };
 export let Log = [];

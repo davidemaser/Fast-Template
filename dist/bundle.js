@@ -124,7 +124,10 @@ const Global = {
     ]
   },
   rules:{
-    language:['crap','poo','caca']
+    language:{
+      restricted:['crap','poo','caca'],
+      replacement:'***'
+    }
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Global;
@@ -15999,18 +16002,18 @@ module.exports = function (css) {
   if(acceptedOptions.indexOf(option)>-1){
     switch(option){
       case 'language':
-        let languageStore = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].rules.language;
+        let languageStore = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].rules.language.restricted;
         if(Array.isArray(languageStore)){
           languageStore.map(function(a){
-            expression = expression.replace(new RegExp(a,'g'),'***');
+            expression = expression.replace(new RegExp(a,'g'),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].rules.language.replacement);
           })
         }
         return expression;
         break;
       case 'code':
-        let container = document.createElement("div");
+        let container = document.createElement('div');
         container.innerHTML = expression;
-        return container.textContent || container.innerText || "";
+        return container.textContent || container.innerText || '';
         break;
     }
   }else{
