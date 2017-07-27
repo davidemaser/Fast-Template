@@ -2,9 +2,9 @@
  * Created by David Maser on 19/06/2017.
  */
 import {Global} from '../config/Global';
-import Cycle from './Cycle';
+import FastCycle from './FastCycle';
 import FastPlugin from '../plugins/FastPlugin';
-export default class Sniffer{
+export default class FastSniffer{
   constructor(args){
     this.args = args;
     this.tag = Global.node;
@@ -16,7 +16,7 @@ export default class Sniffer{
     let order = Global.cycleOrder;
     if(Array.isArray(order)){
       order.map(function(tag){
-        new Cycle(tag);
+        new FastCycle(tag);
       });
     }
     new FastPlugin();

@@ -6,7 +6,7 @@ import {Global} from '../config/Global';
 import FastProcessor from '../functions/FastProcessor';
 import Woops from './Woops';
 import RegisterState from './RegisterState';
-export default class Cycle{
+export default class FastCycle{
   constructor(type){
     this.type = type;
     this.tag = Global.node;

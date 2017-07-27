@@ -12502,7 +12502,7 @@ module.exports = Cancel;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_components_Faster__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_classes_Sniffer__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_classes_FastSniffer__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_classes_FastDom__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__src_config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_css_scss_Fast_scss__ = __webpack_require__(72);
@@ -12517,7 +12517,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 $(function(){
   __WEBPACK_IMPORTED_MODULE_3__src_config_Global__["a" /* Global */].appEvents.enable === true ? new __WEBPACK_IMPORTED_MODULE_2__src_classes_FastDom__["a" /* default */]() : null; //turn on mutation observers for all ftx-render objects
-  $.when(new __WEBPACK_IMPORTED_MODULE_1__src_classes_Sniffer__["a" /* default */]()).done(__WEBPACK_IMPORTED_MODULE_0__src_components_Faster__["b" /* Faster */].exec())
+  $.when(new __WEBPACK_IMPORTED_MODULE_1__src_classes_FastSniffer__["a" /* default */]()).done(__WEBPACK_IMPORTED_MODULE_0__src_components_Faster__["b" /* Faster */].exec())
 });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
@@ -12548,41 +12548,7 @@ class Logger{
 
 
 /***/ }),
-/* 17 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cycle__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(68);
-/**
- * Created by David Maser on 19/06/2017.
- */
-
-
-
-class Sniffer{
-  constructor(args){
-    this.args = args;
-    this.tag = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].node;
-    this.ignore = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ignore;
-    this.cycle();
-  }
-
-  cycle(){
-    let order = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].cycleOrder;
-    if(Array.isArray(order)){
-      order.map(function(tag){
-        new __WEBPACK_IMPORTED_MODULE_1__Cycle__["a" /* default */](tag);
-      });
-    }
-    new __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__["a" /* default */]();
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Sniffer;
-
-
-/***/ }),
+/* 17 */,
 /* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -12600,7 +12566,7 @@ class Sniffer{
 
 
 
-class Cycle{
+class FastCycle{
   constructor(type){
     this.type = type;
     this.tag = __WEBPACK_IMPORTED_MODULE_1__config_Global__["a" /* Global */].node;
@@ -12694,7 +12660,7 @@ class Cycle{
     }
   }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Cycle;
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastCycle;
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
@@ -12722,7 +12688,7 @@ class Cycle{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__FastVideo__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__classes_FastAnalytics__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__classes_FastStylize__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__functions_FastMap__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__FastLinks__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__FastFilter__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__FastUtilities__ = __webpack_require__(6);
 /**
@@ -12818,8 +12784,8 @@ function FastProcessor(type, option, expression, element){
     case 'video':
       return __WEBPACK_IMPORTED_MODULE_15__FastVideo__["a" /* default */](option,expression);
       break;
-    case 'map':
-      return __WEBPACK_IMPORTED_MODULE_18__functions_FastMap__["a" /* default */](option,expression);
+    case 'links':
+      return __WEBPACK_IMPORTED_MODULE_18__FastLinks__["a" /* default */](option,expression);
       break;
     case 'filter':
       return __WEBPACK_IMPORTED_MODULE_19__FastFilter__["a" /* default */](option,expression);
@@ -16225,6 +16191,41 @@ module.exports = function (css) {
 	// send back the fixed css
 	return fixedCss;
 };
+
+
+/***/ }),
+/* 77 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FastCycle__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(68);
+/**
+ * Created by David Maser on 19/06/2017.
+ */
+
+
+
+class FastSniffer{
+  constructor(args){
+    this.args = args;
+    this.tag = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].node;
+    this.ignore = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ignore;
+    this.cycle();
+  }
+
+  cycle(){
+    let order = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].cycleOrder;
+    if(Array.isArray(order)){
+      order.map(function(tag){
+        new __WEBPACK_IMPORTED_MODULE_1__FastCycle__["a" /* default */](tag);
+      });
+    }
+    new __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__["a" /* default */]();
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastSniffer;
 
 
 /***/ })

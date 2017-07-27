@@ -19,7 +19,7 @@ import FastBanner from './FastBanner';
 import FastVideo from './FastVideo';
 import FastAnalytics from '../classes/FastAnalytics';
 import FastStylize from '../classes/FastStylize';
-import FastMap from '../functions/FastMap';
+import FastLinks from './FastLinks';
 import FastFilter from './FastFilter';
 import {FastUtilities} from './FastUtilities';
 /**
@@ -91,8 +91,8 @@ export default function FastProcessor(type, option, expression, element){
     case 'video':
       return FastVideo(option,expression);
       break;
-    case 'map':
-      return FastMap(option,expression);
+    case 'links':
+      return FastLinks(option,expression);
       break;
     case 'filter':
       return FastFilter(option,expression);
