@@ -12502,7 +12502,7 @@ module.exports = Cancel;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_components_Faster__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_classes_FastSniffer__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_classes_FastSniffer__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_classes_FastDom__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__src_config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_css_scss_Fast_scss__ = __webpack_require__(72);
@@ -12548,7 +12548,41 @@ class Logger{
 
 
 /***/ }),
-/* 17 */,
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FastCycle__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(68);
+/**
+ * Created by David Maser on 19/06/2017.
+ */
+
+
+
+class FastSniffer{
+  constructor(args){
+    this.args = args;
+    this.tag = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].node;
+    this.ignore = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ignore;
+    this.cycle();
+  }
+
+  cycle(){
+    let order = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].cycleOrder;
+    if(Array.isArray(order)){
+      order.map(function(tag){
+        new __WEBPACK_IMPORTED_MODULE_1__FastCycle__["a" /* default */](tag);
+      });
+    }
+    new __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__["a" /* default */]();
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastSniffer;
+
+
+/***/ }),
 /* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -16191,41 +16225,6 @@ module.exports = function (css) {
 	// send back the fixed css
 	return fixedCss;
 };
-
-
-/***/ }),
-/* 77 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FastCycle__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(68);
-/**
- * Created by David Maser on 19/06/2017.
- */
-
-
-
-class FastSniffer{
-  constructor(args){
-    this.args = args;
-    this.tag = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].node;
-    this.ignore = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ignore;
-    this.cycle();
-  }
-
-  cycle(){
-    let order = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].cycleOrder;
-    if(Array.isArray(order)){
-      order.map(function(tag){
-        new __WEBPACK_IMPORTED_MODULE_1__FastCycle__["a" /* default */](tag);
-      });
-    }
-    new __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__["a" /* default */]();
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = FastSniffer;
 
 
 /***/ })
