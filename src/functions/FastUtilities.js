@@ -120,33 +120,6 @@ export const FastUtilities = {
       }
     },
     /**
-     * This function takes an array of html elements and randomizes their position
-     * on the page, within a parent container
-     * @param {string} option
-     * @param {string} expression
-     * @returns {string}
-     */
-    random:function(option,expression){
-      option = option !== null ? option : 'section';
-      let elementArray = expression.trim().split(/\r?\n/);
-      return Template.random.layout.replace(/@option/g,option).replace('@content',this.shuffleArray(elementArray).join(''));
-    },
-    /**
-     * THis function takes an array and reorders it's contents to create a
-     * random order for the returned array
-     * @param {object|array} array
-     * @returns {object|array}
-     */
-    shuffleArray: function (array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        let temp = array[i].trim();
-        array[i] = array[j].trim();
-        array[j] = temp;
-      }
-      return array;
-    },
-    /**
      * Simple function that wraps elements in a mobile container. Option can be set to default
      * or 1 of the accepted breakpoint values
      * @param {string} option
@@ -156,6 +129,17 @@ export const FastUtilities = {
     mobile:function(option,expression){
       option = option !== null ? option : 'default';
       return `<section class="ftx__mobile size__${option}">${expression}</section>`;
+    },
+    wrap:function(option,expression){
+      let wordParams = expression.indexOf('{') > -1 ? expression.split('{')[1].split('}')[0] : null;
+      let wordArray = wordParams !== null ? wordParams.split(',') : wordParams;
+      expression = expression.split('{')[1].split('}')[1];
+      if(Array.isArray(wordArray)){
+        wordArray.map(function(a){
+          expression = expression.replace(new RegExp(a.split(' ')[0],'g'),`<${a.split(' ')[1]}>${a.split(' ')[0]}</${a.split(' ')[1]}>`);
+        });
+        return expression;
+      }
     }
   },
   ux:{
@@ -213,12 +197,41 @@ export const FastUtilities = {
   },
   array:{
     /**
+     * This function takes an array of html elements and randomizes their position
+     * on the page, within a parent container
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
+    random:function(option,expression){
+      option = option !== null ? option : 'section';
+      let elementArray = expression.trim().split(/\r?\n/);
+      return Template.random.layout.replace(/@option/g,option).replace('@content',this.shuffleArray(elementArray).join(''));
+    },
+    /**
+     * THis function takes an array and reorders it's contents to create a
+     * random order for the returned array
+     * @param {object|array} array
+     * @returns {object|array}
+     */
+    shuffleArray: function (array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        let temp = array[i].trim();
+        array[i] = array[j].trim();
+        array[j] = temp;
+      }
+      return array;
+    },
+    /**
      * Function removes all trailing white space from an array and
      * returns an clean array. Currently, the functions bounces to
      * the removeEmpty function to deep clean and remove all empty
      * entries
      * @param {object[]} arr
      * @returns {*|Object[]}
+     * @example
+     * .clean(['an ',' array','   with too','much ','whitespace    '])
      */
     clean(arr){
       let clearArr = arr.map((a) =>{
@@ -231,6 +244,8 @@ export const FastUtilities = {
      * array that contains no undefined or null entries
      * @param {object[]} arr
      * @returns {object[]}
+     * @example
+     * .removeEmpty(['one','two','','three])
      */
     removeEmpty(arr){
       let i = 0;
@@ -265,39 +280,65 @@ export const FastUtilities = {
     concatenate(arr1,arr2){
       return arr1.concat(arr2);
     },
-    generate(option,expression){
-      try{
-      let expArray;
-      expression.indexOf(',') > -1 ? splitOnCommas() : splitOnSpaces();
-      function splitOnCommas(){
-        expArray = expression.split(',');
-        bindToWindow()
-      }
-      function splitOnSpaces(){
-        expArray = expression.split(' ');
-        bindToWindow();
-      }
-      function bindToWindow(){
-        if(typeof window[Global.appObj] === 'object'){
-          if(typeof window[Global.appObj]['appObjects'] === 'object'){
-            if(typeof window[Global.appObj]['appObjects']['arrays'] === 'object'){
-              window[Global.appObj]['appObjects']['arrays'][option] = expArray;
-            }else{
-              window[Global.appObj]['appObjects']['arrays'] = {};
+    /**
+     * Function that generates an array from a string passed in the expression.
+     * Option is the name the array will be saved as. Check the Global.userObjects
+     * parameters to set up object saving and define the parent object and the
+     * namespace
+     * @param {string} option
+     * @param {string} expression
+     * @example
+     * .generate('someName','this,thing,that,we,call,an,array')
+     */
+    generate(option, expression){
+      try {
+        let expArray;
+        expression.indexOf(',') > -1 ? splitOnCommas() : splitOnSpaces();
+        /**
+         * Simple function that creates an array from the string by splitting
+         * on commas
+         */
+        function splitOnCommas() {
+          expArray = expression.split(',');
+          Global.userObjects.enable === true ? bindToWindow() : null;
+        }
+        /**
+         * Simple function that creates an array from the string by splitting
+         * on spaces
+         */
+        function splitOnSpaces() {
+          expArray = expression.split(' ');
+          Global.userObjects.enable === true ? bindToWindow() : null;
+        }
+        /**
+         * Function takes the generated array and binds it to the window object
+         * under {appRoot}->{userObjects}
+         */
+        function bindToWindow() {
+          let objSubId = Global.userObjects.array.identifier;
+          if (typeof window[Global.appObj] === 'object') {
+            if (typeof window[Global.appObj][Global.userObjects.handle] === 'object') {
+              if (typeof window[Global.appObj][Global.userObjects.handle][objSubId] === 'object') {
+                window[Global.appObj][Global.userObjects.handle][objSubId][option] = expArray;
+              } else {
+                window[Global.appObj][Global.userObjects.handle][objSubId] = {};
+                bindToWindow();
+              }
+            } else {
+              window[Global.appObj][Global.userObjects.handle] = {};
               bindToWindow();
             }
-          }else{
-            window[Global.appObj]['appObjects'] = {};
+          } else {
+            window[Global.appObj] = {};
             bindToWindow();
           }
-        }else{
-          window[Global.appObj] = {};
-          bindToWindow();
         }
-      }
-      }catch(e){
+      } catch (e) {
         new Woops({
-
+          origin:'FastUtilities.array.generate',
+          type:'Unable To Parse Array',
+          message:'Unable to parse the array from the expression string. Make sure all reserved symbols are escaped (commas,apostrophes,hyphens)',
+          log:false
         })
       }
     }
@@ -372,7 +413,7 @@ export const FastUtilities = {
    */
   genFtxId:function(){
     let d = new Date();
-    let uniqueArray = FastUtilities.ui.shuffleArray(['f','as','t','e','r']).join('');
+    let uniqueArray = FastUtilities.array.shuffleArray(['f','as','t','e','r']).join('');
     return `${uniqueArray}${d.getHours()}-${d.getMilliseconds()}`;
   },
   poll:{

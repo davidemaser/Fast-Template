@@ -8,8 +8,8 @@ export default class RegisterState{
    * Type __faster__ (or the name of the app defined in config/Global)
    * in console to view the object and it's properties
    * @param {string} obj
-   * @param {(boolean|object)} val
-   * @param {(string|null)} parent
+   * @param {string} val
+   * @param {string=} parent
    */
   constructor(obj,val,parent){
     this.obj = obj;

@@ -85,30 +85,6 @@ export default function FastProcessor(type, option, expression, element){
     case 'analytics':
       new FastAnalytics(option,expression);
       break;
-    case 'placeholder':
-      return FastUtilities.ui.placeholder(option);
-      break;
-    case 'group':
-      return FastUtilities.ui.group(option,expression);
-      break;
-    case 'search':
-      return FastUtilities.components.search(option,expression);
-      break;
-    case 'bind':
-      return FastUtilities.ui.bind(option,expression);
-      break;
-    case 'random':
-      return FastUtilities.ui.random(option,expression);
-      break;
-    case 'mobile':
-      return FastUtilities.ui.mobile(option,expression);
-      break;
-    case 'prefetch':
-      return FastUtilities.ux.prefetch(option,expression);
-      break;
-    case 'image':
-      return FastUtilities.ui.image(option,expression,element);
-      break;
     case 'banner':
       return FastBanner(option,expression);
       break;
@@ -130,6 +106,32 @@ export default function FastProcessor(type, option, expression, element){
     case 'array':
       return FastUtilities.array.generate(option,expression);
       break;
-
+    case 'placeholder':
+      return FastUtilities.ui.placeholder(option);
+      break;
+    case 'group':
+      return FastUtilities.ui.group(option,expression);
+      break;
+    case 'search':
+      return FastUtilities.components.search(option,expression);
+      break;
+    case 'bind':
+      return FastUtilities.ui.bind(option,expression);
+      break;
+    case 'random':
+      return FastUtilities.array.random(option,expression);
+      break;
+    case 'mobile':
+      return FastUtilities.ui.mobile(option,expression);
+      break;
+    case 'prefetch':
+      return FastUtilities.ux.prefetch(option,expression);
+      break;
+    case 'image':
+      return FastUtilities.ui.image(option,expression,element);
+      break;
+    case 'wrap':
+      return FastUtilities.ui.wrap(option,expression);
+      break;
   }
 }

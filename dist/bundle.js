@@ -128,6 +128,13 @@ const Global = {
       restricted:['crap','poo','caca'],
       replacement:'***'
     }
+  },
+  userObjects:{
+    enable:true,
+    handle:'userObjects',
+    array:{
+      identifier:'arrays'
+    }
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Global;
@@ -11035,8 +11042,8 @@ class RegisterState{
    * Type __faster__ (or the name of the app defined in config/Global)
    * in console to view the object and it's properties
    * @param {string} obj
-   * @param {(boolean|object)} val
-   * @param {(string|null)} parent
+   * @param {string} val
+   * @param {string=} parent
    */
   constructor(obj,val,parent){
     this.obj = obj;
@@ -11192,33 +11199,6 @@ const FastUtilities = {
       }
     },
     /**
-     * This function takes an array of html elements and randomizes their position
-     * on the page, within a parent container
-     * @param {string} option
-     * @param {string} expression
-     * @returns {string}
-     */
-    random:function(option,expression){
-      option = option !== null ? option : 'section';
-      let elementArray = expression.trim().split(/\r?\n/);
-      return __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].random.layout.replace(/@option/g,option).replace('@content',this.shuffleArray(elementArray).join(''));
-    },
-    /**
-     * THis function takes an array and reorders it's contents to create a
-     * random order for the returned array
-     * @param {object|array} array
-     * @returns {object|array}
-     */
-    shuffleArray: function (array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        let temp = array[i].trim();
-        array[i] = array[j].trim();
-        array[j] = temp;
-      }
-      return array;
-    },
-    /**
      * Simple function that wraps elements in a mobile container. Option can be set to default
      * or 1 of the accepted breakpoint values
      * @param {string} option
@@ -11228,6 +11208,17 @@ const FastUtilities = {
     mobile:function(option,expression){
       option = option !== null ? option : 'default';
       return `<section class="ftx__mobile size__${option}">${expression}</section>`;
+    },
+    wrap:function(option,expression){
+      let wordParams = expression.indexOf('{') > -1 ? expression.split('{')[1].split('}')[0] : null;
+      let wordArray = wordParams !== null ? wordParams.split(',') : wordParams;
+      expression = expression.split('{')[1].split('}')[1];
+      if(Array.isArray(wordArray)){
+        wordArray.map(function(a){
+          expression = expression.replace(new RegExp(a.split(' ')[0],'g'),`<${a.split(' ')[1]}>${a.split(' ')[0]}</${a.split(' ')[1]}>`);
+        });
+        return expression;
+      }
     }
   },
   ux:{
@@ -11285,12 +11276,41 @@ const FastUtilities = {
   },
   array:{
     /**
+     * This function takes an array of html elements and randomizes their position
+     * on the page, within a parent container
+     * @param {string} option
+     * @param {string} expression
+     * @returns {string}
+     */
+    random:function(option,expression){
+      option = option !== null ? option : 'section';
+      let elementArray = expression.trim().split(/\r?\n/);
+      return __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */].random.layout.replace(/@option/g,option).replace('@content',this.shuffleArray(elementArray).join(''));
+    },
+    /**
+     * THis function takes an array and reorders it's contents to create a
+     * random order for the returned array
+     * @param {object|array} array
+     * @returns {object|array}
+     */
+    shuffleArray: function (array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        let temp = array[i].trim();
+        array[i] = array[j].trim();
+        array[j] = temp;
+      }
+      return array;
+    },
+    /**
      * Function removes all trailing white space from an array and
      * returns an clean array. Currently, the functions bounces to
      * the removeEmpty function to deep clean and remove all empty
      * entries
      * @param {object[]} arr
      * @returns {*|Object[]}
+     * @example
+     * .clean(['an ',' array','   with too','much ','whitespace    '])
      */
     clean(arr){
       let clearArr = arr.map((a) =>{
@@ -11303,6 +11323,8 @@ const FastUtilities = {
      * array that contains no undefined or null entries
      * @param {object[]} arr
      * @returns {object[]}
+     * @example
+     * .removeEmpty(['one','two','','three])
      */
     removeEmpty(arr){
       let i = 0;
@@ -11337,39 +11359,65 @@ const FastUtilities = {
     concatenate(arr1,arr2){
       return arr1.concat(arr2);
     },
-    generate(option,expression){
-      try{
-      let expArray;
-      expression.indexOf(',') > -1 ? splitOnCommas() : splitOnSpaces();
-      function splitOnCommas(){
-        expArray = expression.split(',');
-        bindToWindow()
-      }
-      function splitOnSpaces(){
-        expArray = expression.split(' ');
-        bindToWindow();
-      }
-      function bindToWindow(){
-        if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object'){
-          if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['appObjects'] === 'object'){
-            if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['appObjects']['arrays'] === 'object'){
-              window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['appObjects']['arrays'][option] = expArray;
-            }else{
-              window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['appObjects']['arrays'] = {};
+    /**
+     * Function that generates an array from a string passed in the expression.
+     * Option is the name the array will be saved as. Check the Global.userObjects
+     * parameters to set up object saving and define the parent object and the
+     * namespace
+     * @param {string} option
+     * @param {string} expression
+     * @example
+     * .generate('someName','this,thing,that,we,call,an,array')
+     */
+    generate(option, expression){
+      try {
+        let expArray;
+        expression.indexOf(',') > -1 ? splitOnCommas() : splitOnSpaces();
+        /**
+         * Simple function that creates an array from the string by splitting
+         * on commas
+         */
+        function splitOnCommas() {
+          expArray = expression.split(',');
+          __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.enable === true ? bindToWindow() : null;
+        }
+        /**
+         * Simple function that creates an array from the string by splitting
+         * on spaces
+         */
+        function splitOnSpaces() {
+          expArray = expression.split(' ');
+          __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.enable === true ? bindToWindow() : null;
+        }
+        /**
+         * Function takes the generated array and binds it to the window object
+         * under {appRoot}->{userObjects}
+         */
+        function bindToWindow() {
+          let objSubId = __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.array.identifier;
+          if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object') {
+            if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] === 'object') {
+              if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] === 'object') {
+                window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId][option] = expArray;
+              } else {
+                window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] = {};
+                bindToWindow();
+              }
+            } else {
+              window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] = {};
               bindToWindow();
             }
-          }else{
-            window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['appObjects'] = {};
+          } else {
+            window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
             bindToWindow();
           }
-        }else{
-          window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
-          bindToWindow();
         }
-      }
-      }catch(e){
+      } catch (e) {
         new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
-
+          origin:'FastUtilities.array.generate',
+          type:'Unable To Parse Array',
+          message:'Unable to parse the array from the expression string. Make sure all reserved symbols are escaped (commas,apostrophes,hyphens)',
+          log:false
         })
       }
     }
@@ -11444,7 +11492,7 @@ const FastUtilities = {
    */
   genFtxId:function(){
     let d = new Date();
-    let uniqueArray = FastUtilities.ui.shuffleArray(['f','as','t','e','r']).join('');
+    let uniqueArray = FastUtilities.array.shuffleArray(['f','as','t','e','r']).join('');
     return `${uniqueArray}${d.getHours()}-${d.getMilliseconds()}`;
   },
   poll:{
@@ -11550,7 +11598,7 @@ const Faster = {
       /**
        *
        * @param {object} obj
-       * @param {function} callback
+       * @callback {callback=}
        * @returns {object}
        */
       type(obj, callback){
@@ -11574,7 +11622,7 @@ const Faster = {
     /**
      *
      * @param {object} obj
-     * @param {function} callback
+     * @callback {callback=}
      * @param {boolean} parse
      * @returns {*}
      */
@@ -11596,7 +11644,7 @@ const Faster = {
     /**
      *
      * @param {object} obj
-     * @param {function} callback
+     * @callback {callback=}
      * @returns {*}
      */
     class(obj,callback){
@@ -11629,7 +11677,7 @@ const Faster = {
     /**
      *
      * @param {object} obj
-     * @param {function} callback
+     * @callback {callback=}
      * @returns {*}
      */
     id(obj,callback){
@@ -11654,7 +11702,7 @@ const Faster = {
     /**
      *
      * @param {object} obj
-     * @param {function} callback
+     * @callback {callback=}
      * @returns {*}
      */
     content(obj,callback){
@@ -11680,7 +11728,8 @@ const Faster = {
     /**
      *
      * @param {object} obj
-     * @param {function} callback
+     * @callback {callback=}
+     * @type {callback}
      * @returns {*}
      */
     template(obj,callback){
@@ -11688,7 +11737,7 @@ const Faster = {
         if(obj.indexOf('template:') > -1){
           let __this = obj.split('template:')[1].split(',')[0];
           if (callback !== undefined && callback !== null && typeof callback === 'function') {
-            return callback(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */][__this]);
+            return typeof __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */][__this] === 'object' ? callback(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */][__this].layout) : callback(__WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */][__this]);
           }else{
             return __WEBPACK_IMPORTED_MODULE_1__config_Template__["a" /* Template */][__this];
           }
@@ -12705,30 +12754,6 @@ function FastProcessor(type, option, expression, element){
     case 'analytics':
       new __WEBPACK_IMPORTED_MODULE_16__classes_FastAnalytics__["a" /* default */](option,expression);
       break;
-    case 'placeholder':
-      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
-      break;
-    case 'group':
-      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
-      break;
-    case 'search':
-      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].components.search(option,expression);
-      break;
-    case 'bind':
-      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
-      break;
-    case 'random':
-      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.random(option,expression);
-      break;
-    case 'mobile':
-      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.mobile(option,expression);
-      break;
-    case 'prefetch':
-      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ux.prefetch(option,expression);
-      break;
-    case 'image':
-      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.image(option,expression,element);
-      break;
     case 'banner':
       return __WEBPACK_IMPORTED_MODULE_14__FastBanner__["a" /* default */](option,expression);
       break;
@@ -12750,7 +12775,33 @@ function FastProcessor(type, option, expression, element){
     case 'array':
       return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].array.generate(option,expression);
       break;
-
+    case 'placeholder':
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
+      break;
+    case 'group':
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.group(option,expression);
+      break;
+    case 'search':
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].components.search(option,expression);
+      break;
+    case 'bind':
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.bind(option,expression);
+      break;
+    case 'random':
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].array.random(option,expression);
+      break;
+    case 'mobile':
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.mobile(option,expression);
+      break;
+    case 'prefetch':
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ux.prefetch(option,expression);
+      break;
+    case 'image':
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.image(option,expression,element);
+      break;
+    case 'wrap':
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.wrap(option,expression);
+      break;
   }
 }
 

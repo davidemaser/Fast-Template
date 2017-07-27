@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<script type="text/javascript" src="bundle.js?605887770b07c9d129d3"></script></head>
+<script type="text/javascript" src="bundle.js?8f2aa2e07f84503c2ae9"></script></head>
 <body faster="template">
 <ft>class:new,render:div,content:{here's my content}</ft>
-<ft>template:div,content:{this is a template}</ft>
+<ft ignore>template:div,content:{this is a template}</ft>
 <ft ignore>class:old,render:section,json:|{"name": "faster",
     "version": "1.0.0",
     "description": "",
@@ -86,5 +86,6 @@
 <ftx>{filter:code}{rules:li,br}<div>this bit of text <b>is</b> really <i>weird</i> and it's really <br /> quite full<br> of html</div>{~filter}</ftx>
 <ftx>{filter:code}<div>this bit of text <b>will</b> have <i>absolutely</i> no html code <br /> in it <br> when processed</div>{~filter}</ftx>
 <ftx>{array:saveAsThis}one,two,three,four{~array}</ftx>
+<ftx>{wrap:word}{some b,those div}those are some really cool words for some of us{~wrap}</ftx>
 </body>
 </html>

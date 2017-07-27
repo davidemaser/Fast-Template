@@ -57,6 +57,13 @@ export const Global = {
       restricted:['crap','poo','caca'],
       replacement:'***'
     }
+  },
+  userObjects:{
+    enable:true,
+    handle:'userObjects',
+    array:{
+      identifier:'arrays'
+    }
   }
 };
 export let Log = [];

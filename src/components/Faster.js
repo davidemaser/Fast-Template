@@ -18,7 +18,7 @@ export const Faster = {
       /**
        *
        * @param {object} obj
-       * @param {function} callback
+       * @callback {callback=}
        * @returns {object}
        */
       type(obj, callback){
@@ -42,7 +42,7 @@ export const Faster = {
     /**
      *
      * @param {object} obj
-     * @param {function} callback
+     * @callback {callback=}
      * @param {boolean} parse
      * @returns {*}
      */
@@ -64,7 +64,7 @@ export const Faster = {
     /**
      *
      * @param {object} obj
-     * @param {function} callback
+     * @callback {callback=}
      * @returns {*}
      */
     class(obj,callback){
@@ -97,7 +97,7 @@ export const Faster = {
     /**
      *
      * @param {object} obj
-     * @param {function} callback
+     * @callback {callback=}
      * @returns {*}
      */
     id(obj,callback){
@@ -122,7 +122,7 @@ export const Faster = {
     /**
      *
      * @param {object} obj
-     * @param {function} callback
+     * @callback {callback=}
      * @returns {*}
      */
     content(obj,callback){
@@ -148,7 +148,8 @@ export const Faster = {
     /**
      *
      * @param {object} obj
-     * @param {function} callback
+     * @callback {callback=}
+     * @type {callback}
      * @returns {*}
      */
     template(obj,callback){
@@ -156,7 +157,7 @@ export const Faster = {
         if(obj.indexOf('template:') > -1){
           let __this = obj.split('template:')[1].split(',')[0];
           if (callback !== undefined && callback !== null && typeof callback === 'function') {
-            return callback(Template[__this]);
+            return typeof Template[__this] === 'object' ? callback(Template[__this].layout) : callback(Template[__this]);
           }else{
             return Template[__this];
           }
