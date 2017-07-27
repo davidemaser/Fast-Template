@@ -1,5 +1,6 @@
 let webpack = require('webpack');
 let HtmlWebPackPlugin = require('html-webpack-plugin');
+let NpmInstallPlugin = require("npm-install-webpack2-plugin");
 module.exports = {
   entry: "./App.js",
   watch:true,
@@ -38,6 +39,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new NpmInstallPlugin(),
     new HtmlWebPackPlugin(
       {
         template:'src/templates/main.html',

@@ -27,6 +27,7 @@
     "karma-jasmine": "^1.1.0",
     "karma-requirejs": "^1.1.0",
     "node-sass": "^4.5.3",
+    "npm-install-webpack2-plugin": "^5.0.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^3.0.0",
