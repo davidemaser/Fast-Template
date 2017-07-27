@@ -11021,6 +11021,7 @@ class Woops{
       if (typeof this.args === 'object') {
         this.args.log === true ? new __WEBPACK_IMPORTED_MODULE_0__Logger__["a" /* default */](this.args) : null;
         new __WEBPACK_IMPORTED_MODULE_1__classes_RegisterState__["a" /* default */](this.args.origin, this.args.message, 'appErrors');
+        console.warn(this.args.origin,this.args.type,this.args.message)
       } else {
         console.log('Can\'t execute the Warning module');
       }
@@ -11444,7 +11445,7 @@ const FastUtilities = {
           }
         } catch (e) {
           new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
-            origin:'FastUtilities.array.generate',
+            origin:'FastUtilities.objects.generate.array',
             type:'Unable To Parse Array',
             message:'Unable to parse the array from the expression string. Make sure all reserved symbols are escaped (commas,apostrophes,hyphens)',
             log:false
@@ -11458,7 +11459,10 @@ const FastUtilities = {
             return JSON.parse(obj);
           }catch(e){
             new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
-
+              origin:'FastUtilities.objects.generate.object',
+              type:'Unable To Parse JSON',
+              message:'Unable to parse the JSON from the expression string. Make sure the string is formatted as JSON',
+              log:false
             })
           }
         }

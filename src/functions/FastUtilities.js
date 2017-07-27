@@ -359,7 +359,7 @@ export const FastUtilities = {
           }
         } catch (e) {
           new Woops({
-            origin:'FastUtilities.array.generate',
+            origin:'FastUtilities.objects.generate.array',
             type:'Unable To Parse Array',
             message:'Unable to parse the array from the expression string. Make sure all reserved symbols are escaped (commas,apostrophes,hyphens)',
             log:false
@@ -373,7 +373,10 @@ export const FastUtilities = {
             return JSON.parse(obj);
           }catch(e){
             new Woops({
-
+              origin:'FastUtilities.objects.generate.object',
+              type:'Unable To Parse JSON',
+              message:'Unable to parse the JSON from the expression string. Make sure the string is formatted as JSON',
+              log:false
             })
           }
         }
