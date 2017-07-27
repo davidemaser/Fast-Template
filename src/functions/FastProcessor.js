@@ -103,8 +103,8 @@ export default function FastProcessor(type, option, expression, element){
     case 'trim':
       return FastUtilities.ui.trim(option,expression);
       break;
-    case 'array':
-      return FastUtilities.array.generate(option,expression);
+    case 'object':
+      return FastUtilities.objects.generate[option](option,expression);
       break;
     case 'placeholder':
       return FastUtilities.ui.placeholder(option);

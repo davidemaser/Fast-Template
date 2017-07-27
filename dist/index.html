@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<script type="text/javascript" src="bundle.js?8f2aa2e07f84503c2ae9"></script></head>
+<script type="text/javascript" src="bundle.js?450d54bb112247315f6f"></script></head>
 <body faster="template">
 <ft>class:new,render:div,content:{here's my content}</ft>
 <ft ignore>template:div,content:{this is a template}</ft>
@@ -85,7 +85,15 @@
 <ftx>{filter:language}<div>this bit of caca is like crap and it's really quite poo</div>{~filter}</ftx>
 <ftx>{filter:code}{rules:li,br}<div>this bit of text <b>is</b> really <i>weird</i> and it's really <br /> quite full<br> of html</div>{~filter}</ftx>
 <ftx>{filter:code}<div>this bit of text <b>will</b> have <i>absolutely</i> no html code <br /> in it <br> when processed</div>{~filter}</ftx>
-<ftx>{array:saveAsThis}one,two,three,four{~array}</ftx>
+<ftx>{object:array}{save:saveAsThis}one,two,three,four{~object}</ftx>
+<ftx>{object:object}{save:myObject}
+    {
+    "this": {
+    "text": "something",
+    "subtitle": "else"
+    }
+    }
+    {~object}</ftx>
 <ftx>{wrap:word}{some b,those div}those are some really cool words for some of us{~wrap}</ftx>
 </body>
 </html>

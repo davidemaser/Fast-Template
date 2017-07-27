@@ -63,6 +63,12 @@ export const Global = {
     handle:'userObjects',
     array:{
       identifier:'arrays'
+    },
+    object:{
+      identifier:'objects'
+    },
+    function:{
+      identifier:'functions'
     }
   }
 };

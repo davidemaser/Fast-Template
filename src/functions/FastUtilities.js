@@ -279,68 +279,6 @@ export const FastUtilities = {
     },
     concatenate(arr1,arr2){
       return arr1.concat(arr2);
-    },
-    /**
-     * Function that generates an array from a string passed in the expression.
-     * Option is the name the array will be saved as. Check the Global.userObjects
-     * parameters to set up object saving and define the parent object and the
-     * namespace
-     * @param {string} option
-     * @param {string} expression
-     * @example
-     * .generate('someName','this,thing,that,we,call,an,array')
-     */
-    generate(option, expression){
-      try {
-        let expArray;
-        expression.indexOf(',') > -1 ? splitOnCommas() : splitOnSpaces();
-        /**
-         * Simple function that creates an array from the string by splitting
-         * on commas
-         */
-        function splitOnCommas() {
-          expArray = expression.split(',');
-          Global.userObjects.enable === true ? bindToWindow() : null;
-        }
-        /**
-         * Simple function that creates an array from the string by splitting
-         * on spaces
-         */
-        function splitOnSpaces() {
-          expArray = expression.split(' ');
-          Global.userObjects.enable === true ? bindToWindow() : null;
-        }
-        /**
-         * Function takes the generated array and binds it to the window object
-         * under {appRoot}->{userObjects}
-         */
-        function bindToWindow() {
-          let objSubId = Global.userObjects.array.identifier;
-          if (typeof window[Global.appObj] === 'object') {
-            if (typeof window[Global.appObj][Global.userObjects.handle] === 'object') {
-              if (typeof window[Global.appObj][Global.userObjects.handle][objSubId] === 'object') {
-                window[Global.appObj][Global.userObjects.handle][objSubId][option] = expArray;
-              } else {
-                window[Global.appObj][Global.userObjects.handle][objSubId] = {};
-                bindToWindow();
-              }
-            } else {
-              window[Global.appObj][Global.userObjects.handle] = {};
-              bindToWindow();
-            }
-          } else {
-            window[Global.appObj] = {};
-            bindToWindow();
-          }
-        }
-      } catch (e) {
-        new Woops({
-          origin:'FastUtilities.array.generate',
-          type:'Unable To Parse Array',
-          message:'Unable to parse the array from the expression string. Make sure all reserved symbols are escaped (commas,apostrophes,hyphens)',
-          log:false
-        })
-      }
     }
   },
   objects:{
@@ -358,6 +296,116 @@ export const FastUtilities = {
       }else{
         window[Global.appObj] = {};
         window[Global.appObj]['DataDumps'] = copy;
+      }
+    },
+    generate:{
+      /**
+       * Function that generates an array from a string passed in the expression.
+       * Option is the name the array will be saved as. Check the Global.userObjects
+       * parameters to set up object saving and define the parent object and the
+       * namespace
+       * @param {string} option
+       * @param {string} expression
+       * @example
+       * .generate('someName','this,thing,that,we,call,an,array')
+       */
+      array(option, expression){
+        let saveName = null;
+        if(expression.indexOf('{save:')>-1){
+          saveName = expression.split('{save:')[1].split('}')[0];
+          expression = expression.split('{save:')[1].split('}')[1];
+        }
+        try {
+          let expArray;
+          expression.indexOf(',') > -1 ? splitOnCommas() : splitOnSpaces();
+          /**
+           * Simple function that creates an array from the string by splitting
+           * on commas
+           */
+          function splitOnCommas() {
+            expArray = expression.split(',');
+            Global.userObjects.enable === true ? bindToWindow() : null;
+          }
+          /**
+           * Simple function that creates an array from the string by splitting
+           * on spaces
+           */
+          function splitOnSpaces() {
+            expArray = expression.split(' ');
+            Global.userObjects.enable === true ? bindToWindow() : null;
+          }
+          /**
+           * Function takes the generated array and binds it to the window object
+           * under {appRoot}->{userObjects}
+           */
+          function bindToWindow() {
+            let objSubId = Global.userObjects[option].identifier;
+            if (typeof window[Global.appObj] === 'object') {
+              if (typeof window[Global.appObj][Global.userObjects.handle] === 'object') {
+                if (typeof window[Global.appObj][Global.userObjects.handle][objSubId] === 'object') {
+                  window[Global.appObj][Global.userObjects.handle][objSubId][saveName] = expArray;
+                } else {
+                  window[Global.appObj][Global.userObjects.handle][objSubId] = {};
+                  bindToWindow();
+                }
+              } else {
+                window[Global.appObj][Global.userObjects.handle] = {};
+                bindToWindow();
+              }
+            } else {
+              window[Global.appObj] = {};
+              bindToWindow();
+            }
+          }
+        } catch (e) {
+          new Woops({
+            origin:'FastUtilities.array.generate',
+            type:'Unable To Parse Array',
+            message:'Unable to parse the array from the expression string. Make sure all reserved symbols are escaped (commas,apostrophes,hyphens)',
+            log:false
+          })
+        }
+      },
+      object:function(option,expression){
+        let objTemp;
+        function getJsonFormat(obj){
+          try{
+            return JSON.parse(obj);
+          }catch(e){
+            new Woops({
+
+            })
+          }
+        }
+        function bindToWindow() {
+          let objSubId = Global.userObjects[option].identifier;
+          if (typeof window[Global.appObj] === 'object') {
+            if (typeof window[Global.appObj][Global.userObjects.handle] === 'object') {
+              if (typeof window[Global.appObj][Global.userObjects.handle][objSubId] === 'object') {
+                window[Global.appObj][Global.userObjects.handle][objSubId][saveName] = objTemp;
+              } else {
+                window[Global.appObj][Global.userObjects.handle][objSubId] = {};
+                bindToWindow();
+              }
+            } else {
+              window[Global.appObj][Global.userObjects.handle] = {};
+              bindToWindow();
+            }
+          } else {
+            window[Global.appObj] = {};
+            bindToWindow();
+          }
+        }
+        let saveName = null;
+        if(expression.indexOf('{save:')>-1){
+          saveName = expression.split('{save:')[1].split('}')[0];
+          expression = expression.replace(`{save:${saveName}}`,'');
+        }
+        expression = expression.replace(/\r?\n/g,'').trim();
+        if(typeof getJsonFormat(expression) === 'object'){
+          objTemp = getJsonFormat(expression);
+          bindToWindow();
+        }
       }
     }
   },

@@ -134,6 +134,12 @@ const Global = {
     handle:'userObjects',
     array:{
       identifier:'arrays'
+    },
+    object:{
+      identifier:'objects'
+    },
+    function:{
+      identifier:'functions'
     }
   }
 };
@@ -11358,68 +11364,6 @@ const FastUtilities = {
     },
     concatenate(arr1,arr2){
       return arr1.concat(arr2);
-    },
-    /**
-     * Function that generates an array from a string passed in the expression.
-     * Option is the name the array will be saved as. Check the Global.userObjects
-     * parameters to set up object saving and define the parent object and the
-     * namespace
-     * @param {string} option
-     * @param {string} expression
-     * @example
-     * .generate('someName','this,thing,that,we,call,an,array')
-     */
-    generate(option, expression){
-      try {
-        let expArray;
-        expression.indexOf(',') > -1 ? splitOnCommas() : splitOnSpaces();
-        /**
-         * Simple function that creates an array from the string by splitting
-         * on commas
-         */
-        function splitOnCommas() {
-          expArray = expression.split(',');
-          __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.enable === true ? bindToWindow() : null;
-        }
-        /**
-         * Simple function that creates an array from the string by splitting
-         * on spaces
-         */
-        function splitOnSpaces() {
-          expArray = expression.split(' ');
-          __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.enable === true ? bindToWindow() : null;
-        }
-        /**
-         * Function takes the generated array and binds it to the window object
-         * under {appRoot}->{userObjects}
-         */
-        function bindToWindow() {
-          let objSubId = __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.array.identifier;
-          if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object') {
-            if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] === 'object') {
-              if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] === 'object') {
-                window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId][option] = expArray;
-              } else {
-                window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] = {};
-                bindToWindow();
-              }
-            } else {
-              window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] = {};
-              bindToWindow();
-            }
-          } else {
-            window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
-            bindToWindow();
-          }
-        }
-      } catch (e) {
-        new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
-          origin:'FastUtilities.array.generate',
-          type:'Unable To Parse Array',
-          message:'Unable to parse the array from the expression string. Make sure all reserved symbols are escaped (commas,apostrophes,hyphens)',
-          log:false
-        })
-      }
     }
   },
   objects:{
@@ -11437,6 +11381,116 @@ const FastUtilities = {
       }else{
         window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
         window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['DataDumps'] = copy;
+      }
+    },
+    generate:{
+      /**
+       * Function that generates an array from a string passed in the expression.
+       * Option is the name the array will be saved as. Check the Global.userObjects
+       * parameters to set up object saving and define the parent object and the
+       * namespace
+       * @param {string} option
+       * @param {string} expression
+       * @example
+       * .generate('someName','this,thing,that,we,call,an,array')
+       */
+      array(option, expression){
+        let saveName = null;
+        if(expression.indexOf('{save:')>-1){
+          saveName = expression.split('{save:')[1].split('}')[0];
+          expression = expression.split('{save:')[1].split('}')[1];
+        }
+        try {
+          let expArray;
+          expression.indexOf(',') > -1 ? splitOnCommas() : splitOnSpaces();
+          /**
+           * Simple function that creates an array from the string by splitting
+           * on commas
+           */
+          function splitOnCommas() {
+            expArray = expression.split(',');
+            __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.enable === true ? bindToWindow() : null;
+          }
+          /**
+           * Simple function that creates an array from the string by splitting
+           * on spaces
+           */
+          function splitOnSpaces() {
+            expArray = expression.split(' ');
+            __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.enable === true ? bindToWindow() : null;
+          }
+          /**
+           * Function takes the generated array and binds it to the window object
+           * under {appRoot}->{userObjects}
+           */
+          function bindToWindow() {
+            let objSubId = __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects[option].identifier;
+            if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object') {
+              if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] === 'object') {
+                if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] === 'object') {
+                  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId][saveName] = expArray;
+                } else {
+                  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] = {};
+                  bindToWindow();
+                }
+              } else {
+                window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] = {};
+                bindToWindow();
+              }
+            } else {
+              window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
+              bindToWindow();
+            }
+          }
+        } catch (e) {
+          new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+            origin:'FastUtilities.array.generate',
+            type:'Unable To Parse Array',
+            message:'Unable to parse the array from the expression string. Make sure all reserved symbols are escaped (commas,apostrophes,hyphens)',
+            log:false
+          })
+        }
+      },
+      object:function(option,expression){
+        let objTemp;
+        function getJsonFormat(obj){
+          try{
+            return JSON.parse(obj);
+          }catch(e){
+            new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+
+            })
+          }
+        }
+        function bindToWindow() {
+          let objSubId = __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects[option].identifier;
+          if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object') {
+            if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] === 'object') {
+              if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] === 'object') {
+                window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId][saveName] = objTemp;
+              } else {
+                window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] = {};
+                bindToWindow();
+              }
+            } else {
+              window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] = {};
+              bindToWindow();
+            }
+          } else {
+            window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
+            bindToWindow();
+          }
+        }
+        let saveName = null;
+        if(expression.indexOf('{save:')>-1){
+          saveName = expression.split('{save:')[1].split('}')[0];
+          expression = expression.replace(`{save:${saveName}}`,'');
+        }
+        expression = expression.replace(/\r?\n/g,'').trim();
+        if(typeof getJsonFormat(expression) === 'object'){
+          objTemp = getJsonFormat(expression);
+          bindToWindow();
+        }
       }
     }
   },
@@ -12772,8 +12826,8 @@ function FastProcessor(type, option, expression, element){
     case 'trim':
       return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.trim(option,expression);
       break;
-    case 'array':
-      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].array.generate(option,expression);
+    case 'object':
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].objects.generate[option](option,expression);
       break;
     case 'placeholder':
       return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.placeholder(option);
