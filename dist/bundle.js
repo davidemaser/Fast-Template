@@ -11568,7 +11568,7 @@ const FastUtilities = {
   poll:{
     resStatus:undefined,
     server:function(option,expression){
-      __WEBPACK_IMPORTED_MODULE_4__functions_FastPing__["a" /* FastPing */].ping(expression,0).then((delta)=> {
+      __WEBPACK_IMPORTED_MODULE_4__functions_FastPing__["a" /* FastPing */].ping(expression).then((delta)=> {
         console.log(`${expression} responded in ${String(delta)} ms`);
         this.resStatus = 'connected';
       }).catch((err)=> {
@@ -11593,7 +11593,9 @@ const StylizeUtilities = {
     if(typeof params === 'object'){
       let p;
       for(p in params){
-        styleString+=`${p}:${params[p]};`;
+        if(params.hasOwnProperty(p)) {
+          styleString += `${p}:${params[p]};`;
+        }
       }
     }
     let buildString = styleString !== '' ? htmlString.replace('@style',styleString) : htmlString.replace(' style="@style"','');
@@ -16274,7 +16276,7 @@ const FastPing = {
   /**
    * Pings a url.
    * @param  {String} url
-   * @param  {Number} multiplier - optional, factor to adjust the ping by.  0.3 works well for HTTP servers.
+   * @param  {Number=} multiplier - optional, factor to adjust the ping by.  0.3 works well for HTTP servers.
    * @return {Promise} promise that resolves to a ping (ms, float).
    */
   ping:function(url, multiplier) {

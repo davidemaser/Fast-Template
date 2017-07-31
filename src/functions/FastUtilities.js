@@ -478,7 +478,7 @@ export const FastUtilities = {
   poll:{
     resStatus:undefined,
     server:function(option,expression){
-      FastPing.ping(expression,0).then((delta)=> {
+      FastPing.ping(expression).then((delta)=> {
         console.log(`${expression} responded in ${String(delta)} ms`);
         this.resStatus = 'connected';
       }).catch((err)=> {
@@ -501,7 +501,9 @@ export const StylizeUtilities = {
     if(typeof params === 'object'){
       let p;
       for(p in params){
-        styleString+=`${p}:${params[p]};`;
+        if(params.hasOwnProperty(p)) {
+          styleString += `${p}:${params[p]};`;
+        }
       }
     }
     let buildString = styleString !== '' ? htmlString.replace('@style',styleString) : htmlString.replace(' style="@style"','');
