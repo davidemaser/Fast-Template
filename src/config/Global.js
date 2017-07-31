@@ -69,6 +69,9 @@ export const Global = {
     },
     function:{
       identifier:'functions'
+    },
+    variable:{
+      identifier:'vars'
     }
   }
 };

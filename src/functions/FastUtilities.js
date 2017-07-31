@@ -5,6 +5,7 @@ import Woops from '../classes/Woops';
 import {Template} from '../config/Template';
 import {Global} from '../config/Global';
 import {Architect} from '../components/Faster';
+import {FastPing} from '../functions/FastPing';
 export const FastUtilities = {
   ui:{
     image:function(option,expression,element){
@@ -289,15 +290,6 @@ export const FastUtilities = {
       }
       return copy;
     },
-    bindToWindow(obj){
-      let copy = this.copy(obj);
-      if(typeof window[Global.appObj] === 'object'){
-        window[Global.appObj]['DataDumps'] = copy;
-      }else{
-        window[Global.appObj] = {};
-        window[Global.appObj]['DataDumps'] = copy;
-      }
-    },
     generate:{
       /**
        * Function that generates an array from a string passed in the expression.
@@ -324,7 +316,7 @@ export const FastUtilities = {
            */
           function splitOnCommas() {
             expArray = expression.split(',');
-            Global.userObjects.enable === true ? bindToWindow() : null;
+            Global.userObjects.enable === true ? FastUtilities.bindToWindow(option,saveName,expArray) : null;
           }
           /**
            * Simple function that creates an array from the string by splitting
@@ -332,31 +324,12 @@ export const FastUtilities = {
            */
           function splitOnSpaces() {
             expArray = expression.split(' ');
-            Global.userObjects.enable === true ? bindToWindow() : null;
+            Global.userObjects.enable === true ? FastUtilities.bindToWindow(option,saveName,expArray) : null;
           }
           /**
            * Function takes the generated array and binds it to the window object
            * under {appRoot}->{userObjects}
            */
-          function bindToWindow() {
-            let objSubId = Global.userObjects[option].identifier;
-            if (typeof window[Global.appObj] === 'object') {
-              if (typeof window[Global.appObj][Global.userObjects.handle] === 'object') {
-                if (typeof window[Global.appObj][Global.userObjects.handle][objSubId] === 'object') {
-                  window[Global.appObj][Global.userObjects.handle][objSubId][saveName] = expArray;
-                } else {
-                  window[Global.appObj][Global.userObjects.handle][objSubId] = {};
-                  bindToWindow();
-                }
-              } else {
-                window[Global.appObj][Global.userObjects.handle] = {};
-                bindToWindow();
-              }
-            } else {
-              window[Global.appObj] = {};
-              bindToWindow();
-            }
-          }
         } catch (e) {
           new Woops({
             origin:'FastUtilities.objects.generate.array',
@@ -380,25 +353,6 @@ export const FastUtilities = {
             })
           }
         }
-        function bindToWindow() {
-          let objSubId = Global.userObjects[option].identifier;
-          if (typeof window[Global.appObj] === 'object') {
-            if (typeof window[Global.appObj][Global.userObjects.handle] === 'object') {
-              if (typeof window[Global.appObj][Global.userObjects.handle][objSubId] === 'object') {
-                window[Global.appObj][Global.userObjects.handle][objSubId][saveName] = objTemp;
-              } else {
-                window[Global.appObj][Global.userObjects.handle][objSubId] = {};
-                bindToWindow();
-              }
-            } else {
-              window[Global.appObj][Global.userObjects.handle] = {};
-              bindToWindow();
-            }
-          } else {
-            window[Global.appObj] = {};
-            bindToWindow();
-          }
-        }
         let saveName = null;
         if(expression.indexOf('{save:')>-1){
           saveName = expression.split('{save:')[1].split('}')[0];
@@ -407,7 +361,34 @@ export const FastUtilities = {
         expression = expression.replace(/\r?\n/g,'').trim();
         if(typeof getJsonFormat(expression) === 'object'){
           objTemp = getJsonFormat(expression);
-          bindToWindow();
+          FastUtilities.bindToWindow(option,saveName,objTemp)
+        }
+      },
+      variable:function(option,expression){
+        try {
+          let saveName = null;
+          if (expression.indexOf('{save:') > -1) {
+            saveName = expression.split('{save:')[1].split('}')[0];
+            expression = expression.split('{save:')[1].split('}')[1];
+            if (saveName.indexOf('[') > -1) {
+              saveName = saveName.split('[')[1].split(']')[0];
+              if (saveName.indexOf(',') > -1) {
+                saveName = saveName.split(',');
+                saveName.map(function (a) {
+                  a.indexOf('=') > -1 ? FastUtilities.bindToWindow(option, a.split('=')[0], a.split('=')[1]) : FastUtilities.bindToWindow(option, a, null);
+                })
+              }
+            } else {
+              expression === '' ? FastUtilities.bindToWindow(option, saveName, null) : FastUtilities.bindToWindow(option, saveName, expression);
+            }
+          }
+        }catch(e){
+          new Woops({
+            origin:'FastUtilities.objects.generate.variable',
+            type:'Unable to parse string',
+            message:'Unable to parse the expression string. Make sure it is correctly formatted',
+            log:false
+          })
         }
       }
     }
@@ -467,12 +448,34 @@ export const FastUtilities = {
     let uniqueArray = FastUtilities.array.shuffleArray(['f','as','t','e','r']).join('');
     return `${uniqueArray}${d.getHours()}-${d.getMilliseconds()}`;
   },
+  bindToWindow(option,alias,obj){
+    let objSubId = Global.userObjects[option].identifier;
+    if (typeof window[Global.appObj] === 'object') {
+      if (typeof window[Global.appObj][Global.userObjects.handle] === 'object') {
+        if (typeof window[Global.appObj][Global.userObjects.handle][objSubId] === 'object') {
+          window[Global.appObj][Global.userObjects.handle][objSubId][alias] = obj;
+        } else {
+          window[Global.appObj][Global.userObjects.handle][objSubId] = {};
+          this.bindToWindow(option,alias,obj);
+        }
+      } else {
+        window[Global.appObj][Global.userObjects.handle] = {};
+        this.bindToWindow(option,alias,obj);
+      }
+    } else {
+      window[Global.appObj] = {};
+      this.bindToWindow(option,alias,obj);
+    }
+  },
   poll:{
-    server:function(){
-
-    },
-    ip:function(){
-
+    resStatus:undefined,
+    server:function(option,expression){
+      FastPing.ping(expression,0).then((delta)=> {
+        console.log(`${expression} responded in ${String(delta)} ms`);
+        this.resStatus = 'connected';
+      }).catch((err)=> {
+        console.error('Could not ping remote URL', err);
+      });
     },
     database:function(qs){
 

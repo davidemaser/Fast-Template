@@ -140,6 +140,9 @@ const Global = {
     },
     function:{
       identifier:'functions'
+    },
+    variable:{
+      identifier:'vars'
     }
   }
 };
@@ -11084,9 +11087,11 @@ class RegisterState{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__functions_FastPing__ = __webpack_require__(79);
 /**
  * Created by David Maser on 13/07/2017.
  */
+
 
 
 
@@ -11375,15 +11380,6 @@ const FastUtilities = {
       }
       return copy;
     },
-    bindToWindow(obj){
-      let copy = this.copy(obj);
-      if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object'){
-        window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['DataDumps'] = copy;
-      }else{
-        window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
-        window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj]['DataDumps'] = copy;
-      }
-    },
     generate:{
       /**
        * Function that generates an array from a string passed in the expression.
@@ -11410,7 +11406,7 @@ const FastUtilities = {
            */
           function splitOnCommas() {
             expArray = expression.split(',');
-            __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.enable === true ? bindToWindow() : null;
+            __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.enable === true ? FastUtilities.bindToWindow(option,saveName,expArray) : null;
           }
           /**
            * Simple function that creates an array from the string by splitting
@@ -11418,31 +11414,12 @@ const FastUtilities = {
            */
           function splitOnSpaces() {
             expArray = expression.split(' ');
-            __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.enable === true ? bindToWindow() : null;
+            __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.enable === true ? FastUtilities.bindToWindow(option,saveName,expArray) : null;
           }
           /**
            * Function takes the generated array and binds it to the window object
            * under {appRoot}->{userObjects}
            */
-          function bindToWindow() {
-            let objSubId = __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects[option].identifier;
-            if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object') {
-              if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] === 'object') {
-                if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] === 'object') {
-                  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId][saveName] = expArray;
-                } else {
-                  window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] = {};
-                  bindToWindow();
-                }
-              } else {
-                window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] = {};
-                bindToWindow();
-              }
-            } else {
-              window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
-              bindToWindow();
-            }
-          }
         } catch (e) {
           new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
             origin:'FastUtilities.objects.generate.array',
@@ -11466,25 +11443,6 @@ const FastUtilities = {
             })
           }
         }
-        function bindToWindow() {
-          let objSubId = __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects[option].identifier;
-          if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object') {
-            if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] === 'object') {
-              if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] === 'object') {
-                window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId][saveName] = objTemp;
-              } else {
-                window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] = {};
-                bindToWindow();
-              }
-            } else {
-              window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] = {};
-              bindToWindow();
-            }
-          } else {
-            window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
-            bindToWindow();
-          }
-        }
         let saveName = null;
         if(expression.indexOf('{save:')>-1){
           saveName = expression.split('{save:')[1].split('}')[0];
@@ -11493,7 +11451,34 @@ const FastUtilities = {
         expression = expression.replace(/\r?\n/g,'').trim();
         if(typeof getJsonFormat(expression) === 'object'){
           objTemp = getJsonFormat(expression);
-          bindToWindow();
+          FastUtilities.bindToWindow(option,saveName,objTemp)
+        }
+      },
+      variable:function(option,expression){
+        try {
+          let saveName = null;
+          if (expression.indexOf('{save:') > -1) {
+            saveName = expression.split('{save:')[1].split('}')[0];
+            expression = expression.split('{save:')[1].split('}')[1];
+            if (saveName.indexOf('[') > -1) {
+              saveName = saveName.split('[')[1].split(']')[0];
+              if (saveName.indexOf(',') > -1) {
+                saveName = saveName.split(',');
+                saveName.map(function (a) {
+                  a.indexOf('=') > -1 ? FastUtilities.bindToWindow(option, a.split('=')[0], a.split('=')[1]) : FastUtilities.bindToWindow(option, a, null);
+                })
+              }
+            } else {
+              expression === '' ? FastUtilities.bindToWindow(option, saveName, null) : FastUtilities.bindToWindow(option, saveName, expression);
+            }
+          }
+        }catch(e){
+          new __WEBPACK_IMPORTED_MODULE_0__classes_Woops__["a" /* default */]({
+            origin:'FastUtilities.objects.generate.variable',
+            type:'Unable to parse string',
+            message:'Unable to parse the expression string. Make sure it is correctly formatted',
+            log:false
+          })
         }
       }
     }
@@ -11553,12 +11538,34 @@ const FastUtilities = {
     let uniqueArray = FastUtilities.array.shuffleArray(['f','as','t','e','r']).join('');
     return `${uniqueArray}${d.getHours()}-${d.getMilliseconds()}`;
   },
+  bindToWindow(option,alias,obj){
+    let objSubId = __WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects[option].identifier;
+    if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] === 'object') {
+      if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] === 'object') {
+        if (typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] === 'object') {
+          window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId][alias] = obj;
+        } else {
+          window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle][objSubId] = {};
+          this.bindToWindow(option,alias,obj);
+        }
+      } else {
+        window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj][__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].userObjects.handle] = {};
+        this.bindToWindow(option,alias,obj);
+      }
+    } else {
+      window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].appObj] = {};
+      this.bindToWindow(option,alias,obj);
+    }
+  },
   poll:{
-    server:function(){
-
-    },
-    ip:function(){
-
+    resStatus:undefined,
+    server:function(option,expression){
+      __WEBPACK_IMPORTED_MODULE_4__functions_FastPing__["a" /* FastPing */].ping(expression,0).then((delta)=> {
+        console.log(`${expression} responded in ${String(delta)} ms`);
+        this.resStatus = 'connected';
+      }).catch((err)=> {
+        console.error('Could not ping remote URL', err);
+      });
     },
     database:function(qs){
 
@@ -12859,6 +12866,9 @@ function FastProcessor(type, option, expression, element){
       break;
     case 'wrap':
       return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].ui.wrap(option,expression);
+      break;
+    case 'poll':
+      return __WEBPACK_IMPORTED_MODULE_20__FastUtilities__["a" /* FastUtilities */].poll.server(option,expression);
       break;
   }
 }
@@ -16225,6 +16235,56 @@ module.exports = function (css) {
 	// send back the fixed css
 	return fixedCss;
 };
+
+
+/***/ }),
+/* 77 */,
+/* 78 */,
+/* 79 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * Created by David Maser on 31/07/2017.
+ */
+const FastPing = {
+  /**
+   * Creates and loads an image element by url.
+   * @param  {String} url
+   * @return {Promise} promise that resolves to an image element or
+   *                   fails to an Error.
+   */
+  requestImage:function(url) {
+    return new Promise(function(resolve, reject) {
+      let img = new Image();
+      img.onload = function() { resolve(img); };
+      img.onerror = function() { reject(url); };
+      img.src = url + '?random-no-cache=' + Math.floor((1 + Math.random()) * 0x10000).toString(16);
+    });
+  },
+
+  /**
+   * Pings a url.
+   * @param  {String} url
+   * @param  {Number} multiplier - optional, factor to adjust the ping by.  0.3 works well for HTTP servers.
+   * @return {Promise} promise that resolves to a ping (ms, float).
+   */
+  ping:function(url, multiplier) {
+    return new Promise((resolve, reject)=> {
+      let start = (new Date()).getTime();
+      let response = ()=> {
+        let delta = ((new Date()).getTime() - start);
+        delta *= (multiplier || 1);
+        resolve(delta);
+      };
+      this.requestImage(url).then(response).catch(response);
+
+      // Set a timeout for max-pings, 5s.
+      setTimeout(function() { reject(Error('Timeout')); }, 5000);
+    });
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = FastPing;
 
 
 /***/ })

@@ -133,5 +133,8 @@ export default function FastProcessor(type, option, expression, element){
     case 'wrap':
       return FastUtilities.ui.wrap(option,expression);
       break;
+    case 'poll':
+      return FastUtilities.poll.server(option,expression);
+      break;
   }
 }
