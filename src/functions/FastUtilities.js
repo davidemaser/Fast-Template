@@ -390,6 +390,14 @@ export const FastUtilities = {
             log:false
           })
         }
+      },
+      function:function(option,expression){
+        let saveName = null;
+        if(expression.indexOf('{save:')>-1){
+          saveName = expression.split('{save:')[1].split('}')[0];
+          expression = expression.replace(`{save:${saveName}}`,'');
+          FastUtilities.bindToWindow(option,saveName,new Function(`${expression}`));
+        }
       }
     }
   },

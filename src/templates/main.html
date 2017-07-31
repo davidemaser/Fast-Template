@@ -85,6 +85,7 @@
 <ftx>{filter:language}<div>this bit of caca is like crap and it's really quite poo</div>{~filter}</ftx>
 <ftx>{filter:code}{rules:li,br}<div>this bit of text <b>is</b> really <i>weird</i> and it's really <br /> quite full<br> of html</div>{~filter}</ftx>
 <ftx>{filter:code}<div>this bit of text <b>will</b> have <i>absolutely</i> no html code <br /> in it <br> when processed</div>{~filter}</ftx>
+<ftx>{wrap:word}{some b,those div}those are some really cool words for some of us{~wrap}</ftx>
 <ftx>{object:array}{save:saveAsThis}one,two,three,four{~object}</ftx>
 <ftx>{object:object}{save:myObject}
     {
@@ -94,8 +95,8 @@
     }
     }
     {~object}</ftx>
-<ftx>{wrap:word}{some b,those div}those are some really cool words for some of us{~wrap}</ftx>
 <ftx>{object:variable}{save:[myVar=this,anotherVar=hello,thisVar]}{~object}</ftx>
+<ftx>{object:function}{save:tempFunc}console.log('hi there'){~object}</ftx>
 <ftx>{poll}www.google.com{~poll}</ftx>
 </body>
 </html>
