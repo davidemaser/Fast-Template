@@ -125,10 +125,12 @@ if the condition calls a function than wrap it in square brackets (i.e. ``{if:[r
 
 This object randomizes items it contains. Item should be separated by a line break. 
 
-``
-{random}
-<div>this is the first</div>
-``
+``{random}``
+
+``<div>this is the first</div>``
+
+``{~random}``
+
 #### mobile
 ><b>{mobile}{~mobile}</b>
 
