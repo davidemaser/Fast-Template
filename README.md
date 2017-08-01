@@ -20,7 +20,35 @@ Faster is a flexible templating engine that uses common html/xml tag formatting 
 
 Faster uses special tags within an html page that allows the user to inject a template assignment or data call simply, without having to code or tweak an existing component or layout.
 
+How It Works
+------
+
+Faster tags are custom html elements that can be added to any html document. The faster tag (<b>&lt;ft&gt;,&lt;ftx&gt;,&lt;fta&gt;</b>) instructs Faster to treat the content of the tag
+as a method with arguments, options and expressions. When the app is loaded by the browser, Faster will cycle through all tags and process the contents and objects it encounters. The Faster object
+will be processed in order or asynchronously and the data returned will take the place of the Faster object. Faster does not register it's
+own tags in order to avoid issues with older browsers. 
+
+Semantics
+------
+
+This document uses some terms that may not be seen as standard identifiers. Since Faster has it's own markup format, it was difficult to
+ define a naming convention. Below are some terms you will encounter and a description of their use in and by Faster tags.
+ 
+##### Options
+  
+Options are encapsulated into the faster object's tag itself. Not all objects have options. ``{fastObject:option}``.
+ 
+ NOTE: Faster logic objects like the IF object do not have options. The comparison value takes the place of the option. (i.e. {if:9*9=81}...)
+
+##### Expressions  
+
+Expressions make up the core of the Faster object. Expressions reside between the opening and closing Faster object tags. ``{tag}expression{~tag}``. There
+is no predefined format for an expression. It can contain multiple comma separated parameters or arrays. Certain expressions are formatted as objects as they can
+contain multiple objects or child objects. 
+
 ### Faster Tags 
+
+<b><i>NOTE: Standard Faster tags will be deprecated in the next version. Functionality will be transferred to Faster eXperiment utilities</i></b>
 
 ><b>&lt;ft&gt;Standard Faster tags&lt;/ft&gt;</b>
 
@@ -94,34 +122,74 @@ The if tag allows you to insert logic. The option is the condition to check. It 
 if the condition calls a function than wrap it in square brackets (i.e. ``{if:[round(238*1.85)]=4}``). The expression returned by the tag can be a string.
 #### form 
 ><b>{form:option}{~form}</b>
+
+Awaiting documentation
 #### panel
 ><b>{panel:option}{~panel}</b>
+
+Awaiting documentation
 #### gutter
 ><b>{gutter}string{~gutter}</b>
+
+Awaiting documentation
 #### json
 ><b>{json:url}expression{~json}</b>
+
+Awaiting documentation
 #### modal
 ><b>{modal:option}{~modal}</b>
+
+Awaiting documentation
 #### html
 ><b>{html}{~html}</b>
+
+Awaiting documentation
 #### animate
 ><b>{animate}{~animate}</b>
+
+Awaiting documentation
 #### nav
 ><b>{nav}{~nav}</b>
+
+Awaiting documentation
 #### placeholder
 ><b>{placeholder:option}{~placeholder}</b>
+
+The placeholder object inserts an empty "placeholder" element. It's options can be large or small. The large or small size values
+can be modified in the CSS.
 #### accordion
 ><b>{accordion}{~accordion}</b>
+
+The accordion object creates a simple and dynamic accordion object on the page. It does not have any options. Each accordion entry
+must be separated by a line break. If a title is required, it can be added using the following format:
+
+``{accordion}
+[title=STRING] content is here
+{~accordion}``
 #### table
 ><b>{table:option}{~table}</b>
 #### group
 ><b>{group}{~group}</b>
+
+The group object, as it's name implies, "groups" all elements encapsulated by it in a section.
 #### sticky
 ><b>{sticky:option}{~sticky}</b>
 
 The sticky object creates a persistent (or sticky) element on the page. Option can be top or bottom 
 #### search
 ><b>{search:default}target:this_link,placeholder:Enter Search Term Here,button:true,label:Search{~search}</b>
+
+The search object creates a pre styled search component that can be placed in the page. The accepted option is default (generic search) or option (adds account creation and password
+recovery links).
+
+The search expression accepts the following parameters:
+
+- target   url for the search form to process
+- placeholder    text placeholder for the input box 
+- button     boolean 
+- label    text label for the button
+
+
 #### bind
 ><b>{bind}{~bind}</b>
 #### random
@@ -180,6 +248,11 @@ The video expression accepts the following parameters.
 Simple object that prefetches an asset and appends it to the document head
 #### image
 ><b>{image:ratio}url:string{~image}</b>
+
+The image object displays an image with specific proportions that are defined in the tag. The option can be a fraction or a numeric value. If numeric, the width/height
+ratio will be reduced by X percent. 
+
+The expression accepts one parameter, url. (i.e. ``{image:20}url://my_url.net{~image}``)
 #### analytics
 ><b>{analytics:option}id:your_id{~analytics}</b>
 
@@ -187,10 +260,29 @@ The analytics object will inject either a basic google analytics tracker or a go
 The content must contain your analytics or GTM ID 
 #### stylize
 ><b>{stylize}{~stylize}</b>
+
+The stylize object allows you to create stylized html elements using a simple, semantic format. 
+
+The first line of the stylize object, defines style attributes. All lines below define the content of the stylized element.
+
+``{stylize}make paragraph background black color white size 22px font-family Verdana
+      this is the content of the above item (in this case a div){`stylize}``
+      
+The first word of the stylize expression must be an accepted instruction (i.e. make,convert)      
 #### trim
 ><b>{trim:length,direction}{ellipsis}{~trim}</b>
+
+The trim object trims a string to a specified length. The trim object accepts a parameter to define whether the string is to be trimmed from the start of from the end (i.e. ``{trim:20,start}``) 
+
+The trim object can also inject an ellipsis to the beginning or end of the trimmed string. To do so, add an ellipsis object (i.e. ``{trim:20,start}{ellipsis}string{~trim}`` )
 #### links
 ><b>{links:option}{~links}</b>
+
+The links object creates a multi-level link map that can be used to generate a site map. Links can be grouped into a hierarchical view.
+
+The link option can be order (displays in the order they are written) or random. 
+
+Line breaks split links into groups. To group multiple links together, use a greater then symbol ( > ) to separate them (i.e ``this is the text,thelink.com > this is the text,thelink.com > this is the text,thelink.com``)
 #### filter
 ><b>{filter:option}{rules:string}{~filter}</b>
 
