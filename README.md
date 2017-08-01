@@ -121,8 +121,69 @@ if the condition calls a function than wrap it in square brackets (i.e. ``{if:[r
 #### bind
 ><b>{bind}{~bind}</b>
 #### random
-><b>{random}{~random}</b>
+><b>{random:type}{~random}</b>
 
+This object randomizes items it contains. Item should be separated by a line break. 
+
+``
+{random}
+<div>this is the first</div>
+``
+#### mobile
+><b>{mobile}{~mobile}</b>
+
+This object wraps a mobile identifier around all content. Content within will be hidden from mobile browsers or styled to display correctly on mobile browsers. 
+#### banner
+><b>{banner:option}{~banner}</b>
+#### video
+><b>{video}{~video}</b>
+
+Object creates a HTML5 video element that can contain multiple sources, tracks and parameters. Tag can bind to callback functions or external events
+#### prefetch
+><b>{prefetch}{~prefetch}</b>
+
+Simple object that prefetches an asset and appends it to the document head
+#### image
+><b>{image:ratio}url:string{~image}</b>
+#### analytics
+><b>{analytics:type}id:your_id{~analytics}</b>
+
+The analytics object will inject either a basic google analytics tracker or a google tag manager instance to the page. The type can be either gtm or basic. 
+The content must contain your analytics or GTM ID 
+#### stylize
+><b>{stylize}{~stylize}</b>
+#### trim
+><b>{trim:length,direction}{ellipsis}{~trim}</b>
+#### links
+><b>{links:option}{~links}</b>
+#### filter
+><b>{filter:type}{rules:string}{~filter}</b>
+
+The filter object removes words from a string or from all elements that are children of this object. The filter object can also use rules to 
+filter specific elements or words. Type can be code or word. The word option strips all explicit language and replaces with a defined replacement string. Rules
+are defined as an object and work if the defined type is code. ``{filter:code}{rules:b,br}<i>Here</i> is <b>some</b> dummy text <br /> for this example{~filter}`` will return ``<i>Here</i> is some dummy text for this example``
+#### wrap
+><b>{wrap:option}{origin tag}{~wrap}</b>
+
+The wrap object finds and wraps specific words with html tags. Option can be word or phrase. ``{wrap:word}{this div}Here is this text{~wrap}`` will return ``here is <div>this</div> text``
+#### object
+><b>{object:type}{save:string}string{~object}</b>
+
+The object tag allows the user to define an object as a string within the page's html. The is saved to the global object and is accessible to other functions or methods. Accepted types are:
+
+array : Formatted as strings separated by commas. 
+
+object : Object must be a JSON formatted string.
+ 
+variable : Simple variable. Can be formatted as an array ({save:[first=this,second=that,third=those]}) 
+
+function : A simple function can be passed to the global object. It can be called by name.
+
+#### poll
+><b>{poll}url_or_ip{~poll}</b>
+
+Object "pings" a url or ip to determine if the url or server is responding.
+``{poll}www.google.com{~poll}``
 
 
 ### Faster Ajax Tags
