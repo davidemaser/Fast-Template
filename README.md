@@ -93,13 +93,15 @@ expression can be used to define the date string to render (i.e dd/mm/yy h:m)
 The if tag allows you to insert logic. The option is the condition to check. It can be a string comparison, a mathematical comparison or a boolean comparison. In the case of mathematical operations,
 if the condition calls a function than wrap it in square brackets (i.e. ``{if:[round(238*1.85)]=4}``). The expression returned by the tag can be a string.
 #### form 
-><b>{form}{~form}</b>
+><b>{form:option}{~form}</b>
 #### panel
-><b>{panel}{~panel}</b>
+><b>{panel:option}{~panel}</b>
 #### gutter
-><b>{gutter}{~gutter}</b>
+><b>{gutter}string{~gutter}</b>
+#### json
+><b>{json:url}expression{~json}</b>
 #### modal
-><b>{modal}{~modal}</b>
+><b>{modal:option}{~modal}</b>
 #### html
 ><b>{html}{~html}</b>
 #### animate
@@ -107,27 +109,31 @@ if the condition calls a function than wrap it in square brackets (i.e. ``{if:[r
 #### nav
 ><b>{nav}{~nav}</b>
 #### placeholder
-><b>{placeholder}{~placeholder}</b>
+><b>{placeholder:option}{~placeholder}</b>
 #### accordion
 ><b>{accordion}{~accordion}</b>
 #### table
-><b>{table}{~table}</b>
+><b>{table:option}{~table}</b>
 #### group
 ><b>{group}{~group}</b>
 #### sticky
-><b>{sticky}{~sticky}</b>
+><b>{sticky:option}{~sticky}</b>
+
+The sticky object creates a persistent (or sticky) element on the page. Option can be top or bottom 
 #### search
-><b>{search}{~search}</b>
+><b>{search:default}target:this_link,placeholder:Enter Search Term Here,button:true,label:Search{~search}</b>
 #### bind
 ><b>{bind}{~bind}</b>
 #### random
-><b>{random:type}{~random}</b>
+><b>{random:option}{~random}</b>
 
 This object randomizes items it contains. Item should be separated by a line break. 
 
 ``{random}``
 
 ``<div>this is the first</div>``
+
+``<div>this is the second</div>``
 
 ``{~random}``
 
@@ -137,10 +143,37 @@ This object randomizes items it contains. Item should be separated by a line bre
 This object wraps a mobile identifier around all content. Content within will be hidden from mobile browsers or styled to display correctly on mobile browsers. 
 #### banner
 ><b>{banner:option}{~banner}</b>
-#### video
-><b>{video}{~video}</b>
 
-Object creates a HTML5 video element that can contain multiple sources, tracks and parameters. Tag can bind to callback functions or external events
+The banner object creates a hero banner instance on the page. The hero banner consists of a full spanning background image, a title, a subtitle
+and a CTA button. The banner can also be a basic text object or an html element. 
+
+The banner option can be full or adapt. Adapt will format the banner to the size of it's parent. The banner expression accepts the following parameters. NOTE: The banner 
+expression is formatted as an object 
+
+- image: a schema-less url to the image
+- title: this is the header text that will appear at the top of the banner container
+- subtext: this is the text that will appear below the header text
+- button: this is the label that will appear on the CTA button
+- action: this is the link or action that will be applied to the CTA button
+
+
+#### video
+><b>{video:option}string{~video}</b>
+
+Object creates a HTML5 video element that can contain multiple sources, tracks and parameters. Tag can bind to callback functions or external events.
+The video option can be default or stream. A streamed video will load and buffer the video before playing.
+
+The video expression accepts the following parameters.
+
+- url: a schema-less url to the video. The url can also be formatted as an array to define multiple video source formats (``url:[//www.link.com format,//www.other.com format]``)
+- width: the width of the video object
+- height: the height of the video
+- controls: display whether the video controls will be shown by default (true or false)
+- autoplay: defines whether the video will play on load (true or false)
+- poster: define the schema-less url to a preview image for the video
+- subtitles: defines the link to the subtitles with the language parameter. The subtitles can be 
+ formatted as an array (``subtitles:[en link,es link]``)
+ 
 #### prefetch
 ><b>{prefetch}{~prefetch}</b>
 
@@ -148,7 +181,7 @@ Simple object that prefetches an asset and appends it to the document head
 #### image
 ><b>{image:ratio}url:string{~image}</b>
 #### analytics
-><b>{analytics:type}id:your_id{~analytics}</b>
+><b>{analytics:option}id:your_id{~analytics}</b>
 
 The analytics object will inject either a basic google analytics tracker or a google tag manager instance to the page. The type can be either gtm or basic. 
 The content must contain your analytics or GTM ID 
@@ -159,7 +192,7 @@ The content must contain your analytics or GTM ID
 #### links
 ><b>{links:option}{~links}</b>
 #### filter
-><b>{filter:type}{rules:string}{~filter}</b>
+><b>{filter:option}{rules:string}{~filter}</b>
 
 The filter object removes words from a string or from all elements that are children of this object. The filter object can also use rules to 
 filter specific elements or words. Type can be code or word. The word option strips all explicit language and replaces with a defined replacement string. Rules
@@ -169,17 +202,14 @@ are defined as an object and work if the defined type is code. ``{filter:code}{r
 
 The wrap object finds and wraps specific words with html tags. Option can be word or phrase. ``{wrap:word}{this div}Here is this text{~wrap}`` will return ``here is <div>this</div> text``
 #### object
-><b>{object:type}{save:string}string{~object}</b>
+><b>{object:option}{save:string}string{~object}</b>
 
 The object tag allows the user to define an object as a string within the page's html. The is saved to the global object and is accessible to other functions or methods. Accepted types are:
 
-array : Formatted as strings separated by commas. 
-
-object : Object must be a JSON formatted string.
- 
-variable : Simple variable. Can be formatted as an array ({save:[first=this,second=that,third=those]}) 
-
-function : A simple function can be passed to the global object. It can be called by name.
+- array : Formatted as strings separated by commas. 
+- object : Object must be a JSON formatted string.
+- variable : Simple variable. Can be formatted as an array ({save:[first=this,second=that,third=those]}) 
+- function : A simple function can be passed to the global object. It can be called by name.
 
 #### poll
 ><b>{poll}url_or_ip{~poll}</b>
