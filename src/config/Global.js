@@ -11,7 +11,7 @@ export const Global = {
     root:'*[ftx-render]'
   },
   node:'ft',
-  cycleOrder:['ftx','ft','fta'],
+  cycleOrder:['ftx','fta'],
   experiment:{
     node:'ftx',
     render:'<span ftx-render>@return</span>',

@@ -174,19 +174,12 @@ export const Faster = {
   },
   remove:{
     emptyTags(){
-      $(Global.node).each(function(){
-        let __this = $(this).html().trim();
-        __this.length === 0 ? $(this).remove() : null;
-      });
       $(Global.experiment.node).each(function(){
         let __this = $(this).html().trim();
         __this.length === 0 ? $(this).remove() : null;
       })
     },
     ignoredTags(){
-      $(`${Global.node}[${Global.ignore}]`).each(function(){
-        $(this).remove();
-      });
       $(`${Global.experiment.node}[${Global.ignore}]`).each(function(){
         $(this).remove();
       })
@@ -232,12 +225,12 @@ export const Faster = {
 
 export const Architect = {
   build: {
+    /*
     /**
      *
      * @param {string} origin
      * @param {string} replace
      * @param {string} content
-     */
     element(origin, replace, content){
       try {
         $(replace).insertBefore(origin);
@@ -251,7 +244,7 @@ export const Architect = {
           log: false
         });
       }
-    },
+    },*/
     /**
      *
      * @param {string} origin
