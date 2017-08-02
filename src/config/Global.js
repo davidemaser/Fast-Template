@@ -7,7 +7,7 @@ export const Global = {
   appRoot:'body',
   appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
   appEvents:{
-    enable:true, //this will turn on/off the mutation observer for all ftx-render objects
+    enable:false, //this will turn on/off the mutation observer for all ftx-render objects
     root:'*[ftx-render]'
   },
   node:'ft',
@@ -26,7 +26,7 @@ export const Global = {
   ajax:{
     node:'fta',
     useDefault:true,
-    render:'<span ftx-render ftx-ajax>@return</spanftx-render>',
+    render:'<span ftx-render ftx-ajax>@return</span>',
     root:{
       node:'data',
       url:'../data'

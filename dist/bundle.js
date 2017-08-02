@@ -78,7 +78,7 @@ const Global = {
   appRoot:'body',
   appStatus:'prod', //change this to dev if you want to see the pre-processed Faster tags
   appEvents:{
-    enable:true, //this will turn on/off the mutation observer for all ftx-render objects
+    enable:false, //this will turn on/off the mutation observer for all ftx-render objects
     root:'*[ftx-render]'
   },
   node:'ft',
@@ -97,7 +97,7 @@ const Global = {
   ajax:{
     node:'fta',
     useDefault:true,
-    render:'<span ftx-render ftx-ajax>@return</spanftx-render>',
+    render:'<span ftx-render ftx-ajax>@return</span>',
     root:{
       node:'data',
       url:'../data'
@@ -11882,26 +11882,6 @@ const Faster = {
 
 const Architect = {
   build: {
-    /*
-    /**
-     *
-     * @param {string} origin
-     * @param {string} replace
-     * @param {string} content
-    element(origin, replace, content){
-      try {
-        $(replace).insertBefore(origin);
-        $(replace).html(content);
-        $(origin).remove();
-      }catch(e) {
-        new Woops({
-          origin: 'Architect.build.element',
-          type: 'Function Error',
-          message: 'Unable to execute the Arhitect Builder',
-          log: false
-        });
-      }
-    },*/
     /**
      *
      * @param {string} origin
@@ -13045,6 +13025,7 @@ class FastAjax{
 
 
 function GetAjax(url, props,element) {
+  let hideCode = props.hide || false;
   function build(a,b,template,handle){
     /**@todo this function causes problems when rendering a template **/
     if(template !== null){
@@ -13052,7 +13033,7 @@ function GetAjax(url, props,element) {
     }
     handle !== null ? new __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__["a" /* default */](handle,a,'appData') : null;
     new __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__["a" /* default */]('jsonLoaded',true,'appData');
-    __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).find(`[fstxj-id="${b}"]`),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.render,a);
+    hideCode === 'false' || hideCode === false ? __WEBPACK_IMPORTED_MODULE_3__components_Faster__["a" /* Architect */].build.experiment($(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).find(`[fstxj-id="${b}"]`),__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].ajax.render,a) : $(__WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].appRoot).find(`[fstxj-id="${b}"]`).remove();
   }
   function processProps(data, props) {
     if (typeof props === 'object') {

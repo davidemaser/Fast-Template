@@ -8,6 +8,7 @@ import {Architect} from '../components/Faster';
 import {FastTemplate} from '../functions/FastTemplate';
 import RegisterState from '../classes/RegisterState';
 export default function GetAjax(url, props,element) {
+  let hideCode = props.hide || false;
   function build(a,b,template,handle){
     /**@todo this function causes problems when rendering a template **/
     if(template !== null){
@@ -15,7 +16,7 @@ export default function GetAjax(url, props,element) {
     }
     handle !== null ? new RegisterState(handle,a,'appData') : null;
     new RegisterState('jsonLoaded',true,'appData');
-    Architect.build.experiment($(Global.appRoot).find(`[fstxj-id="${b}"]`),Global.ajax.render,a);
+    hideCode === 'false' || hideCode === false ? Architect.build.experiment($(Global.appRoot).find(`[fstxj-id="${b}"]`),Global.ajax.render,a) : $(Global.appRoot).find(`[fstxj-id="${b}"]`).remove();
   }
   function processProps(data, props) {
     if (typeof props === 'object') {

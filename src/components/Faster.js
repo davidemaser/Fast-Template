@@ -225,26 +225,6 @@ export const Faster = {
 
 export const Architect = {
   build: {
-    /*
-    /**
-     *
-     * @param {string} origin
-     * @param {string} replace
-     * @param {string} content
-    element(origin, replace, content){
-      try {
-        $(replace).insertBefore(origin);
-        $(replace).html(content);
-        $(origin).remove();
-      }catch(e) {
-        new Woops({
-          origin: 'Architect.build.element',
-          type: 'Function Error',
-          message: 'Unable to execute the Arhitect Builder',
-          log: false
-        });
-      }
-    },*/
     /**
      *
      * @param {string} origin

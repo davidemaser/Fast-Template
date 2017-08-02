@@ -291,6 +291,7 @@ defining thing as the starting node ``node:thing`` would return only the data in
 
 - show: defines the number of the results to show from the returned data.
 - saveAs: defines the name that the object will saves as. The object is bound to the window ``window['object']`` and is globally accessible.
+- hide: (boolean) defines whether or not the code should be returned and printed as a string (default false)
 
 ### Customizing Templates
 
