@@ -1,4 +1,4 @@
-/**
+/*
  * Created by David Maser on 19/07/2017.
  */
 import itsDOMLoading from '../components/DomManager';

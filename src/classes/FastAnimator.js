@@ -1,4 +1,4 @@
-/**
+/*
  * Created by David Maser on 04/07/2017.
  */
 import {FastAnimatorFunctions} from '../functions/FastAnimatorFunctions';

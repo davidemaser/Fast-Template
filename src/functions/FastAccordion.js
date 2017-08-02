@@ -1,4 +1,4 @@
-/**
+/*
  * Created by David Maser on 12/07/2017.
  */
 import {Template} from '../config/Template';

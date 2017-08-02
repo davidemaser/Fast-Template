@@ -1,7 +1,17 @@
-/**
+/*
  * Created by David Maser on 21/06/2017.
  */
 import Woops from '../classes/Woops';
+/**
+ * The FastCondition function handles and calculates all conditional
+ * statements. If necessary, FastCondition passes the option to be
+ * executed as a mathematical statement before returning the result
+ * of the comparison
+ * @param {string} option
+ * @param {string} expression
+ * @return {*}
+ * @constructor
+ */
 export default function FastCondition(option, expression){
   function execMath(args){
     let execValue = args.replace('[','').replace(']','');

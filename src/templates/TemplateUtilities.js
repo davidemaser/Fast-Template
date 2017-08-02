@@ -1,4 +1,4 @@
-/**
+/*
  * Created by David Maser on 22/06/2017.
  */
 export const TemplateUtilities = {

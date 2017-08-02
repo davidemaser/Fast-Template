@@ -1,4 +1,4 @@
-/**
+/*
  * Created by David Maser on 26/06/2017.
  */
 export default function FormElements(obj){

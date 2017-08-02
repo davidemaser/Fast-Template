@@ -1,4 +1,4 @@
-/**
+/*
  * Created by David Maser on 21/06/2017.
  */
 import {Faster,Architect} from '../components/Faster';

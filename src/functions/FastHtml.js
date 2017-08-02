@@ -1,4 +1,4 @@
-/**
+/*
  * Created by David Maser on 29/06/2017.
  */
 import {Global} from '../config/Global';
@@ -13,7 +13,7 @@ import Woops from '../classes/Woops';
  */
 export default function FastHtml(option, expression){
   let HtmlTags = Global.fastHtmlTags;
-  let htmlStore = {};
+  let htmlStore = {}; //object that contains all html elements and line items
   let htmlArray = expression.trim().split(/\r?\n/);
   if(Array.isArray(htmlArray)){
     let a;
@@ -21,7 +21,12 @@ export default function FastHtml(option, expression){
       htmlStore[a] = htmlArray[a].trim();
     }
   }
-
+  /**
+   * Function builds the tag structure base on the string or object
+   * passed by the parser
+   * @param {string} obj
+   * @return {string|*}
+   */
   function buildTag(obj){
     if(Array.isArray(obj)){
       let rootObj = obj[0].trim();
@@ -65,6 +70,13 @@ export default function FastHtml(option, expression){
       return rootNode;
     }
   }
+
+  /**
+   * Function cycles through elements of the object collected in the htmlstore
+   * and exports a string that will be handled by the buildTag function
+   * @param {object} obj
+   * @return {string}
+   */
   function parseObject(obj){
     if(typeof obj === 'object'){
       let o;

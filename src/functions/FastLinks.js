@@ -1,4 +1,4 @@
-/**
+/*
  * Created by David Maser on 25/07/2017.
  */
 import {FastUtilities} from '../functions/FastUtilities';

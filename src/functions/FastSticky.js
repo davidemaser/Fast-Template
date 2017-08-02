@@ -1,4 +1,4 @@
-/**
+/*
  * Created by David Maser on 14/07/2017.
  */
 import {Global} from '../config/Global';

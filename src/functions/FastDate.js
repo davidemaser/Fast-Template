@@ -1,7 +1,15 @@
-/**
+/*
  * Created by David Maser on 21/06/2017.
  */
 import {Global} from '../config/Global';
+/**
+ * The FastDate function parses and returns a date value based
+ * on the format specified by the user or the caller
+ * @param {string} option
+ * @param {string} expression
+ * @return {*|string}
+ * @constructor
+ */
 export default function FastDate(option, expression){
   expression = expression || Global.experiment.date.full;
   let theDate = new Date();

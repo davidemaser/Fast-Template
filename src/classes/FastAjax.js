@@ -1,9 +1,17 @@
-/**
+/*
  * Created by David Maser on 22/06/2017.
  */
 import GetAjax from './GetAjax';
 import RegisterState from './RegisterState';
 export default class FastAjax{
+  /**
+   * FastAjax is the class that handles and dispatches all AJAX
+   * requests from the app
+   * @param {string} option
+   * @param {string} expression
+   * @param {string} element
+   * @constructor
+   */
   constructor(option, expression,element){
     this.option = option;
     this.expression = expression;

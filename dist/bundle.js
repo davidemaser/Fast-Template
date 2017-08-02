@@ -69,7 +69,7 @@
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Log; });
-/**
+/*
  * Created by David Maser on 19/06/2017.
  */
 const Global = {
@@ -155,11 +155,11 @@ let Log = [];
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
+/*
  * Created by David Maser on 22/06/2017.
  */
 /**
- * Defines all tamplate objects used by Faster.
+ * Defines all template objects used by Faster.
  * Template params are stated as @value or @parent.value
  */
 const Template = {
@@ -11008,12 +11008,19 @@ module.exports = {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Logger__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_RegisterState__ = __webpack_require__(5);
-/**
+/*
  * Created by David Maser on 19/06/2017.
  */
 
 
 class Woops{
+  /**
+   * Woops is the error handler inside Faster's ecosystem. It receives
+   * an object from the caller and appends it to the appErrors object
+   * that resides with the core object root.
+   * @param args
+   * @constructor
+   */
   constructor(args){
     this.args = args;
     this.build();
@@ -11042,7 +11049,7 @@ class Woops{
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/**
+/*
  * Created by David Maser on 29/06/2017.
  */
 
@@ -11088,7 +11095,7 @@ class RegisterState{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__functions_FastPing__ = __webpack_require__(59);
-/**
+/*
  * Created by David Maser on 13/07/2017.
  */
 
@@ -11653,7 +11660,7 @@ if(typeof window[__WEBPACK_IMPORTED_MODULE_2__config_Global__["a" /* Global */].
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_RegisterState__ = __webpack_require__(5);
-/**
+/*
  * Created by David Maser on 19/06/2017.
  */
 
@@ -12504,7 +12511,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-//import xtag from 'x-tag';
 
 $(function(){
   __WEBPACK_IMPORTED_MODULE_3__src_config_Global__["a" /* Global */].appEvents.enable === true ? new __WEBPACK_IMPORTED_MODULE_2__src_classes_FastDom__["a" /* default */]() : null; //turn on mutation observers for all ftx-render objects
@@ -12518,7 +12524,7 @@ $(function(){
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/**
+/*
  * Created by David Maser on 19/06/2017.
  */
 
@@ -12546,7 +12552,7 @@ class Logger{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FastCycle__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plugins_FastPlugin__ = __webpack_require__(69);
-/**
+/*
  * Created by David Maser on 19/06/2017.
  */
 
@@ -12583,7 +12589,7 @@ class FastSniffer{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastProcessor__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RegisterState__ = __webpack_require__(5);
-/**
+/*
  * Created by David Maser on 21/06/2017.
  */
 
@@ -12684,7 +12690,7 @@ class FastCycle{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__FastLinks__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__FastFilter__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__FastUtilities__ = __webpack_require__(6);
-/**
+/*
  * Created by David Maser on 21/06/2017.
  */
 
@@ -12831,7 +12837,7 @@ function FastProcessor(type, option, expression, element){
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastMath;
-/**
+/*
  * Created by David Maser on 21/06/2017.
  */
 /**
@@ -12856,10 +12862,18 @@ function FastMath(option, expression) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastDate;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/**
+/*
  * Created by David Maser on 21/06/2017.
  */
 
+/**
+ * The FastDate function parses and returns a date value based
+ * on the format specified by the user or the caller
+ * @param {string} option
+ * @param {string} expression
+ * @return {*|string}
+ * @constructor
+ */
 function FastDate(option, expression){
   expression = expression || __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].experiment.date.full;
   let theDate = new Date();
@@ -12886,10 +12900,20 @@ function FastDate(option, expression){
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastCondition;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
-/**
+/*
  * Created by David Maser on 21/06/2017.
  */
 
+/**
+ * The FastCondition function handles and calculates all conditional
+ * statements. If necessary, FastCondition passes the option to be
+ * executed as a mathematical statement before returning the result
+ * of the comparison
+ * @param {string} option
+ * @param {string} expression
+ * @return {*}
+ * @constructor
+ */
 function FastCondition(option, expression){
   function execMath(args){
     let execValue = args.replace('[','').replace(']','');
@@ -12971,12 +12995,20 @@ function FastCondition(option, expression){
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GetAjax__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RegisterState__ = __webpack_require__(5);
-/**
+/*
  * Created by David Maser on 22/06/2017.
  */
 
 
 class FastAjax{
+  /**
+   * FastAjax is the class that handles and dispatches all AJAX
+   * requests from the app
+   * @param {string} option
+   * @param {string} expression
+   * @param {string} element
+   * @constructor
+   */
   constructor(option, expression,element){
     this.option = option;
     this.expression = expression;
@@ -13015,7 +13047,7 @@ class FastAjax{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Faster__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__functions_FastTemplate__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__classes_RegisterState__ = __webpack_require__(5);
-/**
+/*
  * Created by David Maser on 20/06/2017.
  */
 
@@ -13966,7 +13998,7 @@ module.exports = function spread(callback) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_TemplateUtilities__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_TemplateTableUtilities__ = __webpack_require__(46);
-/**
+/*
  * Created by David Maser on 22/06/2017.
  */
 
@@ -13993,7 +14025,7 @@ function FastTemplate(data, template) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
+/*
  * Created by David Maser on 22/06/2017.
  */
 const TemplateUtilities = {
@@ -14018,7 +14050,7 @@ const TemplateUtilities = {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
-/**
+/*
  * Created by David Maser on 22/06/2017.
  */
 
@@ -14065,13 +14097,27 @@ const TemplateTableUtilities = {
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastForm;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FormElements__ = __webpack_require__(48);
-/**
+/*
  * Created by David Maser on 26/06/2017.
  */
 
 
+/**
+ * FastForm builds and appends to the dom a form object
+ * as well as it's required children.
+ * @param {string} option
+ * @param {string} expression
+ * @return {*|null}
+ * @constructor
+ */
 function FastForm(option, expression) {
   try {
+    /**
+     * This function splits the expression into chunks that
+     * will guide the function to parse the required content
+     * @param {object} obj
+     * @return {object}
+     */
     function processExpression(obj) {
       let expressionObj = {};
       let e;
@@ -14081,6 +14127,13 @@ function FastForm(option, expression) {
       return expressionObj;
     }
 
+    /**
+     * This function uses the expressionObj object as well as values
+     * from the template object to create a form layout
+     * @param {object} obj
+     * @param {string} layout
+     * @return {string}
+     */
     function processLayout(obj, layout) {
       let o;
       for (o in obj) {
@@ -14109,7 +14162,7 @@ function FastForm(option, expression) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FormElements;
-/**
+/*
  * Created by David Maser on 26/06/2017.
  */
 function FormElements(obj){
@@ -14184,7 +14237,7 @@ function FormElements(obj){
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastGutter;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
-/**
+/*
  * Created by David Maser on 27/06/2017.
  */
 
@@ -14202,7 +14255,7 @@ function FastGutter(option, expression){
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = FastPanel;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
-/**
+/*
  * Created by David Maser on 27/06/2017.
  */
 
@@ -14222,10 +14275,10 @@ function FastPanel(option, expression){
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(5);
-/**
+/*
  * Created by David Maser on 29/06/2017.
  */
-/**
+/*
  * Created by David Maser on 27/06/2017.
  */
 
@@ -14281,7 +14334,7 @@ function FastModal(option, expression){
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlUtilities__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_Woops__ = __webpack_require__(4);
-/**
+/*
  * Created by David Maser on 29/06/2017.
  */
 
@@ -14296,7 +14349,7 @@ function FastModal(option, expression){
  */
 function FastHtml(option, expression){
   let HtmlTags = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].fastHtmlTags;
-  let htmlStore = {};
+  let htmlStore = {}; //object that contains all html elements and line items
   let htmlArray = expression.trim().split(/\r?\n/);
   if(Array.isArray(htmlArray)){
     let a;
@@ -14304,7 +14357,12 @@ function FastHtml(option, expression){
       htmlStore[a] = htmlArray[a].trim();
     }
   }
-
+  /**
+   * Function builds the tag structure base on the string or object
+   * passed by the parser
+   * @param {string} obj
+   * @return {string|*}
+   */
   function buildTag(obj){
     if(Array.isArray(obj)){
       let rootObj = obj[0].trim();
@@ -14348,6 +14406,13 @@ function FastHtml(option, expression){
       return rootNode;
     }
   }
+
+  /**
+   * Function cycles through elements of the object collected in the htmlstore
+   * and exports a string that will be handled by the buildTag function
+   * @param {object} obj
+   * @return {string}
+   */
   function parseObject(obj){
     if(typeof obj === 'object'){
       let o;
@@ -14382,7 +14447,7 @@ function FastHtml(option, expression){
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastHtmlEvents__ = __webpack_require__(54);
-/**
+/*
  * Created by David Maser on 29/06/2017.
  */
 
@@ -14447,7 +14512,7 @@ const FastHtmlUtilities = {
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastHtmlFunctions__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_Global__ = __webpack_require__(0);
-/**
+/*
  * Created by David Maser on 04/07/2017.
  */
 
@@ -14493,7 +14558,7 @@ class FastHtmlEvents{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
+/*
  * Created by David Maser on 04/07/2017.
  */
 const FastHtmlFunctions = {
@@ -14511,7 +14576,7 @@ const FastHtmlFunctions = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_FastAnimatorFunctions__ = __webpack_require__(57);
-/**
+/*
  * Created by David Maser on 04/07/2017.
  */
 
@@ -14551,7 +14616,7 @@ class FastAnimator{
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
-/**
+/*
  * Created by David Maser on 04/07/2017.
  */
 
@@ -14625,7 +14690,7 @@ const FastAnimatorFunctions={
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions_FastUtilities__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__classes_Woops__ = __webpack_require__(4);
-/**
+/*
  * Created by David Maser on 10/07/2017.
  */
 
@@ -14764,7 +14829,7 @@ function FastNav(option,expression,element){
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
+/*
  * Created by David Maser on 31/07/2017.
  */
 const FastPing = {
@@ -14803,7 +14868,7 @@ const FastPing = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_FastUtilities__ = __webpack_require__(6);
-/**
+/*
  * Created by David Maser on 12/07/2017.
  */
 
@@ -14871,7 +14936,7 @@ function FastAccordion(option,expression){
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Faster__ = __webpack_require__(7);
-/**
+/*
  * Created by David Maser on 13/07/2017.
  */
 
@@ -14972,7 +15037,7 @@ function FastTable(option,expression,element){
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = FastSticky;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/**
+/*
  * Created by David Maser on 14/07/2017.
  */
 
@@ -15005,7 +15070,7 @@ function FastSticky(option,expression) {
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FastUtilities__ = __webpack_require__(6);
-/**
+/*
  * Created by David Maser on 18/07/2017.
  */
 
@@ -15075,7 +15140,7 @@ function FastSticky(option,expression) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__ = __webpack_require__(6);
-/**
+/*
  * Created by David Maser on 18/07/2017.
  */
 
@@ -15184,7 +15249,7 @@ function FastSticky(option,expression) {
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_Woops__ = __webpack_require__(4);
-/**
+/*
  * Created by David Maser on 20/07/2017.
  */
 
@@ -15295,7 +15360,7 @@ class FastAnalytics {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Template__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions_FastUtilities__ = __webpack_require__(6);
-/**
+/*
  * Created by David Maser on 24/07/2017.
  */
 
@@ -15346,7 +15411,7 @@ class FastStylize{
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__functions_FastUtilities__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Template__ = __webpack_require__(1);
-/**
+/*
  * Created by David Maser on 25/07/2017.
  */
 
@@ -15394,17 +15459,32 @@ class FastStylize{
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Woops__ = __webpack_require__(4);
-/**
+/*
  * Created by David Maser on 26/07/2017.
  */
 
 
-
+/**
+ * FastFilter executes filter commands such as stripping code
+ * or expletives from a passed string. The returned value is
+ * a string that does not contain the words, tags or expressions
+ * passed as a rule
+ * @param {string} option
+ * @param {string} expression
+ * @return {string}
+ * @constructor
+ */
 /* harmony default export */ __webpack_exports__["a"] = (function(option,expression){
   let acceptedOptions = ['language','code','custom'];
   if(acceptedOptions.indexOf(option)>-1){
     switch(option){
       case 'language':
+        /**
+         * Removes all language blocks from a string based on rules found in
+         * the global config file
+         * @type {Element}
+         * @return {string}
+         */
         let languageStore = __WEBPACK_IMPORTED_MODULE_0__config_Global__["a" /* Global */].rules.language.restricted;
         if(Array.isArray(languageStore)){
           languageStore.map(function(a){
@@ -15417,6 +15497,8 @@ class FastStylize{
         /**
          * Removes all code blocks from a string based on rules passed in
          * the filter object.
+         * @type {Element}
+         * @return {string}
          */
         if(expression.indexOf('{rules:')>-1){
           let ruleArray = expression.split('{rules:')[1].split('}')[0].split(',');
@@ -15463,7 +15545,7 @@ class FastStylize{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Config__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Woops__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_RegisterState__ = __webpack_require__(5);
-/**
+/*
  * Created by David Maser on 29/06/2017.
  */
 
@@ -15509,7 +15591,7 @@ class FastPlugin{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
+/*
  * Created by David Maser on 29/06/2017.
  */
 const PluginConfig = {
@@ -15552,7 +15634,7 @@ const PluginAbstractor = {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_DomManager__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_Global__ = __webpack_require__(0);
-/**
+/*
  * Created by David Maser on 19/07/2017.
  */
 
@@ -15579,7 +15661,7 @@ class FastDom{
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_Global__ = __webpack_require__(0);
-/**
+/*
  * Created by David Maser on 19/07/2017.
  */
 

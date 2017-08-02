@@ -1,9 +1,16 @@
-/**
+/*
  * Created by David Maser on 19/06/2017.
  */
 import Logger from './Logger';
 import RegisterState from '../classes/RegisterState';
 export default class Woops{
+  /**
+   * Woops is the error handler inside Faster's ecosystem. It receives
+   * an object from the caller and appends it to the appErrors object
+   * that resides with the core object root.
+   * @param args
+   * @constructor
+   */
   constructor(args){
     this.args = args;
     this.build();

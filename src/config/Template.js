@@ -1,8 +1,8 @@
-/**
+/*
  * Created by David Maser on 22/06/2017.
  */
 /**
- * Defines all tamplate objects used by Faster.
+ * Defines all template objects used by Faster.
  * Template params are stated as @value or @parent.value
  */
 export const Template = {

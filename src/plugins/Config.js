@@ -1,4 +1,4 @@
-/**
+/*
  * Created by David Maser on 29/06/2017.
  */
 export const PluginConfig = {

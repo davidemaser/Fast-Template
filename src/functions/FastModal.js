@@ -1,7 +1,7 @@
-/**
+/*
  * Created by David Maser on 29/06/2017.
  */
-/**
+/*
  * Created by David Maser on 27/06/2017.
  */
 import {Template} from '../config/Template';
