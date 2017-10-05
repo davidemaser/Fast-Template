@@ -11,7 +11,7 @@
   "author": "David Maser",
   "repository": {
     "type": "git",
-    "url": "https://github.com:davidemaser/Fast-Template.git"
+    "url": "https://github.com:davidemaser/faster.git"
   },
   "license": "MIT",
   "devDependencies": {
